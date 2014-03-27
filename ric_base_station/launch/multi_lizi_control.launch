@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+
+<!-- Load Joystick -->
+<param name="joy_node/dev" value="/dev/input/js0" type="str"/>
+<rosparam file="$(find lizi_base_station)/config/multi_lizi_control.yaml" command="load" />
+<node name="joy_node" pkg="joy" type="joy_node" output="screen" /> 
+<node name="multi_lizi_control" pkg="lizi_base_station" type="multi_lizi_control.py" output="screen" />
+<!-- End Joystick -->
+
+
+
+</launch>
+
+ 

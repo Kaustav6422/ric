@@ -1,0 +1,2 @@
+SUBSYSTEMS=="usb",  ATTRS{product}=="Arduino Due Prog. Port", SYMLINK+="LiziDUE"
+SUBSYSTEMS=="usb",ATTRS{manufacturer}=="Hokuyo Data Flex for USB", SYMLINK+="Hokuyo", MODE="0666"

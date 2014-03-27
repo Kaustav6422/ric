@@ -1,2 +1,4 @@
 uint8 faults
-float32 battery_voltage
+float32 battery1_voltage
+float32 battery2_voltage
+float32 battery3_voltage

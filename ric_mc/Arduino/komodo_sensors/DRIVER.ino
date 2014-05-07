@@ -4,7 +4,7 @@ void setup_driver() {
 
   float pid_constatns[5];
   if (!nh.getParam("pid_constants", pid_constatns, 5)) {
-    nh.loginfo("No PID parameters found, using defaults.");
+    nh.logwarn("No PID parameters found, using defaults.");
   }
   else {
     nh.loginfo("PID parameters found, sending to controller...");
@@ -19,67 +19,82 @@ void setup_driver() {
   }
 
   stop_motors();
-unsigned long temp_t=millis();
-
-while (millis()-temp_t<100) {
-  cmdMessenger.feedinSerialData();
-}
-got_parameters=false;
-cmdMessenger.sendCmd(kGetParameters, true);
-
-while (!got_parameters) cmdMessenger.feedinSerialData();
+  got_parameters=false;
+  encoders_ok=false;
+  gotp_t=millis();
+  enc_ok_t=millis();
 
 }
 
 void OnGetParametersAck() {
   got_parameters=true;
-  nh.loginfo("Reading parameters from controller...");
+  nh.loginfo("Got parameters from controller:");
   float kp = cmdMessenger.readFloatArg();
   float ki = cmdMessenger.readFloatArg();
   float kd = cmdMessenger.readFloatArg();
   float alpha = cmdMessenger.readFloatArg();
   int cdt = cmdMessenger.readIntArg();
-  
+
   char log_msg[30];
+  char log_msg1[10];
 
-  sprintf(log_msg, "    kp*10000 = %d", (int)(kp * 10000));
+  dtostrf(kp,3,4,log_msg1);
+  sprintf(log_msg, "    kp = %s", log_msg1);
+  nh.loginfo(log_msg);
+  
+ dtostrf(ki,3,4,log_msg1);
+  sprintf(log_msg, "    ki = %s", log_msg1);
   nh.loginfo(log_msg);
 
-
-  sprintf(log_msg, "    ki*10000 = %d", (int)(ki * 10000));
+ dtostrf(kd,3,4,log_msg1);
+  sprintf(log_msg, "    kd = %s", log_msg1);
   nh.loginfo(log_msg);
 
-
-  sprintf(log_msg, "    kd*10000 = %d", (int)(kd * 10000));
-  nh.loginfo(log_msg);
-
-
-  sprintf(log_msg, "    alpha*10000 = %d", (int)(alpha * 10000));
+dtostrf(alpha,3,4,log_msg1);
+  sprintf(log_msg, "    alpha = %s", log_msg1);
   nh.loginfo(log_msg);
 
   sprintf(log_msg, "    Control loop dt = %d", cdt);
   nh.loginfo(log_msg);
+  nh.loginfo("Controller ready");
 }
 
 
 void OnEncoders() {
   left_enc = cmdMessenger.readIntArg();
   right_enc = cmdMessenger.readIntArg();
+  enc_ok_t=millis();
+  if (!encoders_ok){
+      nh.loginfo("Communication with controller is OK");
+      encoders_ok=true;
+    }
+}
+
+void check_encoders() {
+  if (millis()-enc_ok_t>2000) {
+    if (encoders_ok){
+      nh.logwarn("No communication with controller");
+      encoders_ok=false;
+    }
+  } 
 }
 
 void OnStatus() {
-  status_bits = cmdMessenger.readIntArg();
+  RxStatus = cmdMessenger.readBoolArg();
   controller_bat_v = cmdMessenger.readFloatArg();
 }
 
 
 void read_status() {
 
+int gps_fault_bit=0;
+#ifdef USE_GPS
+ // gps_fault_bit = !gps.location.isValid();
+ if (gps.location.age()>GPS_IS_OLD) gps_fault_bit=1;
+#endif
 
-  int gps_fix_bit = !gps.location.isValid();
-  int imu_bit = (int)imu_fault;
-  status_msg.faults = 8 * imu_bit + 4 * gps_fix_bit + status_bits;
-  status_msg.battery1_voltage = (float)analogRead(BATTERY_MONITOR_PIN) * 3.3 / 4096 * VOLTAGE_DIVIDER_RATIO;
+  status_msg.faults = 8 * (int)imu_fault + 4 * gps_fault_bit + 2*(int)(!encoders_ok) + 1*(int)(RxStatus);
+  status_msg.battery1_voltage = (float)analogRead(BATTERY_MONITOR_PIN) * 3.3 / 65535 * VOLTAGE_DIVIDER_RATIO;
   status_msg.battery2_voltage = controller_bat_v;
   p_status.publish(&status_msg);
 
@@ -88,8 +103,8 @@ void read_status() {
 
 
 void reset_encCb(const Empty::Request & req, Empty::Response & res) {
- cmdMessenger.sendCmd (kReset, true);
- 
+  cmdMessenger.sendCmd (kReset, true);
+
   nh.loginfo("Reset encoders");
 
 
@@ -111,5 +126,7 @@ void stop_motors() {
   cmdMessenger.sendCmdArg(0.0);
   cmdMessenger.sendCmdEnd();
 }
+
+
 
 

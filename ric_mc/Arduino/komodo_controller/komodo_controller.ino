@@ -1,25 +1,41 @@
 
-
 //PINS
-#define BATTERY_MONITOR_PIN A11
 
+#define LED_PIN 13
 
-#define ENC1_A_PIN 30
-#define ENC1_B_PIN 31
-#define ENC2_A_PIN 32
-#define ENC2_B_PIN 33
+#define BATTERY_MONITOR_PIN A0
+
+#define ENC1_A_PIN 15
+#define ENC1_B_PIN 16
+#define ENC2_A_PIN 17
+#define ENC2_B_PIN 18
 /*
-LEFT MOTOR RED->M2B
-LEFT MOTOR BLACK->M2A
-LEFT ENCODER A -> ENC2_A_PIN = 32
-LEFT ENCODER B -> ENC2_B_PIN = 33
+RIGHT MOTOR RED->M1A
+RIGHT MOTOR BLACK->M1B
+RIGHT ENCODER A -> ENC1_A_PIN = 15
+RIGHT ENCODER B -> ENC1_B_PIN = 16
 
-RIGHT MOTOR RED->M1B
-RIGHT MOTOR BLACK->M1A
-RIGHT ENCODER A -> ENC1_A_PIN = 30
-RIGHT ENCODER B -> ENC1_B_PIN = 31
-
+LEFT MOTOR RED->M2A
+LEFT MOTOR BLACK->M2B
+LEFT ENCODER A -> ENC2_A_PIN = 17
+LEFT ENCODER B -> ENC2_B_PIN = 18
 */
+#include <SabertoothSimplified.h>
+SabertoothSimplified ST;
+
+#include <Arduino.h>
+#include <TeensyReceiver.h>
+volatile uint16_t RX1=0,RX2=0,RX3=0,RX4=0,RX5=0,RX6=0;
+
+#define RX_DEAD_BAND 15
+
+#define MIN_RX1 1195
+#define MAX_RX1 1800
+#define CENTER_RX1 1496
+#define MIN_RX2 1241
+#define MAX_RX2 1774
+#define CENTER_RX2 1513
+
 #include <CmdMessenger.h>  // CmdMessenger
 // In order to receive, attach a callback function to these events
 enum
@@ -36,6 +52,7 @@ enum
 
 #define  SERIAL_PORT_SPEED  115200
 #define  SERIAL_PORT Serial2
+
 #define PUB_ENC_INTERVAL 100 //10 hz
 unsigned long enc_t = 0, status_t = 0, pub_t;
 
@@ -46,18 +63,18 @@ CmdMessenger cmdMessenger = CmdMessenger(SERIAL_PORT);
 
 //BATTERY MONITOR
 #define STATUS_INTERVAL 1000 //1 hz  
-#define VOLTAGE_DIVIDER_RATIO 6.67
+#define VOLTAGE_DIVIDER_RATIO 11.48 //Vbat ----/\/\R1=47K/\/\----A0----/\/\R2=4.7K/\/\----AGND
 
 
 //DRIVER
 #include <Encoder.h>
 #include <PID_v1.h>
-
+//#include <EEPROM.h>
 
 long left_enc = 0, right_enc = 0;
 long pre_left_enc = 0, pre_right_enc = 0;
 float left_spd = 0, right_spd = 0;
-
+int drive_command=0,turn_command=0;
 double Setpoint1, Input1, Output1;
 double Setpoint2, Input2, Output2;
 #define READ_ENCODERS_INTERVAL 50 //200 hz
@@ -73,7 +90,7 @@ PID PID2(&Input2, &Output2, &Setpoint2, kp, ki, kd, DIRECT);
 
 Encoder Enc1(ENC1_A_PIN, ENC1_B_PIN);
 Encoder Enc2(ENC2_A_PIN, ENC2_B_PIN);
-unsigned long wd_t = 0, control_t = 0;
+unsigned long wd_t = 0, control_t = 0,led_t=0;
 
 
 
@@ -81,9 +98,14 @@ unsigned long wd_t = 0, control_t = 0;
 void setup()
 {
 
-  pinMode(13, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  
+Serial.begin(57600);
+
   SERIAL_PORT.begin(SERIAL_PORT_SPEED);
- //Serial.begin(115200); 
+  
+  initializeReceiver();
+
    // Adds newline to every command
   cmdMessenger.printLfCr(); 
 
@@ -92,8 +114,15 @@ void setup()
 
   setup_driver();
 
+ analogReadResolution(16);
 }
 
+void blink_led(int led_interval) {
+ if (millis()-led_t>led_interval) {
+  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+  led_t=millis();
+ } 
+}
 
 
 void attachCommandCallbacks()
@@ -105,6 +134,7 @@ void attachCommandCallbacks()
     cmdMessenger.attach(kGetParameters, OnGetParameters);
    cmdMessenger.attach(kReset, OnReset);
 }
+
 
 
 void loop()
@@ -125,7 +155,7 @@ void loop()
   if (millis() - status_t >= STATUS_INTERVAL)  {
     pub_status();
     status_t = millis();
-    digitalWrite(13, !digitalRead(13));
+    
   }
 
 
@@ -138,6 +168,8 @@ void loop()
     pub_enc();
     pub_t = millis();
   }
+
+
 
 
 }

@@ -1,4 +1,5 @@
-
+//#define USE_PAN_TILT
+#define USE_GPS
 
 //SUBSCRIBERS
 #define COMMAND_TOPIC "command"
@@ -10,12 +11,14 @@
 //SERVICES
 #define  RESET_ENCODERS_SRV "reset_encoders"
 #define IMU_CALIB_SRV "imu_calib"
-
+#define RESTART_ALL_SRV "restart"
 
 
 
 //PINS
-#define BATTERY_MONITOR_PIN A11
+#define LED_PIN 13
+
+#define BATTERY_MONITOR_PIN A0
 
 #define PAN_SERVO_PIN 2
 #define TILT_SERVO_PIN 3
@@ -28,27 +31,27 @@
 
 /*
 
-GPS PIN 1 -> GND
-GPS PIN 2 -> VCC
-GPS PIN 3 -> RX2 = 17
-GPS PIN 4 -> TX2 = 16
-
-*/
+ GPS PIN 1 -> GND
+ GPS PIN 2 -> VCC
+ GPS PIN 3 -> RX2 = 17
+ GPS PIN 4 -> TX2 = 16
+ 
+ */
+ 
 //CONTROLLER
-
-
 #define  CONTROLLER_PORT_SPEED  115200
-#define CONTROLLER_PORT Serial3
+#define CONTROLLER_PORT Serial2
 #include <CmdMessenger.h>  // CmdMessenger
 
 
 
 CmdMessenger cmdMessenger = CmdMessenger(CONTROLLER_PORT);
 
-int status_bits = 0;
+boolean RxStatus = 0;
 float controller_bat_v = 0;
 int left_enc = 0, right_enc = 0;
-bool got_parameters=false;
+unsigned long enc_ok_t=0, gotp_t=0;
+boolean got_parameters=false, encoders_ok=false;
 enum
 {
   kCommand,
@@ -76,7 +79,7 @@ enum
 #define  ROS_PORT_SPEED  57600
 #define  ROS_PORT Serial
 #define PUB_RAW_INTERVAL 100 //10 hz
-unsigned long urf_t = 0, enc_t = 0, status_t = 0, pub_t;
+unsigned long urf_t = 0, enc_t = 0, status_t = 0, pub_t=0, led_t=0;
 
 ros::NodeHandle nh;
 using std_srvs::Empty;
@@ -86,27 +89,40 @@ using ric_robot::imu_calib;
 void reset_encCb(const Empty::Request & req, Empty::Response & res);
 void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res);
 void commandCb( const ric_robot::ric_command& msg);
+#ifdef USE_PAN_TILT
 void pantiltCb( const ric_robot::ric_pan_tilt& msg);
-
+#endif
+void restart_allCb(const Empty::Request & req, Empty::Response & res);
 
 ros::ServiceServer<imu_calib::Request, imu_calib::Response> imu_calib_server(IMU_CALIB_SRV, &imu_calibCb);
 ros::ServiceServer<Empty::Request, Empty::Response> reset_enc_server(RESET_ENCODERS_SRV, &reset_encCb);
+ros::ServiceServer<Empty::Request, Empty::Response> restart_all_server(RESTART_ALL_SRV, &restart_allCb);
+
 
 ros::Subscriber<ric_robot::ric_command> command_sub(COMMAND_TOPIC, &commandCb );
 
+#ifdef USE_PAN_TILT
 ros::Subscriber<ric_robot::ric_pan_tilt> pan_tilt_sub(PAN_TILT_TOPIC, &pantiltCb );
+#endif
 
 
-ric_robot::ric_gps gps_msg;
+
 ric_robot::ric_raw raw_msg;
-ric_robot::ric_status status_msg;
-
-
 ros::Publisher p_raw(RAW_TOPIC, &raw_msg);
+
+#ifdef USE_GPS
+ric_robot::ric_gps gps_msg;
 ros::Publisher p_gps(GPS_TOPIC, &gps_msg);
+#endif
+
+ric_robot::ric_status status_msg;
 ros::Publisher p_status(STATUS_TOPIC, &status_msg);
 
 
+
+
+
+#ifdef USE_PAN_TILT
 //PAN TILT
 #include <Servo.h>
 #define MAX_PAN 35
@@ -122,12 +138,16 @@ unsigned long pan_tilt_t = 0;
 bool pan_tilt_moving = true;
 #define PAN_TILT_MOVE_TIME 1000
 
+#endif
 
+#ifdef USE_GPS
 //GPS
 #include <TinyGPS++.h>
 TinyGPSPlus gps;
 #define  GPS_PORT_SPEED  9600
-#define GPS_SERIAL_PORT Serial2
+#define GPS_SERIAL_PORT Serial3
+#define GPS_IS_OLD 3000 //ms
+#endif
 
 //IMU
 
@@ -135,12 +155,11 @@ TinyGPSPlus gps;
 #include "I2Cdev.h"
 #include "MPU9150Lib.h"
 #include "CalLib.h"
-#include "DueFlash.h"
 #include <dmpKey.h>
 #include <dmpmap.h>
 #include <inv_mpu.h>
 #include <inv_mpu_dmp_motion_driver.h>
-#include <Arduino.h>
+#include <EEPROM.h>
 
 
 float qx = 0, qy = 0, qz = 1, qw = 0;
@@ -151,7 +170,7 @@ boolean imu_fault = 0;
 //    0 = use the device at 0x68
 //    1 = use the device at ox69
 #define  DEVICE_TO_USE    0
-MPU9150Lib dueMPU; // the MPU object
+MPU9150Lib MPU; // the MPU object
 //  MPU_UPDATE_RATE defines the rate (in Hz) at which the MPU updates the sensor data and DMP output
 #define MPU_UPDATE_RATE  (10)
 //  MAG_UPDATE_RATE defines the rate (in Hz) at which the MPU updates the magnetometer data
@@ -167,8 +186,8 @@ MPU9150Lib dueMPU; // the MPU object
 //  MPU_LPF_RATE is the low pas filter rate and can be between 5 and 188Hz
 #define MPU_LPF_RATE   40
 
-long lastPollTime; // last time the MPU-9150 was checked
-long pollInterval; // gap between polls to avoid thrashing the I2C bus
+//long lastPollTime; // last time the MPU-9150 was checked
+//long pollInterval; // gap between polls to avoid thrashing the I2C bus
 char temp_msg[30];
 
 int loopState; // what code to run in the loop
@@ -189,7 +208,7 @@ void accelCalLoop(void);
 
 //BATTERY MONITOR
 #define STATUS_INTERVAL 1000 //1 hz  
-#define VOLTAGE_DIVIDER_RATIO 6.67
+#define VOLTAGE_DIVIDER_RATIO 5.61 //Vbat ----/\/\R1=22K/\/\----A0----/\/\R2=4.7K/\/\----AGND
 
 
 
@@ -206,7 +225,7 @@ FastRunningMedian<unsigned int, sample_size, 0> Rear_URF_Median;
 void setup()
 {
 
-  pinMode(13, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
   ROS_PORT.begin(ROS_PORT_SPEED);
 
   CONTROLLER_PORT.begin(CONTROLLER_PORT_SPEED);
@@ -215,42 +234,69 @@ void setup()
   // Attach my application's user-defined callback methods
   attachCommandCallbacks();
 
-
+analogReadResolution(16);
 
   nh.initNode();
-
   nh.advertise(p_raw);
+#ifdef USE_GPS
   nh.advertise(p_gps);
+#endif
   nh.advertise(p_status);
 
   nh.advertiseService(reset_enc_server);
   nh.advertiseService(imu_calib_server);
+  nh.advertiseService(restart_all_server);
 
   nh.subscribe(command_sub);
+
+#ifdef USE_PAN_TILT
   nh.subscribe(pan_tilt_sub);
+#endif
 
   while (!nh.connected()) {
+    blink_led(1000);
     nh.spinOnce();
   }
-
   nh.loginfo("Starting up...");
+  startup_init();
 
-  setup_driver();
-  nh.loginfo("Driver ready");
+}
 
+
+
+void startup_init() {
+
+#ifdef USE_PAN_TILT
   pan_tilt_setup();
   nh.loginfo("Pan Tilt ready");
+#endif
 
   setup_imu();
 
   setup_urf();
   nh.loginfo("URF sensors ready");
 
+#ifdef USE_GPS
   GPS_SERIAL_PORT.begin(GPS_PORT_SPEED);
   nh.loginfo("GPS ready");
+#endif
 
+  setup_driver();
 
 }
+
+void blink_led(int led_interval) {
+ if (millis()-led_t>led_interval) {
+  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+  led_t=millis();
+ } 
+}
+
+void restart_allCb(const Empty::Request & req, Empty::Response & res) {
+  nh.loginfo("Restarting...");
+  startup_init();
+}
+
 void attachCommandCallbacks()
 {
   // Attach callback methods
@@ -259,6 +305,9 @@ void attachCommandCallbacks()
   cmdMessenger.attach(kStatus, OnStatus);
   cmdMessenger.attach(kEncoders, OnEncoders);
 }
+
+
+
 
 void pub_raw() {
 
@@ -275,21 +324,37 @@ void pub_raw() {
   raw_msg.right_urf = (float)Right_URF_Median.getMedian() / 799.8124 ; //* 3.3 / 4095 *1.5515;
 
   p_raw.publish(&raw_msg);
-
+  // digitalWrite(LED_PIN, !digitalRead(LED_PIN));
 }
 
 void loop()
 {
+  if (nh.connected()) blink_led(100);
+  else {
+    blink_led(1000);
+    while (!nh.connected()) {
+      nh.spinOnce();
+      blink_led(1000);
+    }
+    nh.loginfo("Starting up...");
+    startup_init();
+  }
 
-cmdMessenger.feedinSerialData();
+  cmdMessenger.feedinSerialData();
 
+  check_encoders();
 
   if (millis() - status_t >= STATUS_INTERVAL)  {
     read_status();
     status_t = millis();
-    digitalWrite(13, !digitalRead(13));
+
   }
 
+  if ((!got_parameters)&&(millis() - gotp_t >= 5000)) {
+    cmdMessenger.sendCmd(kGetParameters, true);
+    nh.loginfo("Asking controller parameters...");
+    gotp_t=millis();
+  }
 
 
   if (millis() - pub_t >= PUB_RAW_INTERVAL)  {
@@ -304,8 +369,10 @@ cmdMessenger.feedinSerialData();
     //  nh.spinOnce();
     urf_t = millis();
   }
-
+  
+#ifdef USE_GPS
   read_gps();
+#endif
 
   if (!imu_fault) {
     if (millis() - imu_t <= CHECK_IMU_INTERVAL)  {
@@ -313,13 +380,21 @@ cmdMessenger.feedinSerialData();
     }
     else {
       imu_fault = true;
+      nh.logerror("IMU Fault");
     }
   }
 
+#ifdef USE_PAN_TILT
   pan_tilt_wd();
+#endif
 
   nh.spinOnce();
 }
+
+
+
+
+
 
 
 

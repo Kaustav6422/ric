@@ -1,3 +1,5 @@
+#ifdef USE_PAN_TILT
+
 void pan_tilt_setup() {
   //center on startup
   pan_servo.attach(PAN_SERVO_PIN);
@@ -40,4 +42,6 @@ void pantiltCb( const ric_robot::ric_pan_tilt& msg) {
   char tt[130];
 
 }
+
+#endif
 

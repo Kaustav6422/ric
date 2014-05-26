@@ -38,8 +38,25 @@ void CommandsFromRX() {
   if (drive_command>127) drive_command=127;
   else if (drive_command<-127) drive_command=-127;
 
+
+if (RX5>1500) {
+  DriveMode=RX_ARM_MODE;
+}
+else {
+  DriveMode=RX_DRIVE_MODE;
+}
+
 }
 
 
 
-
+void pub_rx() {
+  cmdMessenger.sendCmdStart(kRx);
+  cmdMessenger.sendCmdArg(RX1);
+  cmdMessenger.sendCmdArg(RX2);
+    cmdMessenger.sendCmdArg(RX3);
+  cmdMessenger.sendCmdArg(RX4);
+    cmdMessenger.sendCmdArg(RX5);
+  cmdMessenger.sendCmdArg(RX6);
+  cmdMessenger.sendCmdEnd();
+}

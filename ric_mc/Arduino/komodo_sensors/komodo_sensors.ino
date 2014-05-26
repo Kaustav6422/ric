@@ -24,9 +24,9 @@
 #define TILT_SERVO_PIN 3
 
 
-#define LEFT_URF_PIN A8
-#define REAR_URF_PIN A9
-#define RIGHT_URF_PIN A10
+#define LEFT_URF_PIN A1
+#define REAR_URF_PIN A2
+#define RIGHT_URF_PIN A3
 #define URF_TX_PIN 5
 
 /*
@@ -42,16 +42,18 @@
 #define  CONTROLLER_PORT_SPEED  115200
 #define CONTROLLER_PORT Serial2
 #include <CmdMessenger.h>  // CmdMessenger
+#define ASK_PARAMETERS_INTERVAL 5000 //ms
+#define ASK_PARAMETERS_ATTEMPTS 10 
 
-
+int RX1=0,RX2=0,RX3=0,RX4=0,RX5=0,RX6=0;
 
 CmdMessenger cmdMessenger = CmdMessenger(CONTROLLER_PORT);
-
+int asks=1;
 boolean RxStatus = 0;
 float controller_bat_v = 0;
 int left_enc = 0, right_enc = 0;
 unsigned long enc_ok_t=0, gotp_t=0;
-boolean got_parameters=false, encoders_ok=false;
+boolean got_parameters=false, encoders_ok=false, ask_parameters=true;
 enum
 {
   kCommand,
@@ -61,6 +63,7 @@ enum
   kSetParameters,
   kGetParameters,
   kGetParametersAck,
+  kRx,
 };
 
 
@@ -78,7 +81,7 @@ enum
 
 #define  ROS_PORT_SPEED  57600
 #define  ROS_PORT Serial
-#define PUB_RAW_INTERVAL 100 //10 hz
+#define PUB_RAW_INTERVAL 50 //20 hz
 unsigned long urf_t = 0, enc_t = 0, status_t = 0, pub_t=0, led_t=0;
 
 ros::NodeHandle nh;
@@ -213,7 +216,7 @@ void accelCalLoop(void);
 
 
 //URF
-#define URF_INTERVAL 100 //10 hz
+#define URF_INTERVAL 50 //20 hz
 #define sample_size 5
 #include "FastRunningMedian.h"
 FastRunningMedian<unsigned int, sample_size, 0> Left_URF_Median;
@@ -281,6 +284,8 @@ void startup_init() {
   nh.loginfo("GPS ready");
 #endif
 
+asks=1;
+ask_parameters=true;
   setup_driver();
 
 }
@@ -304,6 +309,7 @@ void attachCommandCallbacks()
   cmdMessenger.attach(kGetParametersAck, OnGetParametersAck);
   cmdMessenger.attach(kStatus, OnStatus);
   cmdMessenger.attach(kEncoders, OnEncoders);
+   cmdMessenger.attach(kRx, OnRx);
 }
 
 
@@ -320,7 +326,8 @@ void pub_raw() {
   raw_msg.right_ticks = (long)right_enc;
 
   raw_msg.left_urf = (float)Left_URF_Median.getMedian() / 799.8124 ; //* 3.3 / 4095 *1.5515;
-  raw_msg.rear_urf = (float)Rear_URF_Median.getMedian() / 799.8124 ; //* 3.3 / 4095 *1.5515;
+ raw_msg.rear_urf = (float)Rear_URF_Median.getMedian() / 65535 * 5120 /1000 ; 
+    
   raw_msg.right_urf = (float)Right_URF_Median.getMedian() / 799.8124 ; //* 3.3 / 4095 *1.5515;
 
   p_raw.publish(&raw_msg);
@@ -350,9 +357,13 @@ void loop()
 
   }
 
-  if ((!got_parameters)&&(millis() - gotp_t >= 5000)) {
+  if ((ask_parameters==true)&&(!got_parameters)&&(millis() - gotp_t >= ASK_PARAMETERS_INTERVAL)) {
     cmdMessenger.sendCmd(kGetParameters, true);
-    nh.loginfo("Asking controller parameters...");
+    char ask_msg[100];
+    sprintf(ask_msg, "Asking controller parameters... (Attempt %d/%d)", asks,ASK_PARAMETERS_ATTEMPTS);
+    asks=asks+1;
+    if (asks>ASK_PARAMETERS_ATTEMPTS) ask_parameters=false;
+    nh.loginfo(ask_msg);
     gotp_t=millis();
   }
 

@@ -39,10 +39,12 @@ void pub_enc() {
   cmdMessenger.sendCmdEnd();
 }
 
+
+
 void pub_status() {
 
   float battery_voltage = (float)analogRead(BATTERY_MONITOR_PIN) * 3.3 / 65535 * VOLTAGE_DIVIDER_RATIO;
- // Serial.println(battery_voltage);
+  // Serial.println(battery_voltage);
   cmdMessenger.sendCmdStart(kStatus);
   cmdMessenger.sendCmdArg(isRxConnected());
   cmdMessenger.sendCmdArg(battery_voltage);
@@ -54,7 +56,7 @@ void  read_encoders() {
   pre_left_enc = left_enc;
   pre_right_enc = right_enc;
 
-  left_enc =-Enc2.read(); //left
+  left_enc =Enc2.read(); //left
   right_enc = Enc1.read(); //right
 
   left_spd = alpha * (double)(left_enc - pre_left_enc) / DT  + (1 - alpha) * (double)left_spd;
@@ -62,11 +64,10 @@ void  read_encoders() {
 
   Input2 = left_spd;
   Input1 = right_spd;
- /* 
-  Serial.print(right_enc);
-     Serial.print("   ");
-     Serial.println(left_enc);
-*/
+   
+
+  // Serial.println(Input1);
+   
   RX_failSafe();
 }
 
@@ -77,46 +78,64 @@ void control_loop() {
 
     CommandsFromRX();
 
-    ST.turn(-turn_command);
-    ST.drive(drive_command);
-    /*
-      Serial.print(RX1);
-     Serial.print("   ");
-     Serial.print(RX2);
-     Serial.print("   ");
-     Serial.print(RX3);
-     Serial.print("   ");
-     Serial.print(RX4);
-     Serial.print("   ");
-     Serial.print(RX5);
-     Serial.print("   ");
-     Serial.print(RX6);
-     Serial.print("        ");
-     Serial.print(drive_command);
-     Serial.print("   ");
-     Serial.println(turn_command);
-*/
-     
-     blink_led(300);
+    if (DriveMode==RX_DRIVE_MODE) {
+      ST.turn(-turn_command);
+      ST.drive(drive_command);
+      /*
+     Serial.print(RX1);
+       Serial.print("   ");
+       Serial.print(RX2);
+       Serial.print("   ");
+       Serial.print(RX3);
+       Serial.print("   ");
+       Serial.print(RX4);
+       Serial.print("   ");
+       Serial.print(RX5);
+       Serial.print("   ");
+       Serial.print(RX6);
+       Serial.print("        ");
+       Serial.print(drive_command);
+       Serial.print("   ");
+       Serial.println(turn_command);
+       */
+
+    }
+    else { //DriveMode==RX_ARM_MODE
+      /*
+  Serial.print(RX1);
+       Serial.print("   ");
+       Serial.print(RX2);
+       Serial.print("   ");
+       Serial.print(RX3);
+       Serial.print("   ");
+       Serial.print(RX4);
+       Serial.print("   ");
+       Serial.print(RX5);
+       Serial.print("   ");
+       Serial.println(RX6);
+       */
+    }
+
+    blink_led(300);
   }
-  
- /* else if (wd_on) {
-    stop_motors();
-    blink_led(1000);
-    // Serial.println("wd on");
-  }
-  */
-  else if ( (PID1.Compute()) && (PID2.Compute()) ) {
-    ST.motor(1,-(int)Output1);
-    ST.motor(2,-(int)Output2);
+
+  //else if (wd_on) {
+   // stop_motors();
+   // blink_led(1000);
+     //Serial.println("wd on");
+  //}
+
+  else if ( (PID1.Compute()) && (PID2.Compute()) ) { //ROS Control
+    ST.motor(1,(int)Output1); //right motor
+    ST.motor(2,-(int)Output2); //left motor
     /*
-        Serial.print("Inputs: ");
-         Serial.print((int)Input1);
+     Serial.print("Inputs: ");
+     Serial.print((int)Input1);
      Serial.print("   ");
      Serial.print((int)Input2);
      
-    Serial.print("    Outputs: ");
-         Serial.print(-(int)Output1);
+     Serial.print("    Outputs: ");
+     Serial.print(-(int)Output1);
      Serial.print("   ");
      Serial.println(-(int)Output2);
      */
@@ -149,14 +168,14 @@ void OnGetParameters() {
   cmdMessenger.sendCmdArg(alpha,5);
   cmdMessenger.sendCmdArg(CONTROL_INTERVAL);
   cmdMessenger.sendCmdEnd();
-/*
+  /*
   Serial.println("Sent parameters");
    Serial.println(kp,5);
    Serial.println(ki,5);
    Serial.println(kd,5);
    Serial.println(alpha,5);
    Serial.println(CONTROL_INTERVAL);
- */  
+   */
 }
 
 void OnSetParameters() {
@@ -171,8 +190,8 @@ void OnSetParameters() {
 
   PID1.SetSampleTime(CONTROL_INTERVAL);
   PID2.SetSampleTime(CONTROL_INTERVAL);
-  
-  
+
+
   /* Serial.println("Got parameters");
    Serial.println(kp,5);
    Serial.println(ki,5);
@@ -199,11 +218,11 @@ void OnCommand() {
   if (Setpoint2 > MAX_TICKS_PER_S) Setpoint2 = MAX_TICKS_PER_S;
   else if (Setpoint2 < -MAX_TICKS_PER_S) Setpoint2 = -MAX_TICKS_PER_S;
 
-/*
+  /*
    Serial.println("Got command");
    Serial.println(Setpoint2);
-    Serial.println(Setpoint1);
-*/
+   Serial.println(Setpoint1);
+   */
 }
 
 void stop_motors( ) {
@@ -211,9 +230,10 @@ void stop_motors( ) {
 
   Setpoint1 = 0;
   Setpoint2 = 0;
-  ST.stop();
+ // ST.stop();
 
 }
+
 
 
 

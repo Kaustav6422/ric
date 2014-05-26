@@ -156,7 +156,7 @@ void encodersCallback(int32_t left_ticks, int32_t right_ticks) {
 				first_enc_read = false;
 			}
 		
-		tt = tt + w * delta_time*slip_factor;
+		tt = tt + w * delta_time*slip_factor;;
 		tt = wrapToPi(tt);
 		xx = xx + (v * cos(tt))*delta_time;
 		yy = yy + (v * sin(tt))*delta_time;

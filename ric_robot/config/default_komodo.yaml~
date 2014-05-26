@@ -6,5 +6,5 @@ fuse_imu_roll_pitch: false
 fuse_imu_yaw: false
 slip_factor: 0.85
 
-pid_constants: [0.03,0.15, 0.0, 0.5,1.0] # [kp,ki,kd,alpha(0-1),control_dt(ms)] 
+pid_constants: [0.01,0.001, 0.0, 0.5,1.0] # [kp,ki,kd,alpha(0-1),control_dt(ms)] 
 

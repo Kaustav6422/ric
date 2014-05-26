@@ -5,10 +5,10 @@
 
 #define BATTERY_MONITOR_PIN A0
 
-#define ENC1_A_PIN 15
-#define ENC1_B_PIN 16
-#define ENC2_A_PIN 17
-#define ENC2_B_PIN 18
+#define ENC1_A_PIN 15 //right motor
+#define ENC1_B_PIN 16 //right motor
+#define ENC2_A_PIN 17 //left motor
+#define ENC2_B_PIN 18 //left motor
 /*
 RIGHT MOTOR RED->M1A
 RIGHT MOTOR BLACK->M1B
@@ -20,12 +20,19 @@ LEFT MOTOR BLACK->M2B
 LEFT ENCODER A -> ENC2_A_PIN = 17
 LEFT ENCODER B -> ENC2_B_PIN = 18
 */
+
+//RX
 #include <SabertoothSimplified.h>
 SabertoothSimplified ST;
-
+#define PUB_RX_INTERVAL 100
 #include <Arduino.h>
 #include <TeensyReceiver.h>
+
+#define RX_DRIVE_MODE 1
+#define RX_ARM_MODE 2
+short DriveMode=1;
 volatile uint16_t RX1=0,RX2=0,RX3=0,RX4=0,RX5=0,RX6=0;
+unsigned long rx_t=0;
 
 #define RX_DEAD_BAND 15
 
@@ -48,12 +55,13 @@ enum
   kSetParameters,
   kGetParameters,
   kGetParametersAck,
+  kRx,
 };
 
 #define  SERIAL_PORT_SPEED  115200
 #define  SERIAL_PORT Serial2
 
-#define PUB_ENC_INTERVAL 100 //10 hz
+#define PUB_ENC_INTERVAL 50 //20 hz
 unsigned long enc_t = 0, status_t = 0, pub_t;
 
 
@@ -77,14 +85,14 @@ float left_spd = 0, right_spd = 0;
 int drive_command=0,turn_command=0;
 double Setpoint1, Input1, Output1;
 double Setpoint2, Input2, Output2;
-#define READ_ENCODERS_INTERVAL 50 //200 hz
+#define READ_ENCODERS_INTERVAL 50 //20 hz
 int  CONTROL_INTERVAL = 1; //ms
 double DT;
 #define  WATCHDOG_INTERVAL 1500 //ms
 #define  MAX_TICKS_PER_S 100000 //tics/sec
 boolean wd_on = false;
 float alpha = 0.5;
-float kp = 0.001, ki = 0.01, kd = 0;
+float kp = 0.03, ki = 0.15, kd = 0;
 PID PID1(&Input1, &Output1, &Setpoint1, kp, ki, kd, DIRECT);
 PID PID2(&Input2, &Output2, &Setpoint2, kp, ki, kd, DIRECT);
 
@@ -115,6 +123,7 @@ Serial.begin(57600);
   setup_driver();
 
  analogReadResolution(16);
+// Setpoint1=2048;
 }
 
 void blink_led(int led_interval) {
@@ -122,6 +131,7 @@ void blink_led(int led_interval) {
   digitalWrite(LED_PIN, !digitalRead(LED_PIN));
   led_t=millis();
  } 
+
 }
 
 
@@ -149,8 +159,15 @@ void loop()
       stop_motors();
       wd_on = true;
     }
+    blink_led(1000);
   }
-
+  
+  
+  if ((DriveMode==RX_ARM_MODE)&&(millis() - rx_t >= PUB_RX_INTERVAL))  {
+    pub_rx();
+    rx_t = millis();
+    
+  }
 
   if (millis() - status_t >= STATUS_INTERVAL)  {
     pub_status();

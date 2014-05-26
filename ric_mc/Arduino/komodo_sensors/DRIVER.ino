@@ -29,6 +29,7 @@ void setup_driver() {
 void OnGetParametersAck() {
   got_parameters=true;
   nh.loginfo("Got parameters from controller:");
+  asks=1;
   float kp = cmdMessenger.readFloatArg();
   float ki = cmdMessenger.readFloatArg();
   float kd = cmdMessenger.readFloatArg();
@@ -41,16 +42,16 @@ void OnGetParametersAck() {
   dtostrf(kp,3,4,log_msg1);
   sprintf(log_msg, "    kp = %s", log_msg1);
   nh.loginfo(log_msg);
-  
- dtostrf(ki,3,4,log_msg1);
+
+  dtostrf(ki,3,4,log_msg1);
   sprintf(log_msg, "    ki = %s", log_msg1);
   nh.loginfo(log_msg);
 
- dtostrf(kd,3,4,log_msg1);
+  dtostrf(kd,3,4,log_msg1);
   sprintf(log_msg, "    kd = %s", log_msg1);
   nh.loginfo(log_msg);
 
-dtostrf(alpha,3,4,log_msg1);
+  dtostrf(alpha,3,4,log_msg1);
   sprintf(log_msg, "    alpha = %s", log_msg1);
   nh.loginfo(log_msg);
 
@@ -65,9 +66,22 @@ void OnEncoders() {
   right_enc = cmdMessenger.readIntArg();
   enc_ok_t=millis();
   if (!encoders_ok){
-      nh.loginfo("Communication with controller is OK");
-      encoders_ok=true;
-    }
+    nh.loginfo("Communication with controller is OK");
+    encoders_ok=true;
+  }
+}
+
+void OnRx() {
+  RX1 = cmdMessenger.readIntArg();
+  RX2 = cmdMessenger.readIntArg();
+  RX3 = cmdMessenger.readIntArg();
+  RX4 = cmdMessenger.readIntArg();
+  RX5 = cmdMessenger.readIntArg();
+  RX6 = cmdMessenger.readIntArg();
+
+char rx_msg[100];
+  sprintf(rx_msg, "%d   %d   %d   %d   %d   %d", RX1,RX2,RX3,RX4,RX5,RX6);
+  nh.loginfo(rx_msg);
 }
 
 void check_encoders() {
@@ -87,10 +101,10 @@ void OnStatus() {
 
 void read_status() {
 
-int gps_fault_bit=0;
+  int gps_fault_bit=0;
 #ifdef USE_GPS
- // gps_fault_bit = !gps.location.isValid();
- if (gps.location.age()>GPS_IS_OLD) gps_fault_bit=1;
+  // gps_fault_bit = !gps.location.isValid();
+  if (gps.location.age()>GPS_IS_OLD) gps_fault_bit=1;
 #endif
 
   status_msg.faults = 8 * (int)imu_fault + 4 * gps_fault_bit + 2*(int)(!encoders_ok) + 1*(int)(RxStatus);
@@ -126,6 +140,7 @@ void stop_motors() {
   cmdMessenger.sendCmdArg(0.0);
   cmdMessenger.sendCmdEnd();
 }
+
 
 
 

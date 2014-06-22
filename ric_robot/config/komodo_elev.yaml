@@ -1,0 +1,30 @@
+elevator_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_torque_controller
+        type: JointTorqueController
+    joint_name: elevator_joint
+    joint_speed: 0.0
+    joint_torque_limit: 0.6
+    motor:
+        id: 3
+        init: 2048
+        min: 0
+        max: 4095
+        wheel: 1
+
+pos_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: pos_joint
+    joint_speed: 0.7
+    joint_torque_limit: 0.6
+    motor:
+        id: 4
+        init: 2048
+        min: 0
+        max: 4095
+        wheel: 0
+

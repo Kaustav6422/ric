@@ -27,6 +27,7 @@ add_message_files(
    ric_pan_tilt.msg
    ric_status.msg
    ric_raw.msg
+   ric_elevator_command.msg
  )
 
 ## Generate services in the 'srv' folder
@@ -34,6 +35,8 @@ add_service_files(
   FILES
  set_odom.srv
  imu_calib.srv
+ set_elevator.srv
+ home_elevator.srv
 )
 
 ## Generate added messages and services with any dependencies listed here

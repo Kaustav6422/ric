@@ -1,0 +1,146 @@
+#!/usr/bin/env python
+import roslib; roslib.load_manifest('ric_robot')
+import rospy
+import math
+from dynamixel_msgs.msg import JointState as dxl_JointState
+from sensor_msgs.msg import JointState
+from math import *
+from ric_robot.srv import *
+from ric_robot.msg import *
+from std_msgs.msg import Float64
+
+def br_callback(data):       
+    global msg
+    msg.name[0]=data.name
+    msg.position[0]=data.current_pos
+    msg.velocity[0]=data.velocity
+    msg.effort[0]=data.load
+
+def sh_callback(data):       
+    global msg
+    msg.name[1]=data.name
+    msg.position[1]=data.current_pos
+    msg.velocity[1]=data.velocity
+    msg.effort[1]=data.load
+
+def e1_callback(data):       
+    global msg
+    msg.name[2]=data.name
+    msg.position[2]=data.current_pos
+    msg.velocity[2]=data.velocity
+    msg.effort[2]=data.load
+
+def e2_callback(data):       
+    global msg
+    msg.name[3]=data.name
+    msg.position[3]=data.current_pos
+    msg.velocity[3]=data.velocity
+    msg.effort[3]=data.load
+
+def wr_callback(data):       
+    global msg
+    msg.name[4]=data.name
+    msg.position[4]=data.current_pos
+    msg.velocity[4]=data.velocity
+    msg.effort[4]=data.load
+
+def lf_callback(data):       
+    global msg
+    msg.name[5]=data.name
+    msg.position[5]=data.current_pos
+    msg.velocity[5]=data.velocity
+    msg.effort[5]=data.load
+
+def rf_callback(data):       
+    global msg
+    msg.name[6]=data.name
+    msg.position[6]=data.current_pos
+    msg.velocity[6]=data.velocity
+    msg.effort[6]=data.load
+
+def elev_callback(data):       
+    global msg,elev_turns,pre_pos,pre_epos,final_epos
+    msg.name[7]=data.name
+    epos=data.current_pos
+    msg.velocity[7]=data.velocity #TODO: change to m/s
+    msg.effort[7]=data.load
+    dp=epos-pre_epos
+    if dp>6:
+       elev_turns=elev_turns-1
+       final_epos-=math.pi*2
+    elif dp<-6:
+       elev_turns=elev_turns+1
+       final_epos+=math.pi*2
+    pre_epos=epos
+    final_epos+=dp
+    msg.position[7]=final_epos
+    #rospy.loginfo(final_epos)
+
+def handle_arm_home(req):
+    global elev_turns,final_epos,elevpub
+    elevpub.publish(0.0)
+    rospy.sleep(0.5)
+    final_epos=req.pos
+    return True
+
+def epos_callback(data): 
+    global elev_goal_pos,elev_move,elevpub,final_epos,epos_tol
+    elev_goal_pos=data.pos
+    epos_err=elev_goal_pos-final_epos
+    if abs(epos_err)<epos_tol:
+       rospy.loginfo("Elevator already in goal position")
+    elif (elev_goal_pos>final_epos):
+       elevpub.publish(abs(data.speed))
+       elev_move=True
+    else: 
+       elevpub.publish(-abs(data.speed))
+       elev_move=True
+
+def states_converter():
+    global pub,elevpub
+    global msg
+    global elev_turns,pre_epos,final_epos,elev_goal_pos,elev_move,epos_tol
+    epos_tol=0.01
+    elev_goal_pos=0
+    elev_move=False
+    elev_turns=0
+    pre_epos=0
+    final_epos=0
+    msg = JointState()
+    for i in range(8):
+        msg.name.append("")
+        msg.position.append(0.0)
+	msg.velocity.append(0.0)
+	msg.effort.append(0.0)
+    rospy.init_node('states_converter', anonymous=True)
+    rospy.Subscriber("/elevator_controller/state", dxl_JointState, elev_callback)
+    rospy.Subscriber("/base_rotation_controller/state", dxl_JointState, br_callback)
+    rospy.Subscriber("/shoulder_controller/state", dxl_JointState, sh_callback)
+    rospy.Subscriber("/elbow1_controller/state", dxl_JointState, e1_callback)
+    rospy.Subscriber("/elbow2_controller/state", dxl_JointState, e2_callback)
+    rospy.Subscriber("/left_finger_controller/state", dxl_JointState, lf_callback)
+    rospy.Subscriber("/right_finger_controller/state", dxl_JointState, rf_callback)
+    rospy.Subscriber("/wrist_controller/state", dxl_JointState, wr_callback)
+    pub = rospy.Publisher('joint_states', JointState)
+    elevpub = rospy.Publisher('/elevator_controller/command', Float64)
+    home_ser = rospy.Service('arm_home', arm_home, handle_arm_home)
+    rospy.Subscriber("/elevator_controller/pos_command", ric_elevator_command, epos_callback)
+    while not rospy.is_shutdown():
+	#rospy.loginfo("running states_converter.py") 
+    	msg.header.stamp = rospy.Time.now()
+    	pub.publish(msg)
+        epos_err=elev_goal_pos-final_epos
+        if elev_move==True and abs(epos_err)<epos_tol:
+           elev_move=False
+           rospy.loginfo("Elevator reached goal position: %.2f",elev_goal_pos)
+           elevpub.publish(0.0)
+        elif elev_move==True:
+           rospy.loginfo("epos=%.2f     epos_err=%.2f",final_epos,epos_err)
+	rospy.sleep(0.1)
+	#rospy.loginfo(msg)
+if __name__ == '__main__':
+    #rospy.loginfo("Starting states_converter.py")
+    states_converter()
+
+
+

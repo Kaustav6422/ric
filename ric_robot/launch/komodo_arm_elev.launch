@@ -6,8 +6,8 @@
             namespace: dxl_manager
             serial_ports:
                 arm_port:
-                    port_name: "/dev/ttyUSB0"
-                    baud_rate: 1000000
+                    port_name: "/dev/USB2DYNAMIXEL"
+                    baud_rate: 57142
                     min_motor_id: 1
                     max_motor_id: 10
                     update_rate: 20
@@ -28,6 +28,6 @@
                 elevator_controller"
           output="screen"/>
 
-<node name="dynamixel_joint_state_publisher" pkg="ric_robot" type="dynamixel_joint_state_publisher.py" />
+<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true"/> 
 
 </launch>

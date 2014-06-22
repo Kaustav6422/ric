@@ -25,9 +25,8 @@
 
 <node name="ric_node" pkg="ric_robot" type="ric_node" output="screen" />
 
-<include file="$(find ric_robot)/launch/komodo_arm.launch">
-	<arg name="id" value="$(arg id)" />
-</include>
+<include file="$(find ric_robot)/launch/komodo_arm.launch"/>
+
 
 <!--
 

@@ -1,7 +1,6 @@
 <!-- -*- mode: XML -*- -->
 
 <launch>
-<arg name="id" default='1' />
 
     <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
         <rosparam>

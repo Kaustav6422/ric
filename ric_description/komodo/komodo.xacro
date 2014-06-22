@@ -424,7 +424,7 @@
       xyz="0 0 0" />
   </joint>
   <link
-    name="komodo_$(arg komodo_id)_Front_Camera_optical_link">
+    name="komodo_$(arg komodo_id)_Front_Camera_link">
     <inertial>
       <origin
         xyz="4.5428E-06 -0.00018044 -0.0089264"
@@ -445,7 +445,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/Front_Camera_optical_link.STL" />
+          filename="package://ric_description/komodo/meshes/Front_Camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -459,12 +459,12 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/Front_Camera_optical_link.STL" />
+          filename="package://ric_description/komodo/meshes/Front_Camera_link.STL" />
       </geometry>
     </collision>
   </link>
   <joint
-    name="komodo_$(arg komodo_id)_Front_Camera_optical_joint"
+    name="komodo_$(arg komodo_id)_Front_Camera_joint"
     type="fixed">
     <origin
       xyz="0.25225 0.0875 0.1"
@@ -472,7 +472,7 @@
     <parent
       link="komodo_$(arg komodo_id)_base_link" />
     <child
-      link="komodo_$(arg komodo_id)_Front_Camera_optical_link" />
+      link="komodo_$(arg komodo_id)_Front_Camera_link" />
     <axis
       xyz="0 0 0" />
   </joint>
@@ -530,7 +530,7 @@
       xyz="0 0 0" />
   </joint>
   <link
-    name="komodo_$(arg komodo_id)_Asus_link">
+    name="komodo_$(arg komodo_id)_Asus_Camera_link">
     <inertial>
       <origin
         xyz="-0.01768 0.024568 -0.00023168"
@@ -551,7 +551,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/Asus_link.STL" />
+          filename="package://ric_description/komodo/meshes/Asus_Camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -565,7 +565,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/Asus_link.STL" />
+          filename="package://ric_description/komodo/meshes/Asus_Camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -578,7 +578,7 @@
     <parent
       link="komodo_$(arg komodo_id)_base_link" />
     <child
-      link="komodo_$(arg komodo_id)_Asus_link" />
+      link="komodo_$(arg komodo_id)_Asus_Camera_link" />
     <axis
       xyz="0 0 0" />
   </joint>
@@ -1045,7 +1045,7 @@
       velocity="0" />
   </joint>
   <link
-    name="komodo_$(arg komodo_id)_Arm_camera_link">
+    name="komodo_$(arg komodo_id)_Arm_Camera_link">
     <inertial>
       <origin
         xyz="4.54277955862226E-06 -0.000180435451238137 -0.00825034654992396"
@@ -1066,7 +1066,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/Arm_camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Arm_Camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -1080,7 +1080,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/Arm_camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Arm_Camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -1093,7 +1093,7 @@
     <parent
       link="komodo_$(arg komodo_id)_wrist_link" />
     <child
-      link="komodo_$(arg komodo_id)_Arm_camera_link" />
+      link="komodo_$(arg komodo_id)_Arm_Camera_link" />
     <axis
       xyz="0 0 0" />
   </joint>

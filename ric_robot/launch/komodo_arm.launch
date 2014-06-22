@@ -1,13 +1,15 @@
 <!-- -*- mode: XML -*- -->
 
 <launch>
+<arg name="id" default='1' />
+
     <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
         <rosparam>
             namespace: dxl_manager
             serial_ports:
                 arm_port:
-                    port_name: "/dev/ttyUSB0"
-                    baud_rate: 1000000
+                    port_name: "/dev/USB2DYNAMIXEL"
+                    baud_rate: 57142
                     min_motor_id: 1
                     max_motor_id: 10
                     update_rate: 20
@@ -18,8 +20,15 @@
     <node name="arm_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --port=arm_port
-                elbow2_controller
-                left_finger_controller
+                base_rotation_controller
+                shoulder_controller
+		elbow1_controller
+		elbow2_controller
+		wrist_controller
+		left_finger_controller
 		right_finger_controller"
           output="screen"/>
+
+<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true"/> 
+
 </launch>

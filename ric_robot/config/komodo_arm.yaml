@@ -1,30 +1,44 @@
-left_finger_controller:
+base_rotation_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: left_finger_joint
-    joint_speed: 1.17
-    joint_torque_limit: 0.6
+    joint_name: base_rotation_joint
+    joint_speed: 0.1
+    max_torque: 0.9
     motor:
         id: 1
         init: 2048
-        min: 0
-        max: 4095
+        min: 175
+        max: 3925
 
-right_finger_controller:
+shoulder_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: right_finger_joint
-    joint_speed: 1.17
-    joint_torque_limit: 0.6
+    joint_name: shoulder_joint
+    joint_speed: 0.1
+    max_torque: 0.9
     motor:
         id: 2
         init: 2048
-        min: 0
-        max: 4095
+        min: 1024
+        max: 3072
+
+elbow1_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: elbow1_joint
+    joint_speed: 0.3
+    max_torque: 0.9
+    motor:
+        id: 4
+        init: 2048
+        min: 798
+        max: 3306
 
 elbow2_controller:
     controller:
@@ -32,10 +46,54 @@ elbow2_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: elbow2_joint
-    joint_speed: 1.17
-    joint_torque_limit: 0.6
+    joint_speed: 0.3
+    max_torque: 0.9
     motor:
-        id: 3
+        id: 5
         init: 2048
-        min: 0
-        max: 4095
+        min: 798
+        max: 3400
+
+wrist_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: wrist_joint
+    joint_speed: 0.3
+    max_torque: 0.9
+    motor:
+        id: 6
+        init: 2048
+        min: 30
+        max: 4060
+
+right_finger_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: right_finger_joint
+    joint_speed: 0.5
+    max_torque: 0.1
+    motor:
+        id: 7
+        init: 2048
+        min: 1390
+        max: 2750
+
+left_finger_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: left_finger_joint
+    joint_speed: 0.5
+    max_torque: 0.1
+    motor:
+        id: 8
+        init: 2048
+        min: 1390
+        max: 2750
+
+

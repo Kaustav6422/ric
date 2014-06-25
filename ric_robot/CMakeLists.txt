@@ -28,6 +28,7 @@ add_message_files(
    ric_status.msg
    ric_raw.msg
    ric_elevator_command.msg
+   ric_rc.msg
  )
 
 ## Generate services in the 'srv' folder

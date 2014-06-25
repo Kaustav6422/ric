@@ -8,4 +8,3 @@ fuse_imu_yaw: false
 pid_constants: [0.001,0.01, 0.0, 0.5,1.0] # [kp,ki,kd,alpha(0-1),control_dt(ms)] 
 
 have_pan_tilt: true
-have_elevator: false

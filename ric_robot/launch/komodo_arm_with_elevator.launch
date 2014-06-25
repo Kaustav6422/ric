@@ -2,8 +2,6 @@
 
 <launch>
 
-<arg name="have_elevator" /> 
-
     <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
         <rosparam>
             namespace: dxl_manager
@@ -19,8 +17,7 @@
 
     <rosparam file="$(find ric_robot)/config/komodo_arm.yaml" command="load"/>
 
-<group if="$(arg have_elevator)">
-  <node name="arm_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+    <node name="arm_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --port=arm_port
                 base_rotation_controller
@@ -30,26 +27,9 @@
 		wrist_controller
 		left_finger_controller
 		right_finger_controller
-		elevator_controller"
+                elevator_controller"
           output="screen"/>
-</group>
 
-<group unless="$(arg have_elevator)">
-  <node name="arm_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
-          args="--manager=dxl_manager
-                --port=arm_port
-                base_rotation_controller
-                shoulder_controller
-		elbow1_controller
-		elbow2_controller
-		wrist_controller
-		left_finger_controller
-		right_finger_controller"
-          output="screen"/>
-</group>
-
-  
-
-<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)"/> 
+<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="true"/> 
 
 </launch>

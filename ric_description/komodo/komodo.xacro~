@@ -82,7 +82,7 @@
   </link>
   <joint
     name="komodo_$(arg komodo_id)_FR_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="0.165 -0.18938 0"
       rpy="-2.4325E-31 -1.9723E-15 -1.5708" />
@@ -138,7 +138,7 @@
   </link>
   <joint
     name="komodo_$(arg komodo_id)_FL_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="0.165 0.18938 0"
       rpy="2.4325E-31 1.9723E-15 1.5708" />
@@ -194,7 +194,7 @@
   </link>
   <joint
     name="komodo_$(arg komodo_id)_RR_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="-0.165 -0.18938 0"
       rpy="-2.4325E-31 -1.9723E-15 -1.5708" />
@@ -250,7 +250,7 @@
   </link>
   <joint
     name="komodo_$(arg komodo_id)_RL_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="-0.165 0.18938 0"
       rpy="2.4325E-31 1.9723E-15 1.5708" />

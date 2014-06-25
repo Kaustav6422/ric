@@ -21,6 +21,8 @@ void pan_tilt_wd() {
 
 void pantiltCb( const ric_robot::ric_pan_tilt& msg) {
 
+
+  
   float pan = msg.pan_angle * 180 / PI;
   float tilt = msg.tilt_angle * 180 / PI;
   if (pan > MAX_PAN) pan = MAX_PAN;

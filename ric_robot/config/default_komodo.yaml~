@@ -9,4 +9,3 @@ slip_factor: 0.85
 pid_constants: [0.03,0.15, 0.0, 0.5,1.0] # [kp,ki,kd,alpha(0-1),control_dt(ms)] 
 
 have_pan_tilt: false
-have_elevator: true

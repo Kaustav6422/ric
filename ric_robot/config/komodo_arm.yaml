@@ -95,5 +95,18 @@ left_finger_controller:
         init: 2048
         min: 1390
         max: 2750
-
+elevator_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_torque_controller
+        type: JointTorqueController
+    joint_name: elevator_joint
+    joint_speed: 0.0
+    joint_torque_limit: 0.6
+    motor:
+        id: 9
+        init: 2048
+        min: 0
+        max: 4095
+        wheel: 1
 

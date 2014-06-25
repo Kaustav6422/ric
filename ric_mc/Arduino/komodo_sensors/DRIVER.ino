@@ -79,9 +79,14 @@ void OnRx() {
   RX5 = cmdMessenger.readIntArg();
   RX6 = cmdMessenger.readIntArg();
 
-char rx_msg[100];
-  sprintf(rx_msg, "%d   %d   %d   %d   %d   %d", RX1,RX2,RX3,RX4,RX5,RX6);
-  nh.loginfo(rx_msg);
+  rc_msg.RX1 = RX1;
+  rc_msg.RX2 = RX2;
+  rc_msg.RX3 = RX3;
+  rc_msg.RX4 = RX4;
+  rc_msg.RX5 = RX5;
+  rc_msg.RX6 = RX6;
+  p_rc.publish(&rc_msg);
+
 }
 
 void check_encoders() {
@@ -140,6 +145,7 @@ void stop_motors() {
   cmdMessenger.sendCmdArg(0.0);
   cmdMessenger.sendCmdEnd();
 }
+
 
 
 

@@ -305,7 +305,7 @@
     </collision>
   </link>
   <joint
-    name="komodo_$(arg komodo_id)_Left_US_joint"
+    name="komodo_$(arg komodo_id)_Left_URF_joint"
     type="fixed">
     <origin
       xyz="-0.029 0.13725 0.13795"
@@ -358,7 +358,7 @@
     </collision>
   </link>
   <joint
-    name="komodo_$(arg komodo_id)_Back_US_joint"
+    name="komodo_$(arg komodo_id)_Rear_URF_joint"
     type="fixed">
     <origin
       xyz="-0.273 -0.02 0.11405"
@@ -411,7 +411,7 @@
     </collision>
   </link>
   <joint
-    name="komodo_$(arg komodo_id)_Right_US_joint"
+    name="komodo_$(arg komodo_id)_Right_URF_joint"
     type="fixed">
     <origin
       xyz="-0.029 -0.13725 0.13795"
@@ -1085,7 +1085,7 @@
     </collision>
   </link>
   <joint
-    name="komodo_$(arg komodo_id)_Arm_camera_joint"
+    name="komodo_$(arg komodo_id)_Arm_Camera_joint"
     type="fixed">
     <origin
       xyz="-0.0497500000000013 0 0.0210739350464799"

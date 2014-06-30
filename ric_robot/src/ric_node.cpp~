@@ -423,6 +423,7 @@ int main(int argc, char **argv) {
   ros::init(argc, argv, "ric_node", ros::init_options::AnonymousName);
 
   ros::NodeHandle n;
+  int ricID;
 
   n.param("map_frame_id", map_frame_id, std::string("/map"));
 

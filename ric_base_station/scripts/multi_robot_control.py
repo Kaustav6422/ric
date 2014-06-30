@@ -50,7 +50,7 @@ def joy_callback(data):
           scroll_btn=1
           if (current_robot>num_robots):
              current_robot=1
-          rospy.loginfo("Controlling Lizi %d",current_robot)
+          rospy.loginfo("Controlling robot with ID %d",current_robot)
     if (data.buttons[joy_scroll_btn]==0):
        scroll_btn=0
 
@@ -84,7 +84,8 @@ def joy_cam():
     max_rot = rospy.get_param("max_rot")
     max_pan = rospy.get_param("max_pan")
     max_tilt = rospy.get_param("max_tilt")
-    num_robots = rospy.get_param("lizi_n")
+    num_robots = rospy.get_param("robots_n")
+    robot_type = rospy.get_param("robot_type")
     pan_dir=0
     tilt_dir=0
     pan_vel=0.006
@@ -105,15 +106,14 @@ def joy_cam():
     msg_pt.tilt_angle=0
     rospy.init_node('joy_cam', anonymous=True)
     rospy.Subscriber('joy', Joy, joy_callback)
-    robot_name_global="lizi_"
-    rospy.loginfo("Controlling Lizi %d",current_robot)
+    rospy.loginfo("Controlling robot with ID %d",current_robot)
     for i in range(1, num_robots+1):
-      robot_name=robot_name_global+str(i)+"/cmd_vel"
+      robot_name=robot_type+"_"+str(i)+"/cmd_vel"
       #rospy.loginfo(robot_name) 
       pub[i-1] = rospy.Publisher(robot_name, Twist)
       pub[i-1].publish(msg)
       rospy.sleep(0.1)
-      robot_name_pt=robot_name_global+str(i)+"/pan_tilt"
+      robot_name_pt=robot_type+"_"+str(i)+"/pan_tilt"
       pub_pt[i-1] = rospy.Publisher(robot_name_pt, ric_pan_tilt)
       pub_pt[i-1].publish(msg_pt)
       rospy.sleep(0.1)

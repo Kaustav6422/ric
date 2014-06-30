@@ -48,3 +48,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     apt-get install ros-hydro-dynamixel-motor
 fi
+
+echo -e "\e[32mWould you like to install ros-hydro-joystick-drivers package (joystick support) (y/n)?\e[0m"
+read
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    apt-get install ros-hydro-joystick-drivers
+fi

@@ -223,8 +223,8 @@ void accelCalLoop(void);
 
 
 
-//BATTERY MONITOR
-#define STATUS_INTERVAL 1000 //1 hz  
+//FAULT AND BATTERY MONITOR
+#define STATUS_INTERVAL 200 //5 hz  
 #define VOLTAGE_DIVIDER_RATIO 5.61 //Vbat ----/\/\R1=22K/\/\----A0----/\/\R2=4.7K/\/\----AGND
 
 
@@ -406,7 +406,7 @@ void loop()
   check_encoders();
 
   if (millis() - status_t >= STATUS_INTERVAL)  {
-    read_status();
+    pub_status();
     status_t = millis();
 
   }

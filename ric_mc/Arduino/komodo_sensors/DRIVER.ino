@@ -104,11 +104,10 @@ void OnStatus() {
 }
 
 
-void read_status() {
+void pub_status() {
 
   int gps_fault_bit=0;
 #ifdef USE_GPS
-  // gps_fault_bit = !gps.location.isValid();
   if (gps.location.age()>GPS_IS_OLD) gps_fault_bit=1;
 #endif
 

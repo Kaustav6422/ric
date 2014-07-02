@@ -15,7 +15,6 @@
   <run_depend>ric_base_station</run_depend>
   <run_depend>ric_description</run_depend>
   <run_depend>ric_mc</run_depend>
-  <run_depend>ric_gazebo</run_depend>
   <export>
   	<metapackage/>
   </export>

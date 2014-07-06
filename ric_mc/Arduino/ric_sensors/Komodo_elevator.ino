@@ -1,5 +1,5 @@
 
-#ifdef USE_ELEVATOR
+
 void home_up() {
 
   static unsigned long last_interrupt_time = 0;
@@ -31,10 +31,27 @@ void home_down() {
 }
 
 void setup_homing() {
-  pinMode(HOME_UP_PIN, INPUT_PULLUP); 
-  pinMode(HOME_DOWN_PIN, INPUT_PULLUP); 
-  attachInterrupt(HOME_UP_PIN,home_up, FALLING);
-  attachInterrupt(HOME_DOWN_PIN,home_down, FALLING);
+
+  int have_elevator[1]={ 0  };
+
+  if (!nh.getParam("have_elevator_int", have_elevator)) {
+    nh.logwarn("No have_elevator parameter found, assuming no elevator");
+  }
+  else{
+    if ( have_elevator[0]==1) {
+      nh.loginfo("Seting up elevator home switches...");
+      pinMode(HOME_UP_PIN, INPUT_PULLUP); 
+      pinMode(HOME_DOWN_PIN, INPUT_PULLUP); 
+      attachInterrupt(HOME_UP_PIN,home_up, FALLING);
+      attachInterrupt(HOME_DOWN_PIN,home_down, FALLING);
+      nh.serviceClient(elev_set_client);
+    }
+    else {
+      nh.loginfo("No arm elevator, ignoring elevator home switches");
+      
+    }
+  }
 }
-#endif
+
+
 

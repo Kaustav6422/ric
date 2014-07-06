@@ -1,12 +1,34 @@
-#ifdef USE_PAN_TILT
+
 
 void pan_tilt_setup() {
-  //center on startup
-  pan_servo.attach(PAN_SERVO_PIN);
-  tilt_servo.attach(TILT_SERVO_PIN);
-  pan_servo.write(PAN_CENTER);
-  tilt_servo.write(TILT_CENTER);
-  pan_tilt_t = millis();
+
+
+  int have_pan_tilt[1]={ 
+    0    };
+
+  if (!nh.getParam("have_pan_tilt_int", have_pan_tilt)) {
+    nh.logwarn("No have_pan_tilt parameter found, assuming no pan-tilt system");
+  }
+  else{
+    if ( have_pan_tilt[0]==1) {
+      nh.loginfo("Seting up pan tilt system...");
+      //center on startup
+      nh.subscribe(pan_tilt_sub);
+      pan_servo.attach(PAN_SERVO_PIN);
+      tilt_servo.attach(TILT_SERVO_PIN);
+      pan_servo.write(PAN_CENTER);
+      tilt_servo.write(TILT_CENTER);
+      pan_tilt_t = millis();
+      nh.loginfo("Pan Tilt ready");
+    }
+    else {
+      nh.loginfo("No pan-tilt system");
+
+    }
+  }
+
+
+
 }
 
 void pan_tilt_wd() {
@@ -21,8 +43,6 @@ void pan_tilt_wd() {
 
 void pantiltCb( const ric_robot::ric_pan_tilt& msg) {
 
-
-  
   float pan = msg.pan_angle * 180 / PI;
   float tilt = msg.tilt_angle * 180 / PI;
   if (pan > MAX_PAN) pan = MAX_PAN;
@@ -45,5 +65,6 @@ void pantiltCb( const ric_robot::ric_pan_tilt& msg) {
 
 }
 
-#endif
+
+
 

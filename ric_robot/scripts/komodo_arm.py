@@ -116,8 +116,10 @@ def handle_elev_home(req):
     else:
        rospy.loginfo("Please choose homing direction (1 - up / -1 - down)")
        return False
+       
+       
     
-def komodo_arm(have_elevator):
+def komodo_arm():
     global pub,msg,ns
     global elev_rad2m
     global pre_epos,final_epos,elev_goal_pos,elev_move,epos_tol,max_elev_speed, min_elev_pos,max_elev_pos,elevpub
@@ -138,6 +140,7 @@ def komodo_arm(have_elevator):
     final_epos=0
     msg = JointState()
     rospy.init_node('komodo_arm', anonymous=True)
+    have_elevator=rospy.get_param('have_elevator')
     for i in range(7):
         msg.name.append("")
         msg.position.append(0.0)
@@ -180,5 +183,5 @@ def komodo_arm(have_elevator):
 
 
 if __name__ == '__main__':
-    komodo_arm(sys.argv[1]=='True' or sys.argv[1]=='true')
+    komodo_arm()
 

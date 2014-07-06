@@ -32,6 +32,7 @@
 		right_finger_controller
 		elevator_controller"
           output="screen"/>
+          <param name="have_elevator_int" type="int" value='1' />
 </group>
 
 <group unless="$(arg have_elevator)">
@@ -46,6 +47,7 @@
 		left_finger_controller
 		right_finger_controller"
           output="screen"/>
+          <param name="have_elevator_int" type="int" value='0' />
 </group>
 
   

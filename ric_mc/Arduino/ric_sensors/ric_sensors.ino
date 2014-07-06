@@ -1,5 +1,4 @@
-//#define USE_PAN_TILT
-//#define USE_ELEVATOR
+
 #define USE_GPS
 
 //SUBSCRIBERS
@@ -102,26 +101,17 @@ using ric_robot::set_elevator;
 void reset_encCb(const Empty::Request & req, Empty::Response & res);
 void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res);
 void commandCb( const ric_robot::ric_command& msg);
-#ifdef USE_PAN_TILT
 void pantiltCb( const ric_robot::ric_pan_tilt& msg);
-#endif
 void restart_allCb(const Empty::Request & req, Empty::Response & res);
 
 ros::ServiceServer<imu_calib::Request, imu_calib::Response> imu_calib_server(IMU_CALIB_SRV, &imu_calibCb);
 ros::ServiceServer<Empty::Request, Empty::Response> reset_enc_server(RESET_ENCODERS_SRV, &reset_encCb);
 ros::ServiceServer<Empty::Request, Empty::Response> restart_all_server(RESTART_ALL_SRV, &restart_allCb);
-
-#ifdef USE_ELEVATOR
 ros::ServiceClient<set_elevator::Request, set_elevator::Response> elev_set_client(ELEV_SET_SRV);
-#endif
-//
-
 ros::Subscriber<ric_robot::ric_command> command_sub(COMMAND_TOPIC, &commandCb );
 
-#ifdef USE_PAN_TILT
-ros::Subscriber<ric_robot::ric_pan_tilt> pan_tilt_sub(PAN_TILT_TOPIC, &pantiltCb );
-#endif
 
+ros::Subscriber<ric_robot::ric_pan_tilt> pan_tilt_sub(PAN_TILT_TOPIC, &pantiltCb );
 
 
 ric_robot::ric_raw raw_msg;
@@ -139,7 +129,7 @@ ric_robot::ric_status status_msg;
 ros::Publisher p_status(STATUS_TOPIC, &status_msg);
 
 
-#ifdef USE_PAN_TILT
+
 //PAN TILT
 #include <Servo.h>
 #define MAX_PAN 35
@@ -155,7 +145,6 @@ unsigned long pan_tilt_t = 0;
 bool pan_tilt_moving = true;
 #define PAN_TILT_MOVE_TIME 1000
 
-#endif
 
 #ifdef USE_GPS
 //GPS
@@ -266,17 +255,11 @@ void setup()
   nh.advertiseService(imu_calib_server);
   nh.advertiseService(restart_all_server);
   
-#ifdef USE_ELEVATOR
-  setup_homing();
-  nh.serviceClient(elev_set_client);
-#endif
-   
+
 
   nh.subscribe(command_sub);
 
-#ifdef USE_PAN_TILT
-  nh.subscribe(pan_tilt_sub);
-#endif
+
 
   while (!nh.connected()) {
     blink_led(1000);
@@ -291,10 +274,9 @@ void setup()
 
 void startup_init() {
 
-#ifdef USE_PAN_TILT
+  setup_homing();
+
   pan_tilt_setup();
-  nh.loginfo("Pan Tilt ready");
-#endif
 
   setup_imu();
 

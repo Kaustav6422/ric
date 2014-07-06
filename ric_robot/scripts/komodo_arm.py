@@ -2,6 +2,7 @@
 import roslib; roslib.load_manifest('ric_robot')
 import rospy
 import math
+import sys
 from dynamixel_msgs.msg import JointState as dxl_JointState
 from sensor_msgs.msg import JointState
 from math import *
@@ -59,7 +60,7 @@ def rf_callback(data):
     msg.effort[6]=data.load
 
 def elev_callback(data):       
-    global msg,pre_pos,pre_epos,final_epos
+    global msg,pre_pos,pre_epos,final_epos,ns
     msg.name[7]=ns+"_"+data.name
     epos=data.current_pos*elev_rad2m
     msg.velocity[7]=data.velocity*elev_rad2m
@@ -152,6 +153,7 @@ def komodo_arm(have_elevator):
        set_serv = rospy.Service("/"+ns+"/elevator_controller/set_position", set_elevator, handle_elev_set)
        home_serv = rospy.Service("/"+ns+"/elevator_controller/home", home_elevator, handle_elev_home)
        rospy.Subscriber("/"+ns+"/elevator_controller/pos_command", ric_elevator_command, epos_callback)
+       rospy.loginfo("Seting up elevator...")
     rospy.Subscriber("/"+ns+"/base_rotation_controller/state", dxl_JointState, br_callback)
     rospy.Subscriber("/"+ns+"/shoulder_controller/state", dxl_JointState, sh_callback)
     rospy.Subscriber("/"+ns+"/elbow1_controller/state", dxl_JointState, e1_callback)
@@ -178,7 +180,5 @@ def komodo_arm(have_elevator):
 
 
 if __name__ == '__main__':
-    komodo_arm(sys.argv[1])
-
-
+    komodo_arm(sys.argv[1]=='True' or sys.argv[1]=='true')
 

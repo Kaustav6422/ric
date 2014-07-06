@@ -1,5 +1,5 @@
 //#define USE_PAN_TILT
-#define USE_ELEVATOR
+//#define USE_ELEVATOR
 #define USE_GPS
 
 //SUBSCRIBERS
@@ -241,9 +241,8 @@ FastRunningMedian<unsigned int, sample_size, 0> Rear_URF_Median;
 
 void setup()
 {
-#ifdef USE_ELEVATOR
-  setup_homing();
-#endif
+
+
   pinMode(LED_PIN, OUTPUT);
   ROS_PORT.begin(ROS_PORT_SPEED);
 
@@ -266,8 +265,12 @@ void setup()
   nh.advertiseService(reset_enc_server);
   nh.advertiseService(imu_calib_server);
   nh.advertiseService(restart_all_server);
-
+  
+#ifdef USE_ELEVATOR
+  setup_homing();
   nh.serviceClient(elev_set_client);
+#endif
+   
 
   nh.subscribe(command_sub);
 
@@ -329,43 +332,6 @@ void attachCommandCallbacks()
   cmdMessenger.attach(kStatus, OnStatus);
   cmdMessenger.attach(kEncoders, OnEncoders);
   cmdMessenger.attach(kRx, OnRx);
-}
-
-void home_up() {
-
-  static unsigned long last_interrupt_time = 0;
-  unsigned long interrupt_time = millis();
-  // If interrupts come faster than 200ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 1000)
-  {
-    set_elevator::Request req;
-    set_elevator::Response res;
-    req.pos = 0.31;
-    elev_set_client.call(req, res);
-  }
-  last_interrupt_time = interrupt_time;
-
-
-}
-void home_down() {
-  static unsigned long last_interrupt_time = 0;
-  unsigned long interrupt_time = millis();
-  // If interrupts come faster than 200ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 1000)
-  {
-    set_elevator::Request req;
-    set_elevator::Response res;
-    req.pos = -0.01;
-    elev_set_client.call(req, res);
-  }
-  last_interrupt_time = interrupt_time;
-}
-
-void setup_homing() {
-  pinMode(HOME_UP_PIN, INPUT_PULLUP); 
-  pinMode(HOME_DOWN_PIN, INPUT_PULLUP); 
-  attachInterrupt(HOME_UP_PIN,home_up, FALLING);
-  attachInterrupt(HOME_DOWN_PIN,home_down, FALLING);
 }
 
 

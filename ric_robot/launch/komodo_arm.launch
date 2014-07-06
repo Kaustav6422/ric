@@ -2,7 +2,7 @@
 
 <launch>
 
-<arg name="have_elevator" /> 
+<arg name="have_elevator" default="False"/> 
 
     <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
         <rosparam>
@@ -50,6 +50,6 @@
 
   
 
-<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)"/> 
+<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> 
 
 </launch>

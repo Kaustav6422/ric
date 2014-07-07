@@ -9,8 +9,8 @@ base_rotation_controller:
     motor:
         id: 1
         init: 2048
-        min: 175
-        max: 3925
+        min: 1027
+        max: 3078
 
 shoulder_controller:
     controller:
@@ -23,8 +23,8 @@ shoulder_controller:
     motor:
         id: 2
         init: 2048
-        min: 1024
-        max: 3072
+        min: 2053
+        max: 3074
 
 elbow1_controller:
     controller:
@@ -37,7 +37,7 @@ elbow1_controller:
     motor:
         id: 4
         init: 2048
-        min: 798
+        min: 805
         max: 3306
 
 elbow2_controller:
@@ -52,7 +52,7 @@ elbow2_controller:
         id: 5
         init: 2048
         min: 798
-        max: 3400
+        max: 3364
 
 wrist_controller:
     controller:
@@ -79,8 +79,8 @@ right_finger_controller:
     motor:
         id: 7
         init: 2048
-        min: 1390
-        max: 2750
+        min: 1484
+        max: 3079
 
 left_finger_controller:
     controller:
@@ -93,8 +93,8 @@ left_finger_controller:
     motor:
         id: 8
         init: 2048
-        min: 1390
-        max: 2750
+        min: 1035
+        max: 2619
 elevator_controller:
     controller:
         package: dynamixel_controllers
@@ -108,5 +108,4 @@ elevator_controller:
         init: 2048
         min: 0
         max: 4095
-        wheel: 1
 

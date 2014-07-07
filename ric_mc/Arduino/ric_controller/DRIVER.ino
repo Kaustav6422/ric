@@ -81,39 +81,9 @@ void control_loop() {
     if (DriveMode==RX_DRIVE_MODE) {
       ST.turn(-turn_command);
       ST.drive(drive_command);
-      /*
-     Serial.print(RX1);
-       Serial.print("   ");
-       Serial.print(RX2);
-       Serial.print("   ");
-       Serial.print(RX3);
-       Serial.print("   ");
-       Serial.print(RX4);
-       Serial.print("   ");
-       Serial.print(RX5);
-       Serial.print("   ");
-       Serial.print(RX6);
-       Serial.print("        ");
-       Serial.print(drive_command);
-       Serial.print("   ");
-       Serial.println(turn_command);
-       */
 
     }
     else { //DriveMode==RX_ARM_MODE
-      /*
-  Serial.print(RX1);
-       Serial.print("   ");
-       Serial.print(RX2);
-       Serial.print("   ");
-       Serial.print(RX3);
-       Serial.print("   ");
-       Serial.print(RX4);
-       Serial.print("   ");
-       Serial.print(RX5);
-       Serial.print("   ");
-       Serial.println(RX6);
-       */
     }
 
     blink_led(300);
@@ -125,7 +95,7 @@ void control_loop() {
      //Serial.println("wd on");
   //}
 
-  else if ( (PID1.Compute()) && (PID2.Compute()) ) { //ROS Control
+  else if ((wd_on==false)&& (PID1.Compute()) && (PID2.Compute()) ) { //ROS Control
     ST.motor(1,(int)Output1); //right motor
     ST.motor(2,-(int)Output2); //left motor
     /*

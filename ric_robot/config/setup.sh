@@ -2,6 +2,7 @@
 source ../../../../devel/setup.bash
 echo -e "\e[34mSetting usb rules...\e[0m"
 cp ric_usb.rules /etc/udev/rules.d
+cp 49-teensy.rules /etc/udev/rules.d/49-teensy.rules
 
 echo -e "\e[34mAdding user: [$SUDO_USER] to dialout group (serial premmisions)\e[0m"
 usermod -a -G dialout $SUDO_USER

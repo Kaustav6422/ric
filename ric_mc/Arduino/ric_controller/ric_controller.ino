@@ -59,7 +59,7 @@ enum
 };
 
 #define  SERIAL_PORT_SPEED  115200
-#define  SERIAL_PORT Serial2
+#define  SERIAL_PORT Serial2 //Serial2
 
 #define PUB_ENC_INTERVAL 50 //20 hz
 unsigned long enc_t = 0, status_t = 0, pub_t;
@@ -90,7 +90,7 @@ int  CONTROL_INTERVAL = 1; //ms
 double DT;
 #define  WATCHDOG_INTERVAL 1500 //ms
 #define  MAX_TICKS_PER_S 100000 //tics/sec
-boolean wd_on = false;
+boolean wd_on = true;
 float alpha = 0.5;
 float kp = 0.03, ki = 0.15, kd = 0;
 PID PID1(&Input1, &Output1, &Setpoint1, kp, ki, kd, DIRECT);
@@ -163,7 +163,7 @@ void loop()
   }
   
   
-  if ((DriveMode==RX_ARM_MODE)&&(millis() - rx_t >= PUB_RX_INTERVAL))  {
+  if ((isRxConnected())&&(DriveMode==RX_ARM_MODE)&&(millis() - rx_t >= PUB_RX_INTERVAL))  {
     pub_rx();
     rx_t = millis();
     
@@ -179,6 +179,7 @@ void loop()
   if (millis() - enc_t >= READ_ENCODERS_INTERVAL)  {
     read_encoders();
     enc_t = millis();
+   //Serial.println(isRxConnected());
   }
 
   if (millis() - pub_t >= PUB_ENC_INTERVAL)  {

@@ -9,8 +9,8 @@ base_rotation_controller:
     motor:
         id: 1
         init: 2048
-        min: 1027
-        max: 3078
+        min: 1025
+        max: 3072
 
 shoulder_controller:
     controller:
@@ -23,8 +23,8 @@ shoulder_controller:
     motor:
         id: 2
         init: 2048
-        min: 2053
-        max: 3074
+        min: 947
+        max: 3158
 
 elbow1_controller:
     controller:
@@ -37,8 +37,8 @@ elbow1_controller:
     motor:
         id: 4
         init: 2048
-        min: 805
-        max: 3306
+        min: 457
+        max: 3640
 
 elbow2_controller:
     controller:
@@ -51,8 +51,8 @@ elbow2_controller:
     motor:
         id: 5
         init: 2048
-        min: 798
-        max: 3364
+        min: 457
+        max: 3640
 
 wrist_controller:
     controller:
@@ -65,8 +65,8 @@ wrist_controller:
     motor:
         id: 6
         init: 2048
-        min: 30
-        max: 4060
+        min: 798
+        max: 3299
 
 right_finger_controller:
     controller:
@@ -74,13 +74,13 @@ right_finger_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: right_finger_joint
-    joint_speed: 0.5
+    joint_speed: 0.2
     max_torque: 0.1
     motor:
         id: 7
         init: 2048
-        min: 1484
-        max: 3079
+        min: 1480
+        max: 2622
 
 left_finger_controller:
     controller:
@@ -88,13 +88,13 @@ left_finger_controller:
         module: joint_position_controller
         type: JointPositionController
     joint_name: left_finger_joint
-    joint_speed: 0.5
+    joint_speed: 0.2
     max_torque: 0.1
     motor:
         id: 8
         init: 2048
-        min: 1035
-        max: 2619
+        min: 1480
+        max: 2622
 elevator_controller:
     controller:
         package: dynamixel_controllers

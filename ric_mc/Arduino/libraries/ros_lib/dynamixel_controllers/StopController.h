@@ -13,12 +13,12 @@ static const char STOPCONTROLLER[] = "dynamixel_controllers/StopController";
   class StopControllerRequest : public ros::Msg
   {
     public:
-      char * controller_name;
+      const char* controller_name;
 
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
-      uint32_t length_controller_name = strlen( (const char*) this->controller_name);
+      uint32_t length_controller_name = strlen(this->controller_name);
       memcpy(outbuffer + offset, &length_controller_name, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->controller_name, length_controller_name);
@@ -50,7 +50,7 @@ static const char STOPCONTROLLER[] = "dynamixel_controllers/StopController";
   {
     public:
       bool success;
-      char * reason;
+      const char* reason;
 
     virtual int serialize(unsigned char *outbuffer) const
     {
@@ -62,7 +62,7 @@ static const char STOPCONTROLLER[] = "dynamixel_controllers/StopController";
       u_success.real = this->success;
       *(outbuffer + offset + 0) = (u_success.base >> (8 * 0)) & 0xFF;
       offset += sizeof(this->success);
-      uint32_t length_reason = strlen( (const char*) this->reason);
+      uint32_t length_reason = strlen(this->reason);
       memcpy(outbuffer + offset, &length_reason, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->reason, length_reason);

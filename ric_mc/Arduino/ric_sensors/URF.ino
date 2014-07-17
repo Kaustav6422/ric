@@ -1,13 +1,13 @@
 
 
 void setup_urf() {
-
+/*
   pinMode(URF_TX_PIN, OUTPUT);
   digitalWrite(URF_TX_PIN, HIGH);
   delayMicroseconds(25);
   digitalWrite(URF_TX_PIN, LOW);
   pinMode(URF_TX_PIN, INPUT);
-
+*/
 }
 
 

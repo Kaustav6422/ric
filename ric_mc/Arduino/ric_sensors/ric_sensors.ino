@@ -14,6 +14,7 @@
 #define IMU_CALIB_SRV "imu_calib"
 #define RESTART_ALL_SRV "restart"
 #define ELEV_SET_SRV "elevator_controller/set_position"
+#define RELAYS_SRV "relays"
 
 
 //PINS
@@ -25,9 +26,11 @@
 
 #define BATTERY_MONITOR_PIN A0 //14
 
-#define PAN_SERVO_PIN 2
-#define TILT_SERVO_PIN 3
+#define PAN_SERVO_PIN 22
+#define TILT_SERVO_PIN 23
 
+#define RELAY1_PIN 3
+#define RELAY2_PIN 2
 
 #define LEFT_URF_PIN A1 //15
 #define REAR_URF_PIN A2 //16
@@ -81,6 +84,7 @@ enum
 #include <ric_robot/ric_pan_tilt.h>
 #include <ric_robot/ric_status.h>
 #include <ric_robot/ric_rc.h>
+#include <ric_robot/relays.h>
 
 #include <ric_robot/imu_calib.h>
 #include <std_srvs/Empty.h>
@@ -96,18 +100,22 @@ using ric_robot::imu_calib;
 
 #include <ric_robot/set_elevator.h>
 using ric_robot::set_elevator;
+using ric_robot::relays;
 
 //PROTOTYPES
 void reset_encCb(const Empty::Request & req, Empty::Response & res);
 void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res);
+void relaysCb(const relays::Request & req, relays::Response & res);
 void commandCb( const ric_robot::ric_command& msg);
 void pantiltCb( const ric_robot::ric_pan_tilt& msg);
 void restart_allCb(const Empty::Request & req, Empty::Response & res);
 
 ros::ServiceServer<imu_calib::Request, imu_calib::Response> imu_calib_server(IMU_CALIB_SRV, &imu_calibCb);
+ros::ServiceServer<relays::Request, relays::Response> relays_server(RELAYS_SRV, &relaysCb);
 ros::ServiceServer<Empty::Request, Empty::Response> reset_enc_server(RESET_ENCODERS_SRV, &reset_encCb);
 ros::ServiceServer<Empty::Request, Empty::Response> restart_all_server(RESTART_ALL_SRV, &restart_allCb);
 ros::ServiceClient<set_elevator::Request, set_elevator::Response> elev_set_client(ELEV_SET_SRV);
+
 ros::Subscriber<ric_robot::ric_command> command_sub(COMMAND_TOPIC, &commandCb );
 
 
@@ -231,8 +239,14 @@ FastRunningMedian<unsigned int, sample_size, 0> Rear_URF_Median;
 void setup()
 {
 
-
+ pinMode(RELAY1_PIN, OUTPUT);
+  pinMode(RELAY2_PIN, OUTPUT);
+    digitalWrite(RELAY1_PIN,LOW);
+      digitalWrite(RELAY2_PIN,LOW);
+      
   pinMode(LED_PIN, OUTPUT);
+  
+  
   ROS_PORT.begin(ROS_PORT_SPEED);
 
   CONTROLLER_PORT.begin(CONTROLLER_PORT_SPEED);
@@ -254,7 +268,7 @@ void setup()
   nh.advertiseService(reset_enc_server);
   nh.advertiseService(imu_calib_server);
   nh.advertiseService(restart_all_server);
-  
+  nh.advertiseService(relays_server);
 
 
   nh.subscribe(command_sub);
@@ -301,6 +315,13 @@ void blink_led(int led_interval) {
   } 
 }
 
+void relaysCb(const relays::Request & req, relays::Response & res) {
+  
+  digitalWrite(RELAY1_PIN,req.ch1);
+    digitalWrite(RELAY2_PIN,req.ch2);
+    res.ack=true;
+}
+
 void restart_allCb(const Empty::Request & req, Empty::Response & res) {
   nh.loginfo("Restarting...");
   startup_init();
@@ -324,13 +345,12 @@ void pub_raw() {
   raw_msg.qy = qy;
   raw_msg.qz = qz;
 
-  raw_msg.left_ticks = -(long)left_enc;
+  raw_msg.left_ticks = (long)left_enc;
   raw_msg.right_ticks = (long)right_enc;
 
-  raw_msg.left_urf = (float)Left_URF_Median.getMedian() / 799.8124 ; //* 3.3 / 4095 *1.5515;
+  raw_msg.left_urf = (float)Left_URF_Median.getMedian() / 65535 * 5120 /1000;
   raw_msg.rear_urf = (float)Rear_URF_Median.getMedian() / 65535 * 5120 /1000 ; 
-
-  raw_msg.right_urf = (float)Right_URF_Median.getMedian() / 799.8124 ; //* 3.3 / 4095 *1.5515;
+  raw_msg.right_urf = (float)Right_URF_Median.getMedian() / 65535 * 5120 /1000;
 
   p_raw.publish(&raw_msg);
   // digitalWrite(LED_PIN, !digitalRead(LED_PIN));

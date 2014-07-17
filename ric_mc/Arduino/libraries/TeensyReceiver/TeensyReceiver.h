@@ -30,6 +30,8 @@ volatile uint32_t PWM_time[RX_CHANNELS] = {0,0,0,0,0,0};
 volatile uint16_t RX_failsafeStatus;
 volatile uint8_t RX_signalReceived = 0;
 
+volatile int oks=0;
+
 bool failsafeEnabled = false;
 
 void readPWM(uint8_t channel) {
@@ -109,11 +111,17 @@ void RX_failSafe() {
     
     if (RX_signalReceived > 10) {
         RX_signalReceived = 10; // don't let the variable overflow
-        failsafeEnabled = true; // this ensures that failsafe will operate in attitude mode
+
+failsafeEnabled = true; // this ensures that failsafe will operate in attitude mode
+oks=0;
         
      //TODO: FAILSAFE CODE
 
     } else {
-        failsafeEnabled = false;
+	oks+=1;
+        if (oks>=100) {
+        	failsafeEnabled = false;
+		oks=100;
+	}
     }
 }

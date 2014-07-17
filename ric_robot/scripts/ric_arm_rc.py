@@ -51,7 +51,7 @@ def rc_callback(data):
        elbow2_ang=math.pi-elbow2_max*2.0*math.pi/4096.0
      elbow2_pub.publish(elbow2_ang) 
   
-     if data.RX1 > 1600:
+     if data.RX1 > 1650:
         elbow1_ang-=0.02
      elif data.RX1 < 1400:
         elbow1_ang+=0.02
@@ -71,7 +71,7 @@ def rc_callback(data):
        shoulder_ang=-(math.pi-shoulder_min*2.0*math.pi/4096.0)
      shoulder_pub.publish(shoulder_ang)
      
-     if data.RX1 > 1600:
+     if data.RX1 > 1650:
         base_rotation_ang-=0.02
      elif data.RX1 < 1400:
         base_rotation_ang+=0.02

@@ -21,15 +21,18 @@ void setup_driver() {
   DT = (double)READ_ENCODERS_INTERVAL / 1000.0;
   PID1.SetMode(AUTOMATIC);
   PID2.SetMode(AUTOMATIC);
-  PID1.SetOutputLimits(-127, 127);
-  PID2.SetOutputLimits(-127, 127);
+  PID1.SetOutputLimits(-MAX_COMMAND, MAX_COMMAND);
+  PID2.SetOutputLimits(-MAX_COMMAND, MAX_COMMAND);
 
-  SabertoothTXPinSerial.begin(38400);
+  SabertoothTXPinSerial.begin(9600);
 
 
   stop_motors();
 
 
+
+
+  //Serial.println("-----------------INIT----------------");
 }
 
 void pub_enc() {
@@ -56,7 +59,7 @@ void  read_encoders() {
   pre_left_enc = left_enc;
   pre_right_enc = right_enc;
 
-  left_enc =Enc2.read(); //left
+  left_enc =-Enc2.read(); //left
   right_enc = Enc1.read(); //right
 
   left_spd = alpha * (double)(left_enc - pre_left_enc) / DT  + (1 - alpha) * (double)left_spd;
@@ -64,51 +67,53 @@ void  read_encoders() {
 
   Input2 = left_spd;
   Input1 = right_spd;
-   
 
-  // Serial.println(Input1);
-   
-  RX_failSafe();
+
+  // Serial.println(left_enc);
+  //   Serial.println(right_enc);
+RX_failSafe();
+ 
 }
 
 void control_loop() {
 
-  if (isRxConnected()) {
+  if ( isRxConnected() && (millis()>2000)) {
     ReadRxCommands();
 
     CommandsFromRX();
 
-    if (DriveMode==RX_DRIVE_MODE) {
+    if ((DriveMode==RX_DRIVE_MODE)&&(first_rc)) {
       ST.turn(-turn_command);
       ST.drive(drive_command);
-
+      
+     //Serial.println(drive_command);
     }
     else { //DriveMode==RX_ARM_MODE
+    
     }
 
     blink_led(300);
   }
 
-  //else if (wd_on) {
-   // stop_motors();
-   // blink_led(1000);
-     //Serial.println("wd on");
-  //}
+  else if (wd_on) {
+    stop_motors();
+    // blink_led(1000);
+    //Serial.println("wd on");
+  }
 
-  else if ((wd_on==false)&& (PID1.Compute()) && (PID2.Compute()) ) { //ROS Control
-    ST.motor(1,(int)Output1); //right motor
+  else if ( (PID1.Compute()) && (PID2.Compute()) ) { //ROS Control
+  /*
+    if (Output1>0) Output1+=3;
+    if (Output1<0) Output1-=3;
+    
+    if (Output2>0) Output2+=3;
+    if (Output2<0) Output2-=3;
+*/
+    ST.motor(1,-(int)Output1); //right motor
     ST.motor(2,-(int)Output2); //left motor
-    /*
-     Serial.print("Inputs: ");
-     Serial.print((int)Input1);
-     Serial.print("   ");
-     Serial.print((int)Input2);
-     
-     Serial.print("    Outputs: ");
-     Serial.print(-(int)Output1);
-     Serial.print("   ");
-     Serial.println(-(int)Output2);
-     */
+    // Serial.println("pid on");
+
+
     blink_led(100);
   }
 
@@ -200,9 +205,11 @@ void stop_motors( ) {
 
   Setpoint1 = 0;
   Setpoint2 = 0;
- // ST.stop();
+  ST.stop();
 
 }
+
+
 
 
 

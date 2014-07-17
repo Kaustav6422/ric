@@ -52,16 +52,32 @@ static const char IMU_CALIB[] = "ric_robot/imu_calib";
   class imu_calibResponse : public ros::Msg
   {
     public:
+      bool ack;
 
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
+      union {
+        bool real;
+        uint8_t base;
+      } u_ack;
+      u_ack.real = this->ack;
+      *(outbuffer + offset + 0) = (u_ack.base >> (8 * 0)) & 0xFF;
+      offset += sizeof(this->ack);
       return offset;
     }
 
     virtual int deserialize(unsigned char *inbuffer)
     {
       int offset = 0;
+      union {
+        bool real;
+        uint8_t base;
+      } u_ack;
+      u_ack.base = 0;
+      u_ack.base |= ((uint8_t) (*(inbuffer + offset + 0))) << (8 * 0);
+      this->ack = u_ack.real;
+      offset += sizeof(this->ack);
      return offset;
     }
 

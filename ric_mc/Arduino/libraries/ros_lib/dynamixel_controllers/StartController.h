@@ -13,11 +13,11 @@ static const char STARTCONTROLLER[] = "dynamixel_controllers/StartController";
   class StartControllerRequest : public ros::Msg
   {
     public:
-      char * port_name;
-      char * package_path;
-      char * module_name;
-      char * class_name;
-      char * controller_name;
+      const char* port_name;
+      const char* package_path;
+      const char* module_name;
+      const char* class_name;
+      const char* controller_name;
       uint8_t dependencies_length;
       char* st_dependencies;
       char* * dependencies;
@@ -25,27 +25,27 @@ static const char STARTCONTROLLER[] = "dynamixel_controllers/StartController";
     virtual int serialize(unsigned char *outbuffer) const
     {
       int offset = 0;
-      uint32_t length_port_name = strlen( (const char*) this->port_name);
+      uint32_t length_port_name = strlen(this->port_name);
       memcpy(outbuffer + offset, &length_port_name, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->port_name, length_port_name);
       offset += length_port_name;
-      uint32_t length_package_path = strlen( (const char*) this->package_path);
+      uint32_t length_package_path = strlen(this->package_path);
       memcpy(outbuffer + offset, &length_package_path, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->package_path, length_package_path);
       offset += length_package_path;
-      uint32_t length_module_name = strlen( (const char*) this->module_name);
+      uint32_t length_module_name = strlen(this->module_name);
       memcpy(outbuffer + offset, &length_module_name, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->module_name, length_module_name);
       offset += length_module_name;
-      uint32_t length_class_name = strlen( (const char*) this->class_name);
+      uint32_t length_class_name = strlen(this->class_name);
       memcpy(outbuffer + offset, &length_class_name, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->class_name, length_class_name);
       offset += length_class_name;
-      uint32_t length_controller_name = strlen( (const char*) this->controller_name);
+      uint32_t length_controller_name = strlen(this->controller_name);
       memcpy(outbuffer + offset, &length_controller_name, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->controller_name, length_controller_name);
@@ -55,7 +55,7 @@ static const char STARTCONTROLLER[] = "dynamixel_controllers/StartController";
       *(outbuffer + offset++) = 0;
       *(outbuffer + offset++) = 0;
       for( uint8_t i = 0; i < dependencies_length; i++){
-      uint32_t length_dependenciesi = strlen( (const char*) this->dependencies[i]);
+      uint32_t length_dependenciesi = strlen(this->dependencies[i]);
       memcpy(outbuffer + offset, &length_dependenciesi, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->dependencies[i], length_dependenciesi);
@@ -141,7 +141,7 @@ static const char STARTCONTROLLER[] = "dynamixel_controllers/StartController";
   {
     public:
       bool success;
-      char * reason;
+      const char* reason;
 
     virtual int serialize(unsigned char *outbuffer) const
     {
@@ -153,7 +153,7 @@ static const char STARTCONTROLLER[] = "dynamixel_controllers/StartController";
       u_success.real = this->success;
       *(outbuffer + offset + 0) = (u_success.base >> (8 * 0)) & 0xFF;
       offset += sizeof(this->success);
-      uint32_t length_reason = strlen( (const char*) this->reason);
+      uint32_t length_reason = strlen(this->reason);
       memcpy(outbuffer + offset, &length_reason, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->reason, length_reason);

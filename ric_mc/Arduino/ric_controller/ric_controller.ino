@@ -1,6 +1,8 @@
 
 //PINS
 
+//PWM_PINS[RX_CHANNELS] = {2,3,4,5,6,7};
+
 #define LED_PIN 13
 
 #define BATTERY_MONITOR_PIN A0
@@ -11,19 +13,23 @@
 #define ENC2_B_PIN 18 //left motor
 /*
 RIGHT MOTOR RED->M1A
-RIGHT MOTOR BLACK->M1B
-RIGHT ENCODER A -> ENC1_A_PIN = 15
-RIGHT ENCODER B -> ENC1_B_PIN = 16
-
-LEFT MOTOR RED->M2A
-LEFT MOTOR BLACK->M2B
-LEFT ENCODER A -> ENC2_A_PIN = 17
-LEFT ENCODER B -> ENC2_B_PIN = 18
-*/
+ RIGHT MOTOR BLACK->M1B
+ RIGHT ENCODER A -> ENC1_A_PIN = 15
+ RIGHT ENCODER B -> ENC1_B_PIN = 16
+ 
+ LEFT MOTOR RED->M2A
+ LEFT MOTOR BLACK->M2B
+ LEFT ENCODER A -> ENC2_A_PIN = 17
+ LEFT ENCODER B -> ENC2_B_PIN = 18
+ */
 
 //RX
-#include <SabertoothSimplified.h>
-SabertoothSimplified ST;
+//#include <SabertoothSimplified.h>
+#include <Sabertooth.h>
+Sabertooth ST(128);
+//SabertoothSimplified ST;
+#define MAX_COMMAND 127
+#define MAX_RC_COMMAND 80
 #define PUB_RX_INTERVAL 100
 #include <Arduino.h>
 #include <TeensyReceiver.h>
@@ -31,17 +37,19 @@ SabertoothSimplified ST;
 #define RX_DRIVE_MODE 1
 #define RX_ARM_MODE 2
 short DriveMode=1;
-volatile uint16_t RX1=0,RX2=0,RX3=0,RX4=0,RX5=0,RX6=0;
+volatile uint16_t RX1=1500,RX2=1500,RX3=1500,RX4=0,RX5=1500,RX6=1500;
 unsigned long rx_t=0;
 
-#define RX_DEAD_BAND 15
+#define RX_DEAD_BAND 35
 
-#define MIN_RX1 1195
-#define MAX_RX1 1800
-#define CENTER_RX1 1496
-#define MIN_RX2 1241
-#define MAX_RX2 1774
-#define CENTER_RX2 1513
+int MIN_RX1= 1350;
+int MAX_RX1 =1750;
+int CENTER_RX1 =1500;
+
+int MIN_RX2= 1350;
+int MAX_RX2 =1750;
+int CENTER_RX2 =1500;
+boolean first_rc=false;
 
 #include <CmdMessenger.h>  // CmdMessenger
 // In order to receive, attach a callback function to these events
@@ -85,14 +93,14 @@ float left_spd = 0, right_spd = 0;
 int drive_command=0,turn_command=0;
 double Setpoint1, Input1, Output1;
 double Setpoint2, Input2, Output2;
-#define READ_ENCODERS_INTERVAL 50 //20 hz
+#define READ_ENCODERS_INTERVAL 20 //50 hz
 int  CONTROL_INTERVAL = 1; //ms
 double DT;
 #define  WATCHDOG_INTERVAL 1500 //ms
-#define  MAX_TICKS_PER_S 100000 //tics/sec
-boolean wd_on = true;
-float alpha = 0.5;
-float kp = 0.03, ki = 0.15, kd = 0;
+#define  MAX_TICKS_PER_S 10000 //tics/sec ~ 4 m/s (13cm radius wheel)
+boolean wd_on =true;
+float alpha = 0.05;
+float kp = 0.02, ki = 0.08, kd = 0.0;
 PID PID1(&Input1, &Output1, &Setpoint1, kp, ki, kd, DIRECT);
 PID PID2(&Input2, &Output2, &Setpoint2, kp, ki, kd, DIRECT);
 
@@ -105,16 +113,16 @@ unsigned long wd_t = 0, control_t = 0,led_t=0;
 
 void setup()
 {
-
+  //delay(4000);
   pinMode(LED_PIN, OUTPUT);
-  
-Serial.begin(57600);
+
+  Serial.begin(57600);
 
   SERIAL_PORT.begin(SERIAL_PORT_SPEED);
-  
+
   initializeReceiver();
 
-   // Adds newline to every command
+  // Adds newline to every command
   cmdMessenger.printLfCr(); 
 
   // Attach my application's user-defined callback methods
@@ -122,15 +130,15 @@ Serial.begin(57600);
 
   setup_driver();
 
- analogReadResolution(16);
-// Setpoint1=2048;
+  analogReadResolution(16);
+  // Setpoint1=2048;
 }
 
 void blink_led(int led_interval) {
- if (millis()-led_t>led_interval) {
-  digitalWrite(LED_PIN, !digitalRead(LED_PIN));
-  led_t=millis();
- } 
+  if (millis()-led_t>led_interval) {
+    digitalWrite(LED_PIN, !digitalRead(LED_PIN));
+    led_t=millis();
+  } 
 
 }
 
@@ -138,11 +146,11 @@ void blink_led(int led_interval) {
 void attachCommandCallbacks()
 {
   // Attach callback methods
-//  cmdMessenger.attach(OnUnknownCommand);
+  //  cmdMessenger.attach(OnUnknownCommand);
   cmdMessenger.attach(kCommand, OnCommand);
   cmdMessenger.attach(kSetParameters, OnSetParameters);
-    cmdMessenger.attach(kGetParameters, OnGetParameters);
-   cmdMessenger.attach(kReset, OnReset);
+  cmdMessenger.attach(kGetParameters, OnGetParameters);
+  cmdMessenger.attach(kReset, OnReset);
 }
 
 
@@ -150,47 +158,122 @@ void attachCommandCallbacks()
 void loop()
 {
 
+
+
   cmdMessenger.feedinSerialData();
   control_loop();
-
-
-  if (millis() - wd_t >= WATCHDOG_INTERVAL)  {
-    if (!wd_on) {
-      stop_motors();
-      wd_on = true;
+  
+  /*
+  wd_on =false;
+  if (Serial.available()) {
+    int inByte = Serial.read();
+    //Serial.println(inByte);
+    if ((inByte-48>=0)&&(inByte-48<=9)) {
+      Setpoint1 = 512*(inByte-48);
+      Setpoint2 = 512*(inByte-48);
     }
-    blink_led(1000);
+    else if (inByte=='a') {
+      Setpoint1 += 512;
+      Setpoint2 += 512;
+    }
+    else if (inByte=='z') {
+      Setpoint1 -= 512;
+      Setpoint2 -= 512;
+    }
   }
+  */
   
-  
+  if (millis() - wd_t >= WATCHDOG_INTERVAL)  {
+   if (!wd_on) {
+   stop_motors();
+   wd_on = true;
+   }
+   blink_led(1000);
+   }
+   
+
   if ((isRxConnected())&&(DriveMode==RX_ARM_MODE)&&(millis() - rx_t >= PUB_RX_INTERVAL))  {
     pub_rx();
     rx_t = millis();
-    
+
   }
 
   if (millis() - status_t >= STATUS_INTERVAL)  {
     pub_status();
     status_t = millis();
-    
+
+
+
+
   }
 
 
   if (millis() - enc_t >= READ_ENCODERS_INTERVAL)  {
     read_encoders();
     enc_t = millis();
-   //Serial.println(isRxConnected());
+    //Serial.println(isRxConnected());
   }
 
   if (millis() - pub_t >= PUB_ENC_INTERVAL)  {
     pub_enc();
     pub_t = millis();
+     
+    /*
+    Serial.print("Inputs: ");
+     Serial.print((int)Input1);
+     Serial.print("   ");
+     Serial.print((int)Input2);
+     
+     Serial.print("    Setpoints: ");
+     Serial.print((int)Setpoint1);
+     Serial.print("   ");
+     Serial.print((int)Setpoint2);
+     
+     Serial.print("    Errors: ");
+     Serial.print((int)Setpoint1-Input1);
+     Serial.print("   ");
+     Serial.print((int)Setpoint2-Input2);
+     
+     Serial.print("    Outputs: ");
+     Serial.print(-(int)Output1);
+     Serial.print("   ");
+     Serial.println(-(int)Output2);
+     
+     */
+     /*
+     Serial.print("OK: ");
+    Serial.print(isRxConnected());
+    Serial.print("      CH1: ");
+    Serial.print(RX1);
+    Serial.print("   CH2: ");
+    Serial.print(RX2);
+    Serial.print("   CH3: ");
+    Serial.print(RX3);
+    Serial.print("   CH4: ");
+    Serial.print(RX4);
+    Serial.print("   CH5: ");
+    Serial.print(RX5);
+    Serial.print("   CH6: ");
+    Serial.print(RX6);
+    
+     Serial.print("   RX_signalReceived: ");
+    Serial.print(RX_signalReceived);
+         Serial.print("   oks: ");
+    Serial.print(oks);
+         Serial.print("   RX_failsafeStatus: ");
+    Serial.println(RX_failsafeStatus);
+*/
+
   }
 
 
 
 
 }
+
+
+
+
 
 
 

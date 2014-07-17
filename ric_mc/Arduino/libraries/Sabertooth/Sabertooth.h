@@ -30,7 +30,7 @@ typedef Print SabertoothStream;
 #if defined(USBCON)
 #define SabertoothTXPinSerial Serial1 // Arduino Leonardo has TX->1 on Serial1, not Serial.
 #else
-#define SabertoothTXPinSerial Serial
+#define SabertoothTXPinSerial Serial1
 #endif
 #define SyRenTXPinSerial SabertoothTXPinSerial
 

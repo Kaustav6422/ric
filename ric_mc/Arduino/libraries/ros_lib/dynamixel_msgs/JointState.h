@@ -14,7 +14,7 @@ namespace dynamixel_msgs
   {
     public:
       std_msgs::Header header;
-      char * name;
+      const char* name;
       uint8_t motor_ids_length;
       int32_t st_motor_ids;
       int32_t * motor_ids;
@@ -32,7 +32,7 @@ namespace dynamixel_msgs
     {
       int offset = 0;
       offset += this->header.serialize(outbuffer + offset);
-      uint32_t length_name = strlen( (const char*) this->name);
+      uint32_t length_name = strlen(this->name);
       memcpy(outbuffer + offset, &length_name, sizeof(uint32_t));
       offset += 4;
       memcpy(outbuffer + offset, this->name, length_name);

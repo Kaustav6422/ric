@@ -65,7 +65,7 @@ class ArduinoHardware {
     {
 #if defined(USBCON) and !(defined(USE_USBCON))
       /* Leonardo support */
-      iostream = &Serial;
+      iostream = &Serial1;
 #else
       iostream = &Serial;
 #endif

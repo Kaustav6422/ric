@@ -18,7 +18,7 @@ void setup_driver() {
 
   }
 
-  stop_motors();
+  //stop_motors();
   got_parameters=false;
   encoders_ok=false;
   gotp_t=millis();

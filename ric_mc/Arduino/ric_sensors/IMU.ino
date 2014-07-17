@@ -13,13 +13,13 @@ void  setup_imu() {
         sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.magMinX,calData.magMinY,calData.magMinZ,calData.magMaxX,calData.magMaxY,calData.magMaxZ );
         nh.loginfo(log_msg);
       }
-       if (calData.accelValid==true) {
+      if (calData.accelValid==true) {
         nh.loginfo("    Accel calibration data loaded:"); 
         sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.accelMinX,calData.accelMinY,calData.accelMinZ,calData.accelMaxX,calData.accelMaxY,calData.accelMaxZ );
         nh.loginfo(log_msg);
-       
+
       }
-      
+
     }
     else {
       nh.loginfo("    No calibration data found");
@@ -29,8 +29,8 @@ void  setup_imu() {
   CHECK_IMU_INTERVAL = (unsigned long)(1000.0 / MPU_UPDATE_RATE * 100.0);
 
   loopState = LOOPSTATE_NORMAL;
- // pollInterval = (1000 / MPU_UPDATE_RATE) - 1; // a bit less than the minimum interval
- // lastPollTime = millis();
+  // pollInterval = (1000 / MPU_UPDATE_RATE) - 1; // a bit less than the minimum interval
+  // lastPollTime = millis();
 }
 
 
@@ -82,9 +82,9 @@ void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res) {
       accelCalStart();
       return;
     case 5:
-    calLibErase(DEVICE_TO_USE);
-    nh.loginfo("Calibration data erased");
-    return;
+      calLibErase(DEVICE_TO_USE);
+      nh.loginfo("Calibration data erased");
+      return;
     }
     break;
 
@@ -120,7 +120,7 @@ void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res) {
     }
     break;
   }
-
+ res.ack=true;
 }
 
 void magCalStart(void)
@@ -262,5 +262,6 @@ void accelCalLoop()
 
 
 }
+
 
 

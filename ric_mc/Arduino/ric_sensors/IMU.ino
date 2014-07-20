@@ -22,10 +22,10 @@ void  setup_imu() {
 
     }
     else {
-      nh.loginfo("    No calibration data found");
+      nh.logwarn("    No calibration data found");
     }
   }
-  else   nh.loginfo("IMU fault");
+  else   nh.logerror("IMU fault");
   CHECK_IMU_INTERVAL = (unsigned long)(1000.0 / MPU_UPDATE_RATE * 100.0);
 
   loopState = LOOPSTATE_NORMAL;

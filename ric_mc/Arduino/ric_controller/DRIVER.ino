@@ -71,8 +71,8 @@ void  read_encoders() {
 
   // Serial.println(left_enc);
   //   Serial.println(right_enc);
-RX_failSafe();
- 
+  RX_failSafe();
+
 }
 
 void control_loop() {
@@ -85,14 +85,17 @@ void control_loop() {
     if ((DriveMode==RX_DRIVE_MODE)&&(first_rc)) {
       ST.turn(-turn_command);
       ST.drive(drive_command);
-      
-     //Serial.println(drive_command);
+blink_led(300);
+      //Serial.println(drive_command);
     }
-    else { //DriveMode==RX_ARM_MODE
-    
+    else if ((DriveMode==RX_ARM_MODE)&&(first_rc)) { //ROS CONTROL DRIVING
+      if (!wd_on) {
+        doPID();
+       blink_led(500);
+      }
     }
 
-    blink_led(300);
+    
   }
 
   else if (wd_on) {
@@ -101,24 +104,23 @@ void control_loop() {
     //Serial.println("wd on");
   }
 
-  else if ( (PID1.Compute()) && (PID2.Compute()) ) { //ROS Control
-  /*
-    if (Output1>0) Output1+=3;
-    if (Output1<0) Output1-=3;
-    
-    if (Output2>0) Output2+=3;
-    if (Output2<0) Output2-=3;
-*/
-    ST.motor(1,-(int)Output1); //right motor
-    ST.motor(2,-(int)Output2); //left motor
-    // Serial.println("pid on");
-
-
-    blink_led(100);
-  }
+else {
+  doPID(); //ROS CONTROL
+  blink_led(100);
+}
+ 
 
 }
 
+boolean doPID() {
+  boolean pid =  ( (PID1.Compute()) && (PID2.Compute()) );
+  if (pid) {
+    ST.motor(1,-(int)Output1); //right motor
+    ST.motor(2,-(int)Output2); //left motor
+     
+  }
+  return pid;
+}
 
 
 void OnReset() {
@@ -208,6 +210,8 @@ void stop_motors( ) {
   ST.stop();
 
 }
+
+
 
 
 

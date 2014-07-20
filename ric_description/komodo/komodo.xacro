@@ -22,7 +22,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/base_link.STL" />
+          filename="package://ric_description/komodo/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
@@ -36,7 +36,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/base_link.STL" />
+          filename="package://ric_description/komodo/meshes/base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -62,7 +62,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/FR_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/FR_Wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -76,7 +76,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/FR_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/FR_Wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -115,7 +115,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/FL_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/FL_Wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -129,7 +129,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/FL_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/FL_Wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -168,7 +168,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/RR_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/RR_Wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -182,7 +182,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/RR_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/RR_Wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -221,7 +221,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/RL_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/RL_Wheel_link.STL" />
       </geometry>
       <material
         name="">
@@ -235,7 +235,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/RL_Wheel_link.STL" />
+          filename="package://ric_description/komodo/meshes/RL_Wheel_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -274,7 +274,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Left_URF_link.STL" />
+          filename="package://ric_description/komodo/meshes/Left_URF_link.STL" />
       </geometry>
       <material
         name="">
@@ -288,7 +288,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Left_URF_link.STL" />
+          filename="package://ric_description/komodo/meshes/Left_URF_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -327,7 +327,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Rear_URF_link.STL" />
+          filename="package://ric_description/komodo/meshes/Rear_URF_link.STL" />
       </geometry>
       <material
         name="">
@@ -341,7 +341,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Rear_URF_link.STL" />
+          filename="package://ric_description/komodo/meshes/Rear_URF_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -380,7 +380,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Right_URF_link.STL" />
+          filename="package://ric_description/komodo/meshes/Right_URF_link.STL" />
       </geometry>
       <material
         name="">
@@ -394,7 +394,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Right_URF_link.STL" />
+          filename="package://ric_description/komodo/meshes/Right_URF_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -433,7 +433,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Front_Camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Front_Camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -447,7 +447,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Front_Camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Front_Camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -486,7 +486,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Laser_link.STL" />
+          filename="package://ric_description/komodo/meshes/Laser_link.STL" />
       </geometry>
       <material
         name="">
@@ -500,7 +500,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Laser_link.STL" />
+          filename="package://ric_description/komodo/meshes/Laser_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -539,7 +539,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Asus_Camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Asus_Camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -553,7 +553,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Asus_Camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Asus_Camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -592,7 +592,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Arm_base_link.STL" />
+          filename="package://ric_description/komodo/meshes/Arm_base_link.STL" />
       </geometry>
       <material
         name="">
@@ -606,7 +606,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Arm_base_link.STL" />
+          filename="package://ric_description/komodo/meshes/Arm_base_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -645,7 +645,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/base_rotation_link.STL" />
+          filename="package://ric_description/komodo/meshes/base_rotation_link.STL" />
       </geometry>
       <material
         name="">
@@ -659,7 +659,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/base_rotation_link.STL" />
+          filename="package://ric_description/komodo/meshes/base_rotation_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -703,7 +703,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/shoulder_link.STL" />
+          filename="package://ric_description/komodo/meshes/shoulder_link.STL" />
       </geometry>
       <material
         name="">
@@ -717,7 +717,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/shoulder_link.STL" />
+          filename="package://ric_description/komodo/meshes/shoulder_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -761,7 +761,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/elbow1_link.STL" />
+          filename="package://ric_description/komodo/meshes/elbow1_link.STL" />
       </geometry>
       <material
         name="">
@@ -775,7 +775,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/elbow1_link.STL" />
+          filename="package://ric_description/komodo/meshes/elbow1_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -819,7 +819,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/elbow2_link.STL" />
+          filename="package://ric_description/komodo/meshes/elbow2_link.STL" />
       </geometry>
       <material
         name="">
@@ -833,7 +833,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/elbow2_link.STL" />
+          filename="package://ric_description/komodo/meshes/elbow2_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -877,7 +877,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/wrist_link.STL" />
+          filename="package://ric_description/komodo/meshes/wrist_link.STL" />
       </geometry>
       <material
         name="">
@@ -891,7 +891,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/wrist_link.STL" />
+          filename="package://ric_description/komodo/meshes/wrist_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -935,7 +935,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/left_finger_link.STL" />
+          filename="package://ric_description/komodo/meshes/left_finger_link.STL" />
       </geometry>
       <material
         name="">
@@ -949,7 +949,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/left_finger_link.STL" />
+          filename="package://ric_description/komodo/meshes/left_finger_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -993,7 +993,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/right_finger_link.STL" />
+          filename="package://ric_description/komodo/meshes/right_finger_link.STL" />
       </geometry>
       <material
         name="">
@@ -1007,7 +1007,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/right_finger_link.STL" />
+          filename="package://ric_description/komodo/meshes/right_finger_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -1051,7 +1051,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Arm_Camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Arm_Camera_link.STL" />
       </geometry>
       <material
         name="">
@@ -1065,7 +1065,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/Arm_Camera_link.STL" />
+          filename="package://ric_description/komodo/meshes/Arm_Camera_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -1104,7 +1104,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/sensors_unit_link.STL" />
+          filename="package://ric_description/komodo/meshes/sensors_unit_link.STL" />
       </geometry>
       <material
         name="">
@@ -1118,7 +1118,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://komodo_urdf/meshes/sensors_unit_link.STL" />
+          filename="package://ric_description/komodo/meshes/sensors_unit_link.STL" />
       </geometry>
     </collision>
   </link>

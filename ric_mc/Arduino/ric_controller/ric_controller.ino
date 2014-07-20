@@ -188,7 +188,7 @@ void loop()
    stop_motors();
    wd_on = true;
    }
-   blink_led(1000);
+   blink_led(1500);
    }
    
 

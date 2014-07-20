@@ -75,12 +75,13 @@ def elev_callback(data):
     msg.position[7]=final_epos
 
 def handle_elev_set(req):
-    global final_epos,elevpub,home_ok
-    if (home_ok==1): 
+    global final_epos,elevpub,home_ok,elev_move
+    if (home_ok==1) or (home_ok==0): 
        home_ok=2
        rospy.loginfo("Homing is done")
     elevpub.publish(0.0)
-    rospy.sleep(0.5)
+    elev_move=False
+       #rospy.sleep(0.5)
     final_epos=req.pos
     rospy.loginfo("Elevator position is: %.3f",final_epos)
     return True
@@ -89,7 +90,7 @@ def epos_callback(data):
     global elev_goal_pos,elev_move,elevpub,final_epos,epos_tol,max_elev_speed,home_ok, min_elev_pos,max_elev_pos
     if home_ok==2:
        elev_goal_pos=data.pos
-       if elev_goal_pos>max_elev_pos or elev_goal_pos<min_elev_pos:
+       if elev_goal_pos>(max_elev_pos+0.000001) or elev_goal_pos<(min_elev_pos-0.000001):
           rospy.loginfo("Required goal (%.3f) is outside of the elevator rang of motion [%.3f-%.3f]",elev_goal_pos,min_elev_pos,max_elev_pos)
        else:
           epos_err=elev_goal_pos-final_epos
@@ -102,17 +103,25 @@ def epos_callback(data):
 
 
 def handle_elev_home(req):
-    global home_ok
+    global home_ok,elev_move
     if (req.dir>0):
-       elevpub.publish(max_elev_speed/elev_rad2m)
-       home_ok=1
-       rospy.loginfo("Elevator is homing up")
-       return True
+      if (final_epos<max_elev_pos+0.005):
+        elev_move=False
+        elevpub.publish(max_elev_speed/elev_rad2m)
+        home_ok=1
+        rospy.loginfo("Elevator is homing up")    
+        return True
+      else:
+	return False
     elif(req.dir<0):
-       elevpub.publish(-max_elev_speed/elev_rad2m)
-       home_ok=1
-       rospy.loginfo("Elevator is homing down")
-       return True
+      if (final_epos>min_elev_pos-0.005):
+        elev_move=False
+        elevpub.publish(-max_elev_speed/elev_rad2m)
+        home_ok=1
+        rospy.loginfo("Elevator is homing down")
+        return True
+      else:
+	return False
     else:
        rospy.loginfo("Please choose homing direction (1 - up / -1 - down)")
        return False
@@ -128,11 +137,10 @@ def komodo_arm():
     ns=rospy.get_namespace()
     ns=ns[1:-1]
     elev_rad2m=0.00175/(math.pi*2)
-    min_elev_pos=0 #TODO: get as parameter?
-    max_elev_pos=0.3 #TODO: get as parameter?
+    min_elev_pos=0.0 #TODO: get as parameter?
+    max_elev_pos=0.4 #TODO: get as parameter?
     home_ok=0 #0-not homed, 1-homing  2-homed
-    kp=0.8
-    epos_tol=0.01
+    epos_tol=0.001
     max_elev_speed=0.01
     elev_goal_pos=0
     elev_move=False
@@ -169,6 +177,7 @@ def komodo_arm():
     while not rospy.is_shutdown():
     	msg.header.stamp = rospy.Time.now()
     	pub.publish(msg)
+    	#rospy.loginfo("Elevator position is: %.3f",final_epos)
         if have_elevator:
            epos_err=elev_goal_pos-final_epos
            if elev_move==True and abs(epos_err)<epos_tol:

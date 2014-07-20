@@ -1,6 +1,8 @@
 
 #define USE_GPS
 
+//#define HAVE_ELEVATOR
+
 //SUBSCRIBERS
 #define COMMAND_TOPIC "command"
 #define PAN_TILT_TOPIC "pan_tilt"
@@ -114,10 +116,11 @@ ros::ServiceServer<imu_calib::Request, imu_calib::Response> imu_calib_server(IMU
 ros::ServiceServer<relays::Request, relays::Response> relays_server(RELAYS_SRV, &relaysCb);
 ros::ServiceServer<Empty::Request, Empty::Response> reset_enc_server(RESET_ENCODERS_SRV, &reset_encCb);
 ros::ServiceServer<Empty::Request, Empty::Response> restart_all_server(RESTART_ALL_SRV, &restart_allCb);
+
+#ifdef HAVE_ELEVATOR
 ros::ServiceClient<set_elevator::Request, set_elevator::Response> elev_set_client(ELEV_SET_SRV);
-
+#endif
 ros::Subscriber<ric_robot::ric_command> command_sub(COMMAND_TOPIC, &commandCb );
-
 
 ros::Subscriber<ric_robot::ric_pan_tilt> pan_tilt_sub(PAN_TILT_TOPIC, &pantiltCb );
 
@@ -239,14 +242,14 @@ FastRunningMedian<unsigned int, sample_size, 0> Rear_URF_Median;
 void setup()
 {
 
- pinMode(RELAY1_PIN, OUTPUT);
+  pinMode(RELAY1_PIN, OUTPUT);
   pinMode(RELAY2_PIN, OUTPUT);
-    digitalWrite(RELAY1_PIN,LOW);
-      digitalWrite(RELAY2_PIN,LOW);
-      
+  digitalWrite(RELAY1_PIN,LOW);
+  digitalWrite(RELAY2_PIN,LOW);
+
   pinMode(LED_PIN, OUTPUT);
-  
-  
+
+
   ROS_PORT.begin(ROS_PORT_SPEED);
 
   CONTROLLER_PORT.begin(CONTROLLER_PORT_SPEED);
@@ -269,8 +272,9 @@ void setup()
   nh.advertiseService(imu_calib_server);
   nh.advertiseService(restart_all_server);
   nh.advertiseService(relays_server);
-
-
+#ifdef HAVE_ELEVATOR
+  nh.serviceClient(elev_set_client);
+#endif
   nh.subscribe(command_sub);
 
 
@@ -288,8 +292,11 @@ void setup()
 
 void startup_init() {
 
+#ifdef HAVE_ELEVATOR
   setup_homing();
-
+#else
+  nh.loginfo("No arm elevator, ignoring elevator home switches");
+#endif
   pan_tilt_setup();
 
   setup_imu();
@@ -316,10 +323,10 @@ void blink_led(int led_interval) {
 }
 
 void relaysCb(const relays::Request & req, relays::Response & res) {
-  
+
   digitalWrite(RELAY1_PIN,req.ch1);
-    digitalWrite(RELAY2_PIN,req.ch2);
-    res.ack=true;
+  digitalWrite(RELAY2_PIN,req.ch2);
+  res.ack=true;
 }
 
 void restart_allCb(const Empty::Request & req, Empty::Response & res) {
@@ -368,6 +375,11 @@ void loop()
     nh.loginfo("Starting up...");
     startup_init();
   }
+
+#ifdef HAVE_ELEVATOR
+  check_lower_home();
+  check_upper_home();
+#endif
 
   cmdMessenger.feedinSerialData();
 
@@ -423,6 +435,10 @@ void loop()
 
   nh.spinOnce();
 }
+
+
+
+
 
 
 

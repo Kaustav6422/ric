@@ -101,7 +101,7 @@ def js_callback(data):
   global got_links_states
   global  wrist_ang,elbow2_ang,elbow1_ang, shoulder_ang, base_rotation_ang
   global init
-  if got_links_states==False and len(data.position)==7 and 'base_rotation' in data.name[0]:
+  if got_links_states==False and (len(data.position)==7 or len(data.position)==8) and 'base_rotation' in data.name[0]:
     base_rotation_ang=data.position[0]
     shoulder_ang=data.position[1]
     elbow1_ang=data.position[2]

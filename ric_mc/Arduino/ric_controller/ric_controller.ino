@@ -40,15 +40,28 @@ short DriveMode=1;
 volatile uint16_t RX1=1500,RX2=1500,RX3=1500,RX4=0,RX5=1500,RX6=1500;
 unsigned long rx_t=0;
 
+#include <EEPROM.h>
+int rc_calib_addr = 130;
+boolean rc_calib_ok=false;
+boolean do_rc_calib=false;
+
 #define RX_DEAD_BAND 35
 
-int MIN_RX1= 1350;
-int MAX_RX1 =1750;
+int MIN_RX1= 1000;
+int MAX_RX1 =2000;
 int CENTER_RX1 =1500;
+
+int MIN_RX1_cal= 1000;
+int MAX_RX1_cal =2000;
+int CENTER_RX1_cal =1500;
 
 int MIN_RX2= 1350;
 int MAX_RX2 =1750;
 int CENTER_RX2 =1500;
+
+int MIN_RX2_cal= 1000;
+int MAX_RX2_cal =2000;
+int CENTER_RX2_cal =1500;
 boolean first_rc=false;
 
 #include <CmdMessenger.h>  // CmdMessenger
@@ -64,7 +77,12 @@ enum
   kGetParameters,
   kGetParametersAck,
   kRx,
+  kRcCalib,
+  kloginfo,
+  klogwarn,
 };
+
+
 
 #define  SERIAL_PORT_SPEED  115200
 #define  SERIAL_PORT Serial2 //Serial2
@@ -113,14 +131,16 @@ unsigned long wd_t = 0, control_t = 0,led_t=0;
 
 void setup()
 {
-  //delay(4000);
+ // delay(4000);
   pinMode(LED_PIN, OUTPUT);
 
   Serial.begin(57600);
 
   SERIAL_PORT.begin(SERIAL_PORT_SPEED);
 
+load_rc_calib();
   initializeReceiver();
+
 
   // Adds newline to every command
   cmdMessenger.printLfCr(); 
@@ -142,6 +162,18 @@ void blink_led(int led_interval) {
 
 }
 
+void loginfo(String msg) {
+ 
+   cmdMessenger.sendCmdStart(kloginfo);
+cmdMessenger.sendCmdArg(msg);
+  cmdMessenger.sendCmdEnd();
+}
+
+void logwarn(String msg) {
+   cmdMessenger.sendCmdStart(klogwarn);
+cmdMessenger.sendCmdArg(msg);
+  cmdMessenger.sendCmdEnd();
+}
 
 void attachCommandCallbacks()
 {
@@ -151,6 +183,7 @@ void attachCommandCallbacks()
   cmdMessenger.attach(kSetParameters, OnSetParameters);
   cmdMessenger.attach(kGetParameters, OnGetParameters);
   cmdMessenger.attach(kReset, OnReset);
+  cmdMessenger.attach(kRcCalib, OnRcCalib);
 }
 
 
@@ -158,7 +191,7 @@ void attachCommandCallbacks()
 void loop()
 {
 
-
+if (do_rc_calib) rc_calib();
 
   cmdMessenger.feedinSerialData();
   control_loop();

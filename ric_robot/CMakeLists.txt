@@ -35,7 +35,7 @@ add_message_files(
 add_service_files(
   FILES
  set_odom.srv
- imu_calib.srv
+ ric_calib.srv
  set_elevator.srv
  home_elevator.srv
  relays.srv

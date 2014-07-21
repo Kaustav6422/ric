@@ -13,7 +13,7 @@
 #define RC_TOPIC "RC"
 //SERVICES
 #define  RESET_ENCODERS_SRV "reset_encoders"
-#define IMU_CALIB_SRV "imu_calib"
+#define RIC_CALIB_SRV "ric_calib"
 #define RESTART_ALL_SRV "restart"
 #define ELEV_SET_SRV "elevator_controller/set_position"
 #define RELAYS_SRV "relays"
@@ -31,8 +31,8 @@
 #define PAN_SERVO_PIN 22
 #define TILT_SERVO_PIN 23
 
-#define RELAY1_PIN 3
-#define RELAY2_PIN 2
+#define RELAY1_PIN 2
+#define RELAY2_PIN 3
 
 #define LEFT_URF_PIN A1 //15
 #define REAR_URF_PIN A2 //16
@@ -74,6 +74,9 @@ enum
   kGetParameters,
   kGetParametersAck,
   kRx,
+  kRcCalib,
+  kloginfo,
+  klogwarn,
 };
 
 
@@ -88,7 +91,7 @@ enum
 #include <ric_robot/ric_rc.h>
 #include <ric_robot/relays.h>
 
-#include <ric_robot/imu_calib.h>
+#include <ric_robot/ric_calib.h>
 #include <std_srvs/Empty.h>
 
 #define  ROS_PORT_SPEED  57600
@@ -98,7 +101,7 @@ unsigned long urf_t = 0, enc_t = 0, status_t = 0, pub_t=0, led_t=0;
 
 ros::NodeHandle nh;
 using std_srvs::Empty;
-using ric_robot::imu_calib;
+using ric_robot::ric_calib;
 
 #include <ric_robot/set_elevator.h>
 using ric_robot::set_elevator;
@@ -106,13 +109,13 @@ using ric_robot::relays;
 
 //PROTOTYPES
 void reset_encCb(const Empty::Request & req, Empty::Response & res);
-void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res);
+void ric_calibCb(const ric_calib::Request & req, ric_calib::Response & res);
 void relaysCb(const relays::Request & req, relays::Response & res);
 void commandCb( const ric_robot::ric_command& msg);
 void pantiltCb( const ric_robot::ric_pan_tilt& msg);
 void restart_allCb(const Empty::Request & req, Empty::Response & res);
 
-ros::ServiceServer<imu_calib::Request, imu_calib::Response> imu_calib_server(IMU_CALIB_SRV, &imu_calibCb);
+ros::ServiceServer<ric_calib::Request, ric_calib::Response> ric_calib_server(RIC_CALIB_SRV, &ric_calibCb);
 ros::ServiceServer<relays::Request, relays::Response> relays_server(RELAYS_SRV, &relaysCb);
 ros::ServiceServer<Empty::Request, Empty::Response> reset_enc_server(RESET_ENCODERS_SRV, &reset_encCb);
 ros::ServiceServer<Empty::Request, Empty::Response> restart_all_server(RESTART_ALL_SRV, &restart_allCb);
@@ -205,7 +208,7 @@ MPU9150Lib MPU; // the MPU object
 
 //long lastPollTime; // last time the MPU-9150 was checked
 //long pollInterval; // gap between polls to avoid thrashing the I2C bus
-char temp_msg[30];
+char temp_msg[130];
 
 int loopState; // what code to run in the loop
 
@@ -269,7 +272,7 @@ void setup()
   nh.advertise(p_status);
 
   nh.advertiseService(reset_enc_server);
-  nh.advertiseService(imu_calib_server);
+  nh.advertiseService(ric_calib_server);
   nh.advertiseService(restart_all_server);
   nh.advertiseService(relays_server);
 #ifdef HAVE_ELEVATOR
@@ -342,8 +345,29 @@ void attachCommandCallbacks()
   cmdMessenger.attach(kStatus, OnStatus);
   cmdMessenger.attach(kEncoders, OnEncoders);
   cmdMessenger.attach(kRx, OnRx);
+  cmdMessenger.attach(kRcCalib, OnRcCalib);
+  cmdMessenger.attach(kloginfo, Onloginfo);
+  cmdMessenger.attach(klogwarn, Onlogwarn);
 }
 
+
+void OnRcCalib() {
+  int CH = cmdMessenger.readIntArg();
+  int RX_MIN = cmdMessenger.readIntArg();
+  int RX_CENTER  = cmdMessenger.readIntArg();
+  int RX_MAX = cmdMessenger.readIntArg();
+
+  sprintf(temp_msg, "Channel: %d   Min: %d   Center: %d   Max: %d", CH,RX_MIN,RX_CENTER,RX_MAX); 
+  nh.loginfo(temp_msg);
+}
+
+void Onloginfo() {
+
+  nh.loginfo(cmdMessenger.readStringArg());
+}
+void Onlogwarn() {
+  nh.logwarn(cmdMessenger.readStringArg());
+}
 
 void pub_raw() {
 
@@ -435,6 +459,7 @@ void loop()
 
   nh.spinOnce();
 }
+
 
 
 

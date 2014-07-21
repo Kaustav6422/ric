@@ -35,12 +35,12 @@
 	
 	<rosparam file="$(find ric_robot)/config/default_komodo.yaml" command="load" />
 	
-	 <!-- 
-	-->
+	 <!-- -->
+
 	<include file="$(find ric_robot)/launch/komodo_arm.launch">
 	  <arg name="have_elevator" value="$(arg have_elevator)" />
 	</include> 
-	
+		
 
 	<node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
 	  <param name="~port" value="/dev/Teensy" />

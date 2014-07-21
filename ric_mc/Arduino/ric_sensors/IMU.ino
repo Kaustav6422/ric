@@ -68,7 +68,7 @@ void read_imu() {
 }
 
 
-void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res) {
+void ric_calibCb(const ric_calib::Request & req, ric_calib::Response & res) {
 
 
   switch (loopState) {
@@ -76,14 +76,45 @@ void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res) {
     switch (req.com) {
     case 1:
       magCalStart();
+      res.ack=true;
       return;
 
     case 2:
       accelCalStart();
+      res.ack=true;      
       return;
     case 5:
       calLibErase(DEVICE_TO_USE);
       nh.loginfo("Calibration data erased");
+            res.ack=true;
+      return;
+    case 11:
+      cmdMessenger.sendCmdStart(kRcCalib);
+      cmdMessenger.sendCmdArg(1);
+      cmdMessenger.sendCmdEnd();
+    //  nh.loginfo("sent command to start rc calib");
+          res.ack=true;
+      return;
+    case 12:
+      cmdMessenger.sendCmdStart(kRcCalib);
+      cmdMessenger.sendCmdArg(2);
+      cmdMessenger.sendCmdEnd();
+    //  nh.loginfo("sent command to save rc calib");
+          res.ack=true;
+      return;
+    case 13:
+      cmdMessenger.sendCmdStart(kRcCalib);
+      cmdMessenger.sendCmdArg(3);
+      cmdMessenger.sendCmdEnd();
+    //  nh.loginfo("sent command to cancel rc calib");
+          res.ack=true;
+      return;
+    case 14:
+      cmdMessenger.sendCmdStart(kRcCalib);
+      cmdMessenger.sendCmdArg(4);
+      cmdMessenger.sendCmdEnd();
+            res.ack=true;
+    //  nh.loginfo("sent command to print rc calib");
       return;
     }
     break;
@@ -120,7 +151,7 @@ void imu_calibCb(const imu_calib::Request & req, imu_calib::Response & res) {
     }
     break;
   }
- res.ack=true;
+  res.ack=true;
 }
 
 void magCalStart(void)
@@ -262,6 +293,8 @@ void accelCalLoop()
 
 
 }
+
+
 
 
 

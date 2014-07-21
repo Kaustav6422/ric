@@ -26,7 +26,8 @@ void setup_driver() {
 
   SabertoothTXPinSerial.begin(9600);
 
-
+ST.setTimeout(500);
+ST.setRamping();
   stop_motors();
 
 
@@ -82,7 +83,7 @@ void control_loop() {
 
     CommandsFromRX();
 
-    if ((DriveMode==RX_DRIVE_MODE)&&(first_rc)) {
+    if ((DriveMode==RX_DRIVE_MODE)&&(first_rc)&&(!do_rc_calib)) {
       ST.turn(-turn_command);
       ST.drive(drive_command);
 blink_led(300);

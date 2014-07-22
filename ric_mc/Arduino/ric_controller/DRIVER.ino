@@ -27,7 +27,7 @@ void setup_driver() {
   SabertoothTXPinSerial.begin(9600);
 
 ST.setTimeout(500);
-ST.setRamping();
+//ST.setRamping();
   stop_motors();
 
 

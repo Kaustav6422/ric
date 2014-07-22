@@ -1,5 +1,5 @@
-#ifndef _ROS_SERVICE_imu_calib_h
-#define _ROS_SERVICE_imu_calib_h
+#ifndef _ROS_SERVICE_ric_calib_h
+#define _ROS_SERVICE_ric_calib_h
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
@@ -8,9 +8,9 @@
 namespace ric_robot
 {
 
-static const char IMU_CALIB[] = "ric_robot/imu_calib";
+static const char RIC_CALIB[] = "ric_robot/ric_calib";
 
-  class imu_calibRequest : public ros::Msg
+  class ric_calibRequest : public ros::Msg
   {
     public:
       int16_t com;
@@ -44,12 +44,12 @@ static const char IMU_CALIB[] = "ric_robot/imu_calib";
      return offset;
     }
 
-    const char * getType(){ return IMU_CALIB; };
+    const char * getType(){ return RIC_CALIB; };
     const char * getMD5(){ return "0dce049a176069675a0c664de0822e2c"; };
 
   };
 
-  class imu_calibResponse : public ros::Msg
+  class ric_calibResponse : public ros::Msg
   {
     public:
       bool ack;
@@ -81,15 +81,15 @@ static const char IMU_CALIB[] = "ric_robot/imu_calib";
      return offset;
     }
 
-    const char * getType(){ return IMU_CALIB; };
-    const char * getMD5(){ return "d41d8cd98f00b204e9800998ecf8427e"; };
+    const char * getType(){ return RIC_CALIB; };
+    const char * getMD5(){ return "8f5729177853f34b146e2e57766d4dc2"; };
 
   };
 
-  class imu_calib {
+  class ric_calib {
     public:
-    typedef imu_calibRequest Request;
-    typedef imu_calibResponse Response;
+    typedef ric_calibRequest Request;
+    typedef ric_calibResponse Response;
   };
 
 }

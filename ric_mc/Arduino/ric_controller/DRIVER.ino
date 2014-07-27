@@ -84,10 +84,16 @@ void control_loop() {
     CommandsFromRX();
 
     if ((DriveMode==RX_DRIVE_MODE)&&(first_rc)&&(!do_rc_calib)) {
-      ST.turn(-turn_command);
-      ST.drive(drive_command);
+      float turn_factor=1+((0.7-1.0)/MAX_RC_COMMAND)*abs(drive_command);
+      ST.turn((int)(turn_command*turn_factor));
+      ST.drive(-drive_command);
 blink_led(300);
-      //Serial.println(drive_command);
+    /*  Serial.print("drive: ");
+      Serial.print(drive_command);
+      Serial.print("   turn: ");
+      Serial.print(turn_command);
+      Serial.print("   turn*f: ");
+      Serial.println((int)(turn_command*turn_factor));*/
     }
     else if ((DriveMode==RX_ARM_MODE)&&(first_rc)) { //ROS CONTROL DRIVING
       if (!wd_on) {

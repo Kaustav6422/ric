@@ -29,7 +29,7 @@ RIGHT MOTOR RED->M1A
 Sabertooth ST(128);
 //SabertoothSimplified ST;
 #define MAX_COMMAND 127
-#define MAX_RC_COMMAND 40
+#define MAX_RC_COMMAND 33
 #define PUB_RX_INTERVAL 100
 #include <Arduino.h>
 #include <TeensyReceiver.h>
@@ -45,7 +45,7 @@ int rc_calib_addr = 130;
 boolean rc_calib_ok=false;
 boolean do_rc_calib=false;
 
-#define RX_DEAD_BAND 35
+#define RX_DEAD_BAND 25
 
 int MIN_RX1= 1000;
 int MAX_RX1 =2000;
@@ -111,7 +111,7 @@ float left_spd = 0, right_spd = 0;
 int drive_command=0,turn_command=0;
 double Setpoint1, Input1, Output1;
 double Setpoint2, Input2, Output2;
-#define READ_ENCODERS_INTERVAL 20 //50 hz
+#define READ_ENCODERS_INTERVAL 20  //20ms=50 hz
 int  CONTROL_INTERVAL = 1; //ms
 double DT;
 #define  WATCHDOG_INTERVAL 1500 //ms

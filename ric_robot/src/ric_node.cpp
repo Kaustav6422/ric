@@ -317,17 +317,17 @@ void urfCallback(float left_urf,float rear_urf,float right_urf) {
 
 
 
-void imuCallback(float qw,float qx,float qy,float qz) {
+void imuCallback(const ric_robot::ric_raw::ConstPtr& msg) {
 
 
   sensor_msgs::Imu imu_msg;
 	
   imu_msg.header.frame_id = imu_frame_id;
   imu_msg.header.stamp = ros::Time::now();
-  q_imu.w=qw;
-  q_imu.x=qx;
-  q_imu.y=qy;
-  q_imu.z=qz;
+  q_imu.x=msg->orientation[0];
+  q_imu.y=msg->orientation[1];
+  q_imu.z=msg->orientation[2];
+  q_imu.w=msg->orientation[3];
 	
   double roll = 0, pitch = 0, yaw = 0;							
   tf::Quaternion q;			
@@ -337,7 +337,14 @@ void imuCallback(float qw,float qx,float qy,float qz) {
   q_imu =tf::createQuaternionMsgFromRollPitchYaw(roll,-pitch, -yaw);
 
   imu_msg.orientation=q_imu;
-		
+
+  imu_msg.linear_acceleration.x=msg->linear_acceleration[0];
+  imu_msg.linear_acceleration.y=msg->linear_acceleration[1];
+  imu_msg.linear_acceleration.z=msg->linear_acceleration[2];
+  
+  imu_msg.angular_velocity.x=msg->angular_velocity[0];
+  imu_msg.angular_velocity.y=msg->angular_velocity[1];
+  imu_msg.angular_velocity.z=msg->angular_velocity[2];
 
   double angular_velocity_stdev_ = 0.012;
   double orientation_stdev_ = 0.035;
@@ -374,19 +381,17 @@ void imuCallback(float qw,float qx,float qy,float qz) {
 
 }
 void rawCallback(const ric_robot::ric_raw::ConstPtr& msg) {
-  float qw=msg->qw;
-  float qx=msg->qx;
-  float qy=msg->qy;
-  float qz=msg->qz;
-  imuCallback(qw,qx,qy,qz);
 
-  int32_t left_ticks=msg->left_ticks;
-  int32_t right_ticks=msg->right_ticks;
+  
+  imuCallback(msg);
+
+  int32_t left_ticks=msg->encoders[0]; // left_ticks;
+  int32_t right_ticks=msg->encoders[1]; // right_ticks;
   encodersCallback( left_ticks,  right_ticks);
 
-  float left_urf=msg->left_urf;
-  float rear_urf=msg->rear_urf;
-  float right_urf=msg->right_urf;
+  float left_urf=msg->urf[0];// left_urf;
+  float rear_urf=msg->urf[1];// rear_urf;
+  float right_urf=msg->urf[2];// right_urf;
   urfCallback(left_urf, rear_urf, right_urf);
 
 }

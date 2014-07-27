@@ -183,6 +183,7 @@ TinyGPSPlus gps;
 
 
 float qx = 0, qy = 0, qz = 1, qw = 0;
+short ax=0,ay=0,az=0,gx=0,gy=0,gz=0,mx=0,my=0,mz=0;
 unsigned long imu_t = 0;
 unsigned long CHECK_IMU_INTERVAL;
 boolean imu_fault = 0;
@@ -371,17 +372,29 @@ void Onlogwarn() {
 
 void pub_raw() {
 
-  raw_msg.qw = qw;
-  raw_msg.qx = qx;
-  raw_msg.qy = qy;
-  raw_msg.qz = qz;
+  raw_msg.orientation[0] = qx;
+  raw_msg.orientation[1] = qy;
+  raw_msg.orientation[2] = qz;
+  raw_msg.orientation[3] = qw;
 
-  raw_msg.left_ticks = (long)left_enc;
-  raw_msg.right_ticks = (long)right_enc;
+  raw_msg.linear_acceleration[0]=ax;
+  raw_msg.linear_acceleration[1]=ay;
+  raw_msg.linear_acceleration[2]=az;
 
-  raw_msg.left_urf = (float)Left_URF_Median.getMedian() / 65535 * 5120 /1000;
-  raw_msg.rear_urf = (float)Rear_URF_Median.getMedian() / 65535 * 5120 /1000 ; 
-  raw_msg.right_urf = (float)Right_URF_Median.getMedian() / 65535 * 5120 /1000;
+  raw_msg.angular_velocity[0]=gx;
+  raw_msg.angular_velocity[1]=gy;
+  raw_msg.angular_velocity[2]=gz;
+
+  raw_msg.magnetometer[0]=mx;
+  raw_msg.magnetometer[1]=my;
+  raw_msg.magnetometer[2]=mz;
+
+  raw_msg.encoders[0] = (long)left_enc;
+  raw_msg.encoders[1] = (long)right_enc;
+
+  raw_msg.urf[0] = (float)Left_URF_Median.getMedian() / 65535 * 5120 /1000;
+  raw_msg.urf[1] = (float)Rear_URF_Median.getMedian() / 65535 * 5120 /1000 ; 
+  raw_msg.urf[2] = (float)Right_URF_Median.getMedian() / 65535 * 5120 /1000;
 
   p_raw.publish(&raw_msg);
   // digitalWrite(LED_PIN, !digitalRead(LED_PIN));
@@ -459,6 +472,7 @@ void loop()
 
   nh.spinOnce();
 }
+
 
 
 

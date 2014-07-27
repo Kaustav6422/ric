@@ -46,6 +46,16 @@ void read_imu() {
       qx = MPU.m_fusedQuaternion[1];
       qy = MPU.m_fusedQuaternion[2];
       qz = MPU.m_fusedQuaternion[3];
+      ax=MPU.m_calAccel[0];
+      ay=MPU.m_calAccel[1];
+      az=MPU.m_calAccel[2];
+      mx=MPU.m_calMag[0];
+      my=MPU.m_calMag[1];
+      mz=MPU.m_calMag[2];
+      gx=MPU.m_rawGyro[0];
+      gy=MPU.m_rawGyro[1];
+      gz=MPU.m_rawGyro[2];
+      
       imu_t = millis();
       imu_fault=false;
     }

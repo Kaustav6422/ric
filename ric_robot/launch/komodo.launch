@@ -4,11 +4,15 @@
   <arg name="id" default='1' />
   <arg name="have_elevator"  default="False" />
   <arg name="have_pan_tilt"  default="False" />
- <!--
-    <param name="publish_default_velocities" value="true"/>
+  
+ <!-- uncomment this if you only want to simulate the arm using a gui (without launching the arm launch file)
+   <param name="publish_default_velocities" value="true"/>
     <param name="use_gui" value="true"/>
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> 
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" > 
+    <remap from="joint_states" to="komodo_$(arg id)/joint_states"/>
+    </node>
     -->
+    
       <param name="/robot_description" command="$(find xacro)/xacro.py '$(find ric_description)/komodo/komodo.xacro' komodo_id:=$(arg id)" />
       <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map komodo_$(arg id)_odom 20" /> 
       
@@ -16,6 +20,9 @@
       
       <group ns="komodo_$(arg id)">
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
+	
+
+    
 	<param name="have_elevator" type="bool" value="$(arg have_elevator)" />
 	<group if="$(arg have_elevator)">
 	  <param name="have_elevator_int" type="int" value='1' />

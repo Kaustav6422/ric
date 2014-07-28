@@ -55,8 +55,8 @@ int MIN_RX1_cal= 1000;
 int MAX_RX1_cal =2000;
 int CENTER_RX1_cal =1500;
 
-int MIN_RX2= 1350;
-int MAX_RX2 =1750;
+int MIN_RX2= 1000;
+int MAX_RX2 =2000;
 int CENTER_RX2 =1500;
 
 int MIN_RX2_cal= 1000;

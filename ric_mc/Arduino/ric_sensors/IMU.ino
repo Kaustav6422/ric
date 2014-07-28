@@ -22,7 +22,7 @@ void  setup_imu() {
 
     }
     else {
-      nh.logwarn("    No calibration data found");
+      nh.logwarn("    No IMU calibration data found");
     }
   }
   else   nh.logerror("IMU fault");

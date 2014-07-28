@@ -4,7 +4,7 @@
   <arg name="id" default='1' />
   <arg name="have_elevator"  default="False" />
   <arg name="have_pan_tilt"  default="False" />
-  <!--
+ <!--
     <param name="publish_default_velocities" value="true"/>
     <param name="use_gui" value="true"/>
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> 
@@ -41,13 +41,11 @@
 	</node>
 	
 	<node name="ric_node" pkg="ric_robot" type="ric_node" output="screen" />
-	
+
 	
 	<include file="$(find ric_robot)/launch/komodo_arm.launch">
 	  <arg name="have_elevator" value="$(arg have_elevator)" />
 	</include> 
-	
-	
 	<!--
 	
 	  <node pkg="usb_cam" type="usb_cam_node" name="front_cam_node" output="screen"  respawn="true">

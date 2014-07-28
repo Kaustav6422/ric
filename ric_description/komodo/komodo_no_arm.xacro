@@ -27,7 +27,7 @@
       <material
         name="">
         <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+          rgba="0.52941176470588 0.52941176470588 0.52941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -67,7 +67,7 @@
       <material
         name="">
         <color
-          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+          rgba="0.15 0.15 0.15 1" />
       </material>
     </visual>
     <collision>
@@ -120,7 +120,7 @@
       <material
         name="">
         <color
-          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+          rgba="0.15 0.15 0.15 1" />
       </material>
     </visual>
     <collision>
@@ -173,7 +173,7 @@
       <material
         name="">
         <color
-          rgba="0.152941176470588 0.152941176470588 0.152941176470588 1" />
+          rgba="0.15 0.15 0.15 1" />
       </material>
     </visual>
     <collision>
@@ -226,7 +226,7 @@
       <material
         name="">
         <color
-          rgba="0.152941176470588 01752941176470588 0.152941176470588 1" />
+          rgba="0.15 0.15 0.15 1" />
       </material>
     </visual>
     <collision>
@@ -438,7 +438,7 @@
       <material
         name="">
         <color
-          rgba="1 1 1 1" />
+          rgba="0.1 0.1 0.1 1" />
       </material>
     </visual>
     <collision>
@@ -491,7 +491,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.192156862745098 0.1819607843137255 0.1933333333333333 1" />
       </material>
     </visual>
     <collision>
@@ -544,7 +544,7 @@
       <material
         name="">
         <color
-          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+          rgba="0.1792156862745098 0.1819607843137255 0.1933333333333333 1" />
       </material>
     </visual>
     <collision>
@@ -570,6 +570,7 @@
     <axis
       xyz="-1 0 0" />
   </joint>
+
   <link
     name="komodo_$(arg komodo_id)_sensors_unit_link">
     <inertial>
@@ -597,7 +598,7 @@
       <material
         name="">
         <color
-          rgba="0.509803921568627 0.537254901960784 0.56078431372549 1" />
+          rgba="0.6509803921568627 0.6537254901960784 0.656078431372549 1" />
       </material>
     </visual>
     <collision>

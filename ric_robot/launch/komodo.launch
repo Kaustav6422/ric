@@ -11,11 +11,11 @@
     -->
       <param name="/robot_description" command="$(find xacro)/xacro.py '$(find ric_description)/komodo/komodo.xacro' komodo_id:=$(arg id)" />
       <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map komodo_$(arg id)_odom 20" /> 
-      <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
+      
       
       
       <group ns="komodo_$(arg id)">
-	
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
 	<param name="have_elevator" type="bool" value="$(arg have_elevator)" />
 	<group if="$(arg have_elevator)">
 	  <param name="have_elevator_int" type="int" value='1' />

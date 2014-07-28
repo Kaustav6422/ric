@@ -456,7 +456,7 @@ int main(int argc, char **argv) {
   n.param("odom_pub_topic", odom_topic, std::string("odom_pub"));
   n.param("gps_pub_topic", gps_pub_topic, std::string("gps_pub"));	
 
-  n.param("joint_states_topic", joint_states_topic, std::string("/joint_states"));	
+  n.param("joint_states_topic", joint_states_topic, std::string("joint_states"));	
 
   n.param("ric_command_pub_topic", ric_command_topic, std::string("command"));
 

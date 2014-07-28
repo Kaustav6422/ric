@@ -172,7 +172,7 @@ def komodo_arm():
     rospy.Subscriber("/"+ns+"/left_finger_controller/state", dxl_JointState, lf_callback)
     rospy.Subscriber("/"+ns+"/right_finger_controller/state", dxl_JointState, rf_callback)
     rospy.Subscriber("/"+ns+"/wrist_controller/state", dxl_JointState, wr_callback)
-    pub = rospy.Publisher('/joint_states', JointState)
+    pub = rospy.Publisher('joint_states', JointState)
    
     while not rospy.is_shutdown():
     	msg.header.stamp = rospy.Time.now()

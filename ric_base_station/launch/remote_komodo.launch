@@ -7,7 +7,8 @@
   <arg name="have_elevator"  default="False" />
   <arg name="have_pan_tilt"  default="False" />
 
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
+
+
 	<param name="have_elevator" type="bool" value="$(arg have_elevator)" />
 	<group if="$(arg have_elevator)">
 	  <param name="have_elevator_int" type="int" value='1' />

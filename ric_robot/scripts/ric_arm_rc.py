@@ -51,9 +51,9 @@ def rc_callback(data):
   
   if data.RX6 < 1500:
      if data.RX2 > 1600:
-        elbow2_ang+=0.02
-     elif data.RX2 < 1400:
         elbow2_ang-=0.02
+     elif data.RX2 < 1400:
+        elbow2_ang+=0.02
      if elbow2_ang> math.pi-elbow2_min*2.0*math.pi/4096.0:
        elbow2_ang=math.pi-elbow2_min*2.0*math.pi/4096.0
      elif elbow2_ang< math.pi-elbow2_max*2.0*math.pi/4096.0:
@@ -61,9 +61,9 @@ def rc_callback(data):
      elbow2_pub.publish(elbow2_ang) 
   
      if data.RX1 > 1650:
-        elbow1_ang-=0.02
-     elif data.RX1 < 1400:
         elbow1_ang+=0.02
+     elif data.RX1 < 1400:
+        elbow1_ang-=0.02
      if elbow1_ang> math.pi-elbow1_min*2.0*math.pi/4096.0:
        elbow1_ang=math.pi-elbow1_min*2.0*math.pi/4096.0
      elif elbow1_ang< math.pi-elbow1_max*2.0*math.pi/4096.0:
@@ -71,9 +71,9 @@ def rc_callback(data):
      elbow1_pub.publish(elbow1_ang) 
   else:
      if data.RX2 > 1600:
-        shoulder_ang+=0.02
-     elif data.RX2 < 1400:
         shoulder_ang-=0.02
+     elif data.RX2 < 1400:
+        shoulder_ang+=0.02
      if shoulder_ang> -(math.pi-shoulder_max*2.0*math.pi/4096.0):
        shoulder_ang=-(math.pi-shoulder_max*2.0*math.pi/4096.0)
      elif shoulder_ang< -(math.pi-shoulder_min*2.0*math.pi/4096.0):
@@ -81,9 +81,9 @@ def rc_callback(data):
      shoulder_pub.publish(shoulder_ang)
      
      if data.RX1 > 1650:
-        base_rotation_ang-=0.02
-     elif data.RX1 < 1400:
         base_rotation_ang+=0.02
+     elif data.RX1 < 1400:
+        base_rotation_ang-=0.02
      if base_rotation_ang> math.pi-base_rotation_min*2.0*math.pi/4096.0:
        base_rotation_ang=math.pi-base_rotation_min*2.0*math.pi/4096.0
      elif base_rotation_ang< math.pi-base_rotation_max*2.0*math.pi/4096.0:
@@ -156,7 +156,7 @@ def ric_arm_rc():
    shoulder_pub = rospy.Publisher(ns+"shoulder_controller/command", Float64)   
    base_rotation_pub = rospy.Publisher(ns+"base_rotation_controller/command", Float64) 
   
-   rospy.Subscriber("/joint_states", JointState, js_callback)
+   rospy.Subscriber("joint_states", JointState, js_callback)
   
    while not rospy.is_shutdown():
      #rospy.loginfo("test")

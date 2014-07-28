@@ -1,9 +1,4 @@
 #!/usr/bin/env python
-# You need to run the following commands
-# roscore
-# rosrun joy joy_node
-# rosrun joy_cam joy_cam.py
-
 
 import roslib; 
 import rospy
@@ -13,6 +8,7 @@ from ric_robot.msg import ric_pan_tilt
 
 def joy_callback(data):
     global msg
+    global msg_pt
     global max_vel
     global max_rot
     global msg_pt
@@ -30,8 +26,14 @@ def joy_callback(data):
     global joy_pan
     global joy_tilt
     global joy_scroll_btn
-    msg.linear.x=data.axes[joy_for]*max_vel
-    msg.angular.z=data.axes[joy_rot]*max_rot
+    global joy_slow_btn
+    global slow
+    global slow_btn
+    global joy_center_btn
+    global center_btn
+    global center
+    msg.linear.x=data.axes[joy_for]*max_vel*slow
+    msg.angular.z=data.axes[joy_rot]*max_rot*slow
     if (data.axes[joy_pan]>0.5 and msg_pt.pan_angle<max_pan):
       pan_dir=1
     elif (data.axes[joy_pan]<-0.5 and msg_pt.pan_angle>-max_pan):
@@ -53,6 +55,26 @@ def joy_callback(data):
           rospy.loginfo("Controlling robot with ID %d",current_robot)
     if (data.buttons[joy_scroll_btn]==0):
        scroll_btn=0
+    if (data.buttons[joy_slow_btn]==1):
+       if (slow_btn==0):
+          if (slow==0.5):
+	     slow=1.0
+	  else:
+	     slow=0.5
+          slow_btn=1
+          rospy.loginfo("Max velocity is %f m/s",max_vel*slow)
+    if (data.buttons[joy_slow_btn]==0):
+       slow_btn=0
+    if (data.buttons[joy_center_btn]==1):
+       if (center_btn==0):
+          msg_pt.pan_angle=0
+          msg_pt.tilt_angle=0
+	  center=0
+          center_btn=1
+          rospy.loginfo("Centering pan tilt system")
+    if (data.buttons[joy_center_btn]==0):
+       center_btn=0
+
 
 def joy_cam():
     global pub 
@@ -75,21 +97,33 @@ def joy_cam():
     global joy_pan
     global joy_tilt
     global joy_scroll_btn
+    global joy_slow_btn
+    global slow
+    global slow_btn
+    global joy_center_btn
+    global center_btn
+    global center
     joy_for = rospy.get_param("joy_for")
     joy_rot = rospy.get_param("joy_rot")
     joy_pan = rospy.get_param("joy_pan")
     joy_tilt = rospy.get_param("joy_tilt")
     joy_scroll_btn = rospy.get_param("joy_scroll_btn")
+    joy_slow_btn = rospy.get_param("joy_slow_btn")
+    joy_center_btn = rospy.get_param("joy_center_btn")
     max_vel = rospy.get_param("max_vel")
     max_rot = rospy.get_param("max_rot")
     max_pan = rospy.get_param("max_pan")
     max_tilt = rospy.get_param("max_tilt")
     num_robots = rospy.get_param("robots_n")
     robot_type = rospy.get_param("robot_type")
+    center=10
+    slow=1
+    slow_btn=0
+    center_btn=0
     pan_dir=0
     tilt_dir=0
-    pan_vel=0.006
-    tilt_vel=0.006
+    pan_vel=0.02
+    tilt_vel=0.02
     pub=range(num_robots)
     pub_pt=range(num_robots)
     scroll_btn=0
@@ -117,6 +151,8 @@ def joy_cam():
       pub_pt[i-1] = rospy.Publisher(robot_name_pt, ric_pan_tilt)
       pub_pt[i-1].publish(msg_pt)
       rospy.sleep(0.1)
+    rospy.loginfo("Ready to control, Controlling robot with ID: %d",current_robot)
+    rospy.loginfo("Max velocity is %f m/s",max_vel*slow)
     while not rospy.is_shutdown():
       pub[current_robot-1].publish(msg)
       msg_pt.pan_angle=msg_pt.pan_angle+pan_dir*pan_vel

@@ -2,7 +2,7 @@
 <package>
   <name>ric</name>
   <version>1.0.0</version>
-  <description>ric Stack</description>
+  <description>ric meta-packagek</description>
   <url>http://www.ros.org/wiki/ric</url>
   <maintainer email="support@robotican.net">RoboTiCan</maintainer>
   <author email="support@robotican.net">RoboTiCan</author>

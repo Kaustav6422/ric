@@ -31,11 +31,11 @@ def rc_callback(data):
   #rospy.loginfo("commanding...")
   msg=right_finger_min+((right_finger_max-right_finger_min)/(2000.0-1000.0))*(data.RX3-1000.0)
   msg=math.pi-msg*2.0*math.pi/4096.0
-  right_finger_pub.publish(msg)
+  right_finger_pub.publish(-msg)
   
   #msg=left_finger_min+((left_finger_max-left_finger_min)/(2000.0-1000.0))*(data.RX3-1000.0)
   #msg=math.pi-msg*2.0*math.pi/4096.0
-  left_finger_pub.publish(-msg)
+  left_finger_pub.publish(+msg)
   
   
   if data.RX4 > 1600:

@@ -42,10 +42,6 @@
 	
 	<rosparam file="$(find ric_robot)/config/default_komodo.yaml" command="load" />
 	
-	<node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
-	  <param name="~port" value="/dev/Teensy" />
-	  <param name="~baud" value="57600" />
-	</node>
 	
 	<node name="ric_node" pkg="ric_robot" type="ric_node" output="screen" />
 
@@ -76,6 +72,10 @@
 	    <arg name="camera" value="komodo_$(arg id)_Asus_Camera" />
 	  </include>
 	  
+	 <node pkg="rosserial_python" type="serial_node.py" name="serial_node" output="screen">
+	  <param name="~port" value="/dev/Teensy" />
+	  <param name="~baud" value="57600" />
+	</node>
 	  <!--
 	  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node" output="screen">
 	    <param name="port" value="/dev/Hokuyo" />

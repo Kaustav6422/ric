@@ -53,7 +53,7 @@
 	<include file="$(find ric_robot)/launch/komodo_arm.launch">
 	  <arg name="have_elevator" value="$(arg have_elevator)" />
 	</include> 
-	<!--
+	
 	
 	  <node pkg="usb_cam" type="usb_cam_node" name="front_cam_node" output="screen"  respawn="true">
 	    <param name="~video_device" value="/dev/video1" />
@@ -76,7 +76,7 @@
 	    <arg name="camera" value="komodo_$(arg id)_Asus_Camera" />
 	  </include>
 	  
-	  
+	  <!--
 	  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node" output="screen">
 	    <param name="port" value="/dev/Hokuyo" />
 	    <param name="frame_id" value="komodo_$(arg id)_Laser_link" />

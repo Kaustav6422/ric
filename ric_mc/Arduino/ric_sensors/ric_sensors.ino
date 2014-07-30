@@ -43,8 +43,8 @@
 
  GPS PIN 1 -> GND
  GPS PIN 2 -> VCC
- GPS PIN 3 -> RX2 = 17
- GPS PIN 4 -> TX2 = 16
+ GPS PIN 3 -> RX3 = 7
+ GPS PIN 4 -> TX3 = 8
  
  */
 
@@ -229,7 +229,7 @@ void accelCalLoop(void);
 
 //FAULT AND BATTERY MONITOR
 #define STATUS_INTERVAL 200 //5 hz  
-#define VOLTAGE_DIVIDER_RATIO 5.61 //Vbat ----/\/\R1=22K/\/\----A0----/\/\R2=4.7K/\/\----AGND
+#define VOLTAGE_DIVIDER_RATIO 5.7787 //Vbat ----/\/\R1=22K/\/\----A0----/\/\R2=4.7K/\/\----AGND
 
 
 

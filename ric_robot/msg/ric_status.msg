@@ -1,4 +1,3 @@
 uint8 faults
-float32 battery1_voltage
-float32 battery2_voltage
-float32 battery3_voltage
+float32 sensors_battery_voltage
+float32 rover_battery_voltage

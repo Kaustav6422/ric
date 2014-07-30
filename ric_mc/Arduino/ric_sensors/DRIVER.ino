@@ -112,8 +112,8 @@ void pub_status() {
 #endif
 
   status_msg.faults = 8 * (int)imu_fault + 4 * gps_fault_bit + 2*(int)(!encoders_ok) + 1*(int)(RxStatus);
-  status_msg.battery1_voltage = (float)analogRead(BATTERY_MONITOR_PIN) * 3.3 / 65535 * VOLTAGE_DIVIDER_RATIO;
-  status_msg.battery2_voltage = controller_bat_v;
+  status_msg.sensors_battery_voltage = (float)analogRead(BATTERY_MONITOR_PIN) * 3.3 / 65535 * VOLTAGE_DIVIDER_RATIO;
+  status_msg.rover_battery_voltage = controller_bat_v;
   p_status.publish(&status_msg);
 
 }

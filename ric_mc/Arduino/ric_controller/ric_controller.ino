@@ -97,7 +97,7 @@ CmdMessenger cmdMessenger = CmdMessenger(SERIAL_PORT);
 
 //BATTERY MONITOR
 #define STATUS_INTERVAL 1000 //1 hz  
-#define VOLTAGE_DIVIDER_RATIO 11.09472 //Vbat ----/\/\R1=47K/\/\----A0----/\/\R2=4.7K/\/\----AGND
+#define VOLTAGE_DIVIDER_RATIO 11.104 //Vbat ----/\/\R1=47K/\/\----A0----/\/\R2=4.7K/\/\----AGND
 
 
 //DRIVER

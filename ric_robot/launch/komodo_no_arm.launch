@@ -43,6 +43,8 @@
 	  <param name="~video_device" value="/dev/video0" />
 	  <param name="~camera_frame_id" value="komodo_$(arg id)_Front_Camera_link" />
 	  <param name="~pixel_format" value="yuyv" />
+	  <param name="~image_width" value="320" />
+	  <param name="~image_height" value="240" />
 	</node>
 	
 	

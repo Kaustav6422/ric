@@ -287,6 +287,9 @@ void setup()
     blink_led(1000);
     nh.spinOnce();
   }
+  nh.spinOnce();
+  delay(1000);
+  nh.spinOnce();
   nh.loginfo("Starting up...");
   startup_init();
 
@@ -409,6 +412,9 @@ void loop()
       nh.spinOnce();
       blink_led(1000);
     }
+    nh.spinOnce();
+    delay(1000);
+    nh.spinOnce();
     nh.loginfo("Starting up...");
     startup_init();
   }
@@ -472,6 +478,7 @@ void loop()
 
   nh.spinOnce();
 }
+
 
 
 

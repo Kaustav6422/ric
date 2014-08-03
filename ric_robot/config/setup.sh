@@ -19,7 +19,6 @@ roscd ric_robot
 cd ..
 cd ..
 git clone https://github.com/ros-drivers/rosserial.git
-cp -f ric/ric_mc/ArduinoHardware.h rosserial/rosserial_arduino/src/ros_lib
 
 echo -e "\e[32mWould you like to install usb_cam package (front webcam support) (y/n)?\e[0m"
 read

@@ -118,7 +118,7 @@ double DT;
 #define  MAX_TICKS_PER_S 10000 //tics/sec ~ 4 m/s (13cm radius wheel)
 boolean wd_on =true;
 float alpha = 0.05;
-float kp = 0.02, ki = 0.08, kd = 0.0;
+float kp = 0.007, ki = 0.1, kd = 0.0;
 PID PID1(&Input1, &Output1, &Setpoint1, kp, ki, kd, DIRECT);
 PID PID2(&Input2, &Output2, &Setpoint2, kp, ki, kd, DIRECT);
 

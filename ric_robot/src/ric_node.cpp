@@ -231,7 +231,6 @@ void encodersCallback(int32_t left_ticks, int32_t right_ticks) {
  	
   jointstate_msg.header.stamp = ros::Time::now();
 
-  //TODO: Publish wheels joints
   jointstate_msg.position[0]=r_w*delta_time;
   jointstate_msg.velocity[0]=r_w;
   jointstate_msg.position[1]=l_w*delta_time;
@@ -462,14 +461,14 @@ int main(int argc, char **argv) {
 
   n.param("set_odom_srv", set_odom_srv, std::string("set_odom"));
 
-  n.param("wheel_diameter", wheel_diameter, 0.12);
-  n.param("wheel_base_length", wheel_base_length, 0.275);
-  n.param("encoder_cpr", encoder_cpr, 4288.0);
+  n.param("wheel_diameter", wheel_diameter, 0.2622);
+  n.param("wheel_base_length", wheel_base_length, 0.396);
+  n.param("encoder_cpr", encoder_cpr, 2048.0);
   n.param("rotation_covariance", rot_cov, 1.0);
   n.param("position_covariance", pos_cov, 1.0);
   n.param("fuse_imu_roll_pitch", fuse_imu_roll_pitch, true);
   n.param("fuse_imu_yaw", fuse_imu_yaw, false);
-  n.param("slip_factor", slip_factor, 0.85); 
+  n.param("slip_factor", slip_factor, 0.65); 
   n.param("have_pan_tilt", have_pan_tilt, false);
 	
   q_imu.x=0;

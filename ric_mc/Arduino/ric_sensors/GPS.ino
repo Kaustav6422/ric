@@ -4,7 +4,7 @@ void read_gps() {
     if (gps.encode(GPS_SERIAL_PORT.read())) {
       if ((gps.location.isValid())&&(gps.location.isUpdated()))
       {
-       //  digitalWrite(13, !digitalRead(13));
+        //  digitalWrite(13, !digitalRead(13));
         gps_msg.Lat = gps.location.lat();
         gps_msg.Lon = gps.location.lng();
         gps_msg.Alt = gps.altitude.meters();
@@ -17,3 +17,4 @@ void read_gps() {
   }
 }
 #endif
+

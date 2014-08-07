@@ -10,13 +10,13 @@ void  setup_imu() {
       char log_msg[100];
       if (calData.magValid==true) {
         nh.loginfo("    Mag calibration data loaded:"); 
-        sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.magMinX,calData.magMinY,calData.magMinZ,calData.magMaxX,calData.magMaxY,calData.magMaxZ );
-        nh.loginfo(log_msg);
+        //sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.magMinX,calData.magMinY,calData.magMinZ,calData.magMaxX,calData.magMaxY,calData.magMaxZ );
+        //nh.loginfo(log_msg);
       }
       if (calData.accelValid==true) {
         nh.loginfo("    Accel calibration data loaded:"); 
-        sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.accelMinX,calData.accelMinY,calData.accelMinZ,calData.accelMaxX,calData.accelMaxY,calData.accelMaxZ );
-        nh.loginfo(log_msg);
+        //sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.accelMinX,calData.accelMinY,calData.accelMinZ,calData.accelMaxX,calData.accelMaxY,calData.accelMaxZ );
+        //nh.loginfo(log_msg);
 
       }
 
@@ -55,7 +55,7 @@ void read_imu() {
       gx=MPU.m_rawGyro[0];
       gy=MPU.m_rawGyro[1];
       gz=MPU.m_rawGyro[2];
-      
+
       imu_t = millis();
       imu_fault=false;
     }
@@ -96,35 +96,35 @@ void ric_calibCb(const ric_calib::Request & req, ric_calib::Response & res) {
     case 5:
       calLibErase(DEVICE_TO_USE);
       nh.loginfo("Calibration data erased");
-            res.ack=true;
+      res.ack=true;
       return;
     case 11:
       cmdMessenger.sendCmdStart(kRcCalib);
       cmdMessenger.sendCmdArg(1);
       cmdMessenger.sendCmdEnd();
-    //  nh.loginfo("sent command to start rc calib");
-          res.ack=true;
+      //  nh.loginfo("sent command to start rc calib");
+      res.ack=true;
       return;
     case 12:
       cmdMessenger.sendCmdStart(kRcCalib);
       cmdMessenger.sendCmdArg(2);
       cmdMessenger.sendCmdEnd();
-    //  nh.loginfo("sent command to save rc calib");
-          res.ack=true;
+      //  nh.loginfo("sent command to save rc calib");
+      res.ack=true;
       return;
     case 13:
       cmdMessenger.sendCmdStart(kRcCalib);
       cmdMessenger.sendCmdArg(3);
       cmdMessenger.sendCmdEnd();
-    //  nh.loginfo("sent command to cancel rc calib");
-          res.ack=true;
+      //  nh.loginfo("sent command to cancel rc calib");
+      res.ack=true;
       return;
     case 14:
       cmdMessenger.sendCmdStart(kRcCalib);
       cmdMessenger.sendCmdArg(4);
       cmdMessenger.sendCmdEnd();
-            res.ack=true;
-    //  nh.loginfo("sent command to print rc calib");
+      res.ack=true;
+      //  nh.loginfo("sent command to print rc calib");
       return;
     }
     break;
@@ -303,6 +303,7 @@ void accelCalLoop()
 
 
 }
+
 
 
 

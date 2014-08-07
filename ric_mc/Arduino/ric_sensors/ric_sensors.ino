@@ -4,6 +4,9 @@
 //uncomment this if you have an elevator
 //#define HAVE_ELEVATOR
 
+//uncomment this if you have an elevator
+//#define HAVE_PAN_TILT
+
 //SUBSCRIBERS
 #define COMMAND_TOPIC "command"
 #define PAN_TILT_TOPIC "pan_tilt"
@@ -64,7 +67,8 @@ boolean RxStatus = 0;
 float controller_bat_v = 0;
 int left_enc = 0, right_enc = 0;
 unsigned long enc_ok_t=0, gotp_t=0;
-boolean got_parameters=false, encoders_ok=false, ask_parameters=true;
+boolean got_parameters=false, encoders_ok=false, ask_parameters=true,got_first_enc_read=false;
+
 enum
 {
   kCommand,
@@ -113,7 +117,9 @@ void reset_encCb(const Empty::Request & req, Empty::Response & res);
 void ric_calibCb(const ric_calib::Request & req, ric_calib::Response & res);
 void relaysCb(const relays::Request & req, relays::Response & res);
 void commandCb( const ric_robot::ric_command& msg);
+#ifdef HAVE_PAN_TILT
 void pantiltCb( const ric_robot::ric_pan_tilt& msg);
+#endif
 void restart_allCb(const Empty::Request & req, Empty::Response & res);
 
 ros::ServiceServer<ric_calib::Request, ric_calib::Response> ric_calib_server(RIC_CALIB_SRV, &ric_calibCb);
@@ -126,8 +132,9 @@ ros::ServiceClient<set_elevator::Request, set_elevator::Response> elev_set_clien
 #endif
 ros::Subscriber<ric_robot::ric_command> command_sub(COMMAND_TOPIC, &commandCb );
 
+#ifdef HAVE_PAN_TILT
 ros::Subscriber<ric_robot::ric_pan_tilt> pan_tilt_sub(PAN_TILT_TOPIC, &pantiltCb );
-
+#endif
 
 ric_robot::ric_raw raw_msg;
 ros::Publisher p_raw(RAW_TOPIC, &raw_msg);
@@ -146,6 +153,7 @@ ros::Publisher p_status(STATUS_TOPIC, &status_msg);
 
 
 //PAN TILT
+#ifdef HAVE_PAN_TILT
 #include <Servo.h>
 #define MAX_PAN 35
 #define MIN_PAN -35
@@ -159,6 +167,7 @@ Servo tilt_servo;
 unsigned long pan_tilt_t = 0;
 bool pan_tilt_moving = true;
 #define PAN_TILT_MOVE_TIME 1000
+#endif
 
 
 #ifdef USE_GPS
@@ -303,9 +312,12 @@ void startup_init() {
 #ifdef HAVE_ELEVATOR
   setup_homing();
 #else
-  nh.loginfo("No arm elevator, ignoring elevator home switches");
+  //nh.loginfo("No arm elevator, ignoring elevator home switches");
 #endif
+
+#ifdef HAVE_PAN_TILT
   pan_tilt_setup();
+#endif
 
   setup_imu();
 
@@ -317,8 +329,8 @@ void startup_init() {
   nh.loginfo("GPS ready");
 #endif
 
-  asks=1;
-  ask_parameters=true;
+
+
   setup_driver();
 
 }
@@ -435,6 +447,7 @@ void loop()
 
   }
 
+
   if ((ask_parameters==true)&&(!got_parameters)&&(millis() - gotp_t >= ASK_PARAMETERS_INTERVAL)) {
     cmdMessenger.sendCmd(kGetParameters, true);
     char ask_msg[100];
@@ -444,6 +457,7 @@ void loop()
     nh.loginfo(ask_msg);
     gotp_t=millis();
   }
+
 
 
   if (millis() - pub_t >= PUB_RAW_INTERVAL)  {
@@ -473,12 +487,13 @@ void loop()
     }
   }
 
-#ifdef USE_PAN_TILT
+#ifdef HAVE_PAN_TILT
   pan_tilt_wd();
 #endif
 
   nh.spinOnce();
 }
+
 
 
 

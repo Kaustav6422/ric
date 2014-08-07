@@ -2,6 +2,20 @@
 
 void setup_driver() {
 
+
+  CONTROLLER_PORT.flush();
+  //stop_motors();
+  got_parameters=false;
+  ask_parameters=false;
+  asks=1;
+  encoders_ok=true;
+
+  //gotp_t=millis();
+  enc_ok_t=millis();
+  got_first_enc_read=false;
+}
+
+void send_parameters() {
   float pid_constatns[5];
   if (!nh.getParam("pid_constants", pid_constatns, 5)) {
     nh.logwarn("No PID parameters found, using defaults.");
@@ -17,13 +31,6 @@ void setup_driver() {
     cmdMessenger.sendCmdEnd();
 
   }
-
-  //stop_motors();
-  got_parameters=false;
-  encoders_ok=false;
-  gotp_t=millis();
-  enc_ok_t=millis();
-
 }
 
 void OnGetParametersAck() {
@@ -65,9 +72,14 @@ void OnEncoders() {
   left_enc = cmdMessenger.readIntArg();
   right_enc = cmdMessenger.readIntArg();
   enc_ok_t=millis();
-  if (!encoders_ok){
+  if ((!encoders_ok)||(!got_first_enc_read)){
     nh.loginfo("Communication with controller is OK");
+    got_parameters=false;
+    send_parameters();
+    ask_parameters=true;
+    gotp_t=millis();
     encoders_ok=true;
+    got_first_enc_read=true;
   }
 }
 
@@ -144,6 +156,7 @@ void stop_motors() {
   cmdMessenger.sendCmdArg(0.0);
   cmdMessenger.sendCmdEnd();
 }
+
 
 
 

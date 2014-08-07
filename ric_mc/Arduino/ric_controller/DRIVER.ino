@@ -1,18 +1,6 @@
 
 void setup_driver() {
 
-  /* TODO: READ FROM FLASH
-   float pid_constatns[5];
-   if (!nh.getParam("pid_constants", pid_constatns, 5)) {
-   nh.loginfo("No PID parameters found, using defaults.");
-   }
-   else {
-   PID1.SetTunings(pid_constatns[0], pid_constatns[1], pid_constatns[2]);
-   PID2.SetTunings(pid_constatns[0], pid_constatns[1], pid_constatns[2]);
-   alpha = pid_constatns[3];
-   CONTROL_INTERVAL = (int)pid_constatns[4];
-   }
-   */
 
   Setpoint1 = 0;
   Setpoint2 = 0;

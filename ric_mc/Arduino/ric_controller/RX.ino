@@ -176,7 +176,7 @@ void load_rc_calib() {
     logwarn("Could not load RC calibration from EEPROM");
     rc_calib_ok=false;
   }
-  print_rc_calib(0);
+  //print_rc_calib(0);
 
 }
 

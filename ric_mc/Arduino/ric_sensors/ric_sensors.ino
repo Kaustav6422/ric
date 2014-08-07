@@ -1,6 +1,7 @@
 
 #define USE_GPS
 
+//uncomment this if you have an elevator
 //#define HAVE_ELEVATOR
 
 //SUBSCRIBERS

@@ -91,7 +91,7 @@ def epos_callback(data):
     if home_ok==2:
        elev_goal_pos=data.pos
        if elev_goal_pos>(max_elev_pos+0.000001) or elev_goal_pos<(min_elev_pos-0.000001):
-          rospy.loginfo("Required goal (%.3f) is outside of the elevator rang of motion [%.3f-%.3f]",elev_goal_pos,min_elev_pos,max_elev_pos)
+          rospy.loginfo("Required goal (%.3f) is outside of the elevator range of motion [%.3f-%.3f]",elev_goal_pos,min_elev_pos,max_elev_pos)
        else:
           epos_err=elev_goal_pos-final_epos
           if abs(epos_err)>epos_tol:

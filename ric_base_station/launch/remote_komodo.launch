@@ -68,9 +68,10 @@
 	    <param name="port" value="/dev/Hokuyo" />
 	    <param name="frame_id" value="komodo_$(arg id)_Laser_link" />
 	  </node>
-	   -->  
+	   --> 
+	   <!--
 	  <node name="ric_arm_rc" pkg="ric_robot" type="ric_arm_rc.py" output="screen" />
-	 
+	  -->
 
 </launch>
 

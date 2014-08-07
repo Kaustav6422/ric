@@ -66,6 +66,25 @@ void setup_homing() {
   pre_uh=HIGH;
   uh_t=millis();
 
+int uh=digitalRead(HOME_UP_PIN);
+int lh=digitalRead(HOME_DOWN_PIN);
+if (uh==LOW) {
+  nh.loginfo("Upper home switch activated");
+    set_elevator::Request req;
+    set_elevator::Response res;
+    req.pos = 0.407;
+    elev_set_client.call(req, res);
+    uh_stat=true;  
+}
+else if (lh==LOW) {
+    nh.loginfo("Lower home switch activated");
+    set_elevator::Request req;
+    set_elevator::Response res;
+    req.pos = -0.01;
+    elev_set_client.call(req, res);
+    lh_stat=true;
+}
+
 }
 
 #endif

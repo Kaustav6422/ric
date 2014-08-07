@@ -932,7 +932,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0.185 0 0" />
       <geometry>
         <mesh
           filename="package://ric_description/komodo/meshes/left_finger_link.STL" />
@@ -990,7 +990,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="-0.185 0 0" />
       <geometry>
         <mesh
           filename="package://ric_description/komodo/meshes/right_finger_link.STL" />

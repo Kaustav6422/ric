@@ -9,12 +9,12 @@ void  setup_imu() {
     {
       char log_msg[100];
       if (calData.magValid==true) {
-        nh.loginfo("    Mag calibration data loaded:"); 
+        nh.loginfo("    Mag calibration data loaded"); 
         //sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.magMinX,calData.magMinY,calData.magMinZ,calData.magMaxX,calData.magMaxY,calData.magMaxZ );
         //nh.loginfo(log_msg);
       }
       if (calData.accelValid==true) {
-        nh.loginfo("    Accel calibration data loaded:"); 
+        nh.loginfo("    Accel calibration data loaded"); 
         //sprintf(log_msg, "       minX=%d minY=%d minZ=%d   maxX=%d maxY=%d maxZ=%d",calData.accelMinX,calData.accelMinY,calData.accelMinZ,calData.accelMaxX,calData.accelMaxY,calData.accelMaxZ );
         //nh.loginfo(log_msg);
 

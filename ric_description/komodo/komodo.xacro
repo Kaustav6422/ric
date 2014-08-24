@@ -279,7 +279,7 @@
       <material
         name="">
         <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+          rgba="0.1 0.1 0.1 1" />
       </material>
     </visual>
     <collision>
@@ -332,7 +332,7 @@
       <material
         name="">
         <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+          rgba="0.1 0.1 0.1 1" />
       </material>
     </visual>
     <collision>
@@ -385,7 +385,7 @@
       <material
         name="">
         <color
-          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
+          rgba="0.1 0.1 0.1 1" />
       </material>
     </visual>
     <collision>
@@ -676,8 +676,8 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-1.57079"
+      upper="1.57079"
       effort="0"
       velocity="0" />
   </joint>
@@ -734,8 +734,8 @@
     <axis
       xyz="0 1 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-1.692969"
+      upper="1.692969"
       effort="0"
       velocity="0" />
   </joint>
@@ -792,8 +792,8 @@
     <axis
       xyz="-0.999999999998754 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-2.4434"
+      upper="2.4434"
       effort="0"
       velocity="0" />
   </joint>
@@ -850,8 +850,8 @@
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-2.4434"
+      upper="2.4434"
       effort="0"
       velocity="0" />
   </joint>
@@ -908,8 +908,8 @@
     <axis
       xyz="0 0 0.999999999998754" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-1.91986"
+      upper="1.91986"
       effort="0"
       velocity="0" />
   </joint>
@@ -966,8 +966,8 @@
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-0.87266"
+      upper="0.87266"
       effort="0"
       velocity="0" />
   </joint>
@@ -1024,8 +1024,8 @@
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-3.14"
-      upper="3.14"
+      lower="-0.87266"
+      upper="0.87266"
       effort="0"
       velocity="0" />
   </joint>

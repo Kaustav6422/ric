@@ -2,7 +2,7 @@ wheel_diameter: 0.2622
 wheel_base_length: 0.396
 encoder_cpr: 2048
 
-fuse_imu_roll_pitch: false
+fuse_imu_roll_pitch: true
 fuse_imu_yaw: false
 slip_factor: 0.65
 

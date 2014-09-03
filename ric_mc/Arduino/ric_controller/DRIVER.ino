@@ -155,7 +155,7 @@ void OnSetParameters() {
   ki = cmdMessenger.readFloatArg();
   kd = cmdMessenger.readFloatArg();
   alpha = cmdMessenger.readFloatArg();
-  CONTROL_INTERVAL = cmdMessenger.readIntArg();
+  CONTROL_INTERVAL = cmdMessenger.readInt32Arg();
 
   PID1.SetTunings(kp, ki, kd);
   PID2.SetTunings(kp, ki, kd);

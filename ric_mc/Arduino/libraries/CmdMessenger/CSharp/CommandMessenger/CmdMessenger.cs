@@ -1,4 +1,4 @@
-﻿#region CmdMessenger - MIT - (c) 2013 Thijs Elenbaas.
+﻿#region CmdMessenger - MIT - (c) 2014 Thijs Elenbaas.
 /*
   CmdMessenger - library that provides command based messaging
 
@@ -13,40 +13,61 @@
   The above copyright notice and this permission notice shall be
   included in all copies or substantial portions of the Software.
 
-  Copyright 2013 - Thijs Elenbaas
+  Copyright 2014 - Thijs Elenbaas
 */
 #endregion
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 using CommandMessenger.TransportLayer;
+using ThreadState = System.Diagnostics.ThreadState;
 
 namespace CommandMessenger
 {
-    public enum ClearQueue
+    public enum SendQueue
     {
-        KeepQueue,
-        ClearSendQueue,
-        ClearReceivedQueue,
-        ClearSendAndReceivedQueue,
+        Default,
+        InFrontQueue,
+        AtEndQueue,
+        WaitForEmptyQueue,        
+        ClearQueue,
+    }
+
+    public enum ReceiveQueue
+    {
+        Default,
+        WaitForEmptyQueue,
+        ClearQueue,
+    }
+
+    public enum UseQueue
+    {
+        UseQueue,
+        BypassQueue,
+    }
+
+    public enum BoardType
+    {
+        Bit16,
+        Bit32,
     }
 
     /// <summary> Command messenger main class  </summary>
     public class CmdMessenger : DisposableObject
-    {
-        
-        public EventHandler NewLinesReceived;                               // Event handler for new lines received
-        public EventHandler NewLineReceived;	                            // Event handler for a new line received
-        public EventHandler NewLineSent;	                                // The new line sent
-        private readonly Object _sendCommandDataLock = new Object();        // The process serial data lock
-       
+    {                      
+        public event NewLineEvent.NewLineHandler NewLineReceived;           // Event handler for new lines received
+        public event NewLineEvent.NewLineHandler NewLineSent;               // Event handler for a new line received
+              
         private CommunicationManager _communicationManager;                 // The communication manager
+        private Sender _sender;                                             // The command sender
+
         private char _fieldSeparator;                                       // The field separator
         private char _commandSeparator;                                     // The command separator
-
+        private bool _printLfCr;                                            // Add Linefeed + CarriageReturn 
+        private BoardType _boardType;
         private MessengerCallbackFunction _defaultCallback;                 // The default callback
         private Dictionary<int, MessengerCallbackFunction> _callbackList;   // List of callbacks
 
@@ -58,21 +79,49 @@ namespace CommandMessenger
         /// <param name="receivedCommand"> The received command. </param>
         public delegate void MessengerCallbackFunction(ReceivedCommand receivedCommand);
 
+        /// <summary> Embedded Processor type. Needed to translate variables between sides. </summary>
+        /// <value> The current received line. </value>
+        public BoardType BoardType {
+            get { return _boardType;  }
+            set
+            {
+                _boardType = value;
+                Command.BoardType = _boardType;
+            }
+        }
+
         /// <summary> Gets or sets a whether to print a line feed carriage return after each command. </summary>
         /// <value> true if print line feed carriage return, false if not. </value>
-        public bool PrintLfCr { get; set; }
+        public bool PrintLfCr { 
+            get { return _printLfCr; } 
+            set {
+                _printLfCr = value;
+                Command.PrintLfCr = _printLfCr;
+                _sender.PrintLfCr = _printLfCr;
+            } 
+        }
 
         /// <summary> Gets or sets the current received command line. </summary>
         /// <value> The current received line. </value>
         public String CurrentReceivedLine { get; private set; }
 
-        /// <summary> Gets or sets the current received command. </summary>
-        /// <value> The current received command. </value>
-        public ReceivedCommand CurrentReceivedCommand { get; private set; }
+
 
         /// <summary> Gets or sets the currently sent line. </summary>
         /// <value> The currently sent line. </value>
-        public String CurrentSentLine { get; private set; }
+        //public String CurrentSentLine { get; private set; }
+
+        // Enable logging send commands to file
+        //public bool LogSendCommandsEnabled
+        //{
+        //    get { return _sendCommandLogger.isEnabled; }
+        //    set { 
+        //        _sendCommandLogger.isEnabled = value;
+        //        if  (!_sendCommandLogger.isOpen) {
+        //            _sendCommandLogger.Open();
+        //        }
+        //    }
+        //}
 
         /// <summary> Gets or sets the log file of send commands. </summary>
         /// <value> The logfile name for send commands. </value>
@@ -82,18 +131,28 @@ namespace CommandMessenger
         //    set { _sendCommandLogger.LogFileName = value; }
         //}
 
+   
+
         /// <summary> Gets or sets the log file of receive commands. </summary>
         /// <value> The logfile name for receive commands. </value>
-        public String LogFileReceiveCommands { get; set; }
+        //public String LogFileReceiveCommands { get; set; }
 
         // The control to invoke the callback on
-        private Control _controlToInvokeOn; 
-
+        private Control _controlToInvokeOn;
+        
         /// <summary> Constructor. </summary>
         /// <param name="transport"> The transport layer. </param>
         public CmdMessenger(ITransport transport)
         {
-            Init(transport, ',', ';', '/');
+            Init(transport, ',', ';', '/', 60);
+        }
+
+        /// <summary> Constructor. </summary>
+        /// <param name="transport"> The transport layer. </param>
+        /// <param name="sendBufferMaxLength"> The maximum size of the send buffer</param>
+        public CmdMessenger(ITransport transport, int sendBufferMaxLength)
+        {
+            Init(transport, ',', ';', '/', sendBufferMaxLength);
         }
 
         /// <summary> Constructor. </summary>
@@ -101,7 +160,16 @@ namespace CommandMessenger
         /// <param name="fieldSeparator"> The field separator. </param>
         public CmdMessenger(ITransport transport, char fieldSeparator)
         {
-            Init(transport, fieldSeparator, ';', '/');
+            Init(transport, fieldSeparator, ';', '/', 60);
+        }
+
+        /// <summary> Constructor. </summary>
+        /// <param name="transport"> The transport layer. </param>
+        /// <param name="fieldSeparator"> The field separator. </param>
+        /// <param name="sendBufferMaxLength"> The maximunm size of the send buffer</param>
+        public CmdMessenger(ITransport transport, char fieldSeparator, int sendBufferMaxLength)
+        {
+            Init(transport, fieldSeparator, ';', '/', sendBufferMaxLength);
         }
 
         /// <summary> Constructor. </summary>
@@ -110,7 +178,7 @@ namespace CommandMessenger
         /// <param name="commandSeparator"> The command separator. </param>
         public CmdMessenger(ITransport transport, char fieldSeparator, char commandSeparator)
         {
-            Init(transport, fieldSeparator, commandSeparator, commandSeparator);
+            Init(transport, fieldSeparator, commandSeparator, commandSeparator, 60);
         }
 
         /// <summary> Constructor. </summary>
@@ -118,10 +186,11 @@ namespace CommandMessenger
         /// <param name="fieldSeparator">   The field separator. </param>
         /// <param name="commandSeparator"> The command separator. </param>
         /// <param name="escapeCharacter">  The escape character. </param>
+        /// <param name="sendBufferMaxLength"> The maximunm size of the send buffer</param>
         public CmdMessenger(ITransport transport, char fieldSeparator, char commandSeparator,
-                            char escapeCharacter)
+                            char escapeCharacter, int sendBufferMaxLength)
         {
-            Init(transport, fieldSeparator, commandSeparator, escapeCharacter);
+            Init(transport, fieldSeparator, commandSeparator, escapeCharacter, sendBufferMaxLength);
         }
 
         /// <summary> Initialises this object. </summary>
@@ -129,27 +198,42 @@ namespace CommandMessenger
         /// <param name="fieldSeparator">   The field separator. </param>
         /// <param name="commandSeparator"> The command separator. </param>
         /// <param name="escapeCharacter">  The escape character. </param>
+        /// <param name="sendBufferMaxLength"> The maximunm size of the send buffer</param>
         private void Init(ITransport transport, char fieldSeparator, char commandSeparator,
-                          char escapeCharacter)
+                          char escapeCharacter, int sendBufferMaxLength)
         {           
             _controlToInvokeOn = null;
-
-            _sendCommandQueue = new SendCommandQueue(DisposeStack, this);
-            _receiveCommandQueue = new ReceiveCommandQueue(DisposeStack, this);
+            
+            _receiveCommandQueue  = new ReceiveCommandQueue(DisposeStack, this);
             _communicationManager = new CommunicationManager(DisposeStack, transport, _receiveCommandQueue, commandSeparator, fieldSeparator, escapeCharacter);
+            _sender               = new Sender(_communicationManager, _receiveCommandQueue);
+            _sendCommandQueue     = new SendCommandQueue(DisposeStack, this, _sender, sendBufferMaxLength);
+           
+            _receiveCommandQueue.NewLineReceived += (o, e) => InvokeNewLineEvent(NewLineReceived, e);
+            _sendCommandQueue.NewLineSent        += (o, e) => InvokeNewLineEvent(NewLineSent, e);
 
             _fieldSeparator = fieldSeparator;
             _commandSeparator = commandSeparator;
-
-            Escaping.EscapeChars(fieldSeparator, commandSeparator, escapeCharacter);
-            _callbackList = new Dictionary<int, MessengerCallbackFunction>();
             PrintLfCr = false;
+
+            Command.FieldSeparator = _fieldSeparator;
+            Command.CommandSeparator = _commandSeparator;
+            Command.PrintLfCr = PrintLfCr;            
+
+            Escaping.EscapeChars(_fieldSeparator, _commandSeparator, escapeCharacter);
+            _callbackList = new Dictionary<int, MessengerCallbackFunction>();
+            //CurrentSentLine = "";
+            CurrentReceivedLine = "";
         }
+
+        //void ReceiveCommandQueueNewLineReceived(object sender, NewLineEvent.NewLineArgs e)
+        //{
+        //    InvokeNewLineEvent(NewLineReceived, e);
+        //}
 
         public void SetSingleCore()
         {
-            Process proc = Process.GetCurrentProcess();
-            //var t = proc.Threads[0];
+            var proc = Process.GetCurrentProcess();
             foreach (ProcessThread pt in proc.Threads)
             {
                 if (pt.ThreadState != ThreadState.Terminated)
@@ -212,19 +296,17 @@ namespace CommandMessenger
         /// <value> The last line time stamp. </value>
         public long LastLineTimeStamp { get; private set; }
 
-
         /// <summary> Handle message. </summary>
         /// <param name="receivedCommand"> The received command. </param>
         public void HandleMessage(ReceivedCommand receivedCommand)
         {
-            CurrentReceivedLine = receivedCommand.rawString;
+            CurrentReceivedLine = receivedCommand.RawString;
             // Send message that a new line has been received and is due to be processed
-            InvokeEvent(NewLineReceived);
+            //InvokeEvent(NewLineReceived);
 
             MessengerCallbackFunction callback = null;
             if (receivedCommand.Ok)
             {
-                //receivedCommand = new ReceivedCommand(commandString);
                 if (_callbackList.ContainsKey(receivedCommand.CmdId))
                 {
                     callback = _callbackList[receivedCommand.CmdId];
@@ -249,7 +331,21 @@ namespace CommandMessenger
         /// <param name="sendCommand"> The command to sent. </param>
         public ReceivedCommand SendCommand(SendCommand sendCommand)
         {
-            return SendCommand(sendCommand, ClearQueue.KeepQueue);
+            return SendCommand(sendCommand, SendQueue.InFrontQueue,ReceiveQueue.Default);
+        }
+
+                /// <summary> Sends a command. 
+        /// 		  If no command acknowledge is requested, the command will be send asynchronously: it will be put on the top of the send queue
+        ///  		  If a  command acknowledge is requested, the command will be send synchronously:  the program will block until the acknowledge command 
+        ///  		  has been received or the timeout has expired.
+        ///  		  Based on ClearQueueState, the send- and receive-queues are left intact or are cleared</summary>
+        /// <param name="sendCommand">       The command to sent. </param>
+        /// <param name="sendQueueState">    Property to optionally clear/wait the send queue</param>
+        /// <param name="receiveQueueState"> Property to optionally clear/wait the send queue</param>
+        /// <returns> A received command. The received command will only be valid if the ReqAc of the command is true. </returns>
+        public ReceivedCommand SendCommand(SendCommand sendCommand, SendQueue sendQueueState, ReceiveQueue receiveQueueState)
+        {
+            return SendCommand(sendCommand, sendQueueState, receiveQueueState, UseQueue.UseQueue);
         }
 
         /// <summary> Sends a command. 
@@ -257,74 +353,70 @@ namespace CommandMessenger
         ///  		  If a  command acknowledge is requested, the command will be send synchronously:  the program will block until the acknowledge command 
         ///  		  has been received or the timeout has expired.
         ///  		  Based on ClearQueueState, the send- and receive-queues are left intact or are cleared</summary>
-        /// <param name="sendCommand"> The command to sent. </param>
-        /// <param name="clearQueueState"> Property to optionally clear the send and receive queues</param>
+        /// <param name="sendCommand">       The command to sent. </param>
+        /// <param name="sendQueueState">    Property to optionally clear/wait the send queue</param>
+        /// <param name="receiveQueueState"> Property to optionally clear/wait the send queue</param>
+        /// <param name="useQueue">          Property to optionally bypass the queue</param>
         /// <returns> A received command. The received command will only be valid if the ReqAc of the command is true. </returns>
-        public ReceivedCommand SendCommand(SendCommand sendCommand, ClearQueue clearQueueState)
+        public ReceivedCommand SendCommand(SendCommand sendCommand, SendQueue sendQueueState, ReceiveQueue receiveQueueState, UseQueue useQueue)
         {
-            //_sendCommandLogger.LogLine(CommandToString(sendCommand) + _commandSeparator);
+            //_sendCommandLogger.LogLine(sendCommand.CommandString());
+            var synchronizedSend = (sendCommand.ReqAc || useQueue == UseQueue.BypassQueue);
 
-            if (clearQueueState == ClearQueue.ClearReceivedQueue || 
-                clearQueueState == ClearQueue.ClearSendAndReceivedQueue)
+
+            if (sendQueueState == SendQueue.ClearQueue )
             {
                 // Clear receive queue
                 _receiveCommandQueue.Clear(); 
             }
 
-            if (clearQueueState == ClearQueue.ClearSendQueue || 
-                clearQueueState == ClearQueue.ClearSendAndReceivedQueue)
+            if (receiveQueueState == ReceiveQueue.ClearQueue )
             {
                 // Clear send queue
                 _sendCommandQueue.Clear();
             }
 
-            if (sendCommand.ReqAc)
+            // If synchronized sending, the only way to get command at end of queue is by waiting
+            if (sendQueueState == SendQueue.WaitForEmptyQueue ||
+                (synchronizedSend && sendQueueState == SendQueue.AtEndQueue)
+            )
             {
-                // Directly call execute command
-                return ExecuteSendCommand(sendCommand, clearQueueState);
+                while (_sendCommandQueue.Count > 0) Thread.Sleep(1);
             }
             
-            // Put command at top of command queue
-            _sendCommandQueue.SendCommand(sendCommand);
+            if (receiveQueueState == ReceiveQueue.WaitForEmptyQueue)
+            {
+                while (_receiveCommandQueue.Count>0) Thread.Sleep(1);
+            }
+
+            if (synchronizedSend)
+            {
+                return SendCommandSync(sendCommand, sendQueueState);
+            }
+            
+            if (sendQueueState != SendQueue.AtEndQueue)
+            {
+                // Put command at top of command queue
+                _sendCommandQueue.SendCommand(sendCommand);
+            }
+            else
+            {
+                // Put command at bottom of command queue
+                _sendCommandQueue.QueueCommand(sendCommand);
+            }
             return new ReceivedCommand();
         }
 
-        /// <summary> Directly executes the send command operation. </summary>
-        /// <param name="sendCommand">     The command to sent. </param>
-        /// <param name="clearQueueState"> Property to optionally clear the send and receive queues. </param>
-        /// <returns> A received command. The received command will only be valid if the ReqAc of the command is true. </returns>
-        public ReceivedCommand ExecuteSendCommand(SendCommand sendCommand, ClearQueue clearQueueState)
+        /// <summary> Synchronized send a command. </summary>
+        /// <param name="sendCommand">    The command to sent. </param>
+        /// <param name="sendQueueState"> Property to optionally clear/wait the send queue. </param>
+        /// <returns> . </returns>
+        public ReceivedCommand SendCommandSync(SendCommand sendCommand, SendQueue sendQueueState)
         {
-            // Disable listening, all callbacks are disabled until after command was sent
-
-            lock (_sendCommandDataLock)
-            {
-
-                CurrentSentLine = CommandToString(sendCommand);
- 
-
-                if (PrintLfCr)
-                    _communicationManager.WriteLine(CurrentSentLine + _commandSeparator);
-                else
-                {
-                    _communicationManager.Write(CurrentSentLine + _commandSeparator);
-                }
-                InvokeEvent(NewLineSent);
-                var ackCommand = sendCommand.ReqAc ? BlockedTillReply(sendCommand.AckCmdId, sendCommand.Timeout, clearQueueState) : new ReceivedCommand();
-                return ackCommand;
-            }
-
-        }
-
-        string CommandToString(Command command)
-        {
-            var commandString = command.CmdId.ToString(CultureInfo.InvariantCulture);
-
-            foreach (var argument in command.Arguments)
-            {
-                commandString += _fieldSeparator + argument;
-            }
-            return commandString;
+            // Directly call execute command
+            var resultSendCommand = _sender.ExecuteSendCommand(sendCommand, sendQueueState);
+            InvokeNewLineEvent(NewLineSent, new NewLineEvent.NewLineArgs(sendCommand));
+            return resultSendCommand;            
         }
 
         /// <summary> Put the command at the back of the sent queue.</summary>
@@ -368,23 +460,22 @@ namespace CommandMessenger
         }
 
         /// <summary> Helper function to Invoke or directly call event. </summary>
-        /// <param name="eventHandler"> The event handler. </param>
-        private void InvokeEvent(EventHandler eventHandler)
+        /// <param name="newLineHandler"> The event handler. </param>
+        /// <param name="newLineArgs"></param>
+        private void InvokeNewLineEvent(NewLineEvent.NewLineHandler newLineHandler, NewLineEvent.NewLineArgs newLineArgs)
         {
             try
             {
-                if (eventHandler != null)
+                if (newLineHandler == null) return;
+                if (_controlToInvokeOn != null && _controlToInvokeOn.InvokeRequired)
                 {
-                    if (_controlToInvokeOn != null && _controlToInvokeOn.InvokeRequired)
-                    {
-                        //Asynchronously call on UI thread
-                        _controlToInvokeOn.Invoke(eventHandler, null);
-                    }
-                    else
-                    {
-                        //Directly call
-                        eventHandler(this, null);
-                    }
+                    //Asynchronously call on UI thread
+                    _controlToInvokeOn.Invoke((MethodInvoker)(() => newLineHandler(this, newLineArgs)));
+                }
+                else
+                {
+                    //Directly call
+                    newLineHandler(this, newLineArgs);
                 }
             }
             catch (Exception)
@@ -412,60 +503,14 @@ namespace CommandMessenger
             }
         }
 
-        /// <summary> Blocks until acknowlegdement reply has been received. </summary>
-        /// <param name="ackCmdId"> acknowledgement command ID </param>
-        /// <param name="timeout">  Timeout on acknowlegde command. </param>
-        /// <param name="clearQueueState"></param>
-        /// <returns> . </returns>
-        private ReceivedCommand BlockedTillReply(int ackCmdId, int timeout, ClearQueue clearQueueState)
+        /// <summary> Finaliser. </summary>
+        ~CmdMessenger()
         {
-            // Disable invoking command callbacks
+            _controlToInvokeOn = null;
             _receiveCommandQueue.ThreadRunState = CommandQueue.ThreadRunStates.Stop;
-
-            var start = TimeUtils.Millis;
-            var time = start;
-            var acknowledgeCommand = new ReceivedCommand();
-            while ((time - start < timeout) && !acknowledgeCommand.Ok)
-            {
-                time = TimeUtils.Millis;
-                acknowledgeCommand = CheckForAcknowledge(ackCmdId, clearQueueState);
-            }
-
-            // Re-enable invoking command callbacks
-            _receiveCommandQueue.ThreadRunState = CommandQueue.ThreadRunStates.Start;
-            return acknowledgeCommand;
+            _sendCommandQueue.ThreadRunState = CommandQueue.ThreadRunStates.Stop;
         }
 
-        /// <summary> Listen to the receive queue and check for a specific acknowledge command. </summary>
-        /// <param name="ackCmdId">        acknowledgement command ID. </param>
-        /// <param name="clearQueueState"> Property to optionally clear the send and receive queues. </param>
-        /// <returns> The first received command that matches the command ID. </returns>
-        private ReceivedCommand CheckForAcknowledge(int ackCmdId, ClearQueue clearQueueState)
-        {
-            // Read single command from received queue
-            CurrentReceivedCommand = _receiveCommandQueue.DequeueCommand();
-            if (CurrentReceivedCommand != null)
-            {
-                // Check if received command is valid
-                if (!CurrentReceivedCommand.Ok) return CurrentReceivedCommand;
-
-                // If valid, check if is same as command we are waiting for
-                if (CurrentReceivedCommand.CmdId == ackCmdId)
-                {
-                    // This is command we are waiting for, so return
-                    return CurrentReceivedCommand;
-                }
-                
-                // This is not command we are waiting for
-                if (clearQueueState == ClearQueue.KeepQueue || clearQueueState == ClearQueue.ClearSendQueue)
-                {
-                    // Add to queue for later processing
-                    _receiveCommandQueue.QueueCommand(CurrentReceivedCommand);
-                }
-            }
-            // Return not Ok received command
-            return new ReceivedCommand();
-        }
 
         /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. </summary>
         /// <param name="disposing"> true if resources should be disposed, false if not. </param>
@@ -475,6 +520,8 @@ namespace CommandMessenger
             {
                 _controlToInvokeOn = null;
                 _receiveCommandQueue.ThreadRunState = CommandQueue.ThreadRunStates.Stop;
+                _sendCommandQueue.ThreadRunState = CommandQueue.ThreadRunStates.Stop;
+               // _sendCommandLogger.Close();
             }
             base.Dispose(disposing);
         }

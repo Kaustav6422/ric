@@ -369,10 +369,10 @@ void attachCommandCallbacks()
 
 
 void OnRcCalib() {
-  int CH = cmdMessenger.readIntArg();
-  int RX_MIN = cmdMessenger.readIntArg();
-  int RX_CENTER  = cmdMessenger.readIntArg();
-  int RX_MAX = cmdMessenger.readIntArg();
+  int CH = cmdMessenger.readInt32Arg();
+  int RX_MIN = cmdMessenger.readInt32Arg();
+  int RX_CENTER  = cmdMessenger.readInt32Arg();
+  int RX_MAX = cmdMessenger.readInt32Arg();
 
   sprintf(temp_msg, "Channel: %d   Min: %d   Center: %d   Max: %d", CH,RX_MIN,RX_CENTER,RX_MAX); 
   nh.loginfo(temp_msg);

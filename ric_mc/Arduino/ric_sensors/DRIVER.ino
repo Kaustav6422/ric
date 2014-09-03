@@ -41,7 +41,7 @@ void OnGetParametersAck() {
   float ki = cmdMessenger.readFloatArg();
   float kd = cmdMessenger.readFloatArg();
   float alpha = cmdMessenger.readFloatArg();
-  int cdt = cmdMessenger.readIntArg();
+  int cdt = cmdMessenger.readInt32Arg();
 
   char log_msg[30];
   char log_msg1[10];
@@ -69,8 +69,8 @@ void OnGetParametersAck() {
 
 
 void OnEncoders() {
-  left_enc = cmdMessenger.readIntArg();
-  right_enc = cmdMessenger.readIntArg();
+  left_enc = cmdMessenger.readInt32Arg();
+  right_enc = cmdMessenger.readInt32Arg();
   enc_ok_t=millis();
   if ((!encoders_ok)||(!got_first_enc_read)){
     nh.loginfo("Communication with controller is OK");
@@ -84,12 +84,12 @@ void OnEncoders() {
 }
 
 void OnRx() {
-  RX1 = cmdMessenger.readIntArg();
-  RX2 = cmdMessenger.readIntArg();
-  RX3 = cmdMessenger.readIntArg();
-  RX4 = cmdMessenger.readIntArg();
-  RX5 = cmdMessenger.readIntArg();
-  RX6 = cmdMessenger.readIntArg();
+  RX1 = cmdMessenger.readInt32Arg();
+  RX2 = cmdMessenger.readInt32Arg();
+  RX3 = cmdMessenger.readInt32Arg();
+  RX4 = cmdMessenger.readInt32Arg();
+  RX5 = cmdMessenger.readInt32Arg();
+  RX6 = cmdMessenger.readInt32Arg();
 
   rc_msg.RX1 = RX1;
   rc_msg.RX2 = RX2;

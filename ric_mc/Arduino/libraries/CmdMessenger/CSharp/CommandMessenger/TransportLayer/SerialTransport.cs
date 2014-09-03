@@ -30,6 +30,7 @@ namespace CommandMessenger.TransportLayer
     {
         Start,
         Stop,
+        Abort,
     }
 
     /// <summary>Fas
@@ -37,10 +38,33 @@ namespace CommandMessenger.TransportLayer
     /// </summary>
     public class SerialTransport : DisposableObject, ITransport
     {
-        private readonly QueueSpeed _queueSpeed = new QueueSpeed(4);
+        private readonly QueueSpeed _queueSpeed = new QueueSpeed(4,10);
         private Thread _queueThread;
+        private ThreadRunStates _threadRunState;
+        private readonly object _threadRunStateLock = new object();
+        private readonly object _serialReadWriteLock = new object();
 
-        public ThreadRunStates ThreadRunState = ThreadRunStates.Start;
+        /// <summary> Gets or sets the run state of the thread . </summary>
+        /// <value> The thread run state. </value>
+        public ThreadRunStates ThreadRunState  
+        {
+            set
+            {
+                lock (_threadRunStateLock)
+                {
+                    _threadRunState = value;
+                }
+            }
+            get
+            {
+                ThreadRunStates result;
+                lock (_threadRunStateLock)
+                {
+                    result = _threadRunState;
+                }
+                return result;
+            }
+        }
 
         /// <summary> Default constructor. </summary>
         public SerialTransport()
@@ -53,19 +77,20 @@ namespace CommandMessenger.TransportLayer
         {            
            // _queueSpeed.Name = "Serial";
             // Find installed serial ports on hardware
-            _currentSerialSettings.PortNameCollection = SerialPort.GetPortNames();
-            _currentSerialSettings.PropertyChanged += CurrentSerialSettingsPropertyChanged;
+            _currentSerialSettings.PortNameCollection = SerialPort.GetPortNames();         
 
             // If serial ports are found, we select the first one
             if (_currentSerialSettings.PortNameCollection.Length > 0)
                 _currentSerialSettings.PortName = _currentSerialSettings.PortNameCollection[0];
 
             // Create queue thread and wait for it to start
+            
             _queueThread = new Thread(ProcessQueue)
                 {
                     Priority = ThreadPriority.Normal, 
                     Name = "Serial"
                 };
+            ThreadRunState = ThreadRunStates.Start;
             _queueThread.Start();
             while (!_queueThread.IsAlive) { Thread.Sleep(50); }
         }
@@ -95,41 +120,29 @@ namespace CommandMessenger.TransportLayer
             get { return _serialPort; }
         }
 
-
         #endregion
 
-        #region Event handlers
-
-        /// <summary> Current serial settings property changed. </summary>
-        /// <param name="sender"> Source of the event. </param>
-        /// <param name="e">      Property changed event information. </param>
-        private void CurrentSerialSettingsPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            // if serial port is changed, a new baud query is issued
-            if (e.PropertyName.Equals("PortName"))
-                UpdateBaudRateCollection();
-        }
+        #region Methods
 
         protected  void ProcessQueue()
         {
             // Endless loop
-            while (ThreadRunState == ThreadRunStates.Start)
+            while (ThreadRunState != ThreadRunStates.Abort)
             {
                 var bytes = BytesInBuffer();
-                    _queueSpeed.SetCount(bytes);
-                    _queueSpeed.CalcSleepTimeWithoutLoad();
-                    _queueSpeed.Sleep();
-                if (bytes > 0)
-                {                    
-                    if (NewDataReceived != null) NewDataReceived(this, null);
-                }                    
+                _queueSpeed.SetCount(bytes);
+                _queueSpeed.CalcSleepTimeWithoutLoad();
+                _queueSpeed.Sleep();
+                if (ThreadRunState == ThreadRunStates.Start)
+                {
+                    if (bytes > 0)
+                    {
+                        if (NewDataReceived != null) NewDataReceived(this, null);
+                    }
+                }
             }
             _queueSpeed.Sleep(50);
-        }
-
-        #endregion
-
-        #region Methods
+        }        
 
         /// <summary> Connects to a serial port defined through the current settings. </summary>
         /// <returns> true if it succeeds, false if it fails. </returns>
@@ -160,19 +173,26 @@ namespace CommandMessenger.TransportLayer
         /// <returns> true if it succeeds, false if it fails. </returns>
         public bool Open()
         {
-            try
+                       
+            if(_serialPort != null && PortExists() && !_serialPort.IsOpen)
             {
-                if (SerialPort != null && PortExists())
+                try
                 {
                     _serialPort.Open();
                     return _serialPort.IsOpen;
                 }
+                catch
+                {
+                    return false;
+                }
             }
-            catch
-            {
-                return false;
-            }
-            return false;
+
+            return true;
+        }
+
+        public bool IsConnected()
+        {
+            return IsOpen();
         }
 
         /// <summary> Queries if a given port exists. </summary>
@@ -188,17 +208,15 @@ namespace CommandMessenger.TransportLayer
         {
             try
             {
-                if (SerialPort != null && PortExists())
-                {
-                    _serialPort.Close();
-                    return true;
-                }
+                if (SerialPort == null || !PortExists()) return false;
+                if (!_serialPort.IsOpen) return true;
+                _serialPort.Close();
+                return true;
             }
             catch
             {
                 return false;
-            }
-            return true;
+            }            
         }
 
         /// <summary> Query ifthe serial port is open. </summary>
@@ -219,8 +237,9 @@ namespace CommandMessenger.TransportLayer
         /// <returns> true if it succeeds, false if it fails. </returns>
         public bool StopListening()
         {
-            ThreadRunState = ThreadRunStates.Start;
-            return Close();
+            ThreadRunState = ThreadRunStates.Stop;
+            var state = Close();
+            return state;
         }
 
         /// <summary> Writes a parameter to the serial port. </summary>
@@ -231,7 +250,10 @@ namespace CommandMessenger.TransportLayer
             {
                 if (IsOpen())
                 {
-                    _serialPort.Write(buffer, 0, buffer.Length);
+                    lock (_serialReadWriteLock)
+                    {
+                        _serialPort.Write(buffer, 0, buffer.Length);
+                    }
                 }
             }
             catch
@@ -245,9 +267,7 @@ namespace CommandMessenger.TransportLayer
         {
             try
             {
-                Close();
-                _serialPort = new SerialPort(_currentSerialSettings.PortName);
-                if (Open())
+                if (_serialPort!=null)
                 {
                     var fieldInfo = _serialPort.BaseStream.GetType()
                                                .GetField("commProp", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -282,10 +302,13 @@ namespace CommandMessenger.TransportLayer
             {
                 try
                 {
-                    var dataLength = _serialPort.BytesToRead;
-                    buffer = new byte[dataLength];
-                    int nbrDataRead = _serialPort.Read(buffer, 0, dataLength);
-                    if (nbrDataRead == 0) return new byte[0];
+                    lock (_serialReadWriteLock)
+                    {
+                        var dataLength = _serialPort.BytesToRead;
+                        buffer = new byte[dataLength];
+                        int nbrDataRead = _serialPort.Read(buffer, 0, dataLength);
+                        if (nbrDataRead == 0) return new byte[0];
+                    }
                 }
                 catch
                 { }
@@ -297,15 +320,36 @@ namespace CommandMessenger.TransportLayer
         /// <returns> Bytes in buffer </returns>
         public int BytesInBuffer()
         {
-            //try
-            //{                
-            //    return _serialPort.BytesToRead;
-            //}
-            //catch (Exception)
-            //{
-            //    return 0;
-            //}
             return IsOpen()? _serialPort.BytesToRead:0;
+        }
+
+        /// <summary> Kills this object. </summary>
+        public void Kill()
+        {
+            // Signal thread to stop
+            ThreadRunState = ThreadRunStates.Stop;
+
+            //Wait for thread to die
+            Join(500);
+            if (_queueThread.IsAlive) _queueThread.Abort();
+
+            // Releasing serial port 
+            if (IsOpen()) Close();
+            if (_serialPort != null)
+            {
+                _serialPort.Dispose();
+                _serialPort = null;
+            }
+
+        }
+
+        /// <summary> Joins the thread. </summary>
+        /// <param name="millisecondsTimeout"> The milliseconds timeout. </param>
+        /// <returns> true if it succeeds, false if it fails. </returns>
+        public bool Join(int millisecondsTimeout)
+        {
+            if (_queueThread.IsAlive == false) return true;
+            return _queueThread.Join(TimeSpan.FromMilliseconds(millisecondsTimeout));
         }
 
         // Dispose
@@ -313,13 +357,7 @@ namespace CommandMessenger.TransportLayer
         {
             if (disposing)
             {
-                _queueThread.Abort();
-                _queueThread.Join();
-                _currentSerialSettings.PropertyChanged -= CurrentSerialSettingsPropertyChanged;
-                // Releasing serial port 
-                if (IsOpen()) Close();
-                _serialPort.Dispose();
-                _serialPort = null;
+                Kill();
             }
             base.Dispose(disposing);
         }

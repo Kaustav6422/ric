@@ -216,7 +216,7 @@ void print_rc_calib(int in_cal) {
 }
 
 void OnRcCalib() {
-  int cal = cmdMessenger.readIntArg();
+  int cal = cmdMessenger.readInt32Arg();
   if (cal==1)  start_rc_calib(); 
   else if (cal==2) save_rc_calib();
   else if (cal==3) cancel_rc_calib();

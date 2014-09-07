@@ -29,7 +29,7 @@ RIGHT MOTOR RED->M1A
 Sabertooth ST(128);
 //SabertoothSimplified ST;
 #define MAX_COMMAND 127
-#define MAX_RC_COMMAND 33
+#define MAX_RC_COMMAND 45
 #define PUB_RX_INTERVAL 100
 #include <Arduino.h>
 #include <TeensyReceiver.h>

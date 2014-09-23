@@ -18,7 +18,7 @@ echo -e "\e[34mInstalling rosserial...\e[0m"
 roscd ric_robot
 cd ..
 cd ..
-git clone https://github.com/ros-drivers/rosserial.git
+git clone -b hydro-devel https://github.com/ros-drivers/rosserial.git
 
 echo -e "\e[32mWould you like to install usb_cam package (front webcam support) (y/n)?\e[0m"
 read

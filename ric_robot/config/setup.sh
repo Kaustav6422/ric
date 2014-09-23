@@ -24,14 +24,14 @@ echo -e "\e[32mWould you like to install usb_cam package (front webcam support) 
 read
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    apt-get -y install ros-hydro-usb-cam
+    apt-get -y install ros-indigo-usb-cam
 fi
 
 echo -e "\e[32mWould you like to install openni2 packages (Asus Xtion PRO LIVE support) (y/n)?\e[0m"
 read
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    apt-get -y install ros-hydro-openni2-*
+    apt-get -y install ros-indigo-openni2-*
 fi
 
 echo -e "\e[32mWould you like to install openssh packages (remote machine control support) (y/n)?\e[0m"
@@ -45,19 +45,19 @@ echo -e "\e[32mWould you like to install hokuyo_node packages (Hokuyo laser scan
 read
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    apt-get -y install ros-hydro-hokuyo-node
+    apt-get -y install ros-indigo-hokuyo-node
 fi
 
-echo -e "\e[32mWould you like to install ros-hydro-dynamixel-motor packages (Komodo arm support) (y/n)?\e[0m"
+echo -e "\e[32mWould you like to install ros-indigo-dynamixel-motor packages (Komodo arm support) (y/n)?\e[0m"
 read
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    apt-get -y install ros-hydro-dynamixel-motor
+    apt-get -y install ros-indigo-dynamixel-motor
 fi
 
-echo -e "\e[32mWould you like to install ros-hydro-joystick-drivers package (joystick support) (y/n)?\e[0m"
+echo -e "\e[32mWould you like to install ros-indigo-joystick-drivers package (joystick support) (y/n)?\e[0m"
 read
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    apt-get -y install ros-hydro-joystick-drivers
+    apt-get -y install ros-indigo-joystick-drivers
 fi

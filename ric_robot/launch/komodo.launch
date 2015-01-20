@@ -14,7 +14,7 @@
   <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher0" args="0 0 0 0 0 0 komodo_$(arg id)_odom komodo_$(arg id)_base_link 20" /> 
   -->
   
-  <param name="/robot_description" command="$(find xacro)/xacro.py '$(find ric_description)/komodo/komodo.xacro' komodo_id:=$(arg id)" />
+  <param name="/robot_description" command="$(find xacro)/xacro.py '$(find ric_description)/komodo/komodo_no_plugins.xacro' komodo_id:=$(arg id)" />
   <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map komodo_$(arg id)_odom 20" /> 
   
   

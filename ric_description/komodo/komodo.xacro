@@ -7,14 +7,14 @@
         xyz="-0.0205330571995271 4.54409684683429E-05 0.00735986203300292"
         rpy="0 0 0" />
       <mass
-        value="4.50894999160313" />
+        value="45.0894999160313" />
       <inertia
-        ixx="0.0723503030508731"
-        ixy="-4.68485359152423E-05"
-        ixz="-0.00875564429068847"
-        iyy="0.138127064231828"
-        iyz="1.19695110167269E-05"
-        izz="0.194371448739423" />
+        ixx="0.723503030508731"
+        ixy="-46.8485359152423E-05"
+        ixz="-0.0875564429068847"
+        iyy="1.38127064231828"
+        iyz="11.9695110167269E-05"
+        izz="1.94371448739423" />
     </inertial>
     <visual>
       <origin
@@ -32,7 +32,7 @@
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
+        xyz="-0.065 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
@@ -73,10 +73,12 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes/FR_Wheel_link.STL" />
+       <!--mesh
+          filename="package://ric_description/komodo/meshes_elevator/FR_Wheel_link.STL" /-->
+        <cylinder length="0.05" radius="0.1" 
+          />
       </geometry>
     </collision>
   </link>
@@ -85,7 +87,7 @@
     type="continuous">
     <origin
       xyz="0.173999999999995 -0.2009 0"
-      rpy="2.62229105359916E-15 6.9308460464278E-17 -1.5707963267949" />
+      rpy="2.62229105359916E-15 6.9308460464278E-17 1.5707963267949" />
     <parent
       link="komodo_$(arg komodo_id)_base_link" />
     <child
@@ -126,10 +128,12 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes/FL_Wheel_link.STL" />
+       <!--mesh
+          filename="package://ric_description/komodo/meshes_elevator/FR_Wheel_link.STL" /-->
+        <cylinder length="0.05" radius="0.1"   
+          />
       </geometry>
     </collision>
   </link>
@@ -138,7 +142,7 @@
     type="continuous">
     <origin
       xyz="0.173999999999995 0.2009 0"
-      rpy="-2.62229105359916E-15 6.93084604642783E-17 1.5707963267949" />
+      rpy="-2.62229105359916E-15 6.93084604642783E-17 -1.5707963267949" />
     <parent
       link="komodo_$(arg komodo_id)_base_link" />
     <child
@@ -179,10 +183,12 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes/RR_Wheel_link.STL" />
+       <!--mesh
+          filename="package://ric_description/komodo/meshes_elevator/FR_Wheel_link.STL" /-->
+        <cylinder length="0.05" radius="0.1" 
+          />
       </geometry>
     </collision>
   </link>
@@ -191,7 +197,7 @@
     type="continuous">
     <origin
       xyz="-0.156000000000005 -0.2009 0"
-      rpy="2.62229105359916E-15 -1.59433090848306E-31 -1.5707963267949" />
+      rpy="2.62229105359916E-15 -1.59433090848306E-31 1.5707963267949" />
     <parent
       link="komodo_$(arg komodo_id)_base_link" />
     <child
@@ -232,10 +238,12 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes/RL_Wheel_link.STL" />
+       <!--mesh
+          filename="package://ric_description/komodo/meshes_elevator/FR_Wheel_link.STL" /-->
+        <cylinder length="0.05" radius="0.1"  
+          />
       </geometry>
     </collision>
   </link>
@@ -244,7 +252,7 @@
     type="continuous">
     <origin
       xyz="-0.156000000000005 0.2009 0"
-      rpy="-2.62229105359916E-15 -5.57680208627196E-32 1.5707963267949" />
+      rpy="-2.62229105359916E-15 -5.57680208627196E-32 -1.5707963267949" />
     <parent
       link="komodo_$(arg komodo_id)_base_link" />
     <child
@@ -279,7 +287,7 @@
       <material
         name="">
         <color
-          rgba="0.1 0.1 0.1 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -332,7 +340,7 @@
       <material
         name="">
         <color
-          rgba="0.1 0.1 0.1 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -385,7 +393,7 @@
       <material
         name="">
         <color
-          rgba="0.1 0.1 0.1 1" />
+          rgba="0.752941176470588 0.752941176470588 0.752941176470588 1" />
       </material>
     </visual>
     <collision>
@@ -676,9 +684,9 @@
     <axis
       xyz="0 0 1" />
     <limit
-      lower="-1.57079"
-      upper="1.57079"
-      effort="0"
+      lower="-3.14"
+      upper="3.14"
+      effort="10"
       velocity="0" />
   </joint>
   <link
@@ -734,9 +742,9 @@
     <axis
       xyz="0 1 0" />
     <limit
-      lower="-1.692969"
-      upper="1.692969"
-      effort="0"
+      lower="-1.57"
+      upper="1.57"
+      effort="2000"
       velocity="0" />
   </joint>
   <link
@@ -792,9 +800,9 @@
     <axis
       xyz="-0.999999999998754 0 0" />
     <limit
-      lower="-2.4434"
-      upper="2.4434"
-      effort="0"
+      lower="-3.14"
+      upper="3.14"
+      effort="100"
       velocity="0" />
   </joint>
   <link
@@ -806,7 +814,7 @@
       <mass
         value="1.12138857800426" />
       <inertia
-        ixx="0.0110599202589784"
+        ixx="0.0011156254663426"
         ixy="3.04261287700186E-07"
         ixz="-1.22468079415109E-06"
         iyy="0.0110437302875007"
@@ -842,24 +850,24 @@
     type="revolute">
     <origin
       xyz="0 0 0.223999999999899"
-      rpy="-4.51048856041191E-16 3.35869632765754E-16 1.57079632687657" />
+      rpy="-4.51048856041191E-16 3.35869632765754E-16 0" />
     <parent
       link="komodo_$(arg komodo_id)_elbow1_link" />
     <child
       link="komodo_$(arg komodo_id)_elbow2_link" />
     <axis
-      xyz="1 0 0" />
+      xyz="0 1 0" />
     <limit
-      lower="-2.4434"
-      upper="2.4434"
-      effort="0"
+      lower="-3.14"
+      upper="3.14"
+      effort="10"
       velocity="0" />
   </joint>
   <link
     name="komodo_$(arg komodo_id)_wrist_link">
     <inertial>
       <origin
-        xyz="-0.000140374211043626 4.00707618562063E-10 0.0303673809619358"
+        xyz="0 0 0"
         rpy="0 0 0" />
       <mass
         value="0.717337417215465" />
@@ -882,7 +890,7 @@
       <material
         name="">
         <color
-          rgba="0.3 0.3 0.3 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -899,8 +907,8 @@
     name="komodo_$(arg komodo_id)_wrist_joint"
     type="revolute">
     <origin
-      xyz="0 -0.0130999999999997 0.244749999999997"
-      rpy="-4.43972025628984E-16 -3.35842401421639E-15 -1.57079632687657" />
+      xyz="0.0137 0 0.244749999999997"
+      rpy="0 0 0" />
     <parent
       link="komodo_$(arg komodo_id)_elbow2_link" />
     <child
@@ -908,9 +916,9 @@
     <axis
       xyz="0 0 0.999999999998754" />
     <limit
-      lower="-1.91986"
-      upper="1.91986"
-      effort="0"
+      lower="-3.14"
+      upper="3.14"
+      effort="10"
       velocity="0" />
   </joint>
   <link
@@ -922,17 +930,17 @@
       <mass
         value="0.0111981711598485" />
       <inertia
-        ixx="9.77349829713274E-06"
-        ixy="6.1354405537333E-20"
-        ixz="3.95573177730842E-20"
-        iyy="1.11277552627936E-05"
-        iyz="2.19026618569787E-06"
-        izz="3.8860219521149E-06" />
+        ixx="0.000486392340366094"
+        ixy="4.20757000035677E-12"
+        ixz="-3.91843889020299E-06"
+        iyy="0.000211170064630335"
+        iyz="2.79335159568522E-12"
+        izz="0.000437528795624211" />
     </inertial>
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0.185 0 0" />
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://ric_description/komodo/meshes/left_finger_link.STL" />
@@ -966,9 +974,9 @@
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-0.87266"
-      upper="0.87266"
-      effort="0"
+      lower="-3.14"
+      upper="3.14"
+      effort="10"
       velocity="0" />
   </joint>
   <link
@@ -980,17 +988,17 @@
       <mass
         value="0.0111981711598485" />
       <inertia
-        ixx="9.7734982971327E-06"
-        ixy="1.80407068651258E-20"
-        ixz="2.78908224261042E-20"
-        iyy="1.11277552627935E-05"
-        iyz="-2.19026618569788E-06"
-        izz="3.88602195211489E-06" />
+        ixx="0.000486392340366094"
+        ixy="4.20757000035677E-12"
+        ixz="-3.91843889020299E-06"
+        iyy="0.000211170064630335"
+        iyz="2.79335159568522E-12"
+        izz="0.000437528795624211" />
     </inertial>
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="-0.185 0 0" />
+        rpy="0 0 0" />
       <geometry>
         <mesh
           filename="package://ric_description/komodo/meshes/right_finger_link.STL" />
@@ -1024,9 +1032,9 @@
     <axis
       xyz="1 0 0" />
     <limit
-      lower="-0.87266"
-      upper="0.87266"
-      effort="0"
+      lower="-3.14"
+      upper="3.14"
+      effort="10"
       velocity="0" />
   </joint>
   <link
@@ -1048,7 +1056,7 @@
     <visual>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.57 0" />
       <geometry>
         <mesh
           filename="package://ric_description/komodo/meshes/Arm_Camera_link.STL" />
@@ -1056,7 +1064,7 @@
       <material
         name="">
         <color
-          rgba="0.2 0.2 0.2 1" />
+          rgba="0.4 0.4 0.4 1" />
       </material>
     </visual>
     <collision>
@@ -1074,7 +1082,7 @@
     type="fixed">
     <origin
       xyz="-0.0552499999999999 0 0.0340250000000002"
-      rpy="1.60129334747211E-25 2.01127359533543E-16 -1.57079632649567" />
+      rpy="0 -1.57079632649567 0" />
     <parent
       link="komodo_$(arg komodo_id)_wrist_link" />
     <child
@@ -1135,4 +1143,512 @@
     <axis
       xyz="1 0 0" />
   </joint>
+
+   <!-- ros_control plugin -->
+<gazebo> 
+<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+<robotNamespace>/komodo_$(arg komodo_id)</robotNamespace> 
+</plugin> 
+</gazebo>
+
+ <!-- Transmissions for ROS Control -->
+
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_FR_Wheel_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_FL_Wheel_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_RR_Wheel_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_RL_Wheel_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_base_rotation_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_shoulder_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+	</joint>
+    <actuator name="motor6">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_elbow1_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+</joint>
+    <actuator name="motor7">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran8">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_elbow2_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+</joint>
+    <actuator name="motor8">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran9">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_wrist_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+</joint>
+    <actuator name="motor9">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran10">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_left_finger_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+</joint>
+    <actuator name="motor10">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <transmission name="tran11">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="komodo_$(arg komodo_id)_right_finger_joint">
+<hardwareInterface>EffortJointInterface</hardwareInterface>
+</joint>
+    <actuator name="motor11">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+<!-- New -->
+
+<gazebo reference="komodo_$(arg komodo_id)_base_rotation_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+   <material>Gazebo/Grey</material>
+</gazebo>
+
+<gazebo reference="komodo_$(arg komodo_id)_shoulder_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+   <material>Gazebo/Grey</material>
+</gazebo>
+
+<gazebo reference="komodo_$(arg komodo_id)_elbow1_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+   <material>Gazebo/Grey</material>
+</gazebo>
+
+<gazebo reference="komodo_$(arg komodo_id)_elbow2_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+   <material>Gazebo/Grey</material>
+</gazebo>
+
+<gazebo reference="komodo_$(arg komodo_id)_wrist_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="komodo_$(arg komodo_id)_left_finger_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+</gazebo>
+
+<gazebo reference="komodo_$(arg komodo_id)_right_finger_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+</gazebo>
+
+  <gazebo reference="komodo_$(arg komodo_id)_base_link">
+    <material>Gazebo/Grey</material>
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+  </gazebo>
+<gazebo reference="komodo_$(arg komodo_id)_FR_Wheel_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+    <material>Gazebo/Grey</material>
+</gazebo>
+<gazebo reference="komodo_$(arg komodo_id)_FL_Wheel_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+    <material>Gazebo/Grey</material>
+</gazebo>
+<gazebo reference="komodo_$(arg komodo_id)_RR_Wheel_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+    <material>Gazebo/Grey</material>
+</gazebo>
+<gazebo reference="komodo_$(arg komodo_id)_RL_Wheel_link">
+    <mu1>1</mu1>
+    <mu2>1</mu2>
+    <selfCollide>true</selfCollide>
+    <material>Gazebo/Grey</material>
+</gazebo>
+
+<!-- arm camera -->
+  <gazebo reference="komodo_$(arg komodo_id)_Arm_Camera_link">
+    <sensor type="camera" name="camera1">
+      <visualize>false</visualize>
+      <update_rate>30.0</update_rate>
+      <camera name="arm">
+        <horizontal_fov>2.0</horizontal_fov>
+        <image>
+          <width>1800</width>
+          <height>1800</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>40.0</updateRate>
+        <cameraName>komodo_$(arg komodo_id)/arm_camera</cameraName>
+        <imageTopicName>komodo_$(arg komodo_id)/arm_camera/image_raw</imageTopicName>
+        <cameraInfoTopicName>komodo_$(arg komodo_id)/arm_camera/camera_info</cameraInfoTopicName>
+        <frameName>komodo_$(arg komodo_id)_Arm_Camera_link</frameName>
+        <hackBaseline>0.07</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+<!-- Asus camera  - Gazebo -->
+
+<gazebo reference="komodo_$(arg komodo_id)_Asus_Camera_link">
+<sensor type="depth" name="komodo_$(arg komodo_id)_Asus_Camera_link">
+<pose>0 0 0 0 0 0</pose>
+<visualize>true</visualize>
+<update_rate>20</update_rate>
+<camera>
+<horizontal_fov>2.0</horizontal_fov>
+<image>
+<format>R8G8B8</format>
+<width>640</width>
+<height>480</height>
+</image>
+<clip>
+<near>0.5</near>
+<far>9</far>
+</clip>
+</camera>
+<plugin name="komodo_$(arg komodo_id)_Asus_Camera_link_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+<alwaysOn>true</alwaysOn>
+<updateRate>20</updateRate>
+<imageTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/rgb/image_raw</imageTopicName>
+<cameraInfoTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/rgb/camera_info</cameraInfoTopicName>
+<depthImageTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/image_raw</depthImageTopicName>
+<depthImageCameraInfoTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/camera_info</depthImageCameraInfoTopicName>
+<pointCloudTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/points</pointCloudTopicName>
+<pointCloudCutoff>0.4</pointCloudCutoff>  
+<frameName>komodo_$(arg komodo_id)_Asus_Camera_link</frameName>
+<distortion_k1>0.0</distortion_k1>
+<distortion_k2>0.0</distortion_k2>
+<distortion_k3>0.0</distortion_k3>
+<distortion_t1>0.0</distortion_t1>
+<distortion_t2>0.0</distortion_t2>
+</plugin>
+</sensor>
+</gazebo>
+  
+<!-- ASUS Xtion PRO camera for simulation 
+      <gazebo reference="komodo_Asus_Camera_link">
+        <sensor type="depth" name="komodo_Asus_Camera_link">
+          <update_rate>20</update_rate>
+          <camera>
+            <horizontal_fov>${62.8 * M_PI/180.0}</horizontal_fov>
+            <image>
+              <format>R8G8B8</format>
+              <width>640</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.5</near>
+              <far>9</far>
+            </clip>
+          </camera>
+          <plugin name="komodo_Asus_Camera_link_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <imageTopicName>komodo_Asus_Camera_link/rgb/image_raw</imageTopicName>
+            <cameraInfoTopicName>komodo_Asus_Camera_link/rgb/camera_info</cameraInfoTopicName>
+            <depthImageTopicName>komodo_Asus_Camera_link/depth/image_raw</depthImageTopicName>
+            <depthImageCameraInfoTopicName>komodo_Asus_Camera_link/depth/camera_info</depthImageCameraInfoTopicName>
+            <pointCloudTopicName>komodo_Asus_Camera_link/depth/points</pointCloudTopicName>
+            <frameName>komodo_Asus_Camera_link</frameName>
+            <distortion_k1>0.0</distortion_k1>
+            <distortion_k2>0.0</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0</distortion_t1>
+            <distortion_t2>0.0</distortion_t2>
+          </plugin>
+        </sensor>
+      </gazebo -->
+
+  <!-- hokuyo -->
+  <gazebo reference="komodo_$(arg komodo_id)_Laser_link">
+    <sensor type="ray" name="head_hokuyo_sensor">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>40</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.570796</min_angle>
+            <max_angle>1.570796</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+        <topicName>/komodo_$(arg komodo_id)/laser/scan</topicName>
+        <frameName>komodo_$(arg komodo_id)_Laser_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+<!-- SOnar Right URF -->
+<!-- name = komodo_Right_URF
+     update rate = 20.0
+ -->
+   <gazebo reference="komodo_$(arg komodo_id)_Right_URF_link">
+      <sensor type="ray" name="komodo_$(arg komodo_id)_Right_URF">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>10.0</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7</min_angle>
+              <max_angle> 0.7</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>10.0</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7</min_angle>
+              <max_angle> 0.7</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>1.5</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+
+        <plugin name="gazebo_ros_komodo_$(arg komodo_id)_Right_URF_controller" filename="libhector_gazebo_ros_sonar.so">
+          <!--gaussianNoise>0.005</gaussianNoise-->
+          <topicName>komodo_$(arg komodo_id)/Rangers/Right_URF</topicName>
+          <frameId>komodo_$(arg komodo_id)_Right_URF_link</frameId>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+<!-- SOnar Left URF -->
+<!-- name = komodo_Left_URF
+     update rate = 20.0
+ -->
+   <gazebo reference="komodo_$(arg komodo_id)_Left_URF_link">
+      <sensor type="ray" name="komodo_$(arg komodo_id)_Left_URF">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>10.0</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7</min_angle>
+              <max_angle> 0.7</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>10.0</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7</min_angle>
+              <max_angle> 0.7</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>1.5</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+
+        <plugin name="gazebo_ros_komodo_$(arg komodo_id)_Left_URF_controller" filename="libhector_gazebo_ros_sonar.so">
+          <!--gaussianNoise>0.005</gaussianNoise-->
+          <topicName>komodo_$(arg komodo_id)/Rangers/Left_URF</topicName>
+          <frameId>komodo_$(arg komodo_id)_Left_URF_link</frameId>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+<!--komodo_Rear_URF -->
+
+   <gazebo reference="komodo_$(arg komodo_id)_Rear_URF_link">
+      <sensor type="ray" name="komodo_$(arg komodo_id)_Rear_URF">
+        <always_on>true</always_on>
+        <update_rate>20.0</update_rate>
+        <pose>0 0 0 0 0 0</pose>
+        <visualize>false</visualize>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>10.0</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7</min_angle>
+              <max_angle> 0.7</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>10.0</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.7</min_angle>
+              <max_angle> 0.7</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.1</min>
+            <max>1.5</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+
+        <plugin name="gazebo_ros_komodo_$(arg komodo_id)_Rear_URF_controller" filename="libhector_gazebo_ros_sonar.so">
+          <!--gaussianNoise>0.005</gaussianNoise-->
+          <topicName>komodo_$(arg komodo_id)/Rangers/Rear_URF</topicName>
+          <frameId>komodo_$(arg komodo_id)_Rear_URF_link</frameId>
+        </plugin>
+      </sensor>
+    </gazebo>
+
+<!-- IMU -->
+  <gazebo>
+    <plugin name="komodo_$(arg komodo_id)_imu_sim" filename="libhector_gazebo_ros_imu.so">
+      <updateRate>100.0</updateRate>
+      <bodyName>komodo_$(arg komodo_id)_base_link</bodyName>
+      <topicName>komodo_$(arg komodo_id)/imu_pub</topicName>
+      <rpyOffsets>0 0 0</rpyOffsets> <!-- deprecated -->
+      <gaussianNoise>0</gaussianNoise>  <!-- deprecated -->
+      <accelDrift>0.5 0.5 0.5</accelDrift>
+      <accelGaussianNoise>0.35 0.35 0.3</accelGaussianNoise>
+      <rateDrift>0.1 0.1 0.1</rateDrift>
+      <rateGaussianNoise>0.05 0.05 0.015</rateGaussianNoise>
+    </plugin>
+</gazebo>
+
+
+<!-- Diff drive -->
+<gazebo>
+  <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
+    <always_on>1</always_on>
+    <updateRate>100.0</updateRate>
+    <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
+    <broadcastTF>1</broadcastTF>
+    <leftFrontJoint>komodo_$(arg komodo_id)_FL_Wheel_joint</leftFrontJoint>
+    <rightFrontJoint>komodo_$(arg komodo_id)_FR_Wheel_joint</rightFrontJoint>
+    <leftRearJoint>komodo_$(arg komodo_id)_RL_Wheel_joint</leftRearJoint>
+    <rightRearJoint>komodo_$(arg komodo_id)_RR_Wheel_joint</rightRearJoint>
+    <wheelSeparation>0.5</wheelSeparation>
+    <wheelDiameter>0.2</wheelDiameter>
+    <robotBaseFrame>komodo_$(arg komodo_id)_base_link</robotBaseFrame>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <torque>20</torque>
+    <commandTopic>cmd_vel</commandTopic>
+  </plugin>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+</gazebo>
 </robot>

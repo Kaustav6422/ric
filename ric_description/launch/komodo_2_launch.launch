@@ -1,0 +1,16 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+
+  <arg name="id" default="2"/>
+  <arg name="pos_x" default="0.0"/>
+  <arg name="pos_y" default="0.0"/>
+  
+  <include file="$(find ric_description)/launch/komodo_xacro.launch" >
+  <arg name="id" value="$(arg id)"/>
+  <arg name="pos_x" value="2"/>
+  <arg name="pos_y" value="2"/>
+  </include>
+
+ <!--node name="pcloud_rot_node" pkg="pcloud_rot" type="pcloud_rot_node" cwd="node" output="screen" /--> 
+
+</launch>

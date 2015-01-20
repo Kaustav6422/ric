@@ -1409,6 +1409,7 @@
 <plugin name="komodo_$(arg komodo_id)_Asus_Camera_link_camera_controller" filename="libgazebo_ros_openni_kinect.so">
 <alwaysOn>true</alwaysOn>
 <updateRate>20</updateRate>
+<cameraName>komodo_$(arg komodo_id)/komodo_Asus_Camera</cameraName>
 <imageTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/rgb/image_raw</imageTopicName>
 <cameraInfoTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/rgb/camera_info</cameraInfoTopicName>
 <depthImageTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/image_raw</depthImageTopicName>

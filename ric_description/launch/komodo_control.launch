@@ -1,8 +1,9 @@
 <!-- -*- mode: XML -*- -->
 <launch>
- <arg name="id" default="1"/>
-  <!-- Load joint controller configurations from YAML file to parameter server -->
-  <rosparam file="$(find ric_description)/config/ric_robot_control_$(arg id).yaml" command="load"/>
+<arg name="id" default="1"/>
+<!--group ns="komodo_1">
+  <Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find ric_description)/config/ric_robot_control.yaml" command="load"/>
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
@@ -22,6 +23,9 @@
 	respawn="false" output="screen">
     <remap from="/joint_states" to="/komodo_$(arg id)/joint_states"/> 
 
+    <!--param name="~tf_prefix" value="komodo_$(arg id)" type="str"/-->
+
   </node> 
+<!--/group-->
 
 </launch>

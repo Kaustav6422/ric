@@ -32,21 +32,21 @@
 
  <!-- Spawn URDF models under different name spaces -->
 
-	<group ns="komodo_1/">
+	<group ns="komodo_1">
 		<include file="$(find ric_description)/launch/komodo.launch">
 		<arg name="id" value="1"/>
 		<arg name="x" value="0.0" />
 		<arg name="y" value="0.0" />
 		<arg name="z" value="0.1" />
 		</include>
- <!-- ros_control clam launch file -->
+
+		 <!-- ros_control clam launch file -->
   		<include file="$(find ric_description)/launch/komodo_control.launch" >
 		<arg name="id" value="1"/>
  	       </include>
 	</group>
-		
 
-	<!--group ns="komodo_2">
+	<group ns="komodo_2">
 		<include file="$(find ric_description)/launch/komodo.launch">
 		<arg name="id" value="2"/>
 		<arg name="x" value="2" />
@@ -54,11 +54,11 @@
 		<arg name="z" value="0.1" />
 		</include>
 
-		 <ros_control clam launch file -
+		 <!--ros_control clam launch file -->
   		<include file="$(find ric_description)/launch/komodo_control.launch" >
 		<arg name="id" value="2"/>
  	       </include>
-	</group-->
+	</group>
 
 
 

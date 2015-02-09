@@ -86,7 +86,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES pcloud_rot
 #  CATKIN_DEPENDS Eigen pcl_conversions pcl_ros roscpp sensor_msgs
-  DEPENDS assimp Eigen mlpack
+  DEPENDS assimp eigen mlpack
 )
 
 ###########

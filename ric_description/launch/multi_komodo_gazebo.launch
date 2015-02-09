@@ -20,9 +20,9 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
 
-  <!-- Load the URDF into the ROS Parameter Server -->
+  <!-- Load the URDF into Parameter Server -->
 
-	<include file="$(find ric_description)/launch/komodo.launch">
+		<include file="$(find ric_description)/launch/komodo.launch">
 		<arg name="id" value="1"/>
 		<arg name="x" value="0.0" />
 		<arg name="y" value="0.0" />
@@ -35,7 +35,7 @@
 
  <!-- Spawn URDF models under different name spaces -->
 
-	<group ns="komodo_1/">
+	<group ns="komodo_1">
 		<include file="$(find ric_description)/launch/komodo.launch">
 		<arg name="id" value="1"/>
 		<arg name="x" value="0.0" />
@@ -45,11 +45,28 @@
 		<arg name="P" value="0.0" />
 		<arg name="Y" value="0.0" />
 		</include>
- <!-- ros_control clam launch file -->
+
+		 <!-- ros_control clam launch file -->
   		<include file="$(find ric_description)/launch/komodo_control.launch" >
 		<arg name="id" value="1"/>
  	       </include>
 	</group>
-		
-</launch>
 
+	<group ns="komodo_2">
+		<include file="$(find ric_description)/launch/komodo.launch">
+		<arg name="id" value="2"/>
+		<arg name="x" value="2" />
+		<arg name="y" value="2" />
+		<arg name="z" value="0.1" />
+		<arg name="R" value="0.0" />
+		<arg name="P" value="0.0" />
+		<arg name="Y" value="0.0" />
+		</include>
+
+		 <!--ros_control clam launch file -->
+  		<include file="$(find ric_description)/launch/komodo_control.launch" >
+		<arg name="id" value="2"/>
+ 	       </include>
+	</group>
+
+</launch>

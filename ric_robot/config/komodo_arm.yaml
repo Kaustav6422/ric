@@ -23,8 +23,8 @@ shoulder_controller:
     motor:
         id: 2
         init: 2048
-        min: 947
-        max: 3158
+        min: 2048
+        max: 3057
 
 elbow1_controller:
     controller:

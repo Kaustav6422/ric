@@ -1520,8 +1520,8 @@
 
 <!-- SOnar Right URF -->
 <!-- name = komodo_Right_URF
-     update rate = 20.0
- -->
+     update rate = 20.0 -->
+ 
    <gazebo reference="Right_URF_link">
       <sensor type="ray" name="Right_URF">
         <pose>0 0 0 0 0 0</pose>
@@ -1531,29 +1531,27 @@
             <horizontal>
               <samples>10</samples>
               <resolution>1</resolution>
-              <min_angle>-0.7</min_angle>
-              <max_angle> 0.7</max_angle>
+              <min_angle>-0.5</min_angle>
+              <max_angle> 0.5</max_angle>
             </horizontal>
             <vertical>
               <samples>10</samples>
               <resolution>1</resolution>
-              <min_angle>-0.7</min_angle>
-              <max_angle> 0.7</max_angle>
+              <min_angle>-0.2</min_angle>
+              <max_angle> 0.2</max_angle>
             </vertical>
           </scan>
           <range>
             <min>0.1</min>
             <max>1.5</max>
-            <!--resolution>0.01</resolution-->
+            <resolution>0.01</resolution>
           </range>
         </ray>
         <plugin name="gazebo_ros_Right_URF_controller" filename="libhector_gazebo_ros_sonar.so">
-          <gaussianNoise>0.0</gaussianNoise>
-	  <always_on>true</always_on>
-	  <update_rate>20.0</update_rate>
-	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace> 
+          <!--gaussianNoise>0.005</gaussianNoise-->
+	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
           <topicName>Rangers/Right_URF</topicName>
-          <frameName>/komodo_$(arg komodo_id)/Right_URF_link</frameName>
+          <frameId>komodo_$(arg komodo_id)_Right_URF_link</frameId>
         </plugin>
 	  <always_on>true</always_on>
 	  <update_rate>20.0</update_rate>
@@ -1562,8 +1560,8 @@
 
 <!-- SOnar Left URF -->
 <!-- name = komodo_Left_URF
-     update rate = 20.0
- -->
+     update rate = 20.0 -->
+
    <gazebo reference="Left_URF_link">
       <sensor type="ray" name="Left_URF">
         <always_on>true</always_on>
@@ -1575,14 +1573,14 @@
             <horizontal>
               <samples>10</samples>
               <resolution>1</resolution>
-              <min_angle>-0.7</min_angle>
-              <max_angle> 0.7</max_angle>
+              <min_angle>-0.5</min_angle>
+              <max_angle> 0.5</max_angle>
             </horizontal>
             <vertical>
               <samples>10</samples>
               <resolution>1</resolution>
-              <min_angle>-0.7</min_angle>
-              <max_angle> 0.7</max_angle>
+              <min_angle>-0.2</min_angle>
+              <max_angle> 0.2</max_angle>
             </vertical>
           </scan>
           <range>
@@ -1596,12 +1594,12 @@
           <!--gaussianNoise>0.005</gaussianNoise-->
 	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
           <topicName>Rangers/Left_URF</topicName>
-          <frameId>/komodo_$(arg komodo_id)/Left_URF_link</frameId>
+          <frameId>komodo_$(arg komodo_id)_Left_URF_link</frameId>
         </plugin>
       </sensor>
     </gazebo>
 
-<!--komodo_Rear_URF -->
+<!--komodo_Rear_URF-->
 
    <gazebo reference="Rear_URF_link">
       <sensor type="ray" name="Rear_URF">
@@ -1614,14 +1612,14 @@
             <horizontal>
               <samples>10</samples>
               <resolution>1</resolution>
-              <min_angle>-0.7</min_angle>
-              <max_angle> 0.7</max_angle>
+              <min_angle>-0.5</min_angle>
+              <max_angle> 0.5</max_angle>
             </horizontal>
             <vertical>
               <samples>10</samples>
               <resolution>1</resolution>
-              <min_angle>-0.7</min_angle>
-              <max_angle> 0.7</max_angle>
+              <min_angle>-0.2</min_angle>
+              <max_angle> 0.2</max_angle>
             </vertical>
           </scan>
           <range>
@@ -1630,11 +1628,11 @@
             <resolution>0.01</resolution>
           </range>
         </ray>
-
         <plugin name="gazebo_ros_Rear_URF_controller" filename="libhector_gazebo_ros_sonar.so">
           <!--gaussianNoise>0.005</gaussianNoise-->
-          <topicName>komodo_$(arg komodo_id)/Rangers/Rear_URF</topicName>
-          <frameId>Rear_URF_link</frameId>
+	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
+          <topicName>Rangers/Rear_URF</topicName>
+          <frameId>komodo_$(arg komodo_id)_Rear_URF_link</frameId>
         </plugin>
       </sensor>
     </gazebo>

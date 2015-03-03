@@ -15,11 +15,12 @@ then
 fi
 
 echo -e "\e[34mInstalling rosserial...\e[0m"
-roscd ric_robot
-cd ..
-cd ..
-git clone -b indigo-devel https://github.com/ros-drivers/rosserial.git
-
+#roscd ric_robot
+#cd ..
+#cd ..
+#git clone -b indigo-devel https://github.com/ros-drivers/rosserial.git
+apt-get -y install ros-indigo-rosserial
+ 
 echo -e "\e[32mWould you like to install usb_cam package (front webcam support) (y/n)?\e[0m"
 read
 if [[ $REPLY =~ ^[Yy]$ ]]

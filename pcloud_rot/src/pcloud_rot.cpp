@@ -42,7 +42,7 @@ int main (int argc , char** argv)
 {
 	ros::init(argc , argv , "cloud_rot");
 	ros::NodeHandle n ;
-	ros::Rate loop_rate(1000) ;
+	ros::Rate loop_rate(10) ;
 	char pre1[50]="komodo_1";
 	if(argc == 2){
 	 sprintf(pre1,"komodo_%s",argv[1]);

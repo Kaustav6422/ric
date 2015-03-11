@@ -686,7 +686,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_base_rotation_link.STL" />
+          filename="package://ric_description/komodo/meshes/base_rotation_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -744,7 +744,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_shoulder_link.STL" />
+          filename="package://ric_description/komodo/meshes/shoulder_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -802,7 +802,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_elbow1_link.STL" />
+          filename="package://ric_description/komodo/meshes/elbow1_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -860,7 +860,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_elbow2_link.STL" />
+          filename="package://ric_description/komodo/meshes/elbow2_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -918,7 +918,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_wrist_link.STL" />
+          filename="package://ric_description/komodo/meshes/wrist_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -976,7 +976,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_left_finger_link.STL" />
+          filename="package://ric_description/komodo/meshes/left_finger_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -1034,7 +1034,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_description/komodo/meshes/col_right_finger_link.STL" />
+          filename="package://ric_description/komodo/meshes/right_finger_link.STL" />
       </geometry>
     </collision>
   </link>
@@ -1392,7 +1392,7 @@
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>40.0</updateRate>
-        <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
+        <robotNamespace>komodo_$(arg komodo_id)_Arm_Camera_link</robotNamespace>
         <cameraName>/komodo_$(arg komodo_id)/arm_camera</cameraName>
         <imageTopicName>/komodo_$(arg komodo_id)/arm_camera/image_raw</imageTopicName>
         <cameraInfoTopicName>/komodo_$(arg komodo_id)/arm_camera/camera_info</cameraInfoTopicName>
@@ -1429,15 +1429,15 @@
 <plugin name="Asus_Camera_link_camera_controller" filename="libgazebo_ros_openni_kinect.so">
 <alwaysOn>true</alwaysOn>
 <updateRate>20</updateRate>
-<cameraName>komodo_$(arg komodo_id)/komodo_Asus_Camera</cameraName>
-<robotNamespace>/komodo_$(arg komodo_id)</robotNamespace> 
+<cameraName>komodo_Asus_Camera</cameraName>
+<!--robotNamespace>/komodo_$(arg komodo_id)</robotNamespace--> 
 <imageTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/rgb/image_raw</imageTopicName>
 <cameraInfoTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/rgb/camera_info</cameraInfoTopicName>
 <depthImageTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/image_raw</depthImageTopicName>
 <depthImageCameraInfoTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/camera_info</depthImageCameraInfoTopicName>
 <pointCloudTopicName>/komodo_$(arg komodo_id)/komodo_Asus_Camera/depth/points</pointCloudTopicName>
 <pointCloudCutoff>0.4</pointCloudCutoff>
-<frameName>Asus_Camera_link</frameName> 
+<frameName>/Asus_Camera_link</frameName> 
 <distortion_k1>0.0</distortion_k1>
 <distortion_k2>0.0</distortion_k2>
 <distortion_k3>0.0</distortion_k3>

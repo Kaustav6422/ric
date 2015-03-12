@@ -1551,7 +1551,7 @@
           <!--gaussianNoise>0.005</gaussianNoise-->
 	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
           <topicName>Rangers/Right_URF</topicName>
-          <frameId>komodo_$(arg komodo_id)_Right_URF_link</frameId>
+          <frameId>/komodo_$(arg komodo_id)/Right_URF_link</frameId>
         </plugin>
 	  <always_on>true</always_on>
 	  <update_rate>20.0</update_rate>
@@ -1594,7 +1594,7 @@
           <!--gaussianNoise>0.005</gaussianNoise-->
 	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
           <topicName>Rangers/Left_URF</topicName>
-          <frameId>komodo_$(arg komodo_id)_Left_URF_link</frameId>
+          <frameId>/komodo_$(arg komodo_id)/Left_URF_link</frameId>
         </plugin>
       </sensor>
     </gazebo>
@@ -1632,7 +1632,7 @@
           <!--gaussianNoise>0.005</gaussianNoise-->
 	  <robotNamespace>/komodo_$(arg komodo_id)</robotNamespace>
           <topicName>Rangers/Rear_URF</topicName>
-          <frameId>komodo_$(arg komodo_id)_Rear_URF_link</frameId>
+          <frameId>/komodo_$(arg komodo_id)/Rear_URF_link</frameId>
         </plugin>
       </sensor>
     </gazebo>

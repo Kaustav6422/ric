@@ -69,4 +69,7 @@
  	       </include>
 	</group>
 
+	<!-- Rviz for sensor visualization -->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ric_description)/config/two_komodo_all_sensors.rviz" required="true" />
+
 </launch>

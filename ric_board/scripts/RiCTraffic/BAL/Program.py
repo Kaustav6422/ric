@@ -34,8 +34,8 @@ class Program:
     def __init__(self):
         try:
             rospy.init_node('RiCTraffic')
-            # ser = Serial('/dev/RiCBoard')
-            ser = Serial('/dev/ttyUSB0')
+            ser = Serial('/dev/RiCBoard')
+            # ser = Serial('/dev/ttyUSB0')
             incomingHandler = IncomingHandler()
             params = RiCParam()
             input = ser

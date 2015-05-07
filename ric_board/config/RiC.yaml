@@ -49,7 +49,7 @@ Diff/maxAng: 16.0
 Diff/maxLin: 16.0
 Diff/motorL: 0
 Diff/motorR: 1
-GPS/publishHz: 10
+GPS/publishHz: 50
 GPS/name: RiC_GPS
 GPS/frameId: GPS_FRAME
 GPS/baudrate: 9600

@@ -36,12 +36,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RiCGPS.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RiCGPS.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCGPS.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.407767" vertical-offset="0" max-vertical-offset="618">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="522">
               <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Program.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BAL/Program.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.47603306" vertical-offset="396" max-vertical-offset="2304">
+              <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,9 +111,9 @@
         <option value="$PROJECT_DIR$/BAL/Header/Response/gpsParamResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RiCCloseLoopMotor.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py" />
-        <option value="$PROJECT_DIR$/BAL/Program.py" />
         <option value="$PROJECT_DIR$/BAL/Handlers/incomingDataHandler.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RiCGPS.py" />
+        <option value="$PROJECT_DIR$/BAL/Program.py" />
       </list>
     </option>
   </component>
@@ -881,16 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Program.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38677686" vertical-offset="1584" max-vertical-offset="2304">
-          <caret line="101" column="54" selection-start-line="101" selection-start-column="54" selection-end-line="101" selection-end-column="54" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1785125" vertical-offset="1339" max-vertical-offset="2322">
@@ -913,9 +915,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCGPS.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.407767" vertical-offset="0" max-vertical-offset="618">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="522">
           <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Program.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.47603306" vertical-offset="396" max-vertical-offset="2304">
+          <caret line="38" column="12" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

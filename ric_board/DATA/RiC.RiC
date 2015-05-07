@@ -1,14 +1,14 @@
-{'direction': '1', 'maxSpeed': '16.0', 'name': 'RiC_Close_Motor', 'kD': '0', 'type': 'MotorCloseLoop', 'publishHz': '50', 'port': '1', 'LPFHz': '100', 'directionE': '-1', 'driverAddress': '128', 'PIDHz': '1000', 'LPFAlpha': '0.5', 'motorType': '1', 'kP': '5.0', 'limit': '1.0', 'timeout': '1000', 'cpr': '4288', 'encoderType': '2', 'port2': '3', 'kI': '5.0', 'channel': '1'}
-{'direction': '1', 'maxSpeed': '16.0', 'name': 'RiC_Close_Motor2', 'kD': '0', 'type': 'MotorCloseLoop', 'publishHz': '50', 'port': '2', 'LPFHz': '100', 'directionE': '1', 'driverAddress': '128', 'PIDHz': '1000', 'LPFAlpha': '0.5', 'motorType': '1', 'kP': '5.0', 'limit': '1.0', 'timeout': '1000', 'cpr': '4288', 'encoderType': '2', 'port2': '4', 'kI': '5.0', 'channel': '2'}
-{'name': 'diff_driver', 'rWheel': '0.07', 'split': '0.85', 'publishHz': '50', 'baseLink': 'base_link', 'motorR': '1', 'width': '0.255', 'motorL': '0', 'odom': 'odom_link', 'maxAng': '16.0', 'type': 'DiffCloseLoop', 'maxLin': '16.0'}
-{'baudrate': '9600', 'publishHz': '10', 'type': 'GPS', 'name': 'RiC_GPS', 'frameId': 'GPS_FRAME'}
+{'direction': '1', 'maxSpeed': '16.0', 'name': 'RiC_Close_Motor', 'kD': '0', 'port2': '3', 'publishHz': '50', 'LPFHz': '100', 'directionE': '-1', 'driverAddress': '128', 'PIDHz': '1000', 'cpr': '4288', 'motorType': '1', 'kP': '5.0', 'limit': '1.0', 'timeout': '1000', 'kI': '5.0', 'LPFAlpha': '0.5', 'encoderType': '2', 'type': 'MotorCloseLoop', 'port': '1', 'channel': '1'}
+{'direction': '1', 'maxSpeed': '16.0', 'name': 'RiC_Close_Motor2', 'kD': '0', 'port2': '4', 'publishHz': '50', 'LPFHz': '100', 'directionE': '1', 'driverAddress': '128', 'PIDHz': '1000', 'cpr': '4288', 'motorType': '1', 'kP': '5.0', 'limit': '1.0', 'timeout': '1000', 'kI': '5.0', 'LPFAlpha': '0.5', 'encoderType': '2', 'type': 'MotorCloseLoop', 'port': '2', 'channel': '2'}
+{'name': 'diff_driver', 'width': '0.255', 'publishHz': '50', 'baseLink': 'base_link', 'motorR': '1', 'rWheel': '0.07', 'motorL': '0', 'split': '0.85', 'maxAng': '16.0', 'maxLin': '16.0', 'type': 'DiffCloseLoop', 'odom': 'odom_link'}
+{'baudrate': '9600', 'publishHz': '50', 'type': 'GPS', 'name': 'RiC_GPS', 'frameId': 'GPS_FRAME'}
 <?xml version="1.0" ?>
 <launch>
-                    
+                        
   <group ns="/">
-                                        
+                                                
     <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
-                                        
+                                                
     <rosparam command="load" file="$(find ric_board)/config/RiC.yaml"/>
   </group>
 </launch>

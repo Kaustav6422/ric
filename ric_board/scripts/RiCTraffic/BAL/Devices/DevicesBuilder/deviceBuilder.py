@@ -111,7 +111,8 @@ class DeviceBuilder:
             rospy.loginfo("Building GPS name: %s", self._param.getGpsName())
             gps = RiCGPS(self._param, self._output)
             self._output.writeAndWaitForAck(GPSParamResponse(self._param).dataTosend(), 0)
-            rospy.loginfo("Building IMU name: %s, was done successfully", self._param.getGpsName())
+            self._allDevs['gps'].append(gps)
+            rospy.loginfo("Building GPS name: %s, was done successfully", self._param.getGpsName())
 
     def getDevs(self):
         return self._allDevs

@@ -43,18 +43,16 @@ int main (int argc , char** argv)
 	ros::init(argc , argv , "cloud_rot");
 	ros::NodeHandle n ;
 	ros::Rate loop_rate(10) ;
-	char pre1[50]="komodo_1";
-	if(argc == 2){
-	 sprintf(pre1,"komodo_%s",argv[1]);
-	}
-	std::string pre(pre1);
-	//sprintf(str,"%d",value
 
-	//std::string pre("komodo_1");
+	char robot[50] = {0} ;
+
+	sprintf(robot,"%s_%s",argv[2], argv[1]);
 	
+	std::string pre(robot);
+	std::string name(argv[2]);
 	
-	rotated_cloud = n.advertise<sensor_msgs::PointCloud2>(std::string("/"+pre+"/komodo_Asus_Camera/depth/fixed_points"),100);
-	ros::Subscriber cloud_sub = n.subscribe(std::string("/"+pre+"/komodo_Asus_Camera/depth/points"),1000, rotCallback);
+	rotated_cloud = n.advertise<sensor_msgs::PointCloud2>(std::string("/"+pre+"/"+name+"_Asus_Camera/depth/fixed_points"),100);
+	ros::Subscriber cloud_sub = n.subscribe(std::string("/"+pre+"/"+name+"_Asus_Camera/depth/points"),1000, rotCallback);
 
 	double rotx = 0.0 ;
 	double roty = M_PI_2 ;

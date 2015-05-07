@@ -21,7 +21,7 @@
 	args="-urdf -model komodo_$(arg id) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
 </group>
 
- <node name="pcloud_rot_node" pkg="pcloud_rot" type="pcloud_rot_node" cwd="node" output="screen" args="$(arg id)" />
+ <node name="pcloud_rot_node" pkg="pcloud_rot" type="pcloud_rot_node" cwd="node" output="screen" args="$(arg id) komodo" />
 
  <node pkg="tf" type="static_transform_publisher" name="komodo_broadcaster_$(arg id)" args="0 0 0 0 0 0 /map /komodo_$(arg id)/odom_$(arg id) 100" />
 

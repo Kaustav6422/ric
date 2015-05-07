@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<launch>
+  <group ns="RiCBoard">
+    <node name="RiC_Gui" output="screen" pkg="ric_board" type="startGui.py"/>
+  </group>
+</launch>

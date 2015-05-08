@@ -2,7 +2,8 @@ import serial
 import time
 from BAL.Devices.DevicesBuilder.deviceBuilder import DeviceBuilder
 from BAL.Handlers.incomingDataHandler import IncomingDataHandler
-from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES,GPS_RES
+from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES,GPS_RES, \
+    PPM_RES
 from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START
 from BAL.Header.Response.IMUPublishResponse import IMUPublishResponse
 from BAL.Header.Response.ServoPublishResponse import ServoPublishResponse
@@ -10,6 +11,7 @@ from BAL.Header.Response.URFPublishResponse import URFPublishResponse
 from BAL.Header.Response.closeDiffPublishResponse import CloseDiffPublishRepose
 from BAL.Header.Response.closeLoopPublishResponse import CloseLoopPublishResponse
 from BAL.Header.Response.gpsPublishResponse import GPSPublishResponse
+from BAL.Header.Response.ppmPublishResponse import PPMPublishResponse
 from BAL.Header.Response.switchResponse import SwitchResponse
 
 __author__ = 'tom1231'
@@ -58,6 +60,8 @@ class Program:
                 devBuilder.createIMU()
                 devBuilder.createRelays()
                 devBuilder.createGPS()
+                devBuilder.createPPM()
+                devBuilder.createOpenLoopMotors()
                 devs = devBuilder.getDevs()
                 devBuilder.sendFinishBuilding()
                 input.timeout = None
@@ -100,6 +104,7 @@ class Program:
         if headerId == SWITCH_RES: result = SwitchResponse()
         if headerId == IMU_RES: result = IMUPublishResponse()
         if headerId == GPS_RES: result = GPSPublishResponse()
+        if headerId == PPM_RES: result = PPMPublishResponse()
 
         if result is not None: result.buildRequest(data)
         return result

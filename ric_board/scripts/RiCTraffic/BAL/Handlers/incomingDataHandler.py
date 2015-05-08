@@ -1,6 +1,7 @@
 from BAL.Header.Response.ConnectionResponse import ConnectionResponse
 from BAL.Interfaces.Runnable import Runnable
-from BAL.Handlers.incomingHandler import SERVO_RES, CON_REQ, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES, GPS_RES
+from BAL.Handlers.incomingHandler import SERVO_RES, CON_REQ, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES, GPS_RES, \
+    PPM_RES
 import rospy
 
 __author__ = 'tom1231'
@@ -32,6 +33,8 @@ class IncomingDataHandler(Runnable):
                 self._dev['imu'][0].publish(self._data)
             elif self._data.getId() == GPS_RES:
                 self._dev['gps'][0].publish(self._data)
+            elif self._data.getId() == PPM_RES:
+                self._dev['ppm'][0].publish(self._data)
 
         else:
             rospy.logerr('CheckSum is not valid!!!!!!!!')

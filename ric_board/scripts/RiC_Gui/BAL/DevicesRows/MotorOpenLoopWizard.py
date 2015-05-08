@@ -11,6 +11,7 @@ class MotorOpenLoopWizard(GUIWizard):
         info += 'Address: ' + data['address'] + '\n'
         info += 'Channel: ' + data['channel'] + '\n'
         info += 'Timeout (in millisSecond): ' + data['timeout'] + '\n'
+        info += 'Max speed: ' + data['max'] + '\n'
         return info
 
     def editWizard(self, data):
@@ -20,6 +21,7 @@ class MotorOpenLoopWizard(GUIWizard):
         address = Label(frame, text='Address:')
         channel = Label(frame, text='Channel:')
         timeout = Label(frame, text='Timeout ( in millisSecond ):')
+        max = Label(frame, text='Max speed:')
 
         self.name = Entry(frame)
         self.name.insert(END, data['name'])
@@ -29,6 +31,8 @@ class MotorOpenLoopWizard(GUIWizard):
         self.channel.insert(END, data['channel'])
         self.timeout = Entry(frame)
         self.timeout.insert(END, data['timeout'])
+        self.max = Entry(frame)
+        self.max.insert(0, data['max'])
 
         add = Button(frame, text='Add', command=self.add)
         cancel = Button(frame, text='Cancel', command=self.cancel)
@@ -37,13 +41,15 @@ class MotorOpenLoopWizard(GUIWizard):
         address.grid(sticky=W)
         channel.grid(sticky=W)
         timeout.grid(sticky=W)
+        max.grid(sticky=W)
         add.grid(sticky=W)
 
         self.name.grid(row=0, column=1, sticky=E)
         self.address.grid(row=1, column=1, sticky=E)
         self.channel.grid(row=2, column=1, sticky=E)
         self.timeout.grid(row=3, column=1, sticky=E)
-        cancel.grid(row=4, column=1, sticky=E)
+        self.max.grid(row=4, column=1, sticky=E)
+        cancel.grid(row=5, column=1, sticky=E)
 
         frame.pack()
         return self.finish
@@ -55,6 +61,7 @@ class MotorOpenLoopWizard(GUIWizard):
         address = Label(frame, text='Address:')
         channel = Label(frame, text='Channel:')
         timeout = Label(frame, text='Timeout (in millisSecond):')
+        max = Label(frame, text='Max speed:')
 
         self.name = Entry(frame)
         self.name.insert(0, 'RiC_Open_Motor')
@@ -64,6 +71,8 @@ class MotorOpenLoopWizard(GUIWizard):
         self.channel.insert(0, '1')
         self.timeout = Entry(frame)
         self.timeout.insert(0, '1000')
+        self.max = Entry(frame)
+        self.max.insert(0, '127')
 
         add = Button(frame, text='Add', command=self.add)
         cancel = Button(frame, text='Cancel', command=self.cancel)
@@ -72,13 +81,15 @@ class MotorOpenLoopWizard(GUIWizard):
         address.grid(sticky=W)
         channel.grid(sticky=W)
         timeout.grid(sticky=W)
+        max.grid(sticky=W)
         add.grid(sticky=W)
 
         self.name.grid(row=0, column=1, sticky=E)
         self.address.grid(row=1, column=1, sticky=E)
         self.channel.grid(row=2, column=1, sticky=E)
         self.timeout.grid(row=3, column=1, sticky=E)
-        cancel.grid(row=4, column=1, sticky=E)
+        self.max.grid(row=4, column=1, sticky=E)
+        cancel.grid(row=5, column=1, sticky=E)
 
         frame.pack()
         return self.finish
@@ -117,6 +128,7 @@ class MotorOpenLoopWizard(GUIWizard):
             self.data['address'] = self.address.get()
             self.data['channel'] = self.channel.get()
             self.data['timeout'] = self.timeout.get()
+            self.data['max'] = self.max.get()
             self.finish.set(True)
             self.master.destroy()
         else:

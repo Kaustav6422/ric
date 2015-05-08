@@ -1,6 +1,8 @@
+from BAL.Devices.RICOpenLoopMotor import OpenLoopMotor
 from BAL.Devices.RiCDiffCloseLoop import RiCDiffCloseLoop
 from BAL.Devices.RiCGPS import RiCGPS
 from BAL.Devices.RiCIMU import RiCIMU
+from BAL.Devices.RiCPPM import RiCPPM
 from BAL.Devices.RiCRelay import RiCRelay
 from BAL.Devices.RiCSwitch import RiCSwitch
 from BAL.Devices.RiCURF import RiCURF
@@ -9,6 +11,8 @@ from BAL.Header.Response.IMUParamResponse import IMUParamResponse
 from BAL.Header.Response.ParamBuildResponse import EngineCL, EngineCL2
 from BAL.Header.Response.closeDiffParamResponse import CloseDiffParamResponse
 from BAL.Header.Response.gpsParamResponse import GPSParamResponse
+from BAL.Header.Response.openLoopMotorParamResponse import OpenLoopMotorParamResponse
+from BAL.Header.Response.ppmParamResponse import PPMParamResponse
 from BAL.Header.Response.relayParamResponse import RelayParamResponse
 from BAL.Header.Response.switchParamResponse import SwitchParamResponse
 from BAL.Header.Response.urfParamResponse import URFParamResponse
@@ -41,6 +45,7 @@ class DeviceBuilder:
         self._allDevs['imu'] = []
         self._allDevs['relay'] = []
         self._allDevs['gps'] = []
+        self._allDevs['ppm'] = []
 
     def createServos(self):
         servoAmount = self._param.getServoNum()
@@ -113,6 +118,22 @@ class DeviceBuilder:
             self._output.writeAndWaitForAck(GPSParamResponse(self._param).dataTosend(), 0)
             self._allDevs['gps'].append(gps)
             rospy.loginfo("Building GPS name: %s, was done successfully", self._param.getGpsName())
+
+    def createPPM(self):
+        if self._param.isPPMInit():
+            rospy.loginfo("Building PPM name: %s", self._param.getPPMName())
+            ppm = RiCPPM(self._param)
+            self._output.writeAndWaitForAck(PPMParamResponse(self._param).dataTosend(), 0)
+            self._allDevs['ppm'].append(ppm)
+            rospy.loginfo("Building PPM name: %s, was done successfully", self._param.getPPMName())
+
+    def createOpenLoopMotors(self):
+        motorsAmout = self._param.getOpenLoopNum()
+        for motorId in xrange(motorsAmout):
+            rospy.loginfo("Building motor name: %s", self._param.getOpenLoopName(motorId))
+            motor = OpenLoopMotor(motorId, self._param, self._output)
+            self._output.writeAndWaitForAck(OpenLoopMotorParamResponse(motorId,self._param).dataTosend(), motorId)
+            rospy.loginfo("Building motor name: %s, was done successfully", self._param.getOpenLoopName(motorId))
 
     def getDevs(self):
         return self._allDevs

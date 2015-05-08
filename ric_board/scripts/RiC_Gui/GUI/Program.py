@@ -377,6 +377,7 @@ class Program():
                     file.write('openLoop' + str(openLoopNum) + '/address: ' + dev['address'] + '\n')
                     file.write('openLoop' + str(openLoopNum) + '/channel: ' + dev['channel'] + '\n')
                     file.write('openLoop' + str(openLoopNum) + '/timeout: ' + dev['timeout'] + '\n')
+                    file.write('openLoop' + str(openLoopNum) + '/max: ' + dev['max'] + '\n')
                     openLoopNum += 1
                 else:
                     file.write('Diff/publishHz: ' + dev['publishHz'] + '\n')

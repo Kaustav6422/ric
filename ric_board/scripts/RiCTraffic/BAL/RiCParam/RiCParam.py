@@ -213,3 +213,30 @@ class RiCParam:
 
     def isXbeeEnable(self):
         return int(rospy.get_param('Xbee_INIT', '0'))
+
+    def isPPMInit(self):
+        return int(rospy.get_param('PPM_INIT', '0')) == 1
+
+    def getPPMPubHz(self):
+        return int(rospy.get_param('PPM/publishHz', '0'))
+
+    def getPPMName(self):
+        return rospy.get_param('PPM/name', '')
+
+    def getOpenLoopNum(self):
+        return int(rospy.get_param('openLoopNum', '0'))
+
+    def getOpenLoopName(self, motorNum):
+        return rospy.get_param('openLoop%d/name' % motorNum, '')
+
+    def getOpenLoopAddress(self, motorNum):
+        return int(rospy.get_param('openLoop%d/address' % motorNum, '0'))
+
+    def getOpenLoopChannel(self, motorNum):
+        return int(rospy.get_param('openLoop%d/channel' % motorNum, '0'))
+
+    def getOpenLoopTimeout(self, motorNum):
+        return int(rospy.get_param('openLoop%d/timeout' % motorNum, '0'))
+
+    def getOpenLoopMax(self, motorNum):
+        return int(rospy.get_param('openLoop%d/max' % motorNum, '0'))

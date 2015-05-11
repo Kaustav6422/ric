@@ -1,10 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
-    
   <group ns="/">
-        
     <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
-        
     <rosparam command="load" file="$(find ric_board)/config/RiC.yaml"/>
   </group>
 </launch>

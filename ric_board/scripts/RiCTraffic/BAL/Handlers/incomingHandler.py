@@ -15,6 +15,7 @@ SWITCH_RES = 110
 IMU_RES = 111
 GPS_RES = 113
 PPM_RES = 114
+BAT_RES = 116
 
 class IncomingHandler:
 
@@ -33,5 +34,6 @@ class IncomingHandler:
         if id == IMU_RES: return 76, id
         if id == GPS_RES: return 40, id
         if id == PPM_RES: return 40, id
+        if id == BAT_RES: return 12, id
         return 0, 0
 

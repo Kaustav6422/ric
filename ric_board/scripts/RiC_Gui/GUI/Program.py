@@ -1,4 +1,6 @@
+import rospy
 from BAL.DevicesRows import MotorOpenLoopWizard
+from BAL.DevicesRows.BatteryWizard import BatteryWizard
 from BAL.DevicesRows.MotorCloseLoopWizardTwoEnc import MotorCloseTwoEncLoopWizard
 
 
@@ -70,6 +72,7 @@ class Program():
         self.initPPM = False
         self.initDiff = False
         self.isXbeeEnable = False
+        self.batteryInit = False
         self.override = True
         self.createDeleteAndEditButton()
         logoFrame.pack()
@@ -89,7 +92,7 @@ class Program():
         if len(self.servoPorts) > 0:
             servo = ServoWizard(self.icon, self.data)
             finish = servo.createWizard(self.servoPorts)
-            self.mainMenu.wait_variable(finish)
+            self.mainFrame.wait_variable(finish)
             if finish.get():
                 servoData = servo.getData()
                 self.isSameName(servoData)
@@ -98,6 +101,19 @@ class Program():
                 self.servoPorts.remove(servoData['port'])
         else:
             showerror(title='Error', message="You can't build any more servo devices.")
+
+    def addBat(self):
+        if not self.batteryInit:
+            battery = BatteryWizard(self.icon)
+            finish = battery.createWizard()
+            self.mainFrame.wait_variable(finish)
+            if finish.get():
+                self.batteryInit = True
+                data = battery.getData()
+                self.data.append(data)
+                self.listBox.insert(END, data['name'])
+        else:
+            showerror(title='Error', message="You already have battery.")
 
     def addMenu(self):
         self.mainMenu = Menu(self.mainFrame)
@@ -108,6 +124,8 @@ class Program():
         diffMenu = Menu(self.addDevices, tearoff=0)
         helpMenu = Menu(self.mainMenu, tearoff=0)
 
+
+        self.addDevices.add_command(label='Add Battery', command=self.addBat)
         self.addDevices.add_command(label='Add servo', command=self.addServo)
         self.addDevices.add_command(label='Add switch', command=self.addSwitch)
         self.addDevices.add_command(label='Add IMU', command=self.addIMU)
@@ -296,6 +314,9 @@ class Program():
             info = SwitchWizard.displayData(data)
         elif data['type'] == 'URF':
             info = URFWizard.displayData(data)
+        elif data['type'] == 'Battery':
+            info = BatteryWizard.displayData(data)
+
         self.info.insert(END, info)
         self.info.config(state=DISABLED)
 
@@ -379,6 +400,10 @@ class Program():
                     file.write('openLoop' + str(openLoopNum) + '/timeout: ' + dev['timeout'] + '\n')
                     file.write('openLoop' + str(openLoopNum) + '/max: ' + dev['max'] + '\n')
                     openLoopNum += 1
+                elif dev['type'] == 'Battery':
+                    file.write('Battery/name: ' + dev['name'] + '\n')
+                    file.write('Battery/pubHz: ' + dev['pubHz'] + '\n')
+                    file.write('Battery/voltageDividerRatio: ' + dev['voltageDividerRatio'] + '\n')
                 else:
                     file.write('Diff/publishHz: ' + dev['publishHz'] + '\n')
                     file.write('Diff/name: ' + dev['name'] + '\n')
@@ -391,6 +416,7 @@ class Program():
                     file.write('Diff/maxLin: ' + dev['maxLin'] + '\n')
                     file.write('Diff/motorL: ' + dev['motorL'] + '\n')
                     file.write('Diff/motorR: ' + dev['motorR'] + '\n')
+
                 fileData.write(str(dev) + '\n')
 
             if self.initIMU:
@@ -407,6 +433,11 @@ class Program():
                 file.write('PPM_INIT: 1\n')
             else:
                 file.write('PPM_INIT: 0\n')
+
+            if self.batteryInit:
+                file.write('BAT_INIT: 1\n')
+            else:
+                file.write('BAT_INIT: 0\n')
 
             if self.initDiff:
                 file.write('DIFF_INIT: 1' + '\n')
@@ -479,6 +510,8 @@ class Program():
                 device = DiffDriveCloseLoopWizard(self.icon, self.motors)
             elif data['type'] == 'MotorOpenLoop':
                 device = MotorOpenLoopWizard(self.icon, self.data, index)
+            elif data['type'] == 'Battery':
+                device = BatteryWizard(self.icon)
 
             finish = device.editWizard(data)
             self.mainFrame.wait_variable(finish)
@@ -548,6 +581,8 @@ class Program():
             self.sensorPorts.sort()
         elif data['type'] == 'PPM':
             self.initPPM = False
+        elif data['type'] == 'Battery':
+            self.batteryInit = False
         else:
             self.initDiff = False
 
@@ -600,6 +635,8 @@ class Program():
                 elif dev['type'] == 'Servo':
                     self.servoPorts.remove(dev['port'])
                     self.servoPorts.sort()
+                elif dev['type'] == 'Battery':
+                    self.batteryInit = True
                 self.listBox.insert(END, dev['name'])
                 self.override = False
 

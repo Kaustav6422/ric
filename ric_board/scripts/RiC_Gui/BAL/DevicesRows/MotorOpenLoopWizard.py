@@ -100,7 +100,13 @@ class MotorOpenLoopWizard(GUIWizard):
     def nameIsValid(self):
         for i in xrange(len(self.devs)):
             if self.name.get() == self.devs[i]['name'] and i != self.place:
+                showerror(title='Error', message='Name is already taken.')
                 return False
+            if i != self.place and self.devs[i]['type'] == 'MotorOpenLoop':
+                if self.devs[i]['address'] == self.address.get() and self.devs[i]['channel'] == self.channel.get():
+                    showerror(title='Error', message='Channel is already taken.')
+                    return False
+
         return True
 
     def __init__(self, icon, devs, place=-1):
@@ -131,5 +137,3 @@ class MotorOpenLoopWizard(GUIWizard):
             self.data['max'] = self.max.get()
             self.finish.set(True)
             self.master.destroy()
-        else:
-            showerror(title='Error', message='Name is already taken.')

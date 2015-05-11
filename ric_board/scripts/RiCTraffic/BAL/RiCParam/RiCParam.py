@@ -240,3 +240,15 @@ class RiCParam:
 
     def getOpenLoopMax(self, motorNum):
         return int(rospy.get_param('openLoop%d/max' % motorNum, '0'))
+
+    def isBatteryInit(self):
+        return int(rospy.get_param('BAT_INIT', '0')) == 1
+
+    def getBatteryName(self):
+        return rospy.get_param('Battery/name', '')
+
+    def getBatteryPubHz(self):
+        return int(rospy.get_param('Battery/pubHz', '0'))
+
+    def getBatteryVoltageDividerRatio(self):
+        return float(rospy.get_param('Battery/voltageDividerRatio', '0.0'))

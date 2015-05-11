@@ -1,4 +1,5 @@
 from BAL.Devices.RICOpenLoopMotor import OpenLoopMotor
+from BAL.Devices.RiCBattery import RiCBattery
 from BAL.Devices.RiCDiffCloseLoop import RiCDiffCloseLoop
 from BAL.Devices.RiCGPS import RiCGPS
 from BAL.Devices.RiCIMU import RiCIMU
@@ -6,6 +7,7 @@ from BAL.Devices.RiCPPM import RiCPPM
 from BAL.Devices.RiCRelay import RiCRelay
 from BAL.Devices.RiCSwitch import RiCSwitch
 from BAL.Devices.RiCURF import RiCURF
+from BAL.Header.Response.BatteryParamResponse import BatteryParamResponse
 from BAL.Header.Response.CloseLoopMotorTwoEncBuildResponse import CloseLoopMotorTwoEncBuildResponse
 from BAL.Header.Response.IMUParamResponse import IMUParamResponse
 from BAL.Header.Response.ParamBuildResponse import EngineCL, EngineCL2
@@ -46,6 +48,7 @@ class DeviceBuilder:
         self._allDevs['relay'] = []
         self._allDevs['gps'] = []
         self._allDevs['ppm'] = []
+        self._allDevs['battery'] = []
 
     def createServos(self):
         servoAmount = self._param.getServoNum()
@@ -135,6 +138,13 @@ class DeviceBuilder:
             self._output.writeAndWaitForAck(OpenLoopMotorParamResponse(motorId,self._param).dataTosend(), motorId)
             rospy.loginfo("Building motor name: %s, was done successfully", self._param.getOpenLoopName(motorId))
 
+    def createBattery(self):
+        if self._param.isBatteryInit():
+            rospy.loginfo("Building battery name: %s", self._param.getBatteryName())
+            battery = RiCBattery(self._param)
+            self._allDevs['battery'].append(battery)
+            self._output.writeAndWaitForAck(BatteryParamResponse(self._param).dataTosend(), 0)
+            rospy.loginfo("Building battery name: %s, was done successfully", self._param.getBatteryName())
     def getDevs(self):
         return self._allDevs
 

@@ -288,7 +288,13 @@ class MotorCloseLoopWizard(GUIWizard):
     def nameIsValid(self):
         for i in xrange(len(self.devs)):
             if self.nameTextField.get() == self.devs[i]['name'] and i != self.place:
+                showerror(title='Error', message='Name is already taken.')
                 return False
+            if i != self.place and self.devs[i]['type'] == 'MotorCloseLoop':
+                if self.devs[i]['driverAddress'] == self.driverAddressTextField.get() and self.devs[i]['channel'] == self.channelTextField.get():
+                    showerror(title='Error', message='Channel is already taken.')
+                    return False
+
         return True
 
     def __init__(self, icon, devs, place=-1):
@@ -332,8 +338,6 @@ class MotorCloseLoopWizard(GUIWizard):
                 self.data['directionE'] = '1'
             self.master.destroy()
             self.finish.set(True)
-        else:
-            showerror(title='Error', message='Name is already taken.')
 
     def cancel(self):
         self.master.destroy()

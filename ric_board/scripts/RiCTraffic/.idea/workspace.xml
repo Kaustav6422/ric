@@ -24,21 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RICOpenLoopMotor.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BAL/Devices/RICOpenLoopMotor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="432">
-              <caret line="8" column="19" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="deviceBuilder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="889" max-vertical-offset="2700">
-              <caret line="134" column="104" selection-start-line="134" selection-start-column="104" selection-end-line="134" selection-end-column="104" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2005" max-vertical-offset="2880">
+              <caret line="144" column="52" selection-start-line="144" selection-start-column="52" selection-end-line="144" selection-end-column="52" />
               <folding>
                 <element signature="e#0#54#0" expanded="true" />
               </folding>
@@ -46,56 +36,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Program.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/BAL/Program.py">
+      <file leaf-file-name="RiCBattery.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCBattery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.79611653" vertical-offset="1488" max-vertical-offset="2178">
-              <caret line="124" column="92" selection-start-line="124" selection-start-column="92" selection-end-line="124" selection-end-column="92" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="serialcli.py" pinned="false" current-in-tab="false">
-        <entry file="file:///usr/lib/python2.7/dist-packages/serial/serialcli.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3003" max-vertical-offset="4968">
-              <caret line="181" column="8" selection-start-line="181" selection-start-column="8" selection-end-line="181" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="openLoopMotorParamResponse.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BAL/Header/Response/openLoopMotorParamResponse.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="594">
-              <caret line="7" column="32" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.26213592" vertical-offset="0" max-vertical-offset="618">
+              <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
               <folding>
-                <element signature="e#23#102#0" expanded="true" />
+                <element signature="e#23#50#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="openLoopMotorRequest.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BAL/Header/Requests/openLoopMotorRequest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="540">
-              <caret line="7" column="26" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="26" />
-              <folding>
-                <element signature="e#23#36#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RiCCloseLoopMotor.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCCloseLoopMotor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="324" max-vertical-offset="558">
-              <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -105,10 +53,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/BAL/Header/Response/ServoPublishResponse.py" />
-        <option value="$PROJECT_DIR$/BAL/Header/Response/BuildServoResponse.py" />
-        <option value="$PROJECT_DIR$/BAL/Interfaces/Device.py" />
-        <option value="$PROJECT_DIR$/BAL/Devices/DevicesBuilder/RiCCloseLoopMotor.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/closeLoopPublishResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Requests/closeMotorRequest.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Requests/finishBuildingRequest.py" />
@@ -144,18 +88,22 @@
         <option value="$PROJECT_DIR$/BAL/Devices/RiCCloseLoopMotor.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RiCGPS.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/ppmPublishResponse.py" />
-        <option value="$PROJECT_DIR$/BAL/Header/Response/ParamBuildResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/ppmParamResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RiCPPM.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/gpsParamResponse.py" />
-        <option value="$PROJECT_DIR$/BAL/Handlers/incomingDataHandler.py" />
-        <option value="$PROJECT_DIR$/BAL/RiCParam/RiCParam.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/openLoopMotorParamResponse.py" />
-        <option value="$PROJECT_DIR$/BAL/Handlers/incomingHandler.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Requests/openLoopMotorRequest.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RICOpenLoopMotor.py" />
-        <option value="$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py" />
+        <option value="$PROJECT_DIR$/BAL/RiCParam/RiCParam.py" />
+        <option value="$PROJECT_DIR$/BAL/Header/Response/ParamBuildResponse.py" />
+        <option value="$PROJECT_DIR$/BAL/Header/Response/BatteryParamResponse.py" />
+        <option value="$PROJECT_DIR$/BAL/Header/Response/batteryPublishResponse.py" />
+        <option value="$PROJECT_DIR$/BAL/Handlers/incomingHandler.py" />
+        <option value="$PROJECT_DIR$/BAL/Devices/DevicesBuilder/RiCBattery.py" />
+        <option value="$PROJECT_DIR$/BAL/Handlers/incomingDataHandler.py" />
         <option value="$PROJECT_DIR$/BAL/Program.py" />
+        <option value="$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py" />
+        <option value="$PROJECT_DIR$/BAL/Devices/RiCBattery.py" />
       </list>
     </option>
   </component>
@@ -188,6 +136,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -360,7 +309,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -590,9 +538,9 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25273865" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3919753" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3919753" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -616,32 +564,17 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="44" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/BAL/Handlers/incomingDataHandler.py</url>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="46" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/urfParamResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49514562" vertical-offset="0" max-vertical-offset="618">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/URFPublishResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.097087376" vertical-offset="48" max-vertical-offset="666">
-          <caret line="7" column="24" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/switchResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
-          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Header/Response/switchParamResponse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="432">
@@ -768,13 +701,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/BuildServoResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1262136" vertical-offset="192" max-vertical-offset="810">
-          <caret line="15" column="49" selection-start-line="15" selection-start-column="49" selection-end-line="15" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Header/Response/closeDiffPublishResponse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.592233" vertical-offset="876" max-vertical-offset="1494">
@@ -789,24 +715,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/closeDiffParamResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08737864" vertical-offset="0" max-vertical-offset="618">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCDiffCloseLoop.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6101695" vertical-offset="126" max-vertical-offset="1350">
           <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/IMUPublishResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3294">
-          <caret line="26" column="24" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -852,24 +764,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/ParamBuildResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
-          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Header/RiCHeader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.61165047" vertical-offset="0" max-vertical-offset="1368">
           <caret line="22" column="8" selection-start-line="22" selection-start-column="8" selection-end-line="22" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Handlers/incomingDataHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.93203884" vertical-offset="0" max-vertical-offset="810">
-          <caret line="36" column="55" selection-start-line="36" selection-start-column="55" selection-end-line="36" selection-end-column="55" />
         </state>
       </provider>
     </entry>
@@ -908,25 +806,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Handlers/incomingHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="774">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Header/Requests/closeMotorRequest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="618">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCCloseLoopMotor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="558">
-          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -940,13 +823,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/RiCParam/RiCParam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44660193" vertical-offset="3828" max-vertical-offset="4464">
-          <caret line="228" column="23" selection-start-line="228" selection-start-column="8" selection-end-line="228" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Header/Response/openLoopMotorParamResponse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="594">
@@ -954,24 +830,6 @@
           <folding>
             <element signature="e#23#102#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="889" max-vertical-offset="2700">
-          <caret line="134" column="104" selection-start-line="134" selection-start-column="104" selection-end-line="134" selection-end-column="104" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Devices/RICOpenLoopMotor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="432">
-          <caret line="8" column="19" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -983,11 +841,127 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Devices/RICOpenLoopMotor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23300971" vertical-offset="0" max-vertical-offset="618">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/ParamBuildResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="64" max-vertical-offset="720">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/closeDiffParamResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6407767" vertical-offset="0" max-vertical-offset="618">
+          <caret line="23" column="50" selection-start-line="23" selection-start-column="50" selection-end-line="23" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/BuildServoResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08737864" vertical-offset="0" max-vertical-offset="810">
+          <caret line="3" column="70" selection-start-line="3" selection-start-column="70" selection-end-line="3" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/IMUPublishResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.6504854" vertical-offset="2712" max-vertical-offset="3330">
+          <caret line="94" column="8" selection-start-line="94" selection-start-column="8" selection-end-line="94" selection-end-column="27" />
+          <folding>
+            <element signature="e#23#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCCloseLoopMotor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="558">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/RiCParam/RiCParam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4062" max-vertical-offset="4680">
+          <caret line="246" column="22" selection-start-line="246" selection-start-column="8" selection-end-line="246" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/BatteryParamResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="486">
+          <caret line="7" column="26" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/batteryPublishResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="522">
+          <caret line="12" column="17" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="17" />
+          <folding>
+            <element signature="e#23#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Program.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79611653" vertical-offset="1488" max-vertical-offset="2178">
-          <caret line="124" column="92" selection-start-line="124" selection-start-column="92" selection-end-line="124" selection-end-column="92" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="2214">
+          <caret line="67" column="42" selection-start-line="67" selection-start-column="42" selection-end-line="67" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Handlers/incomingDataHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7735537" vertical-offset="216" max-vertical-offset="918">
+          <caret line="38" column="70" selection-start-line="38" selection-start-column="70" selection-end-line="38" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Handlers/incomingHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.815534" vertical-offset="144" max-vertical-offset="810">
+          <caret line="36" column="24" selection-start-line="36" selection-start-column="17" selection-end-line="36" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Devices/DevicesBuilder/deviceBuilder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2005" max-vertical-offset="2880">
+          <caret line="144" column="52" selection-start-line="144" selection-start-column="52" selection-end-line="144" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCBattery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26213592" vertical-offset="0" max-vertical-offset="618">
+          <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+          <folding>
+            <element signature="e#23#50#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

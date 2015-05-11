@@ -45,7 +45,7 @@ class Program:
             input = ser
             output = SerialWriteHandler(ser, incomingHandler, input)
             data = []
-            input.baudrate = 57600
+            input.baudrate = 9600
             incomingLength = 0
             headerId = 0
             devBuilder = DeviceBuilder(params, output, input, incomingHandler)

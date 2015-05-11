@@ -1,9 +1,13 @@
-{'name': 'RiC_Open_Motor', 'max': '127', 'timeout': '1000', 'address': '128', 'type': 'MotorOpenLoop', 'channel': '1'}
-{'name': 'RiC_Open_Motor1', 'max': '12', 'timeout': '1000', 'address': '128', 'type': 'MotorOpenLoop', 'channel': '1'}
+{'direction': '1', 'maxSpeed': '16.0', 'name': 'RiC_Close_Motor', 'kD': '0', 'publishHz': '50', 'LPFHz': '50', 'directionE': '1', 'driverAddress': '128', 'PIDHz': '1000', 'cpr': '4480', 'motorType': '1', 'kP': '3.0', 'kI': '3.0', 'timeout': '1000', 'limit': '1.0', 'LPFAlpha': '0.7', 'encoderType': '1', 'type': 'MotorCloseLoop', 'port': '1', 'channel': '1'}
+{'direction': '1', 'maxSpeed': '16.0', 'name': 'RiC_Close_Motor1', 'kD': '0', 'publishHz': '50', 'LPFHz': '50', 'directionE': '1', 'driverAddress': '128', 'PIDHz': '1000', 'cpr': '4480', 'motorType': '1', 'kP': '3.0', 'kI': '3.0', 'timeout': '1000', 'limit': '1.0', 'LPFAlpha': '0.7', 'encoderType': '1', 'type': 'MotorCloseLoop', 'port': '2', 'channel': '1'}
+{'name': 'diff_driver', 'width': '0.255', 'publishHz': '50', 'baseLink': 'base_link', 'motorR': '1', 'rWheel': '0.07', 'motorL': '0', 'odom': 'odom_link', 'maxAng': '16.0', 'maxLin': '16.0', 'type': 'DiffCloseLoop', 'split': '0.85'}
 <?xml version="1.0" ?>
 <launch>
+    
   <group ns="/">
+        
     <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
+        
     <rosparam command="load" file="$(find ric_board)/config/RiC.yaml"/>
   </group>
 </launch>

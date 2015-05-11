@@ -37,6 +37,8 @@ class Program:
         try:
             rospy.init_node('RiCTraffic')
             ser = Serial('/dev/RiCBoard')
+            ser.flushInput()
+            ser.flushOutput()
             # ser = Serial('/dev/ttyUSB0')
             incomingHandler = IncomingHandler()
             params = RiCParam()

@@ -53,7 +53,8 @@ class Program:
             gotHeaderStart = False
 
             try:
-                rospy.loginfo("Connect to 0x%x.....", self.waitForConnection(input, output))
+                self.waitForConnection(input, output)
+                # rospy.loginfo("Connect to 0x%x.....", self.waitForConnection(input, output))
                 rospy.loginfo("Starting building process......")
                 devBuilder.createServos()
                 devBuilder.createCLMotors()
@@ -115,18 +116,23 @@ class Program:
         return result
 
     def waitForConnection(self, input, output):
-        isConnect = False
-        gotHeaderStart = False
-        data = []
-        while not rospy.is_shutdown() and not isConnect:
-            if gotHeaderStart:
-                for i in xrange(10):
-                    data.append(input.read())
-                conReq = ConnectionRequest()
-                conReq.buildRequest(data)
-                if conReq.checkPackage() and conReq.toConnect():
+        # isConnect = False
+        # gotHeaderStart = False
+        # data = []
+        # while not rospy.is_shutdown() and not isConnect:
+        #     if gotHeaderStart:
+        #         for i in xrange(10):
+        #             data.append(input.read())
+        #         conReq = ConnectionRequest()
+        #         conReq.buildRequest(data)
+        #         if conReq.checkPackage() and conReq.toConnect():
+        #             d = ConnectionResponse(True).dataTosend()
+        #             for i in d:
+        #                 print ord(i)
+
                     output.writeAndWaitForAck(ConnectionResponse(True).dataTosend(), RES_ID)
-                    isConnect = True
-                gotHeaderStart = False
-            elif ord(input.read()) == HEADER_START: gotHeaderStart = True
-        return conReq.getDes()
+
+        #             isConnect = True
+        #         gotHeaderStart = False
+        #     elif ord(input.read()) == HEADER_START: gotHeaderStart = True
+        #  return conReq.getDes()

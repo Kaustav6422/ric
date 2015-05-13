@@ -19,6 +19,13 @@ class RiCGPS(Device):
         msg.latitude = data.getLat()
         msg.longitude = data.getLng()
         msg.altitude = data.getMeters()
-        msg.status.status = 0
+        if data.getFix() == 1:
+            msg.status.status = 0
+        else:
+            msg.status.status = -1
+        msg.position_covariance_type = 1
+        msg.position_covariance[0] = data.getHDOP() * data.getHDOP()
+        msg.position_covariance[4] = data.getHDOP() * data.getHDOP()
+        msg.position_covariance[8] = 4 * data.getHDOP() * data.getHDOP()
         msg.status.service = 1
         self._pub.publish(msg)

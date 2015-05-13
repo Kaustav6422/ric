@@ -32,7 +32,7 @@ class IncomingHandler:
         if id == URF_RES: return 16, id
         if id == SWITCH_RES: return 16, id
         if id == IMU_RES: return 76, id
-        if id == GPS_RES: return 40, id
+        if id == GPS_RES: return 48, id
         if id == PPM_RES: return 40, id
         if id == BAT_RES: return 12, id
         return 0, 0

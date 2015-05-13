@@ -7,6 +7,7 @@ LNG_PLACE = 24
 METERS_PLACE = 32
 HDOP_PLACE = 36
 SAT_PLACE = 40
+FIX_PLACE = 48
 
 
 class GPSPublishResponse(RiCHeader):
@@ -18,6 +19,7 @@ class GPSPublishResponse(RiCHeader):
         self._meters = 0.0
         self._HDOP = 0
         self._satellites = 0
+        self._fix = 0
 
     def getLat(self): return self._lat
 
@@ -28,6 +30,8 @@ class GPSPublishResponse(RiCHeader):
     def getHDOP(self): return self._HDOP
 
     def getSatellites(self): return self._satellites
+
+    def getFix(self): return self._fix
 
     def buildRequest(self, data):
         RiCHeader.buildRequest(self, data)
@@ -56,6 +60,11 @@ class GPSPublishResponse(RiCHeader):
             bytes.append(data[self.index])
             self.index += 1
         self._satellites = struct.unpack('<i', bytes)[0]
+        bytes = bytearray()
+        while self.index < FIX_PLACE:
+            bytes.append(data[self.index])
+            self.index += 1
+        self._fix = struct.unpack('<q', bytes)[0]
 
 
 

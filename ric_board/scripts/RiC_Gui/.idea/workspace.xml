@@ -37,7 +37,7 @@
       <file leaf-file-name="DiffDriveCloseLoopWizard.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BAL/DevicesRows/DiffDriveCloseLoopWizard.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3906">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3341" max-vertical-offset="3906">
               <caret line="191" column="42" selection-start-line="191" selection-start-column="29" selection-end-line="191" selection-end-column="42" />
               <folding />
             </state>
@@ -47,8 +47,8 @@
       <file leaf-file-name="Program.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUI/Program.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.2972973" vertical-offset="11976" max-vertical-offset="14382">
-              <caret line="662" column="42" selection-start-line="662" selection-start-column="42" selection-end-line="662" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.7162162" vertical-offset="10968" max-vertical-offset="14382">
+              <caret line="631" column="42" selection-start-line="631" selection-start-column="42" selection-end-line="631" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -802,14 +802,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/DevicesRows/DiffDriveOpenLoopWizard.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2369" max-vertical-offset="2826">
-          <caret line="139" column="41" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/DevicesRows/DiffDriveCloseLoopWizard.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3906">
@@ -818,10 +810,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/DevicesRows/DiffDriveOpenLoopWizard.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2369" max-vertical-offset="2826">
+          <caret line="139" column="41" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GUI/Program.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.2972973" vertical-offset="11976" max-vertical-offset="14382">
-          <caret line="662" column="42" selection-start-line="662" selection-start-column="42" selection-end-line="662" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.7162162" vertical-offset="10968" max-vertical-offset="14382">
+          <caret line="631" column="42" selection-start-line="631" selection-start-column="42" selection-end-line="631" selection-end-column="42" />
           <folding />
         </state>
       </provider>

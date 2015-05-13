@@ -510,7 +510,7 @@ class Program():
     def deleteDev(self):
         try:
             index, = self.listBox.curselection()
-            if (self.data[index]['type'] == 'MotorCloseLoop' or self.data[index] == 'MotorOpenLoop') and (self.initDiff or self.initDiffOpen):
+            if (self.data[index]['type'] == 'MotorCloseLoop' or self.data[index]['type'] == 'MotorOpenLoop') and (self.initDiff or self.initDiffOpen):
                 showerror(title='Error', message="You can't delete any motors when differential drive is present.")
                 return
             self.info.config(state=NORMAL)
@@ -629,7 +629,7 @@ class Program():
             self.initPPM = False
         elif data['type'] == 'Battery':
             self.batteryInit = False
-        elif data['type'] == 'DiffCloseLoop':
+        elif data['type'] == 'DiffOpenLoop':
             self.initDiffOpen = False
         else:
             self.initDiff = False

@@ -1,11 +1,12 @@
 {'name': 'RiC_Open_Motor', 'max': '127', 'timeout': '1000', 'address': '128', 'type': 'MotorOpenLoop', 'channel': '1'}
+{'baudrate': '9600', 'publishHz': '10', 'type': 'GPS', 'name': 'RiC_GPS', 'frameId': 'GPS_FRAME'}
 <?xml version="1.0" ?>
 <launch>
-    
+        
   <group ns="/">
-        
+                
     <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
-        
+                
     <rosparam command="load" file="$(find ric_board)/config/RiC.yaml"/>
   </group>
 </launch>

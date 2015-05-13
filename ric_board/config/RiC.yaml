@@ -3,8 +3,12 @@ openLoop0/address: 128
 openLoop0/channel: 1
 openLoop0/timeout: 1000
 openLoop0/max: 127
+GPS/publishHz: 10
+GPS/name: RiC_GPS
+GPS/frameId: GPS_FRAME
+GPS/baudrate: 9600
 IMU_INIT: 0
-GPS_INIT: 0
+GPS_INIT: 1
 PPM_INIT: 0
 BAT_INIT: 0
 DIFF_INIT: 0

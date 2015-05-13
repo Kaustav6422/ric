@@ -1,12 +1,13 @@
-{'name': 'RiC_Open_Motor', 'max': '127', 'timeout': '1000', 'address': '128', 'type': 'MotorOpenLoop', 'channel': '1'}
-{'baudrate': '9600', 'publishHz': '10', 'type': 'GPS', 'name': 'RiC_GPS', 'frameId': 'GPS_FRAME'}
+{'direction': '1', 'name': 'RiC_Open_MotorL', 'max': '127', 'timeout': '1000', 'address': '128', 'type': 'MotorOpenLoop', 'channel': '1'}
+{'direction': '1', 'name': 'RiC_Open_MotorR', 'max': '127', 'timeout': '1000', 'address': '128', 'type': 'MotorOpenLoop', 'channel': '2'}
+{'name': 'diff_driver', 'width': '0.255', 'motorR': '1', 'rWheel': '0.07', 'motorL': '0', 'maxLin': '5.0', 'maxAng': '16.0', 'type': 'DiffOpenLoop'}
 <?xml version="1.0" ?>
 <launch>
-        
+    
   <group ns="/">
-                
+        
     <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
-                
+        
     <rosparam command="load" file="$(find ric_board)/config/RiC.yaml"/>
   </group>
 </launch>

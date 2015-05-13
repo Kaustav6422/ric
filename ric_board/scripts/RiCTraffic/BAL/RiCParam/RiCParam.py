@@ -109,6 +109,9 @@ class RiCParam:
     def isInitCloseDiff(self):
         return int(rospy.get_param('DIFF_INIT', '0')) == 1
 
+    def isInitOpenDiff(self):
+        return int(rospy.get_param('DIFF_INIT_OP', '0')) == 1
+
     def getCloseDiffPubHz(self):
         return int(rospy.get_param('Diff/publishHz', '0'))
 
@@ -240,6 +243,9 @@ class RiCParam:
 
     def getOpenLoopMax(self, motorNum):
         return int(rospy.get_param('openLoop%d/max' % motorNum, '0'))
+
+    def getOpenLoopDirection(self, motorNum):
+        return int(rospy.get_param('openLoop%d/direction' % motorNum, '0'))
 
     def isBatteryInit(self):
         return int(rospy.get_param('BAT_INIT', '0')) == 1

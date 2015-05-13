@@ -12,6 +12,10 @@ class MotorOpenLoopWizard(GUIWizard):
         info += 'Channel: ' + data['channel'] + '\n'
         info += 'Timeout (in millisSecond): ' + data['timeout'] + '\n'
         info += 'Max speed: ' + data['max'] + '\n'
+        if data['direction'] == '-1':
+            info += 'Direction: Reverse' + '\n'
+        else:
+            info += 'Direction: Normal' + '\n'
         return info
 
     def editWizard(self, data):
@@ -22,6 +26,7 @@ class MotorOpenLoopWizard(GUIWizard):
         channel = Label(frame, text='Channel:')
         timeout = Label(frame, text='Timeout ( in millisSecond ):')
         max = Label(frame, text='Max speed:')
+        directionL = Label(frame, text='Direction Reverse:')
 
         self.name = Entry(frame)
         self.name.insert(END, data['name'])
@@ -33,6 +38,11 @@ class MotorOpenLoopWizard(GUIWizard):
         self.timeout.insert(END, data['timeout'])
         self.max = Entry(frame)
         self.max.insert(0, data['max'])
+        self.direction = IntVar(frame)
+        if data['direction'] == '-1':
+            self.direction.set(1)
+
+        direction = Checkbutton(frame, variable=self.direction)
 
         add = Button(frame, text='Add', command=self.add)
         cancel = Button(frame, text='Cancel', command=self.cancel)
@@ -42,6 +52,7 @@ class MotorOpenLoopWizard(GUIWizard):
         channel.grid(sticky=W)
         timeout.grid(sticky=W)
         max.grid(sticky=W)
+        directionL.grid(sticky=W)
         add.grid(sticky=W)
 
         self.name.grid(row=0, column=1, sticky=E)
@@ -49,7 +60,8 @@ class MotorOpenLoopWizard(GUIWizard):
         self.channel.grid(row=2, column=1, sticky=E)
         self.timeout.grid(row=3, column=1, sticky=E)
         self.max.grid(row=4, column=1, sticky=E)
-        cancel.grid(row=5, column=1, sticky=E)
+        direction.grid(row=5, column=1, sticky=E)
+        cancel.grid(row=6, column=1, sticky=E)
 
         frame.pack()
         return self.finish
@@ -62,6 +74,7 @@ class MotorOpenLoopWizard(GUIWizard):
         channel = Label(frame, text='Channel:')
         timeout = Label(frame, text='Timeout (in millisSecond):')
         max = Label(frame, text='Max speed:')
+        directionL = Label(frame, text='Direction Reverse:')
 
         self.name = Entry(frame)
         self.name.insert(0, 'RiC_Open_Motor')
@@ -73,6 +86,9 @@ class MotorOpenLoopWizard(GUIWizard):
         self.timeout.insert(0, '1000')
         self.max = Entry(frame)
         self.max.insert(0, '127')
+        self.direction = IntVar(frame)
+
+        direction = Checkbutton(frame, variable=self.direction)
 
         add = Button(frame, text='Add', command=self.add)
         cancel = Button(frame, text='Cancel', command=self.cancel)
@@ -82,6 +98,7 @@ class MotorOpenLoopWizard(GUIWizard):
         channel.grid(sticky=W)
         timeout.grid(sticky=W)
         max.grid(sticky=W)
+        directionL.grid(sticky=W)
         add.grid(sticky=W)
 
         self.name.grid(row=0, column=1, sticky=E)
@@ -89,7 +106,8 @@ class MotorOpenLoopWizard(GUIWizard):
         self.channel.grid(row=2, column=1, sticky=E)
         self.timeout.grid(row=3, column=1, sticky=E)
         self.max.grid(row=4, column=1, sticky=E)
-        cancel.grid(row=5, column=1, sticky=E)
+        direction.grid(row=5, column=1, sticky=E)
+        cancel.grid(row=6, column=1, sticky=E)
 
         frame.pack()
         return self.finish
@@ -135,5 +153,8 @@ class MotorOpenLoopWizard(GUIWizard):
             self.data['channel'] = self.channel.get()
             self.data['timeout'] = self.timeout.get()
             self.data['max'] = self.max.get()
+            if self.direction.get(): self.data['direction'] = '-1'
+            else: self.data['direction'] = '1'
+
             self.finish.set(True)
             self.master.destroy()

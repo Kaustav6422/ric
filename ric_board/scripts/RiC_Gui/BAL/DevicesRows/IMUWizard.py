@@ -70,7 +70,7 @@ class IMUWizard(GUIWizard):
         self.frameIdTextField.grid(row=2, column=1, pady=1)
         cumpLabel = Label(frame, text='Declination angle:')
         self.campTextFeild = Entry(frame)
-        self.campTextFeild.insert(0, '13.8')
+        self.campTextFeild.insert(0, '0')
         cumpLabel.grid(row=3, column=0, sticky=W)
         self.campTextFeild.grid(row=3, column=1, sticky=E)
         cancel = Button(frame, text='Cancel', command=self.cancel)

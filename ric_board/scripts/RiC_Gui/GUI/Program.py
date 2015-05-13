@@ -1,6 +1,7 @@
 import rospy
 from BAL.DevicesRows import MotorOpenLoopWizard
 from BAL.DevicesRows.BatteryWizard import BatteryWizard
+from BAL.DevicesRows.DiffDriveOpenLoopWizard import DiffDriveOpenLoopWizard
 from BAL.DevicesRows.MotorCloseLoopWizardTwoEnc import MotorCloseTwoEncLoopWizard
 
 
@@ -71,6 +72,7 @@ class Program():
         self.initGPS = False
         self.initPPM = False
         self.initDiff = False
+        self.initDiffOpen = False
         self.isXbeeEnable = False
         self.batteryInit = False
         self.override = True
@@ -101,6 +103,23 @@ class Program():
                 self.servoPorts.remove(servoData['port'])
         else:
             showerror(title='Error', message="You can't build any more servo devices.")
+
+    def addOpenDiff(self):
+        if not self.initDiff:
+            if not self.initDiffOpen:
+                if self.initOpenLoop and len(self.motors) > 1:
+                    diff = DiffDriveOpenLoopWizard(self.icon, self.motors)
+                    finish = diff.createWizard()
+                    self.mainFrame.wait_variable(finish)
+                    if finish.get():
+                        self.initDiffOpen = True
+                        data = diff.getData()
+                        self.data.append(data)
+                        self.listBox.insert(END, data['name'])
+                else:
+                    showerror(title='Error', message="You can't build open differential drive, you need two or more loop motors.")
+        else:
+            showerror(title='Error', message="Only one differential drive can be present.")
 
     def addBat(self):
         if not self.batteryInit:
@@ -141,7 +160,9 @@ class Program():
 
         motorMenu.add_cascade(label='Close Loop', menu=closeMotorMenu)
         motorMenu.add_command(label='Open Loop', command=self.addOpenLoop)
+
         diffMenu.add_command(label='Close Loop Drive', command=self.addDiffCL)
+        diffMenu.add_command(label='Open Loop Drive', command=self.addOpenDiff)
 
         helpMenu.add_command(label='Setup USB rules', command=self.setupUSB)
 
@@ -316,6 +337,12 @@ class Program():
             info = URFWizard.displayData(data)
         elif data['type'] == 'Battery':
             info = BatteryWizard.displayData(data)
+        elif data['type'] == 'DiffOpenLoop':
+            motorD = dict()
+            for i in xrange(len(self.motors)):
+                motorD[self.motors[i]] = str(i)
+            info = DiffDriveOpenLoopWizard.displayData((data, motorD))
+
 
         self.info.insert(END, info)
         self.info.config(state=DISABLED)
@@ -331,6 +358,7 @@ class Program():
             openLoopNum = 0
             fileData = open('%s/DATA/%s.RiC' % (path, self.nameOfFile), 'w')
             for dev in self.data:
+                # print dev
                 if dev['type'] == 'Switch':
                     file.write('switch' + str(switchCount) + '/name: ' + dev['name'] + '\n')
                     file.write('switch' + str(switchCount) + '/port: ' + dev['port'] + '\n')
@@ -399,11 +427,20 @@ class Program():
                     file.write('openLoop' + str(openLoopNum) + '/channel: ' + dev['channel'] + '\n')
                     file.write('openLoop' + str(openLoopNum) + '/timeout: ' + dev['timeout'] + '\n')
                     file.write('openLoop' + str(openLoopNum) + '/max: ' + dev['max'] + '\n')
+                    file.write('openLoop' + str(openLoopNum) + '/direction: ' + dev['direction'] + '\n')
                     openLoopNum += 1
                 elif dev['type'] == 'Battery':
                     file.write('Battery/name: ' + dev['name'] + '\n')
                     file.write('Battery/pubHz: ' + dev['pubHz'] + '\n')
                     file.write('Battery/voltageDividerRatio: ' + dev['voltageDividerRatio'] + '\n')
+                elif dev['type'] == 'DiffOpenLoop':
+                    file.write('Diff/name: ' + dev['name'] + '\n')
+                    file.write('Diff/rWheel: ' + dev['rWheel'] + '\n')
+                    file.write('Diff/width: ' + dev['width'] + '\n')
+                    file.write('Diff/maxAng: ' + dev['maxAng'] + '\n')
+                    file.write('Diff/maxLin: ' + dev['maxLin'] + '\n')
+                    file.write('Diff/motorL: ' + dev['motorL'] + '\n')
+                    file.write('Diff/motorR: ' + dev['motorR'] + '\n')
                 else:
                     file.write('Diff/publishHz: ' + dev['publishHz'] + '\n')
                     file.write('Diff/name: ' + dev['name'] + '\n')
@@ -444,6 +481,10 @@ class Program():
             else:
                 file.write('DIFF_INIT: 0' + '\n')
 
+            if self.initDiffOpen:
+                file.write('DIFF_INIT_OP: 1' + '\n')
+            else:
+                file.write('DIFF_INIT_OP: 0' + '\n')
             # if self.isXbeeEnable:
             #     file.write('XBEE_INIT: 1' + '\n')
             # else:
@@ -469,7 +510,7 @@ class Program():
     def deleteDev(self):
         try:
             index, = self.listBox.curselection()
-            if (self.data[index]['type'] == 'MotorCloseLoop' or self.data[index] == 'MotorOpenLoop') and self.initDiff:
+            if (self.data[index]['type'] == 'MotorCloseLoop' or self.data[index] == 'MotorOpenLoop') and (self.initDiff or self.initDiffOpen):
                 showerror(title='Error', message="You can't delete any motors when differential drive is present.")
                 return
             self.info.config(state=NORMAL)
@@ -508,6 +549,8 @@ class Program():
                 device = PPMWizard(self.icon)
             elif data['type'] == 'DiffCloseLoop':
                 device = DiffDriveCloseLoopWizard(self.icon, self.motors)
+            elif data['type'] == 'DiffOpenLoop':
+                device = DiffDriveOpenLoopWizard(self.icon, self.motors)
             elif data['type'] == 'MotorOpenLoop':
                 device = MotorOpenLoopWizard(self.icon, self.data, index)
             elif data['type'] == 'Battery':
@@ -521,6 +564,9 @@ class Program():
                 self.listBox.delete(index)
                 self.listBox.insert(index, self.data[index]['name'])
                 self.writeToInfo(self.data[index])
+                if self.data[index]['type'] == 'MotorOpenLoop':
+                    self.motors.remove(oldName)
+                    self.motors.append(self.data[index]['name'])
                 if self.data[index]['type'] == 'MotorCloseLoop':
                     self.motors.remove(oldName)
                     self.motors.append(self.data[index]['name'])
@@ -583,6 +629,8 @@ class Program():
             self.initPPM = False
         elif data['type'] == 'Battery':
             self.batteryInit = False
+        elif data['type'] == 'DiffCloseLoop':
+            self.initDiffOpen = False
         else:
             self.initDiff = False
 
@@ -612,6 +660,8 @@ class Program():
                     self.initPPM = True
                 elif dev['type'] == 'DiffCloseLoop':
                     self.initDiff = True
+                elif dev['type'] == 'DiffOpenLoop':
+                    self.initDiffOpen = True
                 elif dev['type'] == 'MotorCloseLoop':
                     self.initCloseLoop = True
                     self.motors.append(dev['name'])
@@ -710,20 +760,23 @@ class Program():
             showerror(title='Error', message='You have no sensor port left')
 
     def addDiffCL(self):
-        if self.devCount('MotorCloseLoop') >= 2:
-            if not self.initDiff:
-                drive = DiffDriveCloseLoopWizard(self.icon, self.motors)
-                finish = drive.createWizard()
-                self.mainFrame.wait_variable(finish)
-                if finish.get():
-                    data = drive.getData()
-                    self.listBox.insert(END, data['name'])
-                    self.data.append(data)
-                    self.initDiff = True
+        if not self.initDiffOpen and self.initCloseLoop:
+            if self.devCount('MotorCloseLoop') >= 2:
+                if not self.initDiff:
+                    drive = DiffDriveCloseLoopWizard(self.icon, self.motors)
+                    finish = drive.createWizard()
+                    self.mainFrame.wait_variable(finish)
+                    if finish.get():
+                        data = drive.getData()
+                        self.listBox.insert(END, data['name'])
+                        self.data.append(data)
+                        self.initDiff = True
+                else:
+                    showerror(title='Error', message='You can only have one drive')
             else:
-                showerror(title='Error', message='You can only have one drive')
+                showerror(title='Error', message='Please create more Close Loop Motor')
         else:
-            showerror(title='Error', message='Please create more Close Loop Motor')
+            showerror(title='Error', message="Can't build close differential and open differential together")
 
     def devCount(self, type):
         count = 0

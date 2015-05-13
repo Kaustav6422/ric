@@ -3,6 +3,7 @@ from BAL.Devices.RiCBattery import RiCBattery
 from BAL.Devices.RiCDiffCloseLoop import RiCDiffCloseLoop
 from BAL.Devices.RiCGPS import RiCGPS
 from BAL.Devices.RiCIMU import RiCIMU
+from BAL.Devices.RiCOpenDiff import RiCOpenDiff
 from BAL.Devices.RiCPPM import RiCPPM
 from BAL.Devices.RiCRelay import RiCRelay
 from BAL.Devices.RiCSwitch import RiCSwitch
@@ -41,6 +42,7 @@ class DeviceBuilder:
         self._allDevs = dict()
         self._allDevs['servos'] = []
         self._allDevs['motorsCl'] = []
+        self._allDevs['motorsOl'] = []
         self._allDevs['urf'] = []
         self._allDevs['switch'] = []
         self._allDevs['diff'] = []
@@ -135,6 +137,7 @@ class DeviceBuilder:
         for motorId in xrange(motorsAmout):
             rospy.loginfo("Building motor name: %s", self._param.getOpenLoopName(motorId))
             motor = OpenLoopMotor(motorId, self._param, self._output)
+            self._allDevs['motorsOl'].append(motor)
             self._output.writeAndWaitForAck(OpenLoopMotorParamResponse(motorId,self._param).dataTosend(), motorId)
             rospy.loginfo("Building motor name: %s, was done successfully", self._param.getOpenLoopName(motorId))
 
@@ -145,8 +148,19 @@ class DeviceBuilder:
             self._allDevs['battery'].append(battery)
             self._output.writeAndWaitForAck(BatteryParamResponse(self._param).dataTosend(), 0)
             rospy.loginfo("Building battery name: %s, was done successfully", self._param.getBatteryName())
+
+    def createOpenDiff(self):
+        if self._param.isInitOpenDiff():
+            rospy.loginfo("Building differential drive name: %s", self._param.getCloseDiffName())
+            motorL = self._allDevs['motorsOl'][self._param.getCloseDiffMotorL()]
+            motorR = self._allDevs['motorsOl'][self._param.getCloseDiffMotorR()]
+            diff = RiCOpenDiff(self._param, motorL, motorR)
+            self._allDevs['diff'].append(diff)
+            rospy.loginfo("Building differential drive name: %s, was done successfully", self._param.getCloseDiffName())
+
     def getDevs(self):
         return self._allDevs
+
 
     def sendFinishBuilding(self):
         self._output.writeAndWaitForAck(FinishBuildingRequest().dataTosend(), ID_REQ)

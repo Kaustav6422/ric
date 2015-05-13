@@ -67,6 +67,7 @@ class Program:
                 devBuilder.createPPM()
                 devBuilder.createOpenLoopMotors()
                 devBuilder.createBattery()
+                devBuilder.createOpenDiff()
                 devs = devBuilder.getDevs()
                 devBuilder.sendFinishBuilding()
                 input.timeout = None

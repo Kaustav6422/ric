@@ -11,9 +11,10 @@ class OpenLoopMotor(Device):
     def __init__(self, motorId,param, output):
         Device.__init__(self, param.getOpenLoopName(motorId), output)
         self._id = motorId
+        self._direction = param.getOpenLoopDirection(motorId)
         Subscriber('%s/command' % self._name, Float32, self.openLoopCallback)
 
     def publish(self, data): pass
 
     def openLoopCallback(self, msg):
-        self._output.write(OpenLoopMotorRequest(self._id, msg.data).dataTosend())
+        self._output.write(OpenLoopMotorRequest(self._id, msg.data * self._direction).dataTosend())

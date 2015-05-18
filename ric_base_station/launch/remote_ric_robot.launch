@@ -1,28 +1,22 @@
 <?xml version="1.0"?>
 <launch>
 
-  <!-- <include file="$(find ric_base_station)/launch/multi_robot_control.launch"/>  -->
-<env name="ROS_MASTER_URI" value="http://10.0.0.17:11311"/>
-<env name="ROS_HOSTNAME" value="10.0.0.15"/>
-
+  <!-- 
+  On remote PC:
+  >export ROSLAUNCH_SSH_UNKNOWN=1
+  >export ROS_HOSTNAME=<PC_IP>
+  >export ROS_MASTER_URI=<ROBOT_IP>:11311
+  edit ~/catkin_ws/src/ric/ric_base_station/launch/remote_ric_robot.launch so the address in the mechine tag will mach the <ROBOT_IP>
+  
+  On robot:
+  edit ~/catkin_ws/src/ric/ric_base_station/config/remote_env.sh so the ROS_HOSTNAME will match the <ROBOT_IP>
+  run roscore in a terminal
+  -->
+  
 <machine name="lizi" address="10.0.0.17" user="lizi" password="a" env-loader="~/catkin_ws/src/ric/ric_base_station/config/remote_env.sh" default="true"/>
-
-<group ns="lizi">
-
-<!-- ~~~~~~~ UNCOMMENT TO VIEW THIS ROBOT IN RVIZ ~~~~~~~ -->
-<param name="/robot_description" command="$(find xacro)/xacro.py '$(find ric_description)/lizi/lizi_fixed.xacro' komodo_id:=1" />
-<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map odom_link 20" /> 
-<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-
-
 <include file="$(find ric_robot)/launch/lizi.launch">
 <arg name="id" value="1" />
 </include>
-
-</group>
-
-
 
 
 </launch>

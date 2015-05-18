@@ -1,19 +1,11 @@
 <?xml version="1.0"?>
 <launch>
+ <arg name="robot_ip"  default="10.0.0.17" />
+  <arg name="pc_ip"  default="10.0.0.15" />
 
-  <!-- 
-  On remote PC:
-  >export ROSLAUNCH_SSH_UNKNOWN=1
-  >export ROS_HOSTNAME=<PC_IP>
-  >export ROS_MASTER_URI=<ROBOT_IP>:11311
-  edit ~/catkin_ws/src/ric/ric_base_station/launch/remote_ric_robot.launch so the address in the mechine tag will mach the <ROBOT_IP>
   
-  On robot:
-  edit ~/catkin_ws/src/ric/ric_base_station/config/remote_env.sh so the ROS_HOSTNAME will match the <ROBOT_IP>
-  run roscore in a terminal
-  -->
-  
-<machine name="lizi" address="10.0.0.17" user="lizi" password="a" env-loader="~/catkin_ws/src/ric/ric_base_station/config/remote_env.sh" default="true"/>
+<machine name="lizi" address="$(arg robot_ip)" user="lizi" password="a" env-loader="~/catkin_ws/src/ric/ric_base_station/config/remote_env.sh" default="true"/>
+
 <include file="$(find ric_robot)/launch/lizi.launch">
 <arg name="id" value="1" />
 </include>

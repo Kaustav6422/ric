@@ -1,0 +1,23 @@
+{'direction': '-1', 'maxSpeed': '16.0', 'name': 'left_motor', 'kD': '0', 'port2': '3', 'publishHz': '20', 'LPFHz': '50', 'directionE': '-1', 'driverAddress': '128', 'PIDHz': '1000', 'cpr': '4480', 'motorType': '1', 'kP': '3.0', 'limit': '1.0', 'timeout': '1000', 'kI': '3.0', 'LPFAlpha': '0.7', 'encoderType': '2', 'type': 'MotorCloseLoop', 'port': '1', 'channel': '1'}
+{'direction': '-1', 'maxSpeed': '16.0', 'name': 'right_motor', 'kD': '0', 'port2': '4', 'publishHz': '20', 'LPFHz': '50', 'directionE': '1', 'driverAddress': '128', 'PIDHz': '1000', 'cpr': '4480', 'motorType': '1', 'kP': '3.0', 'limit': '1.0', 'timeout': '1000', 'kI': '3.0', 'LPFAlpha': '0.7', 'encoderType': '2', 'type': 'MotorCloseLoop', 'port': '2', 'channel': '2'}
+{'name': 'diff_driver', 'rWheel': '0.07', 'publishHz': '20', 'baseLink': 'base_link', 'motorR': '1', 'width': '0.255', 'motorL': '0', 'odom': 'odom_link', 'maxAng': '16.0', 'maxLin': '16.0', 'type': 'DiffCloseLoop', 'split': '0.85'}
+{'voltageDividerRatio': '5.92', 'pubHz': '10', 'type': 'Battery', 'name': 'battery_monitor'}
+{'publishHz': '20', 'camp': '0', 'type': 'IMU', 'name': 'IMU', 'frameId': 'base_link'}
+{'baudrate': '9600', 'type': 'GPS', 'publishHz': '1', 'name': 'GPS', 'frameId': 'base_link'}
+<?xml version="1.0" ?>
+<launch>
+                
+  <group ns="/">
+                                
+    <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
+                                
+    <node name="front_camera" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+      <param name="video_device" value="/dev/video0"/>
+      <param name="camera_frame_id" value="Camera_link"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="image_width" value="640"/>
+      <param name="image_height" value="480"/>
+    </node>
+    <rosparam command="load" file="$(find ric_board)/config/lizi.yaml"/>
+  </group>
+</launch>

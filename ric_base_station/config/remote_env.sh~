@@ -1,0 +1,5 @@
+#!/bin/sh
+export ROS_HOSTNAME="10.0.0.17"
+export ROS_IP="10.0.0.17"
+. ~/catkin_ws/devel/setup.sh
+exec "$@"

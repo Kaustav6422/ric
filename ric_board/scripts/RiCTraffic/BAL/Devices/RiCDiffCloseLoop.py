@@ -57,16 +57,16 @@ class RiCDiffCloseLoop(Device):
         odomMsg.child_frame_id = self._baseLink
         odomMsg.pose.pose.position.x = data[0]
         odomMsg.pose.pose.position.y = data[1]
-        odomMsg.pose.pose.position.z = data[2]
+        odomMsg.pose.pose.position.z = 0
         odomMsg.pose.pose.orientation = q
         self._pub.publish(odomMsg)
         traMsg = TransformStamped()
         traMsg.header.frame_id = self._odom
         traMsg.header.stamp = rospy.get_rostime()
         traMsg.child_frame_id = self._baseLink
-        traMsg.transform.translation.x = data[3]
-        traMsg.transform.translation.y = data[4]
-        traMsg.transform.translation.z = data[5]
+        traMsg.transform.translation.x = data[0]
+        traMsg.transform.translation.y = data[1]
+        traMsg.transform.translation.z = 0
         traMsg.transform.rotation = q
         self._broadCase.sendTransformMessage(traMsg)
 

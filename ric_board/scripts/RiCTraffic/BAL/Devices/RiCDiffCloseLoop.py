@@ -23,7 +23,7 @@ class RiCDiffCloseLoop(Device):
         self._maxLin = param.getCloseDiffMaxLin()
         self._pub = Publisher("%s/odometry" % self._name, Odometry, queue_size=param.getCloseDiffPubHz())
         self._broadCase = TransformBroadcaster()
-        Subscriber('%s/command' % self._name, Twist, self.diffServiceCallback)
+        Subscriber('%s/command' % self._name, Twist, self.diffServiceCallback, queue_size=1)
         Service('%s/setOdometry' % self._name, set_odom, self.setOdom)
 
     def diffServiceCallback(self, msg):
@@ -37,7 +37,7 @@ class RiCDiffCloseLoop(Device):
             msg.linear.x = self._maxLin
         elif msg.linear.x < -self._maxLin:
             msg.linear.x = -self._maxLin
-
+        # print msg.angular.z, msg.linear.x
         self._output.write(CloseDiffRequest(msg.angular.z, msg.linear.x).dataTosend())
 
 

@@ -28,10 +28,10 @@ class IncomingHandler:
         if id == SERVO_RES: return 16, id
         if id == ACK_RES: return 16, id
         if id == MOTOR_RES: return 20, id
-        if id == CLOSE_DIFF_RES: return 40, id
+        if id == CLOSE_DIFF_RES: return 28, id
         if id == URF_RES: return 16, id
         if id == SWITCH_RES: return 16, id
-        if id == IMU_RES: return 76, id
+        if id == IMU_RES: return 60, id
         if id == GPS_RES: return 48, id
         if id == PPM_RES: return 40, id
         if id == BAT_RES: return 12, id

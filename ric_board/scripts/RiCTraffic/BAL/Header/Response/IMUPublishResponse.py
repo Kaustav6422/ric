@@ -19,10 +19,10 @@ O_Y_LEN = 52
 O_Z_LEN = 56
 O_W_LEN = 60
 
-ROLL_LEN = 64
-PITCH_LEN = 68
-YAW_LEN = 72
-TEMP_LEN = 76
+# ROLL_LEN = 64
+# PITCH_LEN = 68
+# YAW_LEN = 72
+# TEMP_LEN = 76
 
 class IMUPublishResponse(RiCHeader):
     def __init__(self):
@@ -157,23 +157,23 @@ class IMUPublishResponse(RiCHeader):
             bytes.append(data[self.index])
             self.index += 1
         self._orientationW = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < ROLL_LEN:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._roll = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < PITCH_LEN:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._pitch = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < YAW_LEN:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._yaw = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < TEMP_LEN:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._temperature = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < ROLL_LEN:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._roll = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < PITCH_LEN:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._pitch = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < YAW_LEN:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._yaw = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < TEMP_LEN:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._temperature = struct.unpack('<f', bytes)[0]

@@ -5,11 +5,11 @@ from BAL.Header.RiCHeader import RiCHeader
 ODOM_X = 12
 ODOM_Y = 16
 ODOM_THATE = 20
-TRAN_X = 24
-TRAN_Y = 28
-TRAN_Z = 32
-TRAN_ROT_Z = 36
-TRAN_ROT_W = 40
+# TRAN_X = 24
+# TRAN_Y = 28
+# TRAN_Z = 32
+TRAN_ROT_Z = 24
+TRAN_ROT_W = 28
 
 class CloseDiffPublishRepose(RiCHeader):
 
@@ -41,21 +41,21 @@ class CloseDiffPublishRepose(RiCHeader):
             bytes.append(data[self.index])
             self.index += 1
         self._odomTheta = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < TRAN_X:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._translationX = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < TRAN_Y:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._translationY = struct.unpack('<f', bytes)[0]
-        bytes = bytearray()
-        while self.index < TRAN_Z:
-            bytes.append(data[self.index])
-            self.index += 1
-        self._translationZ = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < TRAN_X:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._translationX = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < TRAN_Y:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._translationY = struct.unpack('<f', bytes)[0]
+        # bytes = bytearray()
+        # while self.index < TRAN_Z:
+        #     bytes.append(data[self.index])
+        #     self.index += 1
+        # self._translationZ = struct.unpack('<f', bytes)[0]
         bytes = bytearray()
         while self.index < TRAN_ROT_Z:
             bytes.append(data[self.index])

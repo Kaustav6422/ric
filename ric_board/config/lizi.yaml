@@ -40,11 +40,11 @@ closeLoop1/encoderType: 2
 closeLoop1/port2: 4
 Diff/publishHz: 20
 Diff/name: diff_driver
-Diff/rWheel: 0.07
+Diff/rWheel: 0.065
 Diff/width: 0.255
 Diff/baseLink: base_link
 Diff/odom: odom_link
-Diff/slip: 0.65
+Diff/slip: 0.75
 Diff/maxAng: 16.0
 Diff/maxLin: 16.0
 Diff/motorL: 0

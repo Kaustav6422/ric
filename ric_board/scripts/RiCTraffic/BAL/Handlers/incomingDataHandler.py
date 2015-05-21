@@ -39,7 +39,7 @@ class IncomingDataHandler(Runnable):
                 self._dev['battery'][0].publish(self._data.getStatus())
 
         else:
-            rospy.logerr('CheckSum is not valid!!!!!!!!')
+            rospy.logdebug('CheckSum is not valid')
 
 
 

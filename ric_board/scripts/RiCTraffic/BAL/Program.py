@@ -55,7 +55,7 @@ class Program:
             try:
                 self.waitForConnection(input, output)
                 # rospy.loginfo("Connect to 0x%x.....", self.waitForConnection(input, output))
-                rospy.loginfo("Starting building process......")
+                rospy.loginfo("Configuring devices...")
                 devBuilder.createServos()
                 devBuilder.createCLMotors()
                 devBuilder.createDiff()
@@ -71,7 +71,7 @@ class Program:
                 devs = devBuilder.getDevs()
                 devBuilder.sendFinishBuilding()
                 input.timeout = None
-                rospy.loginfo("Finish building process......")
+                rospy.loginfo("Done, RiC Board is ready.")
                 while not rospy.is_shutdown():
                     if gotHeaderStart:
                         if len(data) < 2:

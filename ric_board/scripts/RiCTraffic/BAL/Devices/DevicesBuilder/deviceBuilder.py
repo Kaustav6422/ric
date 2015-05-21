@@ -55,16 +55,16 @@ class DeviceBuilder:
     def createServos(self):
         servoAmount = self._param.getServoNum()
         for servoNum in xrange(servoAmount):
-            rospy.loginfo("Building servo name: %s", self._param.getServoName(servoNum))
+            rospy.loginfo("Configuring servo: %s", self._param.getServoName(servoNum))
             self._allDevs['servos'].append(RiCServo(self._param, servoNum, self._output))
             servoTORic = BuildServoResponse(servoNum, self._param)
             self._output.writeAndWaitForAck(servoTORic.dataTosend(), servoNum)
-            rospy.loginfo("Building servo name: %s was done successfully", self._param.getServoName(servoNum))
+            rospy.loginfo("Servo: %s is ready ", self._param.getServoName(servoNum))
 
     def createCLMotors(self):
         closeMotorsAmount = self._param.getCloseLoopMotorSize()
         for motorNum in xrange(closeMotorsAmount):
-            rospy.loginfo("building motor name: %s", self._param.getCloseLoopMotorName(motorNum))
+            rospy.loginfo("Configuring motor: %s", self._param.getCloseLoopMotorName(motorNum))
             motor = RiCCloseLoopMotor(motorNum, self._param, self._output)
             self._allDevs['motorsCl'].append(motor)
             if self._param.getCloseLoopMotorEncoderType(motorNum) == 1:
@@ -72,91 +72,91 @@ class DeviceBuilder:
             else:
                 toSend = CloseLoopMotorTwoEncBuildResponse(motorNum, self._param, EngineCL2)
             self._output.writeAndWaitForAck(toSend.dataTosend(), motorNum)
-            rospy.loginfo("Building motor name: %s, was done successfully", self._param.getCloseLoopMotorName(motorNum))
+            rospy.loginfo("Motor: %s is ready", self._param.getCloseLoopMotorName(motorNum))
 
     def createDiff(self):
         if self._param.isInitCloseDiff():
-            rospy.loginfo("Building differential drive name: %s", self._param.getCloseDiffName())
+            rospy.loginfo("Configuring differential drive: %s", self._param.getCloseDiffName())
             diff = RiCDiffCloseLoop(self._param, self._output)
             self._allDevs['diff'].append(diff)
             toSend = CloseDiffParamResponse(0, self._param)
             self._output.writeAndWaitForAck(toSend.dataTosend(), 0)
-            rospy.loginfo("Building differential drive name: %s, was done successfully", self._param.getCloseDiffName())
+            rospy.loginfo("Differential drive: %s is ready", self._param.getCloseDiffName())
 
     def createURF(self):
         URFAmount = self._param.getURFNum()
         for urfId in xrange(URFAmount):
-            rospy.loginfo("Building URF name: %s", self._param.getURFName(urfId))
+            rospy.loginfo("Configuring URF: %s", self._param.getURFName(urfId))
             urf = RiCURF(urfId, self._param)
             self._allDevs['urf'].append(urf)
             self._output.writeAndWaitForAck(URFParamResponse(urf.getType(), urfId, self._param).dataTosend(), urfId)
-            rospy.loginfo("Building URF name: %s, was done successfully", self._param.getURFName(urfId))
+            rospy.loginfo("URF: %s is ready", self._param.getURFName(urfId))
     def createSwitchs(self):
         switchAmount = self._param.getSwitchSize()
         for switchNum in xrange(switchAmount):
-            rospy.loginfo("Building switch name: %s", self._param.getSwitchName(switchNum))
+            rospy.loginfo("Configuring switch: %s", self._param.getSwitchName(switchNum))
             switch = RiCSwitch(switchNum, self._param)
             self._allDevs['switch'].append(switch)
             self._output.writeAndWaitForAck(SwitchParamResponse(switchNum, self._param).dataTosend(), switchNum)
-            rospy.loginfo("Building switch name: %s, was done successfully", self._param.getSwitchName(switchNum))
+            rospy.loginfo("Switch: %s is ready", self._param.getSwitchName(switchNum))
     def createIMU(self):
         if self._param.isImuInit():
-            rospy.loginfo("Building IMU name: %s", self._param.getIMUName())
+            rospy.loginfo("Configuring IMU: %s", self._param.getIMUName())
             imu = RiCIMU(self._param, self._output)
             self._allDevs['imu'].append(imu)
             self._output.writeAndWaitForAck(IMUParamResponse(self._param).dataTosend(), 0)
-            rospy.loginfo("Building IMU name: %s, was done successfully", self._param.getIMUName())
+            rospy.loginfo("IMU: %s is ready", self._param.getIMUName())
 
     def createRelays(self):
         relayAmount = self._param.getRelaysSize()
         for relayNum in xrange(relayAmount):
-            rospy.loginfo("Building relay name: %s", self._param.getRelayName(relayNum))
+            rospy.loginfo("Configuring relay: %s", self._param.getRelayName(relayNum))
             relay = RiCRelay(self._param, relayNum, self._output)
             self._output.writeAndWaitForAck(RelayParamResponse(relayNum, self._param).dataTosend(), relayNum)
             self._allDevs['relay'].append(relay)
-            rospy.loginfo("Building relay name: %s, was done successfully", self._param.getRelayName(relayNum))
+            rospy.loginfo("Relay: %s is ready", self._param.getRelayName(relayNum))
 
     def createGPS(self):
         if self._param.isGpsInit():
-            rospy.loginfo("Building GPS name: %s", self._param.getGpsName())
+            rospy.loginfo("Configuring GPS: %s", self._param.getGpsName())
             gps = RiCGPS(self._param, self._output)
             self._output.writeAndWaitForAck(GPSParamResponse(self._param).dataTosend(), 0)
             self._allDevs['gps'].append(gps)
-            rospy.loginfo("Building GPS name: %s, was done successfully", self._param.getGpsName())
+            rospy.loginfo("GPS: %s is ready", self._param.getGpsName())
 
     def createPPM(self):
         if self._param.isPPMInit():
-            rospy.loginfo("Building PPM name: %s", self._param.getPPMName())
+            rospy.loginfo("Configuring PPM: %s", self._param.getPPMName())
             ppm = RiCPPM(self._param)
             self._output.writeAndWaitForAck(PPMParamResponse(self._param).dataTosend(), 0)
             self._allDevs['ppm'].append(ppm)
-            rospy.loginfo("Building PPM name: %s, was done successfully", self._param.getPPMName())
+            rospy.loginfo("PPM: %s is ready", self._param.getPPMName())
 
     def createOpenLoopMotors(self):
         motorsAmout = self._param.getOpenLoopNum()
         for motorId in xrange(motorsAmout):
-            rospy.loginfo("Building motor name: %s", self._param.getOpenLoopName(motorId))
+            rospy.loginfo("Configuring motor: %s", self._param.getOpenLoopName(motorId))
             motor = OpenLoopMotor(motorId, self._param, self._output)
             self._allDevs['motorsOl'].append(motor)
             self._output.writeAndWaitForAck(OpenLoopMotorParamResponse(motorId,self._param).dataTosend(), motorId)
-            rospy.loginfo("Building motor name: %s, was done successfully", self._param.getOpenLoopName(motorId))
+            rospy.loginfo("Motor: %s is ready", self._param.getOpenLoopName(motorId))
 
     def createBattery(self):
         if self._param.isBatteryInit():
-            rospy.loginfo("Building battery name: %s", self._param.getBatteryName())
+            rospy.loginfo("Configuring battery: %s", self._param.getBatteryName())
             battery = RiCBattery(self._param)
             self._allDevs['battery'].append(battery)
             self._output.writeAndWaitForAck(BatteryParamResponse(self._param).dataTosend(), 0)
-            rospy.loginfo("Building battery name: %s, was done successfully", self._param.getBatteryName())
+            rospy.loginfo("Battery: %s is ready", self._param.getBatteryName())
 
     def createOpenDiff(self):
         if self._param.isInitOpenDiff():
-            rospy.loginfo("Building differential drive name: %s", self._param.getCloseDiffName())
+            rospy.loginfo("Configuring differential drive: %s", self._param.getCloseDiffName())
             motorL = self._allDevs['motorsOl'][self._param.getCloseDiffMotorL()]
             motorR = self._allDevs['motorsOl'][self._param.getCloseDiffMotorR()]
             diff = RiCOpenDiff(self._param, motorL, motorR)
             self._allDevs['diff'].append(diff)
-            rospy.loginfo("Building differential drive name: %s, was done successfully", self._param.getCloseDiffName())
+            rospy.loginfo("Differential drive: %s is ready", self._param.getCloseDiffName())
 
     def getDevs(self):
         return self._allDevs

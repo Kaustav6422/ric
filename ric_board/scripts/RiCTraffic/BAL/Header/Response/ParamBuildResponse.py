@@ -15,6 +15,8 @@ URF_HRLV = 10
 URF_LV = 11
 EngineCL2 = 12
 Battery = 13
+CloseDiffFour = 14
+
 
 
 class ParamBuildResponse(RiCHeader):

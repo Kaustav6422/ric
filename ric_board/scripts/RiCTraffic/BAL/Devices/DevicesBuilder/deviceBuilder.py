@@ -12,6 +12,7 @@ from BAL.Header.Response.BatteryParamResponse import BatteryParamResponse
 from BAL.Header.Response.CloseLoopMotorTwoEncBuildResponse import CloseLoopMotorTwoEncBuildResponse
 from BAL.Header.Response.IMUParamResponse import IMUParamResponse
 from BAL.Header.Response.ParamBuildResponse import EngineCL, EngineCL2
+from BAL.Header.Response.closeDiffFourParamResponse import CloseDIffFourParamResponse
 from BAL.Header.Response.closeDiffParamResponse import CloseDiffParamResponse
 from BAL.Header.Response.gpsParamResponse import GPSParamResponse
 from BAL.Header.Response.openLoopMotorParamResponse import OpenLoopMotorParamResponse
@@ -80,6 +81,15 @@ class DeviceBuilder:
             diff = RiCDiffCloseLoop(self._param, self._output)
             self._allDevs['diff'].append(diff)
             toSend = CloseDiffParamResponse(0, self._param)
+            self._output.writeAndWaitForAck(toSend.dataTosend(), 0)
+            rospy.loginfo("Differential drive: %s is ready", self._param.getCloseDiffName())
+
+    def createDiffFour(self):
+        if self._param.isCloseDiffFourInit():
+            rospy.loginfo("Configuring differential drive: %s", self._param.getCloseDiffName())
+            diff = RiCDiffCloseLoop(self._param, self._output)
+            self._allDevs['diff'].append(diff)
+            toSend = CloseDIffFourParamResponse(0, self._param)
             self._output.writeAndWaitForAck(toSend.dataTosend(), 0)
             rospy.loginfo("Differential drive: %s is ready", self._param.getCloseDiffName())
 

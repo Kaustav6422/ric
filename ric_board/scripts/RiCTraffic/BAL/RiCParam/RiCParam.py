@@ -258,3 +258,18 @@ class RiCParam:
 
     def getBatteryVoltageDividerRatio(self):
         return float(rospy.get_param('Battery/voltageDividerRatio', '0.0'))
+
+    def isCloseDiffFourInit(self):
+        return int(rospy.get_param('DIFF_CLOSE_FOUR', '0')) == 1
+
+    def getCloseDiffMotorFL(self):
+        return int(rospy.get_param('Diff/motorFL', 0))
+
+    def getCloseDiffMotorFR(self):
+        return int(rospy.get_param('Diff/motorFR', 0))
+
+    def getCloseDiffMotorBL(self):
+        return int(rospy.get_param('Diff/motorBL', 0))
+
+    def getCloseDiffMotorBR(self):
+        return int(rospy.get_param('Diff/motorBR', 0))

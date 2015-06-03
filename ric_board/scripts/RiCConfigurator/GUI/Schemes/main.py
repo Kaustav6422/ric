@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Jun  3 09:03:34 2015
+# Created: Thu Jun  4 00:30:53 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -113,6 +113,8 @@ class Ui_MainWindow(object):
         self.menuClose_Loop.setObjectName(_fromUtf8("menuClose_Loop"))
         self.menuDifferential_Drive = QtGui.QMenu(self.menuRiC_Device)
         self.menuDifferential_Drive.setObjectName(_fromUtf8("menuDifferential_Drive"))
+        self.menuClose_Loop_Drive = QtGui.QMenu(self.menuDifferential_Drive)
+        self.menuClose_Loop_Drive.setObjectName(_fromUtf8("menuClose_Loop_Drive"))
         self.menuExternal_Device = QtGui.QMenu(self.menuAdd_Device)
         self.menuExternal_Device.setObjectName(_fromUtf8("menuExternal_Device"))
         self.menuHelp = QtGui.QMenu(self.menubar)
@@ -150,8 +152,6 @@ class Ui_MainWindow(object):
         self.actionURF.setObjectName(_fromUtf8("actionURF"))
         self.actionOpen_Loop = QtGui.QAction(MainWindow)
         self.actionOpen_Loop.setObjectName(_fromUtf8("actionOpen_Loop"))
-        self.actionClose_Loop_Drive = QtGui.QAction(MainWindow)
-        self.actionClose_Loop_Drive.setObjectName(_fromUtf8("actionClose_Loop_Drive"))
         self.actionOpen_Loop_Drive = QtGui.QAction(MainWindow)
         self.actionOpen_Loop_Drive.setObjectName(_fromUtf8("actionOpen_Loop_Drive"))
         self.actionMotor_with_one_encoder = QtGui.QAction(MainWindow)
@@ -164,6 +164,10 @@ class Ui_MainWindow(object):
         self.actionOPENNI.setObjectName(_fromUtf8("actionOPENNI"))
         self.actionHakoyo = QtGui.QAction(MainWindow)
         self.actionHakoyo.setObjectName(_fromUtf8("actionHakoyo"))
+        self.actionWith_two_motors = QtGui.QAction(MainWindow)
+        self.actionWith_two_motors.setObjectName(_fromUtf8("actionWith_two_motors"))
+        self.actionWith_four_motors = QtGui.QAction(MainWindow)
+        self.actionWith_four_motors.setObjectName(_fromUtf8("actionWith_four_motors"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -173,8 +177,10 @@ class Ui_MainWindow(object):
         self.menuClose_Loop.addAction(self.actionMotor_with_two_encoder)
         self.menuMotors.addAction(self.actionOpen_Loop)
         self.menuMotors.addAction(self.menuClose_Loop.menuAction())
-        self.menuDifferential_Drive.addAction(self.actionClose_Loop_Drive)
+        self.menuClose_Loop_Drive.addAction(self.actionWith_two_motors)
+        self.menuClose_Loop_Drive.addAction(self.actionWith_four_motors)
         self.menuDifferential_Drive.addAction(self.actionOpen_Loop_Drive)
+        self.menuDifferential_Drive.addAction(self.menuClose_Loop_Drive.menuAction())
         self.menuRiC_Device.addAction(self.actionBattery_Monitor)
         self.menuRiC_Device.addAction(self.actionServo)
         self.menuRiC_Device.addAction(self.actionSwitch)
@@ -221,6 +227,7 @@ class Ui_MainWindow(object):
         self.menuMotors.setTitle(_translate("MainWindow", "Motors", None))
         self.menuClose_Loop.setTitle(_translate("MainWindow", "Close Loop", None))
         self.menuDifferential_Drive.setTitle(_translate("MainWindow", "Differential Drive", None))
+        self.menuClose_Loop_Drive.setTitle(_translate("MainWindow", "Close Loop Drive", None))
         self.menuExternal_Device.setTitle(_translate("MainWindow", "External Device", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.actionNew.setText(_translate("MainWindow", "New", None))
@@ -243,11 +250,12 @@ class Ui_MainWindow(object):
         self.actionRelay.setText(_translate("MainWindow", "Relay", None))
         self.actionURF.setText(_translate("MainWindow", "URF", None))
         self.actionOpen_Loop.setText(_translate("MainWindow", "Open Loop", None))
-        self.actionClose_Loop_Drive.setText(_translate("MainWindow", "Close Loop Drive", None))
         self.actionOpen_Loop_Drive.setText(_translate("MainWindow", "Open Loop Drive", None))
         self.actionMotor_with_one_encoder.setText(_translate("MainWindow", "motor with one encoder", None))
         self.actionMotor_with_two_encoder.setText(_translate("MainWindow", "motor with two encoder", None))
         self.actionUSB_Camera.setText(_translate("MainWindow", "USB Camera", None))
         self.actionOPENNI.setText(_translate("MainWindow", "Openni", None))
         self.actionHakoyo.setText(_translate("MainWindow", "Hokuyo", None))
+        self.actionWith_two_motors.setText(_translate("MainWindow", "With two motors", None))
+        self.actionWith_four_motors.setText(_translate("MainWindow", "With four motors", None))
 

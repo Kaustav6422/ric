@@ -16,8 +16,8 @@ class DiffClose(DeviceFrame):
         self._slip = '0.85'
         self._maxAg = '16.0'
         self._maxLn = '16.0'
-        self._motorL = '1'
-        self._motorR = '2'
+        self._motorL = '0'
+        self._motorR = '1'
 
     def fromDict(self, data):
         self._pubHz = data['pubHz']
@@ -60,8 +60,8 @@ class DiffClose(DeviceFrame):
         self._frame.layout().addRow(QLabel('Slip factor: '), QLabel(self._slip))
         self._frame.layout().addRow(QLabel('Max angular: '), QLabel(self._maxAg))
         self._frame.layout().addRow(QLabel('Max linear: '), QLabel(self._maxLn))
-        self._frame.layout().addRow(QLabel('MotorL: '), QLabel(self.motors[int(self._motorL) - 1]))
-        self._frame.layout().addRow(QLabel('MotorR: '), QLabel(self.motors[int(self._motorR) - 1]))
+        self._frame.layout().addRow(QLabel('MotorL: '), QLabel(self.motors[int(self._motorL)]))
+        self._frame.layout().addRow(QLabel('MotorR: '), QLabel(self.motors[int(self._motorR)]))
 
     def getName(self):
         return self._name
@@ -73,8 +73,8 @@ class DiffClose(DeviceFrame):
         for i in xrange(len(self.motors)):
             self.motorsL.addItem(self.motors[i], str(i))
             self.motorsR.addItem(self.motors[i], str(i))
-        self.motorsL.setCurrentIndex(int(self._motorL) - 1)
-        self.motorsR.setCurrentIndex(int(self._motorR) - 1)
+        self.motorsL.setCurrentIndex(int(self._motorL))
+        self.motorsR.setCurrentIndex(int(self._motorR))
         self.pubHz = QLineEdit(self._pubHz)
         self.name = QLineEdit(self._name)
         self.rWheel = QLineEdit(self._rWheel)

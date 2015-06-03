@@ -130,7 +130,7 @@ class CloseLoop(DeviceFrame):
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/kI: ' + self._ki + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/kD: ' + self._kd + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/limit: ' + self._limit + '\n')
-        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/maxSpeed: ' + self._limit + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/maxSpeed: ' + self._maxSpeed + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/cpr: ' + self._ppr + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/timeout: ' + self._timeout + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/motorType: ' + self._motorType + '\n')

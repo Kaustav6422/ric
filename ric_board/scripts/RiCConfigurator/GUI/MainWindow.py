@@ -631,7 +631,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.currentShowDev.getDevType() == OPEN_LOP:
             self.motors.remove(self.currentShowDev.getName())
         if self.currentShowDev.getDevType() == DIFF_CLOSE or self.currentShowDev.getDevType() == DIFF_OPEN:
-            self.haveDiff = True
+            self.haveDiff = False
 
         if len(self.motors) == 0 and self.haveCloseLoop: self.haveCloseLoop = False
         if len(self.motors) == 0 and self.haveOpenLoop: self.haveOpenLoop = False

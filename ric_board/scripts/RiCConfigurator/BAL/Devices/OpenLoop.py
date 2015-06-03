@@ -38,14 +38,14 @@ class OpenLoop(DeviceFrame):
         return data
 
     def saveToFile(self, file):
-        file.write('openLoop' + str(self.openLoopNum) + '/name: ' + self._name + '\n')
-        file.write('openLoop' + str(self.openLoopNum) + '/address: ' + self._driverAdd + '\n')
-        file.write('openLoop' + str(self.openLoopNum) + '/channel: ' + self._channel + '\n')
-        file.write('openLoop' + str(self.openLoopNum) + '/timeout: ' + self._timeout + '\n')
-        file.write('openLoop' + str(self.openLoopNum) + '/max: ' + self._maxSpeed + '\n')
-        if self._dirMotor: file.write('openLoop' + str(self.openLoopNum) + '/direction: ' + '-1' + '\n')
-        else: file.write('openLoop' + str(self.openLoopNum) + '/direction: ' + '1' + '\n')
-        self.openLoopNum += 1
+        file.write('openLoop' + str(OpenLoop.openLoopNum) + '/name: ' + self._name + '\n')
+        file.write('openLoop' + str(OpenLoop.openLoopNum) + '/address: ' + self._driverAdd + '\n')
+        file.write('openLoop' + str(OpenLoop.openLoopNum) + '/channel: ' + self._channel + '\n')
+        file.write('openLoop' + str(OpenLoop.openLoopNum) + '/timeout: ' + self._timeout + '\n')
+        file.write('openLoop' + str(OpenLoop.openLoopNum) + '/max: ' + self._maxSpeed + '\n')
+        if self._dirMotor: file.write('openLoop' + str(OpenLoop.openLoopNum) + '/direction: ' + '-1' + '\n')
+        else: file.write('openLoop' + str(OpenLoop.openLoopNum) + '/direction: ' + '1' + '\n')
+        OpenLoop.openLoopNum += 1
 
     def add(self):
         self._name = str(self.name.text())

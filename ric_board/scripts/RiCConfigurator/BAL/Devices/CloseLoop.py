@@ -15,7 +15,7 @@ class CloseLoop(DeviceFrame):
         self._lpfHz = '50'
         self._lpfAlpha = '0.7'
         self._driverAdd = '128'
-        self._channel = '128'
+        self._channel = '1'
         self._pidHz = '1000'
         self._kp = '3.0'
         self._ki = '3.0'
@@ -118,27 +118,27 @@ class CloseLoop(DeviceFrame):
         self.mainPorts.removeItem(self.encoders.currentIndex())
 
     def saveToFile(self, file):
-        file.write('closeLoop' + str(self.closeLoop) + '/publishHz: ' + self._pubHz + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/name: ' + self._name + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/LPFAlpha: ' + self._lpfAlpha + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/LPFHz: ' + self._lpfHz + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/driverAddress: ' + self._driverAdd + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/channel: ' + self._channel + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/port: ' + self._encoder + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/PIDHz: ' + self._pidHz + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/kP: ' + self._kp + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/kI: ' + self._ki + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/kD: ' + self._kd + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/limit: ' + self._limit + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/maxSpeed: ' + self._limit + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/cpr: ' + self._ppr + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/timeout: ' + self._timeout + '\n')
-        file.write('closeLoop' + str(self.closeLoop) + '/motorType: ' + self._motorType + '\n')
-        if not self._dirMotor: file.write('closeLoop' + str(self.closeLoop) + '/direction: ' + '1' + '\n')
-        else: file.write('closeLoop' + str(self.closeLoop) + '/direction: ' + '-1' + '\n')
-        if not self._dirEnc: file.write('closeLoop' + str(self.closeLoop) + '/directionE: ' + '1' + '\n')
-        else: file.write('closeLoop' + str(self.closeLoop) + '/encoderType: ' + '-1' + '\n')
-        self.closeLoop += 1
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/publishHz: ' + self._pubHz + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/name: ' + self._name + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/LPFAlpha: ' + self._lpfAlpha + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/LPFHz: ' + self._lpfHz + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/driverAddress: ' + self._driverAdd + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/channel: ' + self._channel + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/port: ' + self._encoder + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/PIDHz: ' + self._pidHz + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/kP: ' + self._kp + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/kI: ' + self._ki + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/kD: ' + self._kd + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/limit: ' + self._limit + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/maxSpeed: ' + self._limit + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/cpr: ' + self._ppr + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/timeout: ' + self._timeout + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/motorType: ' + self._motorType + '\n')
+        if not self._dirMotor: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/direction: ' + '1' + '\n')
+        else: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/direction: ' + '-1' + '\n')
+        if not self._dirEnc: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/directionE: ' + '1' + '\n')
+        else: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/encoderType: ' + '-1' + '\n')
+        CloseLoop.closeLoop += 1
 
     def getName(self):
         return self._name

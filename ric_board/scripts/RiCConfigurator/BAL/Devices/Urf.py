@@ -58,12 +58,12 @@ class Urf(DeviceFrame):
         return self._port
 
     def saveToFile(self, file):
-        file.write('URF' + str(self.urfCount) + '/publishHz: ' + self._pubHz + '\n')
-        file.write('URF' + str(self.urfCount) + '/name: ' + self._name + '\n')
-        file.write('URF' + str(self.urfCount) + '/frameId: ' + self._frameId + '\n')
-        file.write('URF' + str(self.urfCount) + '/type: ' + self._urfType + '\n')
-        file.write('URF' + str(self.urfCount) + '/port: ' + self._urfType + '\n')
-        self.urfCount += 1
+        file.write('URF' + str(Urf.urfCount) + '/publishHz: ' + self._pubHz + '\n')
+        file.write('URF' + str(Urf.urfCount) + '/name: ' + self._name + '\n')
+        file.write('URF' + str(Urf.urfCount) + '/frameId: ' + self._frameId + '\n')
+        file.write('URF' + str(Urf.urfCount) + '/type: ' + self._urfType + '\n')
+        file.write('URF' + str(Urf.urfCount) + '/port: ' + self._urfType + '\n')
+        Urf.urfCount += 1
 
     def showDetails(self, items=None):
         self.urfPorts = QComboBox()

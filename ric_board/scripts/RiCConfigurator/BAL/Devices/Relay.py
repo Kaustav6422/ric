@@ -35,9 +35,9 @@ class Relay(DeviceFrame):
         return self._port
 
     def saveToFile(self, file):
-        file.write('relay' + str(self.relayCount) + '/name: ' + self._name + '\n')
-        file.write('relay' + str(self.relayCount) + '/port: ' + self._port + '\n')
-        self.relayCount += 1
+        file.write('relay' + str(Relay.relayCount) + '/name: ' + self._name + '\n')
+        file.write('relay' + str(Relay.relayCount) + '/port: ' + self._port + '\n')
+        Relay.relayCount += 1
 
     def showDetails(self, items=None):
         self.relayPorts = QComboBox()

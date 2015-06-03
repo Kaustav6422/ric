@@ -71,8 +71,8 @@ class DiffClose(DeviceFrame):
         self.motorsR = QComboBox()
 
         for i in xrange(len(self.motors)):
-            self.motorsL.addItem(self.motors[i], str(i + 1))
-            self.motorsR.addItem(self.motors[i], str(i + 1))
+            self.motorsL.addItem(self.motors[i], str(i))
+            self.motorsR.addItem(self.motors[i], str(i))
         self.motorsL.setCurrentIndex(int(self._motorL) - 1)
         self.motorsR.setCurrentIndex(int(self._motorR) - 1)
         self.pubHz = QLineEdit(self._pubHz)

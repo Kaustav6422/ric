@@ -30,10 +30,10 @@ class Switch(DeviceFrame):
         return data
 
     def saveToFile(self, file):
-        file.write('switch' + str(self.switchCount) + '/name: ' + self._name + '\n')
-        file.write('switch' + str(self.switchCount) + '/port: ' + self._port + '\n')
-        file.write('switch' + str(self.switchCount) + '/publishHz: ' + self._pubHz + '\n')
-        self.switchCount += 1
+        file.write('switch' + str(Switch.switchCount) + '/name: ' + self._name + '\n')
+        file.write('switch' + str(Switch.switchCount) + '/port: ' + self._port + '\n')
+        file.write('switch' + str(Switch.switchCount) + '/publishHz: ' + self._pubHz + '\n')
+        Switch.switchCount += 1
 
     def getPort(self):
         return self._port

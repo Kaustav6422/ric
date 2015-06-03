@@ -79,7 +79,7 @@ class CloseLoopTwo(CloseLoop):
 
     def saveToFile(self, file):
         CloseLoop.saveToFile(self, file)
-        file.write('closeLoop' + str(self.closeLoop - 1) + '/port2: ' + self._encoder2 + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop - 1) + '/port2: ' + self._encoder2 + '\n')
 
     def printEncoder(self):
         self._frame.layout().addRow(QLabel('Encoder1: '), QLabel(self._encoder))

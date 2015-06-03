@@ -252,10 +252,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.currentShowDev = OpenLoop(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
                 elif dev['type'] == DIFF_CLOSE:
-                    self.currentShowDev = DiffClose(self.data, self.data, self.motors)
+                    self.currentShowDev = DiffClose(self.DevFrame, self.data, self.motors)
                     self.currentShowDev.fromDict(dev)
                 elif dev['type'] == DIFF_OPEN:
-                    self.currentShowDev = DiffOpen(self.data, self.data, self.motors)
+                    self.currentShowDev = DiffOpen(self.DevFrame, self.data, self.motors)
                     self.currentShowDev.fromDict(dev)
                 elif dev['type'] == HOKUYO:
                     self.currentShowDev = Hokuyo(self.DevFrame, self.data)

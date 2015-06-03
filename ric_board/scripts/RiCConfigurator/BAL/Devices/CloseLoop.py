@@ -137,7 +137,7 @@ class CloseLoop(DeviceFrame):
         if not self._dirMotor: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/direction: ' + '1' + '\n')
         else: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/direction: ' + '-1' + '\n')
         if not self._dirEnc: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/directionE: ' + '1' + '\n')
-        else: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/encoderType: ' + '-1' + '\n')
+        else: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/directionE: ' + '-1' + '\n')
         CloseLoop.closeLoop += 1
 
     def getName(self):

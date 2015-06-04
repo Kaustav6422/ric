@@ -68,6 +68,7 @@ class Program:
                 devBuilder.createOpenLoopMotors()
                 devBuilder.createBattery()
                 devBuilder.createOpenDiff()
+                devBuilder.createDiffFour()
                 devs = devBuilder.getDevs()
                 devBuilder.sendFinishBuilding()
                 input.timeout = None

@@ -81,6 +81,10 @@ class CloseLoopTwo(CloseLoop):
         CloseLoop.saveToFile(self, file)
         file.write('closeLoop' + str(CloseLoop.closeLoop - 1) + '/port2: ' + self._encoder2 + '\n')
 
+    def encoderType(self):
+        return '2'
+
+
     def printEncoder(self):
         self._frame.layout().addRow(QLabel('Encoder1: '), QLabel(self._encoder))
         self._frame.layout().addRow(QLabel('Encoder2: '), QLabel(self._encoder2))

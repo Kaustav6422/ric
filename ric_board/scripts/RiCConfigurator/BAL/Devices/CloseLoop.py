@@ -134,6 +134,7 @@ class CloseLoop(DeviceFrame):
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/cpr: ' + self._ppr + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/timeout: ' + self._timeout + '\n')
         file.write('closeLoop' + str(CloseLoop.closeLoop) + '/motorType: ' + self._motorType + '\n')
+        file.write('closeLoop' + str(CloseLoop.closeLoop) + '/encoderType: ' + self.encoderType() + '\n')
         if not self._dirMotor: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/direction: ' + '1' + '\n')
         else: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/direction: ' + '-1' + '\n')
         if not self._dirEnc: file.write('closeLoop' + str(CloseLoop.closeLoop) + '/directionE: ' + '1' + '\n')
@@ -222,5 +223,8 @@ class CloseLoop(DeviceFrame):
 
     def printEncoder(self):
         self._frame.layout().addRow(QLabel('Encoder: '), QLabel(self._encoder))
+
+    def encoderType(self):
+        return '1'
 
 

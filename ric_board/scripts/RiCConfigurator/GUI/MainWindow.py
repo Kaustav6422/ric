@@ -22,6 +22,7 @@ from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR
+from GUI.UsbRolesDialog import UsbRolesDialog
 
 __author__ = 'tom1231'
 from PyQt4.QtGui import *
@@ -69,6 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionSave.triggered.connect(self.save)
         self.actionOpen.triggered.connect(self.load)
         self.actionNew.triggered.connect(self.new)
+        self.actionReconfig_RiC_Board.triggered.connect(self.configRiCBoard)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -130,6 +132,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def about(self):
         webbrowser.open('http://wiki.ros.org/ric')
+
+    def configRiCBoard(self):
+        dialog = UsbRolesDialog(self)
+        dialog.show()
+        dialog.exec_()
+
 
     def new(self):
         size = self.devList.count()
@@ -381,7 +389,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Switch.switchCount = 0
         CloseLoop.closeLoop = 0
         OpenLoop.openLoopNum = 0
-        QMessageBox.information(self, 'File', 'File saved')
+        # QMessageBox.information(self, 'File', 'File saved')
+        error = QErrorMessage()
+        error.setWindowTitle("File Saved")
+        error.showMessage("To launch: $ roslaunch ric_board %s.launch " % self._fileName)
+        error.exec_()
 
     def addDiffCloseFour(self):
         if not self.haveCloseLoop or len(self.motors) < 4:

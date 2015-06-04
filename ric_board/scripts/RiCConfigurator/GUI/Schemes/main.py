@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Thu Jun  4 00:30:53 2015
+# Created: Thu Jun  4 10:36:59 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -34,6 +34,9 @@ class Ui_MainWindow(object):
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMouseTracking(False)
         MainWindow.setContextMenuPolicy(QtCore.Qt.DefaultContextMenu)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(_fromUtf8("QWidget#centralwidget, #statusbar{\n"
 "    background-color: qlineargradient(spread:pad, x1:1, y1:0.682, x2:0.966825, y2:0, stop:0 rgba(224, 224, 224, 255), stop:1 rgba(171, 171, 171, 255));\n"
 "}\n"
@@ -168,6 +171,8 @@ class Ui_MainWindow(object):
         self.actionWith_two_motors.setObjectName(_fromUtf8("actionWith_two_motors"))
         self.actionWith_four_motors = QtGui.QAction(MainWindow)
         self.actionWith_four_motors.setObjectName(_fromUtf8("actionWith_four_motors"))
+        self.actionReconfig_RiC_Board = QtGui.QAction(MainWindow)
+        self.actionReconfig_RiC_Board.setObjectName(_fromUtf8("actionReconfig_RiC_Board"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -197,6 +202,7 @@ class Ui_MainWindow(object):
         self.menuAdd_Device.addAction(self.menuRiC_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuExternal_Device.menuAction())
         self.menuHelp.addAction(self.actionAbout_RIC)
+        self.menuHelp.addAction(self.actionReconfig_RiC_Board)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -258,4 +264,6 @@ class Ui_MainWindow(object):
         self.actionHakoyo.setText(_translate("MainWindow", "Hokuyo", None))
         self.actionWith_two_motors.setText(_translate("MainWindow", "With two motors", None))
         self.actionWith_four_motors.setText(_translate("MainWindow", "With four motors", None))
+        self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Reconfigure RiC Board", None))
 
+import resource_rc

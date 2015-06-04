@@ -14,6 +14,7 @@ closeLoop0/maxSpeed: 16.0
 closeLoop0/cpr: 4288
 closeLoop0/timeout: 1000
 closeLoop0/motorType: 1
+closeLoop0/encoderType: 2
 closeLoop0/direction: -1
 closeLoop0/directionE: -1
 closeLoop0/port2: 4
@@ -40,6 +41,7 @@ closeLoop1/maxSpeed: 16.0
 closeLoop1/cpr: 4288
 closeLoop1/timeout: 1000
 closeLoop1/motorType: 1
+closeLoop1/encoderType: 2
 closeLoop1/direction: -1
 closeLoop1/directionE: 1
 closeLoop1/port2: 3

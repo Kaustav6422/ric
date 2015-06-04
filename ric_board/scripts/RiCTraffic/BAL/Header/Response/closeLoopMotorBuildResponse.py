@@ -7,6 +7,7 @@ RES_LEN = 84
 EN_PORT1 = 1
 EN_PORT2 = 2
 EN_PORT3 = 3
+EN_PORT4 = 4
 
 class CloseLoopMotorBuildResponse(ParamBuildResponse):
     def dataTosend(self):
@@ -55,7 +56,7 @@ class CloseLoopMotorBuildResponse(ParamBuildResponse):
         elif port == EN_PORT3:
             self._encoderPinA = 27
             self._encoderPinB = 28
-        else:
+        elif port == EN_PORT4:
             self._encoderPinA = 29
             self._encoderPinB = 30
         self._motorType = param.getCloseLoopMotorType(devId)

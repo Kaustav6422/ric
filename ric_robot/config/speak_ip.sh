@@ -10,7 +10,7 @@ while IFS=$': \t' read -a line ;do
 
 
 if !([ -z "$myip" ]); then
-espeak "Wireless Network I P: $myip" -a 200  -ven-us+f2 -p 10
+espeak "Wireless Network I P: $myip" -a 200  -ven-us+f2 -s170
 fi
 
 myip=
@@ -20,6 +20,6 @@ while IFS=$': \t' read -a line ;do
   done< <(LANG=C /sbin/ifconfig eth0)
 
 if !([ -z "$myip" ]); then
-espeak "Ethernet Network I P: $myip" -a 200  -ven-us+f2 -p 10
+espeak "Ethernet Network I P: $myip" -a 200  -ven-us+f2 -s170
 fi
 

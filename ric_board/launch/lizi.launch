@@ -5,5 +5,12 @@
     <param name="port" value="/dev/Hokuyo"/>
     <param name="frame_id" value="Laser_link"/>
   </node>
+  <node name="front_camera" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+    <param name="video_device" value="/dev/video0"/>
+    <param name="camera_frame_id" value="Camera_link"/>
+    <param name="pixel_format" value="yuyv"/>
+    <param name="image_width" value="640"/>
+    <param name="image_height" value="480"/>
+  </node>
   <rosparam command="load" file="$(find ric_board)/config/lizi.yaml"/>
 </launch>

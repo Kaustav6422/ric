@@ -10,7 +10,7 @@
   <group ns="lizi_$(arg id)">
     
 
-    <include file="$(find ric_board)/launch/lizi.launch"/>
+    <include file="$(find ric_board)/launch/lizi101.launch"/>
 
   </group>
   

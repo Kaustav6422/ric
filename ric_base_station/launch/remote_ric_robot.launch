@@ -11,10 +11,6 @@
 <arg name="id" value="1" />
 </include>
 
- 
-<!--<node pkg="ric_robot" type="testDrivebyOdom.py" name="testDrivebyOdom" output="screen"  respawn="true" args="1 0.5"/> !-->
-	  
-
 
 </launch>
 

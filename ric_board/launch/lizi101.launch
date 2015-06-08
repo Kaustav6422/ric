@@ -12,5 +12,5 @@
     <param name="image_width" value="640"/>
     <param name="image_height" value="480"/>
   </node>
-  <rosparam command="load" file="$(find ric_board)/config/lizi.yaml"/>
+  <rosparam command="load" file="$(find ric_board)/config/lizi101.yaml"/>
 </launch>

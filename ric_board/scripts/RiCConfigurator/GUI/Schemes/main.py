@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Thu Jun  4 10:36:59 2015
+# Created: Wed Jun 10 00:05:21 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -120,6 +120,8 @@ class Ui_MainWindow(object):
         self.menuClose_Loop_Drive.setObjectName(_fromUtf8("menuClose_Loop_Drive"))
         self.menuExternal_Device = QtGui.QMenu(self.menuAdd_Device)
         self.menuExternal_Device.setObjectName(_fromUtf8("menuExternal_Device"))
+        self.menuOther = QtGui.QMenu(self.menuAdd_Device)
+        self.menuOther.setObjectName(_fromUtf8("menuOther"))
         self.menuHelp = QtGui.QMenu(self.menubar)
         self.menuHelp.setObjectName(_fromUtf8("menuHelp"))
         MainWindow.setMenuBar(self.menubar)
@@ -173,6 +175,8 @@ class Ui_MainWindow(object):
         self.actionWith_four_motors.setObjectName(_fromUtf8("actionWith_four_motors"))
         self.actionReconfig_RiC_Board = QtGui.QAction(MainWindow)
         self.actionReconfig_RiC_Board.setObjectName(_fromUtf8("actionReconfig_RiC_Board"))
+        self.actionRobot_Model = QtGui.QAction(MainWindow)
+        self.actionRobot_Model.setObjectName(_fromUtf8("actionRobot_Model"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -199,8 +203,10 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionUSB_Camera)
         self.menuExternal_Device.addAction(self.actionOPENNI)
         self.menuExternal_Device.addAction(self.actionHakoyo)
+        self.menuOther.addAction(self.actionRobot_Model)
         self.menuAdd_Device.addAction(self.menuRiC_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuExternal_Device.menuAction())
+        self.menuAdd_Device.addAction(self.menuOther.menuAction())
         self.menuHelp.addAction(self.actionAbout_RIC)
         self.menuHelp.addAction(self.actionReconfig_RiC_Board)
         self.menubar.addAction(self.menuFlie.menuAction())
@@ -228,13 +234,14 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "File Name:", None))
         self.fileName.setPlaceholderText(_translate("MainWindow", "Enter file name", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
-        self.menuAdd_Device.setTitle(_translate("MainWindow", "Add Device", None))
+        self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
         self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Device", None))
         self.menuMotors.setTitle(_translate("MainWindow", "Motors", None))
         self.menuClose_Loop.setTitle(_translate("MainWindow", "Close Loop", None))
         self.menuDifferential_Drive.setTitle(_translate("MainWindow", "Differential Drive", None))
         self.menuClose_Loop_Drive.setTitle(_translate("MainWindow", "Close Loop Drive", None))
         self.menuExternal_Device.setTitle(_translate("MainWindow", "External Device", None))
+        self.menuOther.setTitle(_translate("MainWindow", "Other", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.actionNew.setText(_translate("MainWindow", "New", None))
         self.actionNew.setShortcut(_translate("MainWindow", "Ctrl+N", None))
@@ -265,5 +272,6 @@ class Ui_MainWindow(object):
         self.actionWith_two_motors.setText(_translate("MainWindow", "With two motors", None))
         self.actionWith_four_motors.setText(_translate("MainWindow", "With four motors", None))
         self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Reconfigure RiC Board", None))
+        self.actionRobot_Model.setText(_translate("MainWindow", "Robot Model", None))
 
 import resource_rc

@@ -16,12 +16,13 @@ from BAL.Devices.OpenLoop import OpenLoop
 from BAL.Devices.Openni import Opennni
 from BAL.Devices.Ppm import Ppm
 from BAL.Devices.Relay import Relay
+from BAL.Devices.RobotModel import RobotModel
 from BAL.Devices.Servo import Servo
 from BAL.Devices.Switch import Switch
 from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
-    OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR
+    OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL
 from GUI.UsbRolesDialog import UsbRolesDialog
 
 __author__ = 'tom1231'
@@ -71,6 +72,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionOpen.triggered.connect(self.load)
         self.actionNew.triggered.connect(self.new)
         self.actionReconfig_RiC_Board.triggered.connect(self.configRiCBoard)
+        self.actionRobot_Model.triggered.connect(self.addRobotModel)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -140,6 +142,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def new(self):
+        self.interruptHandler()
         size = self.devList.count()
         for i in xrange(size):
             self.devList.takeItem(0)
@@ -201,6 +204,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.fileName.setText(self._fileName)
         self.nameSpace.setText(self._ns)
+
+
+
 
     def load(self):
         pkg = rospkg.RosPack().get_path('ric_board')
@@ -280,6 +286,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == USBCAM:
                     self.currentShowDev = UsbCam(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
+                elif dev['type'] == ROBOT_MODEL:
+                    self.currentShowDev = RobotModel(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -339,7 +348,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
         for dev in self.data:
-            if dev.getDevType() == EX_DEV: dev.saveToFile(parent)
+            if dev.getDevType() == EX_DEV:
+                if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
+                else: dev.saveToFile(parent)
             else: dev.saveToFile(toSave)
 
             if dev.getDevType() == DIFF_OPEN: initDiffOpen = '1'
@@ -394,6 +405,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         error.setWindowTitle("File Saved")
         error.showMessage("To launch: $ roslaunch ric_board %s.launch " % self._fileName)
         error.exec_()
+
+    def addRobotModel(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = RobotModel(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
 
     def addDiffCloseFour(self):
         if not self.haveCloseLoop or len(self.motors) < 4:

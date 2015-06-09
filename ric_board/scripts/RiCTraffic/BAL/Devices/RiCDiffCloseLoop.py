@@ -1,3 +1,4 @@
+from threading import Thread
 from nav_msgs.msg import Odometry
 import rospy
 from BAL.Header.Requests.closeDiffRequest import CloseDiffRequest
@@ -27,7 +28,9 @@ class RiCDiffCloseLoop(Device):
         Service('%s/setOdometry' % self._name, set_odom, self.setOdom)
 
     def diffServiceCallback(self, msg):
+        Thread(target=self.sendMsg, args=(msg,)).start()
 
+    def sendMsg(self, msg):
         if msg.angular.z > self._maxAng:
             msg.angular.z = self._maxAng
         elif msg.angular.z < -self._maxAng:

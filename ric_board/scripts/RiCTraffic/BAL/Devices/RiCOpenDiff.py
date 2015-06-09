@@ -1,3 +1,5 @@
+from threading import Thread
+
 __author__ = 'tom1231'
 from BAL.Interfaces.Device import Device
 from rospy import Subscriber
@@ -19,8 +21,7 @@ class RiCOpenDiff(Device):
         self._motorR = motorR
         Subscriber('%s/command' % self._name, Twist, self.diffCallback)
 
-
-    def diffCallback(self, msg):
+    def sendMsg(self, msg):
         if msg.angular.z > self._maxAng:
             msg.angular.z = self._maxAng
         elif msg.angular.z < -self._maxAng:
@@ -42,6 +43,9 @@ class RiCOpenDiff(Device):
 
         msgL.data = resL / w_max
         self._motorL.openLoopCallback(msgL)
+
+    def diffCallback(self, msg):
+        Thread(target=self.sendMsg, args=(msg,)).start()
 
     def publish(self, data):
         pass

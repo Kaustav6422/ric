@@ -1,3 +1,4 @@
+from threading import Thread
 from BAL.Header.Requests.openLoopMotorRequest import OpenLoopMotorRequest
 
 __author__ = 'tom1231'
@@ -17,4 +18,7 @@ class OpenLoopMotor(Device):
     def publish(self, data): pass
 
     def openLoopCallback(self, msg):
+        Thread(target=self.sendMsg, args=(msg,)).start()
+
+    def sendMsg(self, msg):
         self._output.write(OpenLoopMotorRequest(self._id, msg.data * self._direction).dataTosend())

@@ -1,3 +1,4 @@
+from threading import Thread
 from BAL.Header.Requests.servoRequest import ServoRequest
 
 __author__ = 'tom1231'
@@ -20,8 +21,11 @@ class RiCServo(Device):
         self._pub.publish(msg)
 
     def servoCallBack(self, recv):
+        Thread(target=self.sendMsg, args=(recv,)).start()
         # TOOD: ServoRequest
+
+
+    def sendMsg(self, recv):
         position = recv.data
         msg = ServoRequest(self._servoNum, position)
         self._output.write(msg.dataTosend())
-

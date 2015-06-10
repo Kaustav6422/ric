@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<launch>
-  <group ns="ric">
-    <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
-    <rosparam command="load" file="$(find ric_board)/config/test.yaml"/>
-  </group>
-  <param command="$(find xacro)/xacro.py '/home/tom1231/catkin_ws/src/ric/ric_description/lizi/lizi_fixed.xacro'" name="robot_description"/>
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
-</launch>

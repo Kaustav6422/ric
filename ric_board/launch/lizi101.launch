@@ -12,5 +12,7 @@
     <param name="image_width" value="640"/>
     <param name="image_height" value="480"/>
   </node>
+  <param command="$(find xacro)/xacro.py '/home/tom1231/catkin_ws/src/ric/ric_description/lizi/lizi_fixed.xacro'" name="robot_description"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
   <rosparam command="load" file="$(find ric_board)/config/lizi101.yaml"/>
 </launch>

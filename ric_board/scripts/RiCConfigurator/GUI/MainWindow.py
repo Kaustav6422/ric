@@ -23,6 +23,7 @@ from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL
+from GUI.ShowRiCBoard import ShowRiCBoard
 from GUI.UsbRolesDialog import UsbRolesDialog
 
 __author__ = 'tom1231'
@@ -73,6 +74,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionNew.triggered.connect(self.new)
         self.actionReconfig_RiC_Board.triggered.connect(self.configRiCBoard)
         self.actionRobot_Model.triggered.connect(self.addRobotModel)
+        self.actionAbout_RiC_Board.triggered.connect(self.aboutRiCBoard)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -134,6 +136,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def about(self):
         webbrowser.open('http://wiki.ros.org/ric')
+
+    def aboutRiCBoard(self):
+        dialog = ShowRiCBoard(self)
+        dialog.show()
+        dialog.exec_()
 
     def configRiCBoard(self):
         dialog = UsbRolesDialog(self)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Jun 10 00:05:21 2015
+# Created: Wed Jun 10 09:55:31 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -177,6 +177,8 @@ class Ui_MainWindow(object):
         self.actionReconfig_RiC_Board.setObjectName(_fromUtf8("actionReconfig_RiC_Board"))
         self.actionRobot_Model = QtGui.QAction(MainWindow)
         self.actionRobot_Model.setObjectName(_fromUtf8("actionRobot_Model"))
+        self.actionAbout_RiC_Board = QtGui.QAction(MainWindow)
+        self.actionAbout_RiC_Board.setObjectName(_fromUtf8("actionAbout_RiC_Board"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -209,6 +211,7 @@ class Ui_MainWindow(object):
         self.menuAdd_Device.addAction(self.menuOther.menuAction())
         self.menuHelp.addAction(self.actionAbout_RIC)
         self.menuHelp.addAction(self.actionReconfig_RiC_Board)
+        self.menuHelp.addAction(self.actionAbout_RiC_Board)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -273,5 +276,6 @@ class Ui_MainWindow(object):
         self.actionWith_four_motors.setText(_translate("MainWindow", "With four motors", None))
         self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Reconfigure RiC Board", None))
         self.actionRobot_Model.setText(_translate("MainWindow", "Robot Model", None))
+        self.actionAbout_RiC_Board.setText(_translate("MainWindow", "About RiC Board", None))
 
 import resource_rc

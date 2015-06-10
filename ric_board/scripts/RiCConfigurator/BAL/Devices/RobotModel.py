@@ -18,6 +18,11 @@ class RobotModel(DeviceFrame):
           'name': 'robot_description',
           'command': "$(find xacro)/xacro.py '%s'" % self._filePath
         })
+        SubElement(parent, 'node', {
+            'name': 'robot_state_publisher',
+            'pkg': 'robot_state_publisher',
+            'type': 'state_publisher'
+        })
 
     def add(self):
         if not self.nameIsValid():
@@ -44,7 +49,7 @@ class RobotModel(DeviceFrame):
         self._frame.layout().addRow(QLabel('File path: '), browse)
 
     def browse(self):
-        self._filePath = QFileDialog.getOpenFileName(self._frame, self._frame.tr("File Path"), '.', self._frame.tr("Xacro File (*.xacro)"))
+        self._filePath = QFileDialog.getOpenFileName(self._frame, self._frame.tr("File Path"), '.', self._frame.tr("ALL (*.*)"))
 
     def fromDict(self, data):
         self._filePath = data['filePath']

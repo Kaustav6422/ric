@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'UsbRoles.ui'
 #
-# Created: Thu Jun  4 10:36:07 2015
+# Created: Wed Jun 10 09:17:48 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -30,6 +30,9 @@ class Ui_UsbRoles(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         UsbRoles.setWindowIcon(icon)
+        UsbRoles.setStyleSheet(_fromUtf8("QDialog {\n"
+"        background-color: qlineargradient(spread:pad, x1:1, y1:0.682, x2:0.966825, y2:0, stop:0 rgba(224, 224, 224, 255), stop:1 rgba(171, 171, 171, 255));\n"
+"}"))
         self.buttonBox = QtGui.QDialogButtonBox(UsbRoles)
         self.buttonBox.setGeometry(QtCore.QRect(20, 60, 181, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)

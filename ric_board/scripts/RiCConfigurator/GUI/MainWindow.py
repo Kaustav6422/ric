@@ -356,8 +356,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
         for dev in self.data:
             if dev.getDevType() == EX_DEV:
-                if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
-                else: dev.saveToFile(parent)
+                #if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
+                #else: dev.saveToFile(parent)
+		dev.saveToFile(parent)
             else: dev.saveToFile(toSave)
 
             if dev.getDevType() == DIFF_OPEN: initDiffOpen = '1'

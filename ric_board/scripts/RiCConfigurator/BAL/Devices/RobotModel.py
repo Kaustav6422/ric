@@ -11,7 +11,7 @@ class RobotModel(DeviceFrame):
         self._filePath = ''
 
     def getName(self):
-        return 'RobotModel'
+        return 'robot_model'
 
     def saveToFile(self, parent):
         SubElement(parent, 'param', {

@@ -18,7 +18,7 @@ closeLoop0/encoderType: 2
 closeLoop0/direction: -1
 closeLoop0/directionE: -1
 closeLoop0/port2: 4
-Battery/name: Battery_Monitor
+Battery/name: battery_Monitor
 Battery/pubHz: 10
 Battery/voltageDividerRatio: 5.92
 IMU/publishHz: 20

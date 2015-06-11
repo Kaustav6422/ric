@@ -35,7 +35,7 @@ class Battery(DeviceFrame):
         self._frame.layout().addRow(QLabel('Voltage divider ratio: '), self.voltDivRationField)
 
     def getName(self):
-        return 'Battery_Monitor'
+        return 'battery_Monitor'
 
     def add(self):
         if not self.nameIsValid():

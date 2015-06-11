@@ -1,3 +1,5 @@
+import rospkg
+
 __author__ = 'tom1231'
 from PyQt4.QtGui import *
 from BAL.Interface.DeviceFrame import DeviceFrame, EX_DEV, ROBOT_MODEL
@@ -9,6 +11,7 @@ class RobotModel(DeviceFrame):
     def __init__(self, frame, data):
         DeviceFrame.__init__(self, EX_DEV, frame, data)
         self._filePath = ''
+        self._pkg = 'ric_description'
 
     def getName(self):
         return 'robot_model'
@@ -43,13 +46,20 @@ class RobotModel(DeviceFrame):
 
     def showDetails(self, items=None):
         browse = QPushButton('Browse')
+        self.pkg = QLineEdit(self._pkg)
 
+        self.pkg.textChanged.connect(self.change)
         browse.clicked.connect(self.browse)
 
+        self._frame.layout().addRow(QLabel('Package: '), self.pkg)
         self._frame.layout().addRow(QLabel('File path: '), browse)
 
+    def change(self, text):
+        self._pkg = str(text)
+
     def browse(self):
-        self._filePath = QFileDialog.getOpenFileName(self._frame, self._frame.tr("File Path"), '.', self._frame.tr("ALL (*.*)"))
+        self._filePath = QFileDialog.getOpenFileName(self._frame, self._frame.tr("File Path"), rospkg.RosPack().get_path(self._pkg), self._frame.tr("ALL (*.*)"))
+
 
     def fromDict(self, data):
         self._filePath = data['filePath']
@@ -63,4 +73,5 @@ class RobotModel(DeviceFrame):
         return data
 
     def printDetails(self):
+        self._frame.layout().addRow(QLabel('Package: '), QLabel(self._pkg))
         self._frame.layout().addRow(QLabel('File path: '), QLabel(self._filePath))

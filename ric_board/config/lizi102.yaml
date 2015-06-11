@@ -44,7 +44,7 @@ closeLoop2/driverAddress: 129
 closeLoop2/channel: 1
 closeLoop2/port: 3
 closeLoop2/PIDHz: 1000
-closeLoop2/kP: 3.0
+closeLoop2/kP: 5.0
 closeLoop2/kI: 3.0
 closeLoop2/kD: 0
 closeLoop2/limit: 1.0
@@ -63,7 +63,7 @@ closeLoop3/driverAddress: 129
 closeLoop3/channel: 2
 closeLoop3/port: 4
 closeLoop3/PIDHz: 1000
-closeLoop3/kP: 3.0
+closeLoop3/kP: 5.0
 closeLoop3/kI: 3.0
 closeLoop3/kD: 0
 closeLoop3/limit: 1.0

@@ -67,7 +67,7 @@ class UsbCam(DeviceFrame):
         self.width = QLineEdit(self._width)
         self.height = QLineEdit(self._height)
 
-        link = QLabel("<a href = http://wiki.ros.org/usb_cam> Default parameters </a>")
+        link = QLabel("<a href = http://wiki.ros.org/usb_cam> Usb Camera Wiki </a>")
         link.linkActivated.connect(self.onLink)
 
         self._frame.layout().addRow(QLabel('name: '), self.name)

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Jun 10 09:55:31 2015
+# Created: Thu Jun 11 16:05:28 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -254,7 +254,7 @@ class Ui_MainWindow(object):
         self.actionSave.setShortcut(_translate("MainWindow", "Ctrl+S", None))
         self.actionExit.setText(_translate("MainWindow", "Exit", None))
         self.actionExit.setShortcut(_translate("MainWindow", "Ctrl+E", None))
-        self.actionAbout_RIC.setText(_translate("MainWindow", "About RIC", None))
+        self.actionAbout_RIC.setText(_translate("MainWindow", "RiC Board Wiki", None))
         self.actionRiC_Board_Ports.setText(_translate("MainWindow", "RiC Board Ports", None))
         self.actionRe_program_RiC_board.setText(_translate("MainWindow", "Re-program RiC board", None))
         self.actionBattery_Monitor.setText(_translate("MainWindow", "Battery Monitor", None))
@@ -276,6 +276,6 @@ class Ui_MainWindow(object):
         self.actionWith_four_motors.setText(_translate("MainWindow", "With four motors", None))
         self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Reconfigure RiC Board", None))
         self.actionRobot_Model.setText(_translate("MainWindow", "Robot Model", None))
-        self.actionAbout_RiC_Board.setText(_translate("MainWindow", "About RiC Board", None))
+        self.actionAbout_RiC_Board.setText(_translate("MainWindow", "RiC Board Ports", None))
 
 import resource_rc

@@ -48,7 +48,7 @@ class Hokuyo(DeviceFrame):
         self.port = QLineEdit(self._port)
         self.frameId = QLineEdit(self._frameId)
 
-        link = QLabel("<a href = http://wiki.ros.org/hokuyo_node> Default parameters </a>")
+        link = QLabel("<a href = http://wiki.ros.org/hokuyo_node> Hokuyo Wiki </a>")
         link.linkActivated.connect(self.onLink)
 
         self._frame.layout().addRow(QLabel('name: '), self.name)

@@ -29,7 +29,7 @@ class Opennni(DeviceFrame):
 
     def showDetails(self, items=None):
         self.value = QLineEdit(self._value)
-        link = QLabel("<a href = http://wiki.ros.org/openni2_launch> Default parameters </a>")
+        link = QLabel("<a href = http://wiki.ros.org/openni2_launch> Openni Wiki </a>")
         link.linkActivated.connect(self.onLink)
 
         self._frame.layout().addRow(QLabel('Value: '), self.value)

@@ -135,7 +135,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
     def about(self):
-        webbrowser.open('http://wiki.ros.org/ric')
+        webbrowser.open('http://wiki.ros.org/ric_board?distro=indigo')
 
     def aboutRiCBoard(self):
         dialog = ShowRiCBoard(self)

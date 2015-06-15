@@ -253,7 +253,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.currentShowDev = Ppm(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
                 elif dev['type'] == GPS:
-                    self.currentShowDev = Ppm(self.DevFrame, self.data)
+                    self.currentShowDev = Gps(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
                 elif dev['type'] == RELAY:
                     self.currentShowDev = Relay(self.DevFrame, self.data, self.relayPorts)

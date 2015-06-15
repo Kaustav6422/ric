@@ -62,7 +62,7 @@ class Urf(DeviceFrame):
         file.write('URF' + str(Urf.urfCount) + '/name: ' + self._name + '\n')
         file.write('URF' + str(Urf.urfCount) + '/frameId: ' + self._frameId + '\n')
         file.write('URF' + str(Urf.urfCount) + '/type: ' + self._urfType + '\n')
-        file.write('URF' + str(Urf.urfCount) + '/port: ' + self._urfType + '\n')
+        file.write('URF' + str(Urf.urfCount) + '/port: ' + self._port + '\n')
         Urf.urfCount += 1
 
     def showDetails(self, items=None):

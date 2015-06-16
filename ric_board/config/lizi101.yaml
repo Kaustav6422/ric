@@ -20,7 +20,7 @@ closeLoop0/directionE: -1
 closeLoop0/port2: 4
 Battery/name: battery_Monitor
 Battery/pubHz: 10
-Battery/voltageDividerRatio: 5.92
+Battery/voltageDividerRatio: 6
 IMU/publishHz: 20
 IMU/name: IMU
 IMU/frameId: base_link

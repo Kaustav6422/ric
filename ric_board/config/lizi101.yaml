@@ -51,7 +51,7 @@ Diff/rWheel: 0.065
 Diff/width: 0.255
 Diff/baseLink: base_link
 Diff/odom: odom_link
-Diff/slip: 0.75
+Diff/slip: 0.6
 Diff/maxAng: 16.0
 Diff/maxLin: 16.0
 Diff/motorL: 0

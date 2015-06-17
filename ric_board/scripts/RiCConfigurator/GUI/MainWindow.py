@@ -145,7 +145,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def configRiCBoard(self):
         pkg = rospkg.RosPack().get_path('ric_board')
-        exitStatus = system("%s/setup/board_loader --mcu=mk20dx256 -sv %s/setup/RiCBoard.hex" % (pkg, pkg))
+        exitStatus = system("%s/setup/board_loader --mcu=mk20dx256 -s %s/setup/RiCBoard.hex" % (pkg, pkg))
         if exitStatus > 0: QMessageBox.critical(self, "Error", "Could not build RiCBoard.")
 
     def new(self):
@@ -320,16 +320,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def save(self):
         pkg = rospkg.RosPack().get_path('ric_board')
         if len(self.data) == 0:
-            error = QErrorMessage()
-            error.setWindowTitle("File error")
-            error.showMessage("Can not save a empty file.")
-            error.exec_()
+            QMessageBox.critical(self, "File error", "Can not save a empty file.")
             return
         if self._fileName == '':
-            error = QErrorMessage()
-            error.setWindowTitle("File error")
-            error.showMessage("Can not save file without a name.")
-            error.exec_()
+            QMessageBox.critical(self, "File error", "Can not save file without a name.")
             return
         if not self.override:
             ans = QMessageBox.question(self, "Override", "Do you want to override this file", QMessageBox.Yes | QMessageBox.No)
@@ -409,10 +403,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         CloseLoop.closeLoop = 0
         OpenLoop.openLoopNum = 0
         # QMessageBox.information(self, 'File', 'File saved')
-        error = QErrorMessage()
-        error.setWindowTitle("File Saved")
-        error.showMessage("To launch: $ roslaunch ric_board %s.launch " % self._fileName)
-        error.exec_()
+
+        QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
+
 
     def addRobotModel(self):
         self.interruptHandler()
@@ -423,16 +416,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addDiffCloseFour(self):
         if not self.haveCloseLoop or len(self.motors) < 4:
-            error = QErrorMessage()
-            error.setWindowTitle("Driver error")
-            error.showMessage("Need to have at less four close loop motors")
-            error.exec_()
+            QMessageBox.critical(self, "Driver error", "Need to have at less four close loop motors.")
             return
         if self.haveDiff:
-            error = QErrorMessage()
-            error.setWindowTitle("Driver error")
-            error.showMessage("Can not have more")
-            error.exec_()
+            QMessageBox.critical(self, "Driver error", "Can not have more.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -463,16 +450,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addDiffOpen(self):
         if not self.haveOpenLoop or len(self.motors) < 2:
-            error = QErrorMessage()
-            error.setWindowTitle("Driver error")
-            error.showMessage("Need to have at less two open loop motors")
-            error.exec_()
+            QMessageBox.critical(self, "Driver error", "Need to have at less two open loop motors.")
             return
         if self.haveDiff:
-            error = QErrorMessage()
-            error.setWindowTitle("Driver error")
-            error.showMessage("Can not have more")
-            error.exec_()
+            QMessageBox.critical(self, "Driver error", "Can not have more.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -482,16 +463,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addDiffClose(self):
         if not self.haveCloseLoop or len(self.motors) < 2:
-            error = QErrorMessage()
-            error.setWindowTitle("Driver error")
-            error.showMessage("Need to have at less two close loop motors")
-            error.exec_()
+            QMessageBox.critical(self, "Driver error", "Need to have at less two close loop motors.")
             return
         if self.haveDiff:
-            error = QErrorMessage()
-            error.setWindowTitle("Driver error")
-            error.showMessage("Can not have more")
-            error.exec_()
+            QMessageBox.critical(self, "Driver error", "Can not have more.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -501,10 +476,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addOpenMotor(self):
         if self.haveCloseLoop:
-            error = QErrorMessage()
-            error.setWindowTitle("Error")
-            error.showMessage("Open and close motors can not exist in the same configuration")
-            error.exec_()
+            QMessageBox.critical(self, "Error", "Open and close motors can not exist in the same configuration.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -514,16 +486,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addCloseMotorTwo(self):
         if self.haveOpenLoop:
-            error = QErrorMessage()
-            error.setWindowTitle("Error")
-            error.showMessage("Open and close motors can not exist in the same configuration")
-            error.exec_()
+            QMessageBox.critical(self, "Error", "Open and close motors can not exist in the same configuration.")
             return
         if self.encoders.count() < 2:
-            error = QErrorMessage()
-            error.setWindowTitle("Close Motor Error")
-            error.showMessage("Need two or more encoder ports to build this motor")
-            error.exec_()
+            QMessageBox.critical(self, "Close Motor Error", "Need two or more encoder ports to build this motor.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -533,16 +499,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addCloseMotorOne(self):
         if self.haveOpenLoop:
-            error = QErrorMessage()
-            error.setWindowTitle("Error")
-            error.showMessage("Open and close motors can not exist in the same configuration")
-            error.exec_()
+            QMessageBox.critical(self, "Error", "Open and close motors can not exist in the same configuration.")
             return
         if self.encoders.count() == 0:
-            error = QErrorMessage()
-            error.setWindowTitle("Close Motor Error")
-            error.showMessage("Out of encoder ports")
-            error.exec_()
+            QMessageBox.critical(self, "Close Motor Error", "Out of encoder ports.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -552,10 +512,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addURF(self):
         if self.urfPorts.count() == 0:
-            error = QErrorMessage()
-            error.setWindowTitle("URF Error")
-            error.showMessage("Out of URF ports")
-            error.exec_()
+            QMessageBox.critical(self, "URF Error", "Out of URF ports.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -565,10 +522,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addBattery(self):
         if self.haveBattery:
-            error = QErrorMessage()
-            error.setWindowTitle("Battery Error")
-            error.showMessage("Can't add another battery to ric board")
-            error.exec_()
+            QMessageBox.critical(self, "Battery Error", "Can't add another battery to ric board.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -578,10 +532,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addServo(self):
         if self.servoPorts.count() == 0:
-            error = QErrorMessage()
-            error.setWindowTitle("Servo Error")
-            error.showMessage("Out of servo ports")
-            error.exec_()
+            QMessageBox.critical(self, "Servo Error", "Out of servo ports.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -591,10 +542,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addSwitch(self):
         if self.switchPorts.count() == 0:
-            error = QErrorMessage()
-            error.setWindowTitle("Switch Error")
-            error.showMessage("Out of switch ports")
-            error.exec_()
+            QMessageBox.critical(self, "Switch Error", "Out of switch ports.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -604,10 +552,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addImu(self):
         if self.haveIMU:
-            error = QErrorMessage()
-            error.setWindowTitle("IMU Error")
-            error.showMessage("Can't add another IMU to ric board")
-            error.exec_()
+            QMessageBox.critical(self, "IMU Error", "Can't add another IMU to ric board.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -617,10 +562,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addPpm(self):
         if self.havePPM:
-            error = QErrorMessage()
-            error.setWindowTitle("PPM Error")
-            error.showMessage("Can't add another PPM to ric board")
-            error.exec_()
+            QMessageBox.critical(self, "PPM Error", "Can't add another PPM to ric board.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -630,10 +572,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addGps(self):
         if self.haveGPS:
-            error = QErrorMessage()
-            error.setWindowTitle("GPS Error")
-            error.showMessage("Can't add another GPS to ric board")
-            error.exec_()
+            QMessageBox.critical(self, "GPS Error", "Can't add another GPS to ric board.")
             return
         self.interruptHandler()
         self.newDevMode = True
@@ -643,10 +582,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addRelay(self):
         if self.relayPorts.count() == 0:
-            error = QErrorMessage()
-            error.setWindowTitle("Relay Error")
-            error.showMessage("Out of relay ports")
-            error.exec_()
+            QMessageBox.critical(self, "Relay Error", "Out of relay ports.")
             return
         self.interruptHandler()
         self.newDevMode = True

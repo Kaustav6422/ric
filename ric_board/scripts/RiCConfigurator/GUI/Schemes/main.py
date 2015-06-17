@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Thu Jun 11 16:05:28 2015
+# Created: Wed Jun 17 17:18:53 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -238,7 +238,7 @@ class Ui_MainWindow(object):
         self.fileName.setPlaceholderText(_translate("MainWindow", "Enter file name", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
-        self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Device", None))
+        self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Board Device", None))
         self.menuMotors.setTitle(_translate("MainWindow", "Motors", None))
         self.menuClose_Loop.setTitle(_translate("MainWindow", "Close Loop", None))
         self.menuDifferential_Drive.setTitle(_translate("MainWindow", "Differential Drive", None))
@@ -264,7 +264,7 @@ class Ui_MainWindow(object):
         self.actionPPM.setText(_translate("MainWindow", "PPM", None))
         self.actionGPS.setText(_translate("MainWindow", "GPS", None))
         self.actionRelay.setText(_translate("MainWindow", "Relay", None))
-        self.actionURF.setText(_translate("MainWindow", "URF", None))
+        self.actionURF.setText(_translate("MainWindow", "Ranger", None))
         self.actionOpen_Loop.setText(_translate("MainWindow", "Open Loop", None))
         self.actionOpen_Loop_Drive.setText(_translate("MainWindow", "Open Loop Drive", None))
         self.actionMotor_with_one_encoder.setText(_translate("MainWindow", "motor with one encoder", None))

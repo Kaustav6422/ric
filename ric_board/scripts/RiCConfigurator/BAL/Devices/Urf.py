@@ -47,8 +47,8 @@ class Urf(DeviceFrame):
         self._frame.layout().addRow(QLabel('Publish Hz: '), QLabel(self._pubHz))
         self._frame.layout().addRow(QLabel('name: '), QLabel(self._name))
         self._frame.layout().addRow(QLabel('Frame id: '), QLabel(self._frameId))
-        if self._urfType == '10': self._frame.layout().addRow(QLabel('Type: '), QLabel('HRLV'))
-        else: self._frame.layout().addRow(QLabel('Type: '), QLabel('LV'))
+        if self._urfType == '10': self._frame.layout().addRow(QLabel('Type: '), QLabel('HRLV-MaxSonar-EZ'))
+        else: self._frame.layout().addRow(QLabel('Type: '), QLabel('LV-MaxSonar-EZ'))
         self._frame.layout().addRow(QLabel('Port: '), QLabel(self._port))
 
     def getName(self):
@@ -69,8 +69,8 @@ class Urf(DeviceFrame):
         self.urfPorts = QComboBox()
         self.urfTypes = QComboBox()
 
-        self.urfTypes.addItem('HRLV', '10')
-        self.urfTypes.addItem('LV', '11')
+        self.urfTypes.addItem('HRLV-MaxSonar-EZ', '10')
+        self.urfTypes.addItem('LV-MaxSonar-EZ', '11')
         self.urfPorts.addItems([self.mainPorts.itemText(i) for i in xrange(self.mainPorts.count())])
         self.urfPorts.setCurrentIndex(self.findItem())
         self.urfTypes.setCurrentIndex(self.getCurrentUrfTypeInex())

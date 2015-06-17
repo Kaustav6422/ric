@@ -30,11 +30,21 @@
       <file leaf-file-name="MainWindow.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUI/MainWindow.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5209059" vertical-offset="2365" max-vertical-offset="14778">
-              <caret line="148" column="89" selection-start-line="148" selection-start-column="89" selection-end-line="148" selection-end-column="89" />
+            <state vertical-scroll-proportion="-4.0578513" vertical-offset="12967" max-vertical-offset="13626">
+              <caret line="584" column="76" selection-start-line="584" selection-start-column="11" selection-end-line="584" selection-end-column="76" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Urf.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BAL/Devices/Urf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="1962">
+              <caret line="50" column="82" selection-start-line="50" selection-start-column="82" selection-end-line="50" selection-end-column="82" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -60,7 +70,6 @@
         <option value="$PROJECT_DIR$/BAL/Devices/OpenLoop.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/Relay.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/Switch.py" />
-        <option value="$PROJECT_DIR$/BAL/Devices/Urf.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/DiffClose.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/DiffCloseFour.py" />
         <option value="$PROJECT_DIR$/GUI/UsbRolseDialog.py" />
@@ -74,6 +83,7 @@
         <option value="$PROJECT_DIR$/BAL/Devices/Openni.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/UsbCam.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RobotModel.py" />
+        <option value="$PROJECT_DIR$/BAL/Devices/Urf.py" />
         <option value="$PROJECT_DIR$/GUI/MainWindow.py" />
       </list>
     </option>
@@ -151,6 +161,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="BAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RiCConfigurator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RiCConfigurator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Devices" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -652,13 +680,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-1247972723/PyQt4/QtGui/QMessageBox.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.016990291" vertical-offset="997" max-vertical-offset="5004">
-          <caret line="58" column="25" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GUI/Schemes/UsbRoles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="161" max-vertical-offset="1116">
@@ -684,13 +705,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7322314" vertical-offset="3625" max-vertical-offset="4230">
           <caret line="227" column="18" selection-start-line="227" selection-start-column="18" selection-end-line="227" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Devices/Urf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.0776699" vertical-offset="486" max-vertical-offset="1944">
-          <caret line="65" column="11" selection-start-line="65" selection-start-column="11" selection-end-line="65" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -753,10 +767,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Devices/Urf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="1962">
+          <caret line="50" column="82" selection-start-line="50" selection-start-column="82" selection-end-line="50" selection-end-column="82" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm40/system/python_stubs/-1247972723/PyQt4/QtGui/QMessageBox.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3322314" vertical-offset="1509" max-vertical-offset="5004">
+          <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GUI/MainWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5209059" vertical-offset="2365" max-vertical-offset="14778">
-          <caret line="148" column="89" selection-start-line="148" selection-start-column="89" selection-end-line="148" selection-end-column="89" />
+        <state vertical-scroll-proportion="-4.0578513" vertical-offset="12967" max-vertical-offset="13626">
+          <caret line="584" column="76" selection-start-line="584" selection-start-column="11" selection-end-line="584" selection-end-column="76" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

@@ -18,11 +18,12 @@ from BAL.Devices.Ppm import Ppm
 from BAL.Devices.Relay import Relay
 from BAL.Devices.RobotModel import RobotModel
 from BAL.Devices.Servo import Servo
+from BAL.Devices.Slam import Slam
 from BAL.Devices.Switch import Switch
 from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
-    OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL
+    OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM
 from GUI.ShowRiCBoard import ShowRiCBoard
 from GUI.UsbRolesDialog import UsbRolesDialog
 
@@ -76,6 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionReconfig_RiC_Board.triggered.connect(self.configRiCBoard)
         self.actionRobot_Model.triggered.connect(self.addRobotModel)
         self.actionAbout_RiC_Board.triggered.connect(self.aboutRiCBoard)
+        self.actionSLAM.triggered.connect(self.addSLAM)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -296,6 +298,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == ROBOT_MODEL:
                     self.currentShowDev = RobotModel(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
+                elif dev['type'] == SLAM:
+                    self.currentShowDev = Slam(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -406,6 +411,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
 
+    def addSLAM(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = Slam(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
 
     def addRobotModel(self):
         self.interruptHandler()

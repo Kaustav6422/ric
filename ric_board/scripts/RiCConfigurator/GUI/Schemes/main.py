@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Jun 17 17:18:53 2015
+# Created: Wed Jun 17 17:45:59 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -179,6 +179,8 @@ class Ui_MainWindow(object):
         self.actionRobot_Model.setObjectName(_fromUtf8("actionRobot_Model"))
         self.actionAbout_RiC_Board = QtGui.QAction(MainWindow)
         self.actionAbout_RiC_Board.setObjectName(_fromUtf8("actionAbout_RiC_Board"))
+        self.actionSLAM = QtGui.QAction(MainWindow)
+        self.actionSLAM.setObjectName(_fromUtf8("actionSLAM"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -206,6 +208,7 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionOPENNI)
         self.menuExternal_Device.addAction(self.actionHakoyo)
         self.menuOther.addAction(self.actionRobot_Model)
+        self.menuOther.addAction(self.actionSLAM)
         self.menuAdd_Device.addAction(self.menuRiC_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuExternal_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuOther.menuAction())
@@ -264,7 +267,7 @@ class Ui_MainWindow(object):
         self.actionPPM.setText(_translate("MainWindow", "PPM", None))
         self.actionGPS.setText(_translate("MainWindow", "GPS", None))
         self.actionRelay.setText(_translate("MainWindow", "Relay", None))
-        self.actionURF.setText(_translate("MainWindow", "Ranger", None))
+        self.actionURF.setText(_translate("MainWindow", "URF", None))
         self.actionOpen_Loop.setText(_translate("MainWindow", "Open Loop", None))
         self.actionOpen_Loop_Drive.setText(_translate("MainWindow", "Open Loop Drive", None))
         self.actionMotor_with_one_encoder.setText(_translate("MainWindow", "motor with one encoder", None))
@@ -277,5 +280,6 @@ class Ui_MainWindow(object):
         self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Reconfigure RiC Board", None))
         self.actionRobot_Model.setText(_translate("MainWindow", "Robot Model", None))
         self.actionAbout_RiC_Board.setText(_translate("MainWindow", "RiC Board Ports", None))
+        self.actionSLAM.setText(_translate("MainWindow", "SLAM", None))
 
 import resource_rc

@@ -32,6 +32,7 @@ from Schemes.main import Ui_MainWindow
 import webbrowser
 import pickle
 import os.path
+from os import system
 
 
 def prettify(elem):
@@ -143,10 +144,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         dialog.exec_()
 
     def configRiCBoard(self):
-        dialog = UsbRolesDialog(self)
-        dialog.show()
-        dialog.exec_()
-
+        pkg = rospkg.RosPack().get_path('ric_board')
+        exitStatus = system("%s/setup/board_loader --mcu=mk20dx256 -sv %s/setup/RiCBoard.hex" % (pkg, pkg))
+        if exitStatus > 0: QMessageBox.critical(self, "Error", "Could not build RiCBoard.")
 
     def new(self):
         self.interruptHandler()

@@ -51,23 +51,23 @@ class IMUPublishResponse(RiCHeader):
 
     def getVelocity(self):
         vec = Vector3()
-        vec.x = self._velocityX
-        vec.y = self._velocityY
-        vec.z = self._velocityZ
+        vec.x = self._velocityX*0.0174532925 #deg/s -> rad/s
+        vec.y = self._velocityY*0.0174532925 #deg/s -> rad/s
+        vec.z = self._velocityZ*0.0174532925 #deg/s -> rad/s
         return vec
 
     def getAcceleration(self):
         acc = Vector3()
-        acc.x = self._accelerationX
-        acc.y = self._accelerationY
-        acc.z = self._accelerationZ
+        acc.x = self._accelerationX*9.80665 #g -> m/s^2
+        acc.y = self._accelerationY*9.80665 #g -> m/s^2
+        acc.z = self._accelerationZ*9.80665 #g -> m/s^2
         return acc
 
     def getMagnetometer(self):
         mag = Vector3()
-        mag.x = self._magnetometerX
-        mag.y = self._magnetometerY
-        mag.z = self._magnetometerZ
+        mag.x = self._magnetometerX*1.0e-7 #milligauss -> Teslas
+        mag.y = self._magnetometerY*1.0e-7 #milligauss -> Teslas
+        mag.z = self._magnetometerZ*1.0e-7 #milligauss -> Teslas
         return mag
 
     def getOrientation(self):

@@ -28,6 +28,7 @@ class CloseLoop(DeviceFrame):
         self._motorType = '1'
         self._dirMotor = False
         self._dirEnc = False
+        self._driverType = '1'
 
     def fromDict(self, data):
         self._pubHz = data['pubHz']
@@ -77,6 +78,10 @@ class CloseLoop(DeviceFrame):
         if self._motorType == '1': return 1
         return 0
 
+    def getDriverTypeIndex(self):
+        if self._driverType == '1': return 0
+        return 1
+
     def findItem(self):
         for i in xrange(self.mainPorts.count()):
             if self._encoder == str(self.mainPorts.itemText(i)):
@@ -114,6 +119,7 @@ class CloseLoop(DeviceFrame):
         self._ppr = str(self.ppr.text())
         self._timeout = str(self.timeout.text())
         self._motorType = str(self.motorTypes.itemData(self.motorTypes.currentIndex()).toString())
+        self._driverType = str(self.driverType.itemData(self.driverType.currentIndex()).toString())
 
         self.mainPorts.removeItem(self.encoders.currentIndex())
 
@@ -145,12 +151,15 @@ class CloseLoop(DeviceFrame):
         return self._name
 
     def printDetails(self):
+        show = 'Channel: '
+        if self._driverType == '2': show = 'Pin: '
         self._frame.layout().addRow(QLabel('Publish Hz: '), QLabel(self._pubHz))
         self._frame.layout().addRow(QLabel('name: '), QLabel(self._name))
         self._frame.layout().addRow(QLabel('LPF HZ: '), QLabel(self._lpfHz))
         self._frame.layout().addRow(QLabel('LPF Alpha: '), QLabel(self._lpfAlpha))
-        self._frame.layout().addRow(QLabel('Driver Address: '), QLabel(self._driverAdd))
-        self._frame.layout().addRow(QLabel('Channel: '), QLabel(self._channel))
+        if self._driverType == '1':
+            self._frame.layout().addRow(QLabel('Driver Address: '), QLabel(self._driverAdd))
+        self._frame.layout().addRow(QLabel(show), QLabel(self._channel))
         self._frame.layout().addRow(QLabel('PID Hz: '), QLabel(self._pidHz))
         self._frame.layout().addRow(QLabel('Kp parameter: '), QLabel(self._kp))
         self._frame.layout().addRow(QLabel('Ki parameter: '), QLabel(self._ki))
@@ -169,11 +178,18 @@ class CloseLoop(DeviceFrame):
 
     def showDetails(self, items=None):
         self.motorTypes = QComboBox()
+        self.driverType = QComboBox()
 
         self.motorTypes.addItem('Position', '0')
         self.motorTypes.addItem('Speed', '1')
 
+        self.driverType.addItem('Sabertooth', '1')
+        self.driverType.addItem('RCServo', '2')
+
+        self.driverType.setCurrentIndex(self.getDriverTypeIndex())
         self.motorTypes.setCurrentIndex(self.getTypeIndex())
+
+        self.driverType.currentIndexChanged.connect(self.driverTypeChangeEven)
 
         self.pubHz = QLineEdit(self._pubHz)
         self.name = QLineEdit(self._name)
@@ -191,16 +207,20 @@ class CloseLoop(DeviceFrame):
         self.timeout = QLineEdit(self._timeout)
         self.dirMotor = QCheckBox('')
         self.dirEnc = QCheckBox('')
+        if self._driverType == '1': self.channelLabel = QLabel('Channel: ')
+        else: self.channelLabel = QLabel('Pin: ')
 
         self.dirMotor.setChecked(self._dirMotor)
         self.dirEnc.setChecked(self._dirEnc)
+
+        self.driverTypeChangeEven(self.driverType.currentIndex())
 
         self._frame.layout().addRow(QLabel('Publish Hz: '), self.pubHz)
         self._frame.layout().addRow(QLabel('name: '), self.name)
         self._frame.layout().addRow(QLabel('LPF HZ: '), self.lpfHz)
         self._frame.layout().addRow(QLabel('LPF Alpha: '), self.lpfAlpha)
         self._frame.layout().addRow(QLabel('Driver Address: '), self.driverAdd)
-        self._frame.layout().addRow(QLabel('Channel: '), self.channel)
+        self._frame.layout().addRow(self.channelLabel, self.channel)
         self._frame.layout().addRow(QLabel('PID Hz: '), self.pidHz)
         self._frame.layout().addRow(QLabel('Kp parameter: '), self.kp)
         self._frame.layout().addRow(QLabel('Ki parameter: '), self.ki)
@@ -213,6 +233,7 @@ class CloseLoop(DeviceFrame):
         self._frame.layout().addRow(QLabel('Type: '), self.motorTypes)
         self._frame.layout().addRow(QLabel('Reverse motor direction: '), self.dirMotor)
         self._frame.layout().addRow(QLabel('Reverse encoder direction: '), self.dirEnc)
+        self._frame.layout().addRow(QLabel('Type: '), self.driverType)
 
     def setEncode(self):
         self.encoders = QComboBox()
@@ -227,4 +248,15 @@ class CloseLoop(DeviceFrame):
     def encoderType(self):
         return '1'
 
+    def driverTypeChangeEven(self, index):
+        if index == 0:
+            self.driverAdd.setEnabled(True)
+            self.driverAdd.setEchoMode(QLineEdit.Normal)
+            self.driverAdd.setText('128')
+            self.channelLabel.setText('Channel: ')
+            return
+        self.driverAdd.setEnabled(False)
+        self.driverAdd.setEchoMode(QLineEdit.NoEcho)
+        self.driverAdd.setText('999')
+        self.channelLabel.setText('Pin: ')
 

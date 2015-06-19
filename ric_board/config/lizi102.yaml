@@ -2,8 +2,8 @@ closeLoop0/publishHz: 10
 closeLoop0/name: rear_right
 closeLoop0/LPFAlpha: 0.7
 closeLoop0/LPFHz: 50
-closeLoop0/driverAddress: 128
-closeLoop0/channel: 1
+closeLoop0/driverAddress: 999
+closeLoop0/channel: 11
 closeLoop0/port: 1
 closeLoop0/PIDHz: 1000
 closeLoop0/kP: 3.0
@@ -21,8 +21,8 @@ closeLoop1/publishHz: 10
 closeLoop1/name: rear_left
 closeLoop1/LPFAlpha: 0.7
 closeLoop1/LPFHz: 50
-closeLoop1/driverAddress: 128
-closeLoop1/channel: 2
+closeLoop1/driverAddress: 999
+closeLoop1/channel: 12
 closeLoop1/port: 2
 closeLoop1/PIDHz: 1000
 closeLoop1/kP: 3.0
@@ -40,8 +40,8 @@ closeLoop2/publishHz: 10
 closeLoop2/name: front_right
 closeLoop2/LPFAlpha: 0.7
 closeLoop2/LPFHz: 50
-closeLoop2/driverAddress: 129
-closeLoop2/channel: 1
+closeLoop2/driverAddress: 999
+closeLoop2/channel: 0
 closeLoop2/port: 3
 closeLoop2/PIDHz: 1000
 closeLoop2/kP: 5.0
@@ -59,8 +59,8 @@ closeLoop3/publishHz: 10
 closeLoop3/name: front_left
 closeLoop3/LPFAlpha: 0.7
 closeLoop3/LPFHz: 50
-closeLoop3/driverAddress: 129
-closeLoop3/channel: 2
+closeLoop3/driverAddress: 999
+closeLoop3/channel: 1
 closeLoop3/port: 4
 closeLoop3/PIDHz: 1000
 closeLoop3/kP: 5.0
@@ -72,7 +72,7 @@ closeLoop3/cpr: 4480
 closeLoop3/timeout: 1000
 closeLoop3/motorType: 1
 closeLoop3/encoderType: 1
-closeLoop3/direction: 1
+closeLoop3/direction: -1
 closeLoop3/directionE: -1
 Diff/publishHz: 20
 Diff/name: diff_driver

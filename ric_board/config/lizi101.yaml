@@ -29,8 +29,8 @@ closeLoop1/publishHz: 20
 closeLoop1/name: right_motor
 closeLoop1/LPFAlpha: 0.7
 closeLoop1/LPFHz: 50
-closeLoop1/driverAddress: 128
-closeLoop1/channel: 2
+closeLoop1/driverAddress: 999
+closeLoop1/channel: 0
 closeLoop1/port: 2
 closeLoop1/PIDHz: 1000
 closeLoop1/kP: 3.0

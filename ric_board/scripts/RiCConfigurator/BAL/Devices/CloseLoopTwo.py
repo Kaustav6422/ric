@@ -72,6 +72,7 @@ class CloseLoopTwo(CloseLoop):
         self._ppr = str(self.ppr.text())
         self._timeout = str(self.timeout.text())
         self._motorType = str(self.motorTypes.itemData(self.motorTypes.currentIndex()).toString())
+        self._driverType = str(self.driverType.itemData(self.driverType.currentIndex()).toString())
 
         self.mainPorts.removeItem(self.findItem())
 

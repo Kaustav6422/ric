@@ -49,6 +49,7 @@ class CloseLoop(DeviceFrame):
         self._motorType = data['motorType']
         self._dirMotor = data['dirMotor']
         self._dirEnc = data['dirEnc']
+        self._driverType = data['driverType']
 
     def toDict(self):
         data = dict()
@@ -71,6 +72,7 @@ class CloseLoop(DeviceFrame):
         data['motorType'] = self._motorType
         data['dirMotor'] = self._dirMotor
         data['dirEnc'] = self._dirEnc
+        data['driverType'] = self._driverType
 
         return data
 

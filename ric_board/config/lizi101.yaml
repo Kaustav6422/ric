@@ -6,8 +6,8 @@ closeLoop0/driverAddress: 999
 closeLoop0/channel: 1
 closeLoop0/port: 1
 closeLoop0/PIDHz: 1000
-closeLoop0/kP: 3.0
-closeLoop0/kI: 3.0
+closeLoop0/kP: 43
+closeLoop0/kI: 35.5
 closeLoop0/kD: 0
 closeLoop0/limit: 1.0
 closeLoop0/maxSpeed: 16.0
@@ -33,8 +33,8 @@ closeLoop1/driverAddress: 999
 closeLoop1/channel: 0
 closeLoop1/port: 2
 closeLoop1/PIDHz: 1000
-closeLoop1/kP: 3.0
-closeLoop1/kI: 3.0
+closeLoop1/kP: 43
+closeLoop1/kI: 35.5
 closeLoop1/kD: 0
 closeLoop1/limit: 1.0
 closeLoop1/maxSpeed: 16.0

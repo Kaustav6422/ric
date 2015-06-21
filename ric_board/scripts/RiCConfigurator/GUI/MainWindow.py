@@ -218,7 +218,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nameSpace.setText(self._ns)
 
     def launch(self):
-        subprocess.Popen(args=["gnome-terminal", "--command=source ~/.bashrc && roslaunch ric_board %s.launch" % self._fileName])
+        subprocess.Popen(args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName])
 
 
     def load(self):

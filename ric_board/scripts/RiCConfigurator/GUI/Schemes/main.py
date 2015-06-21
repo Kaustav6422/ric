@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Jun 17 17:45:59 2015
+# Created: Sun Jun 21 03:02:13 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -99,6 +99,9 @@ class Ui_MainWindow(object):
         self.fileName = QtGui.QLineEdit(self.centralwidget)
         self.fileName.setGeometry(QtCore.QRect(100, 10, 141, 21))
         self.fileName.setObjectName(_fromUtf8("fileName"))
+        self.pushButton_2 = QtGui.QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(QtCore.QRect(280, 10, 98, 27))
+        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 923, 25))
@@ -239,6 +242,7 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Apply", None))
         self.label_4.setText(_translate("MainWindow", "File Name:", None))
         self.fileName.setPlaceholderText(_translate("MainWindow", "Enter file name", None))
+        self.pushButton_2.setText(_translate("MainWindow", "Launch", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
         self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Board Device", None))

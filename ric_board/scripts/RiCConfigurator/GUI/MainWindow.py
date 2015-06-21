@@ -34,6 +34,7 @@ import webbrowser
 import pickle
 import os.path
 from os import system
+import subprocess
 
 
 def prettify(elem):
@@ -135,7 +136,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listMode = False
         self.newDevMode = False
         self.override = True
-
+        self.pushButton_2.setEnabled(False)
+        self.pushButton_2.clicked.connect(self.launch)
 
     def about(self):
         webbrowser.open('http://wiki.ros.org/ric_board?distro=indigo')
@@ -210,11 +212,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listMode = False
         self.newDevMode = False
         self.override = True
+        self.pushButton_2.setEnabled(False)
 
         self.fileName.setText(self._fileName)
         self.nameSpace.setText(self._ns)
 
-
+    def launch(self):
+        subprocess.Popen(args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName])
 
 
     def load(self):
@@ -321,6 +325,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.devList.addItem(QListWidgetItem(self.currentShowDev.getName()))
                 self.data.append(self.currentShowDev)
                 self.currentShowDev = None
+            self.pushButton_2.setEnabled(True)
 
     def save(self):
         pkg = rospkg.RosPack().get_path('ric_board')
@@ -410,7 +415,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # QMessageBox.information(self, 'File', 'File saved')
 
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
-
+        self.pushButton_2.setEnabled(True)
+        
     def addSLAM(self):
         self.interruptHandler()
         self.newDevMode = True
@@ -615,6 +621,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def fileNameEven(self, text):
         self._fileName = str(text)
+        self.pushButton_2.setEnabled(False)
 
     def devDelete(self):
         if self.currentShowDev.getDevType() == SERVO:

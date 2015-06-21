@@ -9,7 +9,7 @@ class OpenLoop(DeviceFrame):
     def __init__(self, frame, data):
         DeviceFrame.__init__(self, OPEN_LOP, frame, data)
 
-        self._name = 'RiC_Open_Motor'
+        self._name = 'motor'
         self._driverAdd = '128'
         self._channel = '1'
         self._timeout = '1000'

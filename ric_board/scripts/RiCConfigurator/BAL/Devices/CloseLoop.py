@@ -10,8 +10,8 @@ class CloseLoop(DeviceFrame):
         DeviceFrame.__init__(self, CLOSE_LOP_ONE, frame, data)
         self.mainPorts = encoders
 
-        self._pubHz = '50'
-        self._name = 'RiC_Close_Motor'
+        self._pubHz = '20'
+        self._name = 'motor'
         self._lpfHz = '50'
         self._lpfAlpha = '0.7'
         self._driverAdd = '128'
@@ -185,8 +185,8 @@ class CloseLoop(DeviceFrame):
         self.motorTypes.addItem('Position', '0')
         self.motorTypes.addItem('Speed', '1')
 
-        self.driverType.addItem('Sabertooth', '1')
-        self.driverType.addItem('RCServo', '2')
+        self.driverType.addItem('Sabertooth Serial', '1')
+        self.driverType.addItem('RC Servo', '2')
 
         self.driverType.setCurrentIndex(self.getDriverTypeIndex())
         self.motorTypes.setCurrentIndex(self.getTypeIndex())

@@ -9,8 +9,8 @@ class DiffCloseFour(DeviceFrame):
         DeviceFrame.__init__(self, DIFF_CLOSE_FOUR, frame, data)
         self.motors = motors
         self._pubHz = '50'
-        self._name = 'Diff_driver'
-        self._rWheel = '0.07'
+        self._name = 'diff_driver'
+        self._rWheel = '0.065'
         self._width = '0.255'
         self._base = 'base_link'
         self._odom = 'odom_link'

@@ -8,7 +8,7 @@ class DiffOpen(DeviceFrame):
         DeviceFrame.__init__(self, DIFF_OPEN, frame, data)
         self.motors = motors
         self._name = 'diff_driver'
-        self._rWheel = '0.07'
+        self._rWheel = '0.065'
         self._width = '0.255'
         self._maxAg = '16.0'
         self._maxLn = '16.0'

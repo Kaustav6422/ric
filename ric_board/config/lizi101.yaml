@@ -15,7 +15,7 @@ closeLoop0/cpr: 4288
 closeLoop0/timeout: 1000
 closeLoop0/motorType: 1
 closeLoop0/encoderType: 2
-closeLoop0/direction: -1
+closeLoop0/direction: 1
 closeLoop0/directionE: -1
 closeLoop0/port2: 4
 Battery/name: battery_Monitor

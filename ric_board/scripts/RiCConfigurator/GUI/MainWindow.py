@@ -149,8 +149,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def configRiCBoard(self):
         pkg = rospkg.RosPack().get_path('ric_board')
-        exitStatus = system("%s/setup/board_loader --mcu=mk20dx256 -sv %s/setup/RiCBoard.hex" % (pkg, pkg))
+        path = QFileDialog.getOpenFileName(self, self.tr("Load File"), "%s/setup" % pkg, self.tr("Hex files (*.hex)"))
+        exitStatus = system("%s/setup/board_loader --mcu=mk20dx256 -sv %s" % (pkg, path))
         if exitStatus > 0: QMessageBox.critical(self, "Error", "Could not build RiCBoard.")
+        else: QMessageBox.information(self, "Done", "Firmware successfully updated.")
 
     def new(self):
         self.interruptHandler()

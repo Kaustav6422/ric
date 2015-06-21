@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Sun Jun 21 03:02:13 2015
+# Created: Sun Jun 21 21:59:05 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -127,6 +127,8 @@ class Ui_MainWindow(object):
         self.menuOther.setObjectName(_fromUtf8("menuOther"))
         self.menuHelp = QtGui.QMenu(self.menubar)
         self.menuHelp.setObjectName(_fromUtf8("menuHelp"))
+        self.menuTools = QtGui.QMenu(self.menubar)
+        self.menuTools.setObjectName(_fromUtf8("menuTools"))
         MainWindow.setMenuBar(self.menubar)
         self.actionNew = QtGui.QAction(MainWindow)
         self.actionNew.setObjectName(_fromUtf8("actionNew"))
@@ -216,10 +218,11 @@ class Ui_MainWindow(object):
         self.menuAdd_Device.addAction(self.menuExternal_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuOther.menuAction())
         self.menuHelp.addAction(self.actionAbout_RIC)
-        self.menuHelp.addAction(self.actionReconfig_RiC_Board)
         self.menuHelp.addAction(self.actionAbout_RiC_Board)
+        self.menuTools.addAction(self.actionReconfig_RiC_Board)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
+        self.menubar.addAction(self.menuTools.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
         self.retranslateUi(MainWindow)
@@ -253,6 +256,7 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.setTitle(_translate("MainWindow", "External Device", None))
         self.menuOther.setTitle(_translate("MainWindow", "Other", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
+        self.menuTools.setTitle(_translate("MainWindow", "Tools", None))
         self.actionNew.setText(_translate("MainWindow", "New", None))
         self.actionNew.setShortcut(_translate("MainWindow", "Ctrl+N", None))
         self.actionOpen.setText(_translate("MainWindow", "Open", None))
@@ -281,7 +285,7 @@ class Ui_MainWindow(object):
         self.actionHakoyo.setText(_translate("MainWindow", "Hokuyo", None))
         self.actionWith_two_motors.setText(_translate("MainWindow", "With two motors", None))
         self.actionWith_four_motors.setText(_translate("MainWindow", "With four motors", None))
-        self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Reconfigure RiC Board", None))
+        self.actionReconfig_RiC_Board.setText(_translate("MainWindow", "Update Firmware", None))
         self.actionRobot_Model.setText(_translate("MainWindow", "Robot Model", None))
         self.actionAbout_RiC_Board.setText(_translate("MainWindow", "RiC Board Ports", None))
         self.actionSLAM.setText(_translate("MainWindow", "SLAM", None))

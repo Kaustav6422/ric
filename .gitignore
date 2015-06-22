@@ -1,1 +1,3 @@
 *.pyc
+ric_base_station/config/remote_env.sh
+

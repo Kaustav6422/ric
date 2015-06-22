@@ -47,7 +47,7 @@ class Slam(DeviceFrame):
         self._frame.layout().addRow(QLabel('Scan topic: '), QLabel(self._scan_topic))
 
     def getName(self):
-        return "map"
+        return "SLAM"
 
     def saveToFile(self, parent):
         element = SubElement(parent, 'include', {

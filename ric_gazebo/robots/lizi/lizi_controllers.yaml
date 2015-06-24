@@ -1,0 +1,14 @@
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  # Position Controllers ---------------------------------------
+  pan_controller:
+    type: effort_controllers/JointPositionController
+    joint: Asus_Pan_Joint
+    pid: {p: 100.0, i: 0.00, d: 0}
+  tilt_controller:
+    type: effort_controllers/JointPositionController
+    joint: Asus_Tilt_Joint
+    pid: {p: 100.0, i: 0.00, d: 0.0}

@@ -16,7 +16,7 @@
   <run_depend>ric_description</run_depend>
   <run_depend>ric_mc</run_depend>
   <run_depend>ric_board</run_depend>
-  <run_depend>pcloud_rot</run_depend>
+  <run_depend>ric_gazebo</run_depend>
   <export>
   	<metapackage/>
   </export>

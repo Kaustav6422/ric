@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Sun Jun 21 21:59:05 2015
+# Created: Thu Jun 25 14:56:15 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -275,7 +275,7 @@ class Ui_MainWindow(object):
         self.actionPPM.setText(_translate("MainWindow", "PPM", None))
         self.actionGPS.setText(_translate("MainWindow", "GPS", None))
         self.actionRelay.setText(_translate("MainWindow", "Relay", None))
-        self.actionURF.setText(_translate("MainWindow", "URF", None))
+        self.actionURF.setText(_translate("MainWindow", "Rangers", None))
         self.actionOpen_Loop.setText(_translate("MainWindow", "Open Loop", None))
         self.actionOpen_Loop_Drive.setText(_translate("MainWindow", "Open Loop Drive", None))
         self.actionMotor_with_one_encoder.setText(_translate("MainWindow", "motor with one encoder", None))

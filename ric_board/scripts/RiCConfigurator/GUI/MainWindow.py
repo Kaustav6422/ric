@@ -89,9 +89,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.servoPorts = QComboBox()
         self.servoPorts.addItems([
             self.tr('1'),
-            self.tr('2'),
-            self.tr('3'),
-            self.tr('4')
+            self.tr('2')
         ])
 
         self.switchPorts = QComboBox()
@@ -167,9 +165,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.servoPorts = QComboBox()
         self.servoPorts.addItems([
             self.tr('1'),
-            self.tr('2'),
-            self.tr('3'),
-            self.tr('4')
+            self.tr('2')
         ])
 
         self.switchPorts = QComboBox()

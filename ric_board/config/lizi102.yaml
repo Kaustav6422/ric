@@ -49,7 +49,7 @@ Diff/maxAng: 16.0
 Diff/maxLin: 16.0
 Diff/motorL: 0
 Diff/motorR: 1
-Battery/name: battery_Monitor
+Battery/name: battery_monitor
 Battery/pubHz: 5
 Battery/voltageDividerRatio: 6
 IMU_INIT: 0

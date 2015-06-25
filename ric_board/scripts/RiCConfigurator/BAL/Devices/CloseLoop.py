@@ -24,6 +24,7 @@ class CloseLoop(DeviceFrame):
         self._maxSpeed = '16.0'
         self._ppr = '4480'
         self._timeout = '1000'
+        self.mainPorts.setCurrentIndex(0)
         self._encoder = str(self.mainPorts.currentText())
         self._motorType = '1'
         self._dirMotor = False

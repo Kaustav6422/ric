@@ -10,8 +10,12 @@
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
 
+
+
+  
   <!-- We resume the logic in empty_world.launch -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
+ <!--  <arg name="world_name" value="$(find ric_gazebo)/worlds/gas_station.world"/> -->
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
     <arg name="paused" value="$(arg paused)"/>
@@ -20,43 +24,49 @@
   </include>
 
   <!-- Load the URDF into the ROS Parameter Server -->
+ <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro' ns:='init' lizi_color_name:='Blue'" /> 
+ 
 
+  	<include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
+		<arg name="name" value="lizi_1"/>
+		<arg name="color" value="Green"/>
+		<arg name="x" value="0.0" />
+		<arg name="y" value="0.0" />
+		<arg name="z" value="0.1" />
+		<arg name="R" value="0.0" />
+		<arg name="P" value="0.0" />
+		<arg name="Y" value="0.0" />
+	  </include>
+
+	    <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
+		<arg name="name" value="lizi_2"/>
+		<arg name="color" value="Blue"/>
+		<arg name="x" value="0.0" />
+		<arg name="y" value="1.0" />
+		<arg name="z" value="0.1" />
+		<arg name="R" value="0.0" />
+		<arg name="P" value="0.0" />
+		<arg name="Y" value="0.0" />
+	  </include>
   
-   <arg name="x" default="0.0"/>
-  <arg name="y" default="0.0"/>
-  <arg name="z" default="0.1"/>
-  <arg name="R" default="0.0" />
-  <arg name="P" default="0.0" />
-  <arg name="Y" default="0.0" />
-  
+<!--  
    <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro'" />
 
- <node name="pcloud_rot_node" pkg="ric_gazebo" type="pcloud_rot_node" cwd="node" output="screen" />
+
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+	args="-urdf -model lizi -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/> 
+-->
+	
 
 <!--  <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom_link 20" /> -->
 
     
-   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-	args="-urdf -model lizi -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/>
 
-
-    <!--Load joint controller configurations from YAML file to parameter server -->
-  <rosparam file="$(find ric_gazebo)/robots/lizi/lizi_controllers.yaml" command="load"/>
-
-    <!-- load the controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-	output="screen"  args="joint_state_controller
-						   pan_controller
-						   tilt_controller
-						  "/>	
-
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
-	respawn="false" output="screen"/>
 	
 
 
-<!-- Rviz for sensor visualization -->
+<!-- Rviz for sensor visualization 
 	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ric_gazebo)/robots/lizi/lizi_rviz_config.rviz" required="true" />
-		
+	-->	
 </launch>
 

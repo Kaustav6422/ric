@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/lizi_robot" name="lizi_urdf">
-<xacro:property name="lizi_color" value="0.0 1.0 0.0 1" />
+<robot xmlns:xacro="http://www.ros.org/wiki/lizi_robot" name="$(arg ns)_urdf">
+<xacro:property name="lizi_color" value="0.0 0.7 0.0 1" />
+
+
 <!-- Dummy inertia link & Joint -->
-  <link
+   <link
     name="dummy_link">    
 </link>
   <joint
@@ -18,7 +20,7 @@
     <axis
       xyz="0 0 0" />
   </joint>
-<!-- Dummy link & node -->
+<!--Dummy link & node -->
   <link
     name="base_link">
     <inertial>
@@ -40,13 +42,12 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/base_link.STL" />
+        <mesh filename="package://ric_description/lizi/meshes/base_link.STL" />
       </geometry>
       <material
         name="">
-        <color
-          rgba="${lizi_color}" />
+	<color rgba="${lizi_color}" /> 
+
       </material>
     </visual>
     <collision>
@@ -54,11 +55,15 @@
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/base_link.STL" />
+	   <mesh filename="package://ric_description/lizi/meshes/base_link.STL" /> 
       </geometry>
-    </collision>
+    </collision> 
   </link>
+  
+  <gazebo reference="base_link">
+    <material>Gazebo/$(arg lizi_color_name)</material>
+  </gazebo> 
+  
   <link
     name="FL_Wheel_link">
     <inertial>
@@ -81,7 +86,7 @@
         rpy="3.14159265359 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/FL_Wheel_Link.STL" />
+          filename="package://ric_description/lizi/meshes/FL_Wheel_Link.STL" />
       </geometry>
       <material
         name="">
@@ -95,12 +100,16 @@
         rpy="1.5707963267949 0 0" />
       <geometry>
         <!--mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/FL_Wheel_Link.STL" /-->
-        <cylinder length="0.02" radius="0.068"  
+          filename="package://ric_description/lizi/meshes/FL_Wheel_Link.STL" /-->
+        <cylinder length="0.02" radius="0.065"  
           />
       </geometry>
     </collision>
   </link>
+     <gazebo reference="FL_Wheel_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="FL_Wheel_Joint"
     type="continuous">
@@ -136,7 +145,7 @@
         rpy="3.14159265359 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/RL_Wheel_Link.STL" />
+          filename="package://ric_description/lizi/meshes/RL_Wheel_Link.STL" />
       </geometry>
       <material
         name="">
@@ -150,12 +159,17 @@
         rpy="1.5707963267949 0 0" />
       <geometry>
         <!--mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/RL_Wheel_Link.STL" /-->
-<cylinder length="0.02" radius="0.068"  
+          filename="package://ric_description/lizi/meshes/RL_Wheel_Link.STL" /-->
+<cylinder length="0.02" radius="0.065"  
           />
       </geometry>
     </collision>
   </link>
+  
+   <gazebo reference="RR_Wheel_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="RL_Wheel_Joint"
     type="continuous">
@@ -194,7 +208,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/RR_Wheel_Link.STL" />
+          filename="package://ric_description/lizi/meshes/RR_Wheel_Link.STL" />
       </geometry>
       <material
         name="">
@@ -208,12 +222,16 @@
         rpy="1.5707963267949 0 0" />
       <geometry>
         <!--mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/RR_Wheel_Link.STL" /-->
-<cylinder length="0.02" radius="0.068"  
+          filename="package://ric_description/lizi/meshes/RR_Wheel_Link.STL" /-->
+<cylinder length="0.02" radius="0.065"  
           />
       </geometry>
     </collision>
   </link>
+          <gazebo reference="RR_Wheel_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="RR_Wheel_Joint"
     type="continuous">
@@ -249,7 +267,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/FR_Wheel_Link.STL" />
+          filename="package://ric_description/lizi/meshes/FR_Wheel_Link.STL" />
       </geometry>
       <material
         name="">
@@ -263,11 +281,15 @@
         rpy="1.5707963267949 0 0" />
       <geometry>
         <!--mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/FR_Wheel_Link.STL" /-->
-<cylinder length="0.02" radius="0.068"/>
+          filename="package://ric_description/lizi/meshes/FR_Wheel_Link.STL" /-->
+<cylinder length="0.02" radius="0.065"/>
       </geometry>
     </collision>
   </link>
+        <gazebo reference="FR_Wheel_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="FR_Wheel_Joint"
     type="continuous">
@@ -303,7 +325,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Asus_Pan_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Asus_Pan_Link.STL" />
       </geometry>
       <material
         name="">
@@ -317,10 +339,15 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Asus_Pan_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Asus_Pan_Link.STL" />
       </geometry>
     </collision>
   </link>
+  
+    <gazebo reference="Asus_Pan_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="Asus_Pan_Joint"
     type="revolute">
@@ -361,7 +388,7 @@
         rpy="1.57 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Asus_Camera_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Asus_Camera_Link.STL" />
       </geometry>
       <material
         name="">
@@ -375,10 +402,15 @@
         rpy="1.5707963267949 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Asus_Camera_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Asus_Camera_Link.STL" />
       </geometry>
     </collision>
   </link>
+  
+  <gazebo reference="Asus_Camera_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="Asus_Tilt_Joint"
     type="revolute">
@@ -419,7 +451,7 @@
         rpy="0 0 1.57" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Right_URF_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Right_URF_Link.STL" />
       </geometry>
       <material
         name="">
@@ -427,16 +459,18 @@
           rgba="0.19216 0.11961 0.13333 1" />
       </material>
     </visual>
-    <collision>
+   <collision>
       <origin
         xyz="0 0 0"
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Right_URF_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Right_URF_Link.STL" />
       </geometry>
-    </collision>
+    </collision> 
   </link>
+
+
   <joint
     name="Right_URF_Joint"
     type="fixed">
@@ -472,7 +506,7 @@
         rpy="0 0 -1.57" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Left_URF_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Left_URF_Link.STL" />
       </geometry>
       <material
         name="">
@@ -486,9 +520,9 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Left_URF_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Left_URF_Link.STL" />
       </geometry>
-    </collision>
+    </collision> 
   </link>
   <joint
     name="Left_URF_Joint"
@@ -525,7 +559,7 @@
         rpy="0 0 3.14" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Rear_URF_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Rear_URF_Link.STL" />
       </geometry>
       <material
         name="">
@@ -539,9 +573,9 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Rear_URF_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Rear_URF_Link.STL" />
       </geometry>
-    </collision>
+    </collision> 
   </link>
   <joint
     name="Rear_URF_Joint"
@@ -578,7 +612,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Laser_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Laser_Link.STL" />
       </geometry>
       <material
         name="">
@@ -592,10 +626,15 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Laser_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Laser_Link.STL" />
       </geometry>
-    </collision>
+    </collision> 
   </link>
+  
+    <gazebo reference="Laser_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="Laser_Joint"
     type="fixed">
@@ -631,7 +670,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Camera_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Camera_Link.STL" />
       </geometry>
       <material
         name="">
@@ -645,10 +684,13 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://ric_gazebo/robots/lizi/meshes/Camera_Link.STL" />
+          filename="package://ric_description/lizi/meshes/Camera_Link.STL" />
       </geometry>
-    </collision>
+    </collision> 
   </link>
+    <gazebo reference="Camera_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
   <joint
     name="Camera_Joint"
     type="fixed">
@@ -675,6 +717,8 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  
+
 
   <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
@@ -734,7 +778,7 @@
 
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-    <!-- <robotNamespace>/lizi_$(arg lizi_id)</robotNamespace> -->
+    <robotNamespace>$(arg ns)</robotNamespace> 
   </plugin>
 </gazebo>
 
@@ -772,7 +816,7 @@
   <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
     <always_on>1</always_on>
     <updateRate>100.0</updateRate>
-    <!--  <robotNamespace>/lizi_$(arg lizi_id)</robotNamespace> -->
+    <robotNamespace>$(arg ns)</robotNamespace> 
     <broadcastTF>1</broadcastTF>
     <leftFrontJoint>FL_Wheel_Joint</leftFrontJoint>
     <rightFrontJoint>FR_Wheel_Joint</rightFrontJoint>
@@ -787,7 +831,7 @@
     <commandTopic>diff_driver/command</commandTopic>
   </plugin>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <!-- <robotNamespace>/lizi_st_$(arg lizi_id)</robotNamespace> -->
+       <robotNamespace>$(arg ns)</robotNamespace>  
     </plugin>
 </gazebo>
 
@@ -811,7 +855,7 @@
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
-	<!--  <robotNamespace>komodo_$(arg komodo_id)</robotNamespace> -->
+	 <robotNamespace>$(arg ns)</robotNamespace> 
         <cameraName>Front_Camera</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
@@ -858,7 +902,7 @@
 	<depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
 	<pointCloudTopicName>depth/bad_points</pointCloudTopicName>
 	<pointCloudCutoff>0.4</pointCloudCutoff>
-	<pointCloudCutoffMax>4.4</pointCloudCutoffMax>
+        <pointCloudCutoffMax>50.0</pointCloudCutoffMax> 
 	<frameName>Asus_Camera_link</frameName> 
 	<distortion_k1>0.0</distortion_k1>
 	<distortion_k2>0.0</distortion_k2>
@@ -935,7 +979,7 @@
         </ray>
         <plugin name="gazebo_ros_Right_URF_controller" filename="libhector_gazebo_ros_sonar.so">
           <!--gaussianNoise>0.005</gaussianNoise-->
-	  <!-- <robotNamespace>/lizi_$(arg lizi_id)</robotNamespace> -->
+	 <robotNamespace>$(arg ns)</robotNamespace> 
           <topicName>Rangers/Right_URF</topicName>
           <frameId>Right_URF_link</frameId>
         </plugin>
@@ -973,7 +1017,7 @@
         </ray>
         <plugin name="gazebo_ros_Left_URF_controller" filename="libhector_gazebo_ros_sonar.so">
           <!--gaussianNoise>0.005</gaussianNoise-->
-	  <!--  <robotNamespace>/lizi_$(arg lizi_id)</robotNamespace> -->
+	  <robotNamespace>$(arg ns)</robotNamespace> 
           <topicName>Rangers/Left_URF</topicName>
           <frameId>Left_URF_link</frameId>
         </plugin>
@@ -1011,7 +1055,7 @@
         </ray>
         <plugin name="gazebo_ros_Rear_URF_controller" filename="libhector_gazebo_ros_sonar.so">
           <!--gaussianNoise>0.005</gaussianNoise-->
-	  <!--  <robotNamespace>/lizi_$(arg lizi_id)</robotNamespace> -->
+	 <robotNamespace>$(arg ns)</robotNamespace> 
           <topicName>Rangers/Rear_URF</topicName>
           <frameId>Rear_URF_link</frameId>
         </plugin>

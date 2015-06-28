@@ -51,8 +51,8 @@ int main (int argc , char** argv)
 	//std::string pre(robot);
 	//std::string name(argv[2]);
 	
-	rotated_cloud = n.advertise<sensor_msgs::PointCloud2>(std::string("Asus_Camera/depth/points"),100);
-	ros::Subscriber cloud_sub = n.subscribe(std::string("Asus_Camera/depth/bad_points"),1000, rotCallback);
+	rotated_cloud = n.advertise<sensor_msgs::PointCloud2>(std::string("Asus_Camera/depth/points"),10);
+	ros::Subscriber cloud_sub = n.subscribe(std::string("Asus_Camera/depth/bad_points"),10, rotCallback);
 
 	double rotx = 0.0 ;
 	double roty = M_PI_2 ;

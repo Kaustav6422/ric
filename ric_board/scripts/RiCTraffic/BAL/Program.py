@@ -4,7 +4,7 @@ from BAL.Devices.DevicesBuilder.deviceBuilder import DeviceBuilder
 from BAL.Handlers.incomingDataHandler import IncomingDataHandler
 from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES,GPS_RES, \
     PPM_RES, BAT_RES
-from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START
+from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START, HEADER_DEBUG
 from BAL.Header.Response.IMUPublishResponse import IMUPublishResponse
 from BAL.Header.Response.ServoPublishResponse import ServoPublishResponse
 from BAL.Header.Response.URFPublishResponse import URFPublishResponse
@@ -32,6 +32,10 @@ CON_REQ = 1
 SERVO_RES = 102
 STATUS_RES = 100
 
+INFO = 0
+ERROR = 1
+WARRNING = 2
+
 class Program:
 
     def __init__(self):
@@ -46,15 +50,16 @@ class Program:
             input = ser
             output = SerialWriteHandler(ser, incomingHandler, input)
             data = []
+            toPrint = ''
             input.baudrate = 9600
             incomingLength = 0
             headerId = 0
             devBuilder = DeviceBuilder(params, output, input, incomingHandler)
             gotHeaderStart = False
+            gotHeaderDebug = False
 
             try:
                 self.waitForConnection(input, output)
-                # rospy.loginfo("Connect to 0x%x.....", self.waitForConnection(input, output))
                 rospy.loginfo("Configuring devices...")
                 devBuilder.createServos()
                 devBuilder.createCLMotors()
@@ -85,13 +90,30 @@ class Program:
                             # print data
                             msg = self.genData(data, headerId)
                             if msg is not None:
-                                    Thread(target=IncomingDataHandler(msg, output, devs).run, args=()).start()
+                                Thread(target=IncomingDataHandler(msg, output, devs).run, args=()).start()
                             data = []
                             gotHeaderStart = False
                         else:
                             data = []
                             gotHeaderStart = False
-                    elif ord(input.read()) == HEADER_START: gotHeaderStart = True
+                    elif gotHeaderDebug:
+                        size = ord(input.read())
+
+                        for i in xrange(size):
+                            toPrint += input.read()
+
+                        code = ord(input.read())
+
+                        if code == INFO: rospy.loginfo(toPrint)
+                        elif code == ERROR: rospy.logerr(toPrint)
+                        elif code == WARRNING: rospy.logwarn(toPrint)
+
+                        toPrint = ''
+                        gotHeaderDebug = False
+                    else:
+                        checkHead = ord(input.read())
+                        if checkHead == HEADER_START: gotHeaderStart = True
+                        elif checkHead == HEADER_DEBUG: gotHeaderDebug = True
 
             except KeyboardInterrupt: pass
             finally:

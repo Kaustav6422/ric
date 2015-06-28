@@ -6,6 +6,7 @@ from BAL.Header.Response.ackResponse import ACKResponse
 __author__ = 'tom1231'
 from threading import RLock
 HEADER_START = 0xfe
+HEADER_DEBUG = 0xfd
 
 class SerialWriteHandler:
     def __init__(self, ser, incomingDataHandler, input):

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/lizi_robot" name="lizi_urdf">
+<robot xmlns:xacro="http://www.ros.org/wiki/ric_gazebo" name="lizi">
 <xacro:property name="lizi_color" value="0.0 0.7 0.0 1" />
 
 
@@ -1001,7 +1001,7 @@
 	  <frameId>$(arg ns)/Right_URF_link</frameId>
 	</plugin>
 	  <always_on>true</always_on>
-	  <update_rate>20.0</update_rate>
+	  <update_rate>10.0</update_rate>
       </sensor>
     </gazebo>
 
@@ -1039,7 +1039,7 @@
 	  <frameId>$(arg ns)/Left_URF_link</frameId>
 	</plugin>
 	  <always_on>true</always_on>
-	  <update_rate>20.0</update_rate>
+	  <update_rate>10.0</update_rate>
       </sensor>
     </gazebo>
 
@@ -1077,11 +1077,25 @@
 	  <frameId>$(arg ns)/Rear_URF_link</frameId>
 	</plugin>
 	  <always_on>true</always_on>
-	  <update_rate>20.0</update_rate>
+	  <update_rate>10.0</update_rate>
       </sensor>
     </gazebo>
 
-
+<!-- IMU -->
+  <gazebo>
+    <plugin name="imu_sim" filename="libhector_gazebo_ros_imu.so">
+      <updateRate>50.0</updateRate>
+      <bodyName>dummy_link</bodyName>
+       <frameId>$(arg ns)/dummy_link</frameId>
+      <topicName>IMU_AGQ</topicName>
+      <rpyOffsets>0 0 0</rpyOffsets> <!-- deprecated -->
+      <gaussianNoise>0</gaussianNoise>  <!-- deprecated -->
+      <accelDrift>0.5 0.5 0.5</accelDrift>
+      <accelGaussianNoise>0.35 0.35 0.3</accelGaussianNoise>
+      <rateDrift>0.1 0.1 0.1</rateDrift>
+      <rateGaussianNoise>0.05 0.05 0.015</rateGaussianNoise>
+    </plugin>
+</gazebo>
 
 
 </robot>

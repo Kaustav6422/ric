@@ -26,7 +26,7 @@
   
   <include file="$(find ric_gazebo)/launch/spawn_komodo.launch">   
     <arg name="name" value="komodo_1"/>
-    <arg name="color" value="Grey"/>
+    <arg name="color" value="White"/>
     <arg name="x" value="0.0" />
     <arg name="y" value="0.0" />
     <arg name="z" value="0.1" />
@@ -38,7 +38,7 @@
 <!--
   <include file="$(find ric_gazebo)/launch/spawn_komodo.launch">
   <arg name="name" value="komodo_2"/>
-  <arg name="color" value="White"/>
+  <arg name="color" value="Grey"/>
   <arg name="x" value="0.0" />
   <arg name="y" value="1.0" />
   <arg name="z" value="0.1" />

@@ -1,72 +1,58 @@
 <!-- -*- mode: XML -*- -->
 <launch>
+  
 
-<!-- Launch world -->
 
-  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
-
-
-
+  
   
   <!-- We resume the logic in empty_world.launch -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
- <!--  <arg name="world_name" value="$(find ric_gazebo)/worlds/gas_station.world"/> -->
+    <!-- <arg name="world_name" value="$(find ric_gazebo)/worlds/gas_station.world"/> -->
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
     <arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="headless" value="$(arg headless)"/>
   </include>
-
-  <!-- Load the URDF into the ROS Parameter Server -->
- <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro' ns:='init' lizi_color_name:='Blue'" /> 
- 
-
-  	<include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
-		<arg name="name" value="lizi_1"/>
-		<arg name="color" value="Green"/>
-		<arg name="x" value="0.0" />
-		<arg name="y" value="0.0" />
-		<arg name="z" value="0.1" />
-		<arg name="R" value="0.0" />
-		<arg name="P" value="0.0" />
-		<arg name="Y" value="0.0" />
-	  </include>
-
-	    <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
-		<arg name="name" value="lizi_2"/>
-		<arg name="color" value="Blue"/>
-		<arg name="x" value="0.0" />
-		<arg name="y" value="1.0" />
-		<arg name="z" value="0.1" />
-		<arg name="R" value="0.0" />
-		<arg name="P" value="0.0" />
-		<arg name="Y" value="0.0" />
-	  </include>
   
-<!--  
-   <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro'" />
-
-
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-	args="-urdf -model lizi -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/> 
--->
-	
-
-<!--  <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /odom_link 20" /> -->
-
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro'  ns:='init' lizi_color_name:='Blue'" />
+  
+  
+  <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
     
-
-	
-
-
-<!-- Rviz for sensor visualization 
-	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ric_gazebo)/robots/lizi/lizi_rviz_config.rviz" required="true" />
-	-->	
+    <arg name="name" value="lizi_1"/>
+    <arg name="color" value="Green"/>
+    <arg name="x" value="0.0" />
+    <arg name="y" value="0.0" />
+    <arg name="z" value="0.1" />
+    <arg name="R" value="0.0" />
+    <arg name="P" value="0.0" />
+    <arg name="Y" value="0.0" />
+  </include>
+  
+  <!--
+  <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
+  <arg name="name" value="lizi_2"/>
+  <arg name="color" value="Blue"/>
+  <arg name="x" value="0.0" />
+  <arg name="y" value="1.0" />
+  <arg name="z" value="0.1" />
+  <arg name="R" value="0.0" />
+  <arg name="P" value="0.0" />
+  <arg name="Y" value="0.0" />
+  </include>
+  
+  -->
+  
+  
+  <!-- Rviz for sensor visualization 
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ric_gazebo)/robots/lizi/two_lizi_rviz_config.rviz" required="true" />
+  -->	
 </launch>
 

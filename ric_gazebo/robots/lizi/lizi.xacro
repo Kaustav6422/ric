@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/lizi_robot" name="$(arg ns)_urdf">
+<robot xmlns:xacro="http://www.ros.org/wiki/lizi_robot" name="lizi_urdf">
 <xacro:property name="lizi_color" value="0.0 0.7 0.0 1" />
 
 
 <!-- Dummy inertia link & Joint -->
-   <link
+  <link
     name="dummy_link">    
 </link>
   <joint
@@ -25,37 +25,37 @@
     name="base_link">
     <inertial>
       <origin
-        xyz="-0.036889 0.00027038 0.069426"
-        rpy="0 0 0" />
+	xyz="-0.036889 0.00027038 0.069426"
+	rpy="0 0 0" />
       <mass
-        value="4.706" />
+	value="4.706" />
       <inertia
-        ixx="0.032024"
-        ixy="0.00038846"
-        ixz="-0.0046108"
-        iyy="0.065583"
-        iyz="2.8552E-06"
-        izz="0.076391" />
+	ixx="0.032024"
+	ixy="0.00038846"
+	ixz="-0.0046108"
+	iyy="0.065583"
+	iyz="2.8552E-06"
+	izz="0.076391" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh filename="package://ric_description/lizi/meshes/base_link.STL" />
+	<mesh filename="package://ric_description/lizi/meshes/base_link.STL" />
       </geometry>
       <material
-        name="">
+	name="">
 	<color rgba="${lizi_color}" /> 
 
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-	   <mesh filename="package://ric_description/lizi/meshes/base_link.STL" /> 
+	  <mesh filename="package://ric_description/lizi/meshes/base_link.STL" /> 
       </geometry>
     </collision> 
   </link>
@@ -68,45 +68,45 @@
     name="FL_Wheel_link">
     <inertial>
       <origin
-        xyz="2.9411E-11 -0.0075967 5.8231E-11"
-        rpy="0 0 0" />
+	xyz="2.9411E-11 -0.0075967 5.8231E-11"
+	rpy="0 0 0" />
       <mass
-        value="0.4084" />
+	value="0.4084" />
       <inertia
-        ixx="0.00059356"
-        ixy="3.4979E-14"
-        ixz="-4.6514E-14"
-        iyy="0.0011268"
-        iyz="5.6928E-14"
-        izz="0.00059356" />
+	ixx="0.00059356"
+	ixy="3.4979E-14"
+	ixz="-4.6514E-14"
+	iyy="0.0011268"
+	iyz="5.6928E-14"
+	izz="0.00059356" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="3.14159265359 0 0" />
+	xyz="0 0 0"
+	rpy="3.14159265359 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/FL_Wheel_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/FL_Wheel_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
+	xyz="0 0 0"
+	rpy="1.5707963267949 0 0" />
       <geometry>
-        <!--mesh
-          filename="package://ric_description/lizi/meshes/FL_Wheel_Link.STL" /-->
-        <cylinder length="0.02" radius="0.065"  
-          />
+	<!--mesh
+	  filename="package://ric_description/lizi/meshes/FL_Wheel_Link.STL" /-->
+	<cylinder length="0.02" radius="0.065"  
+	  />
       </geometry>
     </collision>
   </link>
-     <gazebo reference="FL_Wheel_link">
+    <gazebo reference="FL_Wheel_link">
     <material>Gazebo/Grey</material>
 </gazebo>
 
@@ -127,46 +127,46 @@
     name="RL_Wheel_link">
     <inertial>
       <origin
-        xyz="2.9411E-11 -0.0035967 5.8231E-11"
-        rpy="0 0 0" />
+	xyz="2.9411E-11 -0.0035967 5.8231E-11"
+	rpy="0 0 0" />
       <mass
-        value="0.4084" />
+	value="0.4084" />
       <inertia
-        ixx="0.00059356"
-        ixy="3.4979E-14"
-        ixz="-4.6514E-14"
-        iyy="0.0011268"
-        iyz="5.6928E-14"
-        izz="0.00059356" />
+	ixx="0.00059356"
+	ixy="3.4979E-14"
+	ixz="-4.6514E-14"
+	iyy="0.0011268"
+	iyz="5.6928E-14"
+	izz="0.00059356" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="3.14159265359 0 0" />
+	xyz="0 0 0"
+	rpy="3.14159265359 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/RL_Wheel_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/RL_Wheel_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
+	xyz="0 0 0"
+	rpy="1.5707963267949 0 0" />
       <geometry>
-        <!--mesh
-          filename="package://ric_description/lizi/meshes/RL_Wheel_Link.STL" /-->
+	<!--mesh
+	  filename="package://ric_description/lizi/meshes/RL_Wheel_Link.STL" /-->
 <cylinder length="0.02" radius="0.065"  
-          />
+	  />
       </geometry>
     </collision>
   </link>
   
-   <gazebo reference="RR_Wheel_link">
+  <gazebo reference="RR_Wheel_link">
     <material>Gazebo/Grey</material>
 </gazebo>
 
@@ -190,45 +190,45 @@
     name="RR_Wheel_link">
     <inertial>
       <origin
-        xyz="-2.9411E-11 0.0035967 5.8231E-11"
-        rpy="0 0 0" />
+	xyz="-2.9411E-11 0.0035967 5.8231E-11"
+	rpy="0 0 0" />
       <mass
-        value="0.4084" />
+	value="0.4084" />
       <inertia
-        ixx="0.00059356"
-        ixy="3.4979E-14"
-        ixz="4.6514E-14"
-        iyy="0.0011268"
-        iyz="-5.6928E-14"
-        izz="0.00059356" />
+	ixx="0.00059356"
+	ixy="3.4979E-14"
+	ixz="4.6514E-14"
+	iyy="0.0011268"
+	iyz="-5.6928E-14"
+	izz="0.00059356" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/RR_Wheel_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/RR_Wheel_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
+	xyz="0 0 0"
+	rpy="1.5707963267949 0 0" />
       <geometry>
-        <!--mesh
-          filename="package://ric_description/lizi/meshes/RR_Wheel_Link.STL" /-->
+	<!--mesh
+	  filename="package://ric_description/lizi/meshes/RR_Wheel_Link.STL" /-->
 <cylinder length="0.02" radius="0.065"  
-          />
+	  />
       </geometry>
     </collision>
   </link>
-          <gazebo reference="RR_Wheel_link">
+	  <gazebo reference="RR_Wheel_link">
     <material>Gazebo/Grey</material>
 </gazebo>
 
@@ -249,44 +249,44 @@
     name="FR_Wheel_link">
     <inertial>
       <origin
-        xyz="-2.9052E-11 0.0035967 5.8411E-11"
-        rpy="0 0 0" />
+	xyz="-2.9052E-11 0.0035967 5.8411E-11"
+	rpy="0 0 0" />
       <mass
-        value="0.4084" />
+	value="0.4084" />
       <inertia
-        ixx="0.00059356"
-        ixy="3.4627E-14"
-        ixz="4.9977E-14"
-        iyy="0.0011268"
-        iyz="-5.7142E-14"
-        izz="0.00059356" />
+	ixx="0.00059356"
+	ixy="3.4627E-14"
+	ixz="4.9977E-14"
+	iyy="0.0011268"
+	iyz="-5.7142E-14"
+	izz="0.00059356" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/FR_Wheel_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/FR_Wheel_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
+	xyz="0 0 0"
+	rpy="1.5707963267949 0 0" />
       <geometry>
-        <!--mesh
-          filename="package://ric_description/lizi/meshes/FR_Wheel_Link.STL" /-->
+	<!--mesh
+	  filename="package://ric_description/lizi/meshes/FR_Wheel_Link.STL" /-->
 <cylinder length="0.02" radius="0.065"/>
       </geometry>
     </collision>
   </link>
-        <gazebo reference="FR_Wheel_link">
+	<gazebo reference="FR_Wheel_link">
     <material>Gazebo/Grey</material>
 </gazebo>
 
@@ -307,39 +307,39 @@
     name="Asus_Pan_link">
     <inertial>
       <origin
-        xyz="-0.015533 -0.010751 0.019512"
-        rpy="0 0 0" />
+	xyz="-0.015533 -0.010751 0.019512"
+	rpy="0 0 0" />
       <mass
-        value="0.016162" />
+	value="0.016162" />
       <inertia
-        ixx="5.2781E-06"
-        ixy="1.178E-06"
-        ixz="1.1286E-06"
-        iyy="6.0052E-06"
-        iyz="7.9421E-07"
-        izz="4.7257E-06" />
+	ixx="5.2781E-06"
+	ixy="1.178E-06"
+	ixz="1.1286E-06"
+	iyy="6.0052E-06"
+	iyz="7.9421E-07"
+	izz="4.7257E-06" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Asus_Pan_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Asus_Pan_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Asus_Pan_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Asus_Pan_Link.STL" />
       </geometry>
     </collision>
   </link>
@@ -370,39 +370,39 @@
     name="Asus_Camera_link">
     <inertial>
       <origin
-        xyz="-0.00010275 -0.00025849 0.00032822"
-        rpy="0 0 0" />
+	xyz="-0.00010275 -0.00025849 0.00032822"
+	rpy="0 0 0" />
       <mass
-        value="0.14689" />
+	value="0.14689" />
       <inertia
-        ixx="0.00037709"
-        ixy="-2.2879E-08"
-        ixz="1.0241E-05"
-        iyy="0.00038351"
-        iyz="1.2981E-08"
-        izz="2.2432E-05" />
+	ixx="0.00037709"
+	ixy="-2.2879E-08"
+	ixz="1.0241E-05"
+	iyy="0.00038351"
+	iyz="1.2981E-08"
+	izz="2.2432E-05" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="1.57 0 0" />
+	xyz="0 0 0"
+	rpy="1.57 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Asus_Camera_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Asus_Camera_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="1.5707963267949 0 0" />
+	xyz="0 0 0"
+	rpy="1.5707963267949 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Asus_Camera_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Asus_Camera_Link.STL" />
       </geometry>
     </collision>
   </link>
@@ -433,43 +433,46 @@
     name="Right_URF_link">
     <inertial>
       <origin
-        xyz="1.6494E-05 0.012085 -1.486E-07"
-        rpy="0 0 0" />
+	xyz="1.6494E-05 0.012085 -1.486E-07"
+	rpy="0 0 0" />
       <mass
-        value="0.0020317" />
+	value="0.0020317" />
       <inertia
-        ixx="8.4324E-08"
-        ixy="1.1443E-10"
-        ixz="1.6171E-09"
-        iyy="9.8652E-08"
-        iyz="-1.0309E-12"
-        izz="7.8496E-08" />
+	ixx="8.4324E-08"
+	ixy="1.1443E-10"
+	ixz="1.6171E-09"
+	iyy="9.8652E-08"
+	iyz="-1.0309E-12"
+	izz="7.8496E-08" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 1.57" />
+	xyz="0 0 0"
+	rpy="0 0 1.57" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Right_URF_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Right_URF_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.19216 0.11961 0.13333 1" />
+	name="">
+	<color
+	  rgba="0.19216 0.11961 0.13333 1" />
       </material>
     </visual>
-   <collision>
+  <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Right_URF_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Right_URF_Link.STL" />
       </geometry>
     </collision> 
   </link>
 
+<gazebo reference="Right_URF_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
 
   <joint
     name="Right_URF_Joint"
@@ -488,42 +491,47 @@
     name="Left_URF_link">
     <inertial>
       <origin
-        xyz="1.6494E-05 -0.012085 1.486E-07"
-        rpy="0 0 0" />
+	xyz="1.6494E-05 -0.012085 1.486E-07"
+	rpy="0 0 0" />
       <mass
-        value="0.0020317" />
+	value="0.0020317" />
       <inertia
-        ixx="8.4324E-08"
-        ixy="-1.1443E-10"
-        ixz="-1.6171E-09"
-        iyy="9.8652E-08"
-        iyz="-1.0309E-12"
-        izz="7.8496E-08" />
+	ixx="8.4324E-08"
+	ixy="-1.1443E-10"
+	ixz="-1.6171E-09"
+	iyy="9.8652E-08"
+	iyz="-1.0309E-12"
+	izz="7.8496E-08" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 -1.57" />
+	xyz="0 0 0"
+	rpy="0 0 -1.57" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Left_URF_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Left_URF_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.19216 0.11961 0.13333 1" />
+	name="">
+	<color
+	  rgba="0.19216 0.11961 0.13333 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Left_URF_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Left_URF_Link.STL" />
       </geometry>
     </collision> 
   </link>
+  
+  <gazebo reference="Left_URF_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="Left_URF_Joint"
     type="fixed">
@@ -541,42 +549,47 @@
     name="Rear_URF_link">
     <inertial>
       <origin
-        xyz="0.012085 -1.486E-07 1.6494E-05"
-        rpy="0 0 0" />
+	xyz="0.012085 -1.486E-07 1.6494E-05"
+	rpy="0 0 0" />
       <mass
-        value="0.0020317" />
+	value="0.0020317" />
       <inertia
-        ixx="9.8652E-08"
-        ixy="-1.0309E-12"
-        ixz="1.1443E-10"
-        iyy="7.8496E-08"
-        iyz="1.6171E-09"
-        izz="8.4324E-08" />
+	ixx="9.8652E-08"
+	ixy="-1.0309E-12"
+	ixz="1.1443E-10"
+	iyy="7.8496E-08"
+	iyz="1.6171E-09"
+	izz="8.4324E-08" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 3.14" />
+	xyz="0 0 0"
+	rpy="0 0 3.14" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Rear_URF_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Rear_URF_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.19216 0.11961 0.13333 1" />
+	name="">
+	<color
+	  rgba="0.19216 0.11961 0.13333 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Rear_URF_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Rear_URF_Link.STL" />
       </geometry>
     </collision> 
   </link>
+  
+    <gazebo reference="Rear_URF_link">
+    <material>Gazebo/Grey</material>
+</gazebo>
+
   <joint
     name="Rear_URF_Joint"
     type="fixed">
@@ -594,39 +607,39 @@
     name="Laser_link">
     <inertial>
       <origin
-        xyz="0.00079194 -0.00016941 -0.032844"
-        rpy="0 0 0" />
+	xyz="0.00079194 -0.00016941 -0.032844"
+	rpy="0 0 0" />
       <mass
-        value="0.13934" />
+	value="0.13934" />
       <inertia
-        ixx="7.4677E-05"
-        ixy="-1.0667E-07"
-        ixz="-9.0925E-07"
-        iyy="7.7824E-05"
-        iyz="5.076E-07"
-        izz="5.1196E-05" />
+	ixx="7.4677E-05"
+	ixy="-1.0667E-07"
+	ixz="-9.0925E-07"
+	iyy="7.7824E-05"
+	iyz="5.076E-07"
+	izz="5.1196E-05" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Laser_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Laser_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.25294 0.25294 0.25294 1" />
+	name="">
+	<color
+	  rgba="0.25294 0.25294 0.25294 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Laser_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Laser_Link.STL" />
       </geometry>
     </collision> 
   </link>
@@ -652,39 +665,39 @@
     name="Camera_link">
     <inertial>
       <origin
-        xyz="-0.010925 -4.5428E-06 0.00024772"
-        rpy="0 0 0" />
+	xyz="-0.010925 -4.5428E-06 0.00024772"
+	rpy="0 0 0" />
       <mass
-        value="0.033156" />
+	value="0.033156" />
       <inertia
-        ixx="9.3903E-06"
-        ixy="-1.4061E-09"
-        ixz="5.0587E-08"
-        iyy="5.845E-06"
-        iyz="-2.4174E-09"
-        izz="5.8692E-06" />
+	ixx="9.3903E-06"
+	ixy="-1.4061E-09"
+	ixz="5.0587E-08"
+	iyy="5.845E-06"
+	iyz="-2.4174E-09"
+	izz="5.8692E-06" />
     </inertial>
     <visual>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Camera_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Camera_Link.STL" />
       </geometry>
       <material
-        name="">
-        <color
-          rgba="0.2 0.2 0.2 1" />
+	name="">
+	<color
+	  rgba="0.2 0.2 0.2 1" />
       </material>
     </visual>
     <collision>
       <origin
-        xyz="0 0 0"
-        rpy="0 0 0" />
+	xyz="0 0 0"
+	rpy="0 0 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/lizi/meshes/Camera_Link.STL" />
+	<mesh
+	  filename="package://ric_description/lizi/meshes/Camera_Link.STL" />
       </geometry>
     </collision> 
   </link>
@@ -717,8 +730,6 @@
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-  
-
 
   <transmission name="tran2">
     <type>transmission_interface/SimpleTransmission</type>
@@ -815,8 +826,8 @@
 <gazebo>
   <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
     <always_on>1</always_on>
-    <updateRate>100.0</updateRate>
-    <robotNamespace>$(arg ns)</robotNamespace> 
+    <updateRate>50.0</updateRate>
+    <robotNamespace>/$(arg ns)</robotNamespace>
     <broadcastTF>1</broadcastTF>
     <leftFrontJoint>FL_Wheel_Joint</leftFrontJoint>
     <rightFrontJoint>FR_Wheel_Joint</rightFrontJoint>
@@ -830,10 +841,16 @@
     <torque>20</torque>
     <commandTopic>diff_driver/command</commandTopic>
   </plugin>
-    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-       <robotNamespace>$(arg ns)</robotNamespace>  
-    </plugin>
+  
+  <!--
+<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>$(arg ns)</robotNamespace> 
+  </plugin>
+  -->
+  
 </gazebo>
+
+
 
 
 <!-- front camera -->
@@ -842,30 +859,30 @@
       <visualize>false</visualize>
       <update_rate>30.0</update_rate>
       <camera name="Front_Camera">
-        <horizontal_fov>2.0</horizontal_fov>
-        <image>
-          <width>640</width>
-          <height>470</height>
-          <format>R8G8B8</format>
-        </image>
-        <clip>
-          <near>0.02</near>
-          <far>9</far>
-        </clip>
+	<horizontal_fov>2.0</horizontal_fov>
+	<image>
+	  <width>640</width>
+	  <height>470</height>
+	  <format>R8G8B8</format>
+	</image>
+	<clip>
+	  <near>0.02</near>
+	  <far>9</far>
+	</clip>
       </camera>
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <alwaysOn>true</alwaysOn>
-	 <robotNamespace>$(arg ns)</robotNamespace> 
-        <cameraName>Front_Camera</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
-        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-        <frameName>Camera_link</frameName>
-        <hackBaseline>0.07</hackBaseline>
-        <distortionK1>0.0</distortionK1>
-        <distortionK2>0.0</distortionK2>
-        <distortionK3>0.0</distortionK3>
-        <distortionT1>0.0</distortionT1>
-        <distortionT2>0.0</distortionT2>
+	<alwaysOn>true</alwaysOn>
+	<robotNamespace>$(arg ns)</robotNamespace>
+	<cameraName>Front_Camera</cameraName>
+	<imageTopicName>image_raw</imageTopicName>
+	<cameraInfoTopicName>camera_info</cameraInfoTopicName>
+	<frameName>Camera_link</frameName>
+	<hackBaseline>0.07</hackBaseline>
+	<distortionK1>0.0</distortionK1>
+	<distortionK2>0.0</distortionK2>
+	<distortionK3>0.0</distortionK3>
+	<distortionT1>0.0</distortionT1>
+	<distortionT2>0.0</distortionT2>
       </plugin>
     </sensor>
   </gazebo>
@@ -879,8 +896,8 @@
 	<sensor type="depth" name="Asus_Camera_link">
 	  <pose>0 0 0 0 0 0</pose>
 	  <visualize>true</visualize>
-          <update_rate>20</update_rate>
-	 	<camera>
+	  <update_rate>20</update_rate>
+		<camera>
 		<horizontal_fov>2.0</horizontal_fov>
 			<image>
 			<format>R8G8B8</format>
@@ -894,16 +911,16 @@
 		</camera>
 	<plugin name="Asus_Camera_link_camera_controller" filename="libgazebo_ros_openni_kinect.so">
 	<alwaysOn>true</alwaysOn>
-	<updateRate>20</updateRate>
+	<updateRate>5.0</updateRate>
 	<cameraName>Asus_Camera</cameraName>
 	<imageTopicName>rgb/image_raw</imageTopicName>
 	<cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
 	<depthImageTopicName>depth/image_raw</depthImageTopicName>
 	<depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-	<pointCloudTopicName>depth/bad_points</pointCloudTopicName>
+	<pointCloudTopicName>depth/rotated_points</pointCloudTopicName>
 	<pointCloudCutoff>0.4</pointCloudCutoff>
-        <pointCloudCutoffMax>50.0</pointCloudCutoffMax> 
-	<frameName>Asus_Camera_link</frameName> 
+	<pointCloudCutoffMax>50.0</pointCloudCutoffMax> 
+	<frameName>/Asus_Camera_link</frameName> 
 	<distortion_k1>0.0</distortion_k1>
 	<distortion_k2>0.0</distortion_k2>
 	<distortion_k3>0.0</distortion_k3>
@@ -918,34 +935,34 @@
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
       <visualize>false</visualize>
-      <update_rate>40</update_rate>
+      <update_rate>10</update_rate>
       <ray>
-        <scan>
-          <horizontal>
-            <samples>720</samples>
-            <resolution>1</resolution>
-            <min_angle>-1.570796</min_angle>
-            <max_angle>1.570796</max_angle>
-          </horizontal>
-        </scan>
-        <range>
-          <min>0.10</min>
-          <max>30.0</max>
-          <resolution>0.01</resolution>
-        </range>
-        <noise>
-          <type>gaussian</type>
-          <!-- Noise parameters based on published spec for Hokuyo laser
-               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-               reading. -->
-          <mean>0.0</mean>
-          <stddev>0.01</stddev>
-        </noise>
+	<scan>
+	  <horizontal>
+	    <samples>720</samples>
+	    <resolution>1</resolution>
+	    <min_angle>-1.570796</min_angle>
+	    <max_angle>1.570796</max_angle>
+	  </horizontal>
+	</scan>
+	<range>
+	  <min>0.06</min>
+	  <max>4.095</max>
+	  <resolution>0.01</resolution>
+	</range>
+	<noise>
+	  <type>gaussian</type>
+	  <!-- Noise parameters based on published spec for Hokuyo laser
+	      achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+	      stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+	      reading. -->
+	  <mean>0.0</mean>
+	  <stddev>0.01</stddev>
+	</noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <topicName>scan</topicName>
-        <frameName>Laser_link</frameName>
+	<topicName>scan</topicName>
+	<frameName>Laser_link</frameName>
       </plugin>
     </sensor>
   </gazebo>
@@ -954,35 +971,35 @@
 
 <gazebo reference="Right_URF_link">
       <sensor type="ray" name="Right_URF">
-        <pose>0 0 0 0 0 0</pose>
-        <visualize>false</visualize>
-        <ray>
-          <scan>
-            <horizontal>
-              <samples>10</samples>
-              <resolution>1</resolution>
-              <min_angle>-0.5</min_angle>
-              <max_angle> 0.5</max_angle>
-            </horizontal>
-            <vertical>
-              <samples>10</samples>
-              <resolution>1</resolution>
-              <min_angle>-0.2</min_angle>
-              <max_angle> 0.2</max_angle>
-            </vertical>
-          </scan>
-          <range>
-            <min>0.1</min>
-            <max>1.5</max>
-            <resolution>0.01</resolution>
-          </range>
-        </ray>
-        <plugin name="gazebo_ros_Right_URF_controller" filename="libhector_gazebo_ros_sonar.so">
-          <!--gaussianNoise>0.005</gaussianNoise-->
-	 <robotNamespace>$(arg ns)</robotNamespace> 
-          <topicName>Rangers/Right_URF</topicName>
-          <frameId>Right_URF_link</frameId>
-        </plugin>
+	<pose>0 0 0 0 0 0</pose>
+	<visualize>false</visualize>
+	<ray>
+	  <scan>
+	    <horizontal>
+	      <samples>10</samples>
+	      <resolution>1</resolution>
+	      <min_angle>-0.5</min_angle>
+	      <max_angle> 0.5</max_angle>
+	    </horizontal>
+	    <vertical>
+	      <samples>10</samples>
+	      <resolution>1</resolution>
+	      <min_angle>-0.2</min_angle>
+	      <max_angle> 0.2</max_angle>
+	    </vertical>
+	  </scan>
+	  <range>
+	    <min>0.1</min>
+	    <max>1.5</max>
+	    <resolution>0.01</resolution>
+	  </range>
+	</ray>
+	<plugin name="gazebo_ros_Right_URF_controller" filename="libhector_gazebo_ros_sonar.so">
+	  <!--gaussianNoise>0.005</gaussianNoise-->
+	  <!-- <robotNamespace>$(arg ns)</robotNamespace> -->
+	  <topicName>Rangers/Right_URF</topicName>
+	  <frameId>$(arg ns)/Right_URF_link</frameId>
+	</plugin>
 	  <always_on>true</always_on>
 	  <update_rate>20.0</update_rate>
       </sensor>
@@ -992,35 +1009,35 @@
 
 <gazebo reference="Left_URF_link">
       <sensor type="ray" name="Left_URF">
-        <pose>0 0 0 0 0 0</pose>
-        <visualize>false</visualize>
-        <ray>
-          <scan>
-            <horizontal>
-              <samples>10</samples>
-              <resolution>1</resolution>
-              <min_angle>-0.5</min_angle>
-              <max_angle> 0.5</max_angle>
-            </horizontal>
-            <vertical>
-              <samples>10</samples>
-              <resolution>1</resolution>
-              <min_angle>-0.2</min_angle>
-              <max_angle> 0.2</max_angle>
-            </vertical>
-          </scan>
-          <range>
-            <min>0.1</min>
-            <max>1.5</max>
-            <resolution>0.01</resolution>
-          </range>
-        </ray>
-        <plugin name="gazebo_ros_Left_URF_controller" filename="libhector_gazebo_ros_sonar.so">
-          <!--gaussianNoise>0.005</gaussianNoise-->
-	  <robotNamespace>$(arg ns)</robotNamespace> 
-          <topicName>Rangers/Left_URF</topicName>
-          <frameId>Left_URF_link</frameId>
-        </plugin>
+	<pose>0 0 0 0 0 0</pose>
+	<visualize>false</visualize>
+	<ray>
+	  <scan>
+	    <horizontal>
+	      <samples>10</samples>
+	      <resolution>1</resolution>
+	      <min_angle>-0.5</min_angle>
+	      <max_angle> 0.5</max_angle>
+	    </horizontal>
+	    <vertical>
+	      <samples>10</samples>
+	      <resolution>1</resolution>
+	      <min_angle>-0.2</min_angle>
+	      <max_angle> 0.2</max_angle>
+	    </vertical>
+	  </scan>
+	  <range>
+	    <min>0.1</min>
+	    <max>1.5</max>
+	    <resolution>0.01</resolution>
+	  </range>
+	</ray>
+	<plugin name="gazebo_ros_Left_URF_controller" filename="libhector_gazebo_ros_sonar.so">
+	  <!--gaussianNoise>0.005</gaussianNoise-->
+	  <!-- <robotNamespace>$(arg ns)</robotNamespace> -->
+	  <topicName>Rangers/Left_URF</topicName>
+	  <frameId>$(arg ns)/Left_URF_link</frameId>
+	</plugin>
 	  <always_on>true</always_on>
 	  <update_rate>20.0</update_rate>
       </sensor>
@@ -1030,35 +1047,35 @@
 
 <gazebo reference="Rear_URF_link">
       <sensor type="ray" name="Rear_URF">
-        <pose>0 0 0 0 0 0</pose>
-        <visualize>false</visualize>
-        <ray>
-          <scan>
-            <horizontal>
-              <samples>10</samples>
-              <resolution>1</resolution>
-              <min_angle>-0.5</min_angle>
-              <max_angle> 0.5</max_angle>
-            </horizontal>
-            <vertical>
-              <samples>10</samples>
-              <resolution>1</resolution>
-              <min_angle>-0.2</min_angle>
-              <max_angle> 0.2</max_angle>
-            </vertical>
-          </scan>
-          <range>
-            <min>0.1</min>
-            <max>1.5</max>
-            <resolution>0.01</resolution>
-          </range>
-        </ray>
-        <plugin name="gazebo_ros_Rear_URF_controller" filename="libhector_gazebo_ros_sonar.so">
-          <!--gaussianNoise>0.005</gaussianNoise-->
-	 <robotNamespace>$(arg ns)</robotNamespace> 
-          <topicName>Rangers/Rear_URF</topicName>
-          <frameId>Rear_URF_link</frameId>
-        </plugin>
+	<pose>0 0 0 0 0 0</pose>
+	<visualize>false</visualize>
+	<ray>
+	  <scan>
+	    <horizontal>
+	      <samples>10</samples>
+	      <resolution>1</resolution>
+	      <min_angle>-0.5</min_angle>
+	      <max_angle> 0.5</max_angle>
+	    </horizontal>
+	    <vertical>
+	      <samples>10</samples>
+	      <resolution>1</resolution>
+	      <min_angle>-0.2</min_angle>
+	      <max_angle> 0.2</max_angle>
+	    </vertical>
+	  </scan>
+	  <range>
+	    <min>0.1</min>
+	    <max>1.5</max>
+	    <resolution>0.01</resolution>
+	  </range>
+	</ray>
+	<plugin name="gazebo_ros_Rear_URF_controller" filename="libhector_gazebo_ros_sonar.so">
+	  <!--gaussianNoise>0.005</gaussianNoise-->
+	<!-- <robotNamespace>$(arg ns)</robotNamespace> -->
+	  <topicName>Rangers/Rear_URF</topicName>
+	  <frameId>$(arg ns)/Rear_URF_link</frameId>
+	</plugin>
 	  <always_on>true</always_on>
 	  <update_rate>20.0</update_rate>
       </sensor>

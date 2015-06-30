@@ -24,21 +24,24 @@
 	  args="-urdf -model $(arg name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)"/> 
     
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen"/>
-    
+
     
     <node name="pcloud_rot_node" pkg="ric_gazebo" type="pcloud_rot_node" cwd="node" output="screen" /> 
     
     <rosparam file="$(find ric_gazebo)/robots/lizi/lizi_controllers.yaml" command="load"/>
-    
+         
+   
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
 	  output="screen" args="joint_state_controller 
 	  pan_controller
 	  tilt_controller
-	  "/>	
+	  ">	
+    </node> 
     
     
-    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /$(arg name)/odom_link 20" />
-    
+    <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /$(arg name)/odom_link 20" /> 
+       
+  
   </group>
   
 </launch>

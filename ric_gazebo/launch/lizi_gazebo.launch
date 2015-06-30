@@ -20,9 +20,9 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
   
-  <!-- Load the URDF into the ROS Parameter Server -->
+  <!-- Load the URDF into the ROS Parameter Server   -->
   <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro'  ns:='init' lizi_color_name:='Blue'" />
-  
+
   
   <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
     
@@ -36,7 +36,7 @@
     <arg name="Y" value="0.0" />
   </include>
   
-  <!--
+ <!--
   <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
   <arg name="name" value="lizi_2"/>
   <arg name="color" value="Blue"/>

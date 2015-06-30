@@ -790,6 +790,7 @@
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
     <robotNamespace>$(arg ns)</robotNamespace> 
+    <!-- <robotParam>robot_description_$(arg ns)</robotParam> -->
   </plugin>
 </gazebo>
 
@@ -857,12 +858,12 @@
   <gazebo reference="Camera_link">
     <sensor type="camera" name="front_camera">
       <visualize>false</visualize>
-      <update_rate>30.0</update_rate>
+      <update_rate>15.0</update_rate>
       <camera name="Front_Camera">
 	<horizontal_fov>2.0</horizontal_fov>
 	<image>
 	  <width>640</width>
-	  <height>470</height>
+	  <height>480</height>
 	  <format>R8G8B8</format>
 	</image>
 	<clip>
@@ -890,13 +891,13 @@
 
 
 
-<!-- Asus camera plugin -->
+  <!-- Asus camera plugin -->
 
 <gazebo reference="Asus_Camera_link">
 	<sensor type="depth" name="Asus_Camera_link">
 	  <pose>0 0 0 0 0 0</pose>
 	  <visualize>true</visualize>
-	  <update_rate>20</update_rate>
+	  <update_rate>10</update_rate>
 		<camera>
 		<horizontal_fov>2.0</horizontal_fov>
 			<image>
@@ -919,7 +920,7 @@
 	<depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
 	<pointCloudTopicName>depth/rotated_points</pointCloudTopicName>
 	<pointCloudCutoff>0.4</pointCloudCutoff>
-	<pointCloudCutoffMax>50.0</pointCloudCutoffMax> 
+	<pointCloudCutoffMax>5.0</pointCloudCutoffMax> 
 	<frameName>/Asus_Camera_link</frameName> 
 	<distortion_k1>0.0</distortion_k1>
 	<distortion_k2>0.0</distortion_k2>
@@ -939,8 +940,8 @@
       <ray>
 	<scan>
 	  <horizontal>
-	    <samples>720</samples>
-	    <resolution>1</resolution>
+	    <samples>150</samples>
+	    <resolution>1.0</resolution>
 	    <min_angle>-1.570796</min_angle>
 	    <max_angle>1.570796</max_angle>
 	  </horizontal>
@@ -978,8 +979,8 @@
 	    <horizontal>
 	      <samples>10</samples>
 	      <resolution>1</resolution>
-	      <min_angle>-0.5</min_angle>
-	      <max_angle> 0.5</max_angle>
+	      <min_angle>-0.2</min_angle>
+	      <max_angle> 0.2</max_angle>
 	    </horizontal>
 	    <vertical>
 	      <samples>10</samples>
@@ -989,8 +990,8 @@
 	    </vertical>
 	  </scan>
 	  <range>
-	    <min>0.1</min>
-	    <max>1.5</max>
+	    <min>0.01</min>
+	    <max>5.0</max>
 	    <resolution>0.01</resolution>
 	  </range>
 	</ray>
@@ -1016,8 +1017,8 @@
 	    <horizontal>
 	      <samples>10</samples>
 	      <resolution>1</resolution>
-	      <min_angle>-0.5</min_angle>
-	      <max_angle> 0.5</max_angle>
+	      <min_angle>-0.2</min_angle>
+	      <max_angle> 0.2</max_angle>
 	    </horizontal>
 	    <vertical>
 	      <samples>10</samples>
@@ -1027,8 +1028,8 @@
 	    </vertical>
 	  </scan>
 	  <range>
-	    <min>0.1</min>
-	    <max>1.5</max>
+	    <min>0.01</min>
+	    <max>5.0</max>
 	    <resolution>0.01</resolution>
 	  </range>
 	</ray>
@@ -1054,8 +1055,8 @@
 	    <horizontal>
 	      <samples>10</samples>
 	      <resolution>1</resolution>
-	      <min_angle>-0.5</min_angle>
-	      <max_angle> 0.5</max_angle>
+	      <min_angle>-0.2</min_angle>
+	      <max_angle> 0.2</max_angle>
 	    </horizontal>
 	    <vertical>
 	      <samples>10</samples>
@@ -1065,8 +1066,8 @@
 	    </vertical>
 	  </scan>
 	  <range>
-	    <min>0.1</min>
-	    <max>1.5</max>
+	    <min>0.01</min>
+	    <max>5.0</max>
 	    <resolution>0.01</resolution>
 	  </range>
 	</ray>
@@ -1081,16 +1082,18 @@
       </sensor>
     </gazebo>
 
-<!-- IMU -->
+    <!-- IMU -->
   <gazebo>
     <plugin name="imu_sim" filename="libhector_gazebo_ros_imu.so">
-      <updateRate>50.0</updateRate>
+      <updateRate>20.0</updateRate>
       <bodyName>dummy_link</bodyName>
        <frameId>$(arg ns)/dummy_link</frameId>
       <topicName>IMU_AGQ</topicName>
-      <rpyOffsets>0 0 0</rpyOffsets> <!-- deprecated -->
-      <gaussianNoise>0</gaussianNoise>  <!-- deprecated -->
+      <rpyOffsets>0 0 0</rpyOffsets> 
+      <gaussianNoise>0</gaussianNoise>  
       <accelDrift>0.5 0.5 0.5</accelDrift>
+      <xyzOffset>0.0 0.0 0.0</xyzOffset>
+      <rpyOffset>0.0 0.0 0.0</rpyOffset>
       <accelGaussianNoise>0.35 0.35 0.3</accelGaussianNoise>
       <rateDrift>0.1 0.1 0.1</rateDrift>
       <rateGaussianNoise>0.05 0.05 0.015</rateGaussianNoise>

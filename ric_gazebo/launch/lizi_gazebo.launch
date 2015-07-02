@@ -20,37 +20,49 @@
     <arg name="headless" value="$(arg headless)"/>
   </include>
   
-  <!-- Load the URDF into the ROS Parameter Server   -->
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro'  ns:='init' lizi_color_name:='Blue'" />
+  <!-- Load the URDF into the ROS Parameter Server    -->
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/lizi/lizi.xacro' " />
 
+  <!-- Colors: Black, Blue, Green, Grey, Orange, Brown, Red, White -->
   
   <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
-    
     <arg name="name" value="lizi_1"/>
-    <arg name="color" value="Green"/>
+    <arg name="color" value='Green'/> 
+    <arg name="front_camera" value='false'/>
+    <arg name="depth_camera" value='false'/>
+    <arg name="laser_scanner" value='true'/>
+    <arg name="urf" value='false'/>
+    <arg name="imu" value='false'/>
+    <arg name="pan_tilt" value='false'/>
     <arg name="x" value="0.0" />
     <arg name="y" value="0.0" />
     <arg name="z" value="0.1" />
     <arg name="R" value="0.0" />
     <arg name="P" value="0.0" />
+    <arg name="Y" value="0.0" />  
+  </include>
+  
+  <!--
+  
+  <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
+    <arg name="name" value="lizi_2"/>
+    <arg name="color" value='Blue'/>
+    <arg name="front_camera" value='false'/>
+    <arg name="depth_camera" value='false'/>
+    <arg name="laser_scanner" value='true'/>
+    <arg name="urf" value='false'/>
+    <arg name="imu" value='false'/>
+    <arg name="pan_tilt" value='true'/>
+    <arg name="x" value="0.0" />
+    <arg name="y" value="1.0" />
+    <arg name="z" value="0.1" />
+    <arg name="R" value="0.0" />
+    <arg name="P" value="0.0" />
     <arg name="Y" value="0.0" />
   </include>
-  
- <!--
-  <include file="$(find ric_gazebo)/launch/spawn_lizi.launch">
-  <arg name="name" value="lizi_2"/>
-  <arg name="color" value="Blue"/>
-  <arg name="x" value="0.0" />
-  <arg name="y" value="1.0" />
-  <arg name="z" value="0.1" />
-  <arg name="R" value="0.0" />
-  <arg name="P" value="0.0" />
-  <arg name="Y" value="0.0" />
-  </include>
-  
   -->
   
-  
+
 	
 </launch>
 

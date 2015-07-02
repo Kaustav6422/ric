@@ -24,6 +24,7 @@ from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM
+from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 from GUI.UsbRolesDialog import UsbRolesDialog
 
@@ -79,6 +80,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionRobot_Model.triggered.connect(self.addRobotModel)
         self.actionAbout_RiC_Board.triggered.connect(self.aboutRiCBoard)
         self.actionSLAM.triggered.connect(self.addSLAM)
+        self.actionRemote_robot_launch.triggered.connect(self.launchRemote)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -136,6 +138,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.override = True
         self.pushButton_2.setEnabled(False)
         self.pushButton_2.clicked.connect(self.launch)
+
+    def launchRemote(self):
+        dialog = RemoteLaunch(self)
+        dialog.show()
+        dialog.exec_()
 
     def about(self):
         webbrowser.open('http://wiki.ros.org/ric_board?distro=indigo')
@@ -216,7 +223,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nameSpace.setText(self._ns)
 
     def launch(self):
-        subprocess.Popen(args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName])
+        subprocess.Popen(args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName], shell=True)
 
 
     def load(self):

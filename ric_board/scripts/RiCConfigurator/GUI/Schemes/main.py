@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Thu Jun 25 14:56:15 2015
+# Created: Mon Jun 29 15:08:05 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -186,6 +186,8 @@ class Ui_MainWindow(object):
         self.actionAbout_RiC_Board.setObjectName(_fromUtf8("actionAbout_RiC_Board"))
         self.actionSLAM = QtGui.QAction(MainWindow)
         self.actionSLAM.setObjectName(_fromUtf8("actionSLAM"))
+        self.actionRemote_robot_launch = QtGui.QAction(MainWindow)
+        self.actionRemote_robot_launch.setObjectName(_fromUtf8("actionRemote_robot_launch"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -220,6 +222,7 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.actionAbout_RIC)
         self.menuHelp.addAction(self.actionAbout_RiC_Board)
         self.menuTools.addAction(self.actionReconfig_RiC_Board)
+        self.menuTools.addAction(self.actionRemote_robot_launch)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
         self.menubar.addAction(self.menuTools.menuAction())
@@ -289,5 +292,6 @@ class Ui_MainWindow(object):
         self.actionRobot_Model.setText(_translate("MainWindow", "Robot Model", None))
         self.actionAbout_RiC_Board.setText(_translate("MainWindow", "RiC Board Ports", None))
         self.actionSLAM.setText(_translate("MainWindow", "SLAM", None))
+        self.actionRemote_robot_launch.setText(_translate("MainWindow", "Remote robot launch", None))
 
 import resource_rc

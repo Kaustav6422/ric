@@ -3,6 +3,13 @@
   
   <arg name="name" default="lizi"/>
   <arg name="color" default="Green"/>
+  <arg name="front_camera" default='false'/>
+  <arg name="arm_camera" default='false'/>
+  <arg name="depth_camera" default='false'/>
+  <arg name="laser_scanner" default='false'/>
+  <arg name="urf" default='false'/>
+  <arg name="imu" default='false'/>
+  
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
   <arg name="z" default="0.1"/>
@@ -17,7 +24,17 @@
     
     <param name="tf_prefix" value="$(arg name)" />
     
-    <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/komodo/komodo.xacro' ns:=$(arg name) color_name:=$(arg color)" /> 
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find ric_gazebo)/robots/komodo/komodo.xacro' 
+    ns:=$(arg name) 
+    color:=$(arg color)
+     gazebo:='true'
+     front_camera:=$(arg front_camera)
+     arm_camera:=$(arg front_camera)
+     depth_camera:=$(arg depth_camera)
+     laser_scanner:=$(arg laser_scanner)
+     urf:=$(arg urf)
+     imu:=$(arg imu)
+    " /> 
     
     
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"

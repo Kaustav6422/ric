@@ -70,6 +70,7 @@ class Program:
             try:
                 self.waitForConnection(output)
                 if self.checkVer(input):
+                    input.timeout = None
                     rospy.loginfo("Configuring devices...")
                     devBuilder.createServos()
                     devBuilder.createCLMotors()

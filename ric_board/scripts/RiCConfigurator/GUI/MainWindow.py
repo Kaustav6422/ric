@@ -1,5 +1,6 @@
 import json
 import rospkg
+import shlex
 from xml.etree import ElementTree
 from lxml.etree import Element, SubElement, XML
 from xml.dom import minidom
@@ -223,7 +224,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nameSpace.setText(self._ns)
 
     def launch(self):
-        subprocess.Popen(args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName], shell=True)
+        # args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName], shell=True
+        subprocess.Popen(shlex.split("gnome-terminal --command='roslaunch ric_board %s.launch'" % self._fileName))
 
 
     def load(self):

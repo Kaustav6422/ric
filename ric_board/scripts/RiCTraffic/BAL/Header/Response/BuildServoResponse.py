@@ -4,7 +4,7 @@ __author__ = 'tom1231'
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse, SERVO
 
 
-SERVO_LEN_MSG = 40
+SERVO_LEN_MSG = 38
 
 class BuildServoResponse(ParamBuildResponse):
     def __init__(self, devId, param):

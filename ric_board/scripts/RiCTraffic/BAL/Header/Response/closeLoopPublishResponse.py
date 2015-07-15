@@ -2,9 +2,9 @@ __author__ = 'tom1231'
 from BAL.Header.RiCHeader import RiCHeader
 import struct
 
-MOTOR_ID = 12
-MOTOR_RAD = 16
-MOTOR_RAD_S = 20
+MOTOR_ID = 7
+MOTOR_RAD = 11
+MOTOR_RAD_S = 15
 
 
 class CloseLoopPublishResponse(RiCHeader):
@@ -20,7 +20,7 @@ class CloseLoopPublishResponse(RiCHeader):
         while self.index < MOTOR_ID:
             bytes.append(data[self.index])
             self.index += 1
-        self._devId = struct.unpack('<i', bytes)[0]
+        self._devId = struct.unpack('<B', bytes)[0]
         bytes = bytearray()
         while self.index < MOTOR_RAD:
             bytes.append(data[self.index])

@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.RiCHeader import RiCHeader
 
-BAT_STAT = 12
+BAT_STAT = 10
 
 
 class BatteryPublishResponse(RiCHeader):

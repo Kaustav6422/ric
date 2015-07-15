@@ -2,12 +2,12 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.RiCHeader import RiCHeader
 
-LAT_PLACE = 16
-LNG_PLACE = 24
-METERS_PLACE = 32
-HDOP_PLACE = 36
-SAT_PLACE = 40
-FIX_PLACE = 48
+LAT_PLACE = 10
+LNG_PLACE = 14
+METERS_PLACE = 18
+HDOP_PLACE = 20
+SAT_PLACE = 22
+FIX_PLACE = 23
 
 
 class GPSPublishResponse(RiCHeader):
@@ -39,32 +39,32 @@ class GPSPublishResponse(RiCHeader):
         while self.index < LAT_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._lat = struct.unpack('<d', bytes)[0]
+        self._lat = struct.unpack('<f', bytes)[0]
         bytes = bytearray()
         while self.index < LNG_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._lng = struct.unpack('<d', bytes)[0]
+        self._lng = struct.unpack('<f', bytes)[0]
         bytes = bytearray()
         while self.index < METERS_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._meters = struct.unpack('<d', bytes)[0]
+        self._meters = struct.unpack('<f', bytes)[0]
         bytes = bytearray()
         while self.index < HDOP_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._HDOP = struct.unpack('<i', bytes)[0]
+        self._HDOP = struct.unpack('<h', bytes)[0]
         bytes = bytearray()
         while self.index < SAT_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._satellites = struct.unpack('<i', bytes)[0]
+        self._satellites = struct.unpack('<h', bytes)[0]
         bytes = bytearray()
         while self.index < FIX_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._fix = struct.unpack('<q', bytes)[0]
+        self._fix = struct.unpack('<b', bytes)[0]
 
 
 

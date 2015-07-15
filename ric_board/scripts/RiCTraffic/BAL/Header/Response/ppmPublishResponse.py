@@ -2,14 +2,14 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.RiCHeader import RiCHeader
 
-CHANNEL_1 = 12
-CHANNEL_2 = 16
-CHANNEL_3 = 20
-CHANNEL_4 = 24
-CHANNEL_5 = 28
-CHANNEL_6 = 32
-CHANNEL_7 = 36
-CHANNEL_8 = 40
+CHANNEL_1 = 10
+CHANNEL_2 = 14
+CHANNEL_3 = 18
+CHANNEL_4 = 22
+CHANNEL_5 = 26
+CHANNEL_6 = 30
+CHANNEL_7 = 34
+CHANNEL_8 = 38
 
 
 class PPMPublishResponse(RiCHeader):

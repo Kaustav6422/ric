@@ -2,22 +2,22 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.RiCHeader import RiCHeader
 from geometry_msgs.msg import Vector3, Quaternion
-V_X_LEN = 12
-V_Y_LEN = 16
-V_Z_LEN = 20
+V_X_LEN = 10
+V_Y_LEN = 14
+V_Z_LEN = 18
 
-A_X_LEN = 24
-A_Y_LEN = 28
-A_Z_LEN = 32
+A_X_LEN = 22
+A_Y_LEN = 26
+A_Z_LEN = 30
 
-M_X_LEN = 36
-M_Y_LEN = 40
-M_Z_LEN = 44
+M_X_LEN = 34
+M_Y_LEN = 38
+M_Z_LEN = 42
 
-O_X_LEN = 48
-O_Y_LEN = 52
-O_Z_LEN = 56
-O_W_LEN = 60
+O_X_LEN = 46
+O_Y_LEN = 50
+O_Z_LEN = 54
+O_W_LEN = 58
 
 # ROLL_LEN = 64
 # PITCH_LEN = 68

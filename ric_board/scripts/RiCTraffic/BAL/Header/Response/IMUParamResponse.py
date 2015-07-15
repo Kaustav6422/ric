@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse,IMU
 
-RES_LEN = 20
+RES_LEN = 18 # -2
 
 class IMUParamResponse(ParamBuildResponse):
 

@@ -3,7 +3,7 @@ import struct
 from BAL.Header.RiCHeader import RiCHeader
 from BAL.Handlers.incomingHandler import RELAY_REQ
 
-MSG_LEN = 16
+MSG_LEN = 8
 
 class RelayRequest(RiCHeader):
 
@@ -19,6 +19,6 @@ class RelayRequest(RiCHeader):
         self._checkSum = self.calCheckSum(self.dataTosend())
 
     def dataTosend(self):
-        return RiCHeader.dataTosend(self) + struct.pack('<i', self._relayNum) \
-               + struct.pack('<i', self._status)
+        return RiCHeader.dataTosend(self) + struct.pack('<B', self._relayNum) \
+               + struct.pack('<?', self._status)
 

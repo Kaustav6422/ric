@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse, GPS
 
-MSG_LEN = 20
+MSG_LEN = 18
 
 class GPSParamResponse(ParamBuildResponse):
     def __init__(self, param):

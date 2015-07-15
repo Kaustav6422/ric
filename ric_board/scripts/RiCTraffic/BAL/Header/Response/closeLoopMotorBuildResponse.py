@@ -3,7 +3,7 @@ import struct
 __author__ = 'tom1231'
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse, EngineCL
 
-RES_LEN = 84
+RES_LEN = 82
 EN_PORT1 = 1
 EN_PORT2 = 2
 EN_PORT3 = 3

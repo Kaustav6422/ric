@@ -2,14 +2,14 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.RiCHeader import RiCHeader
 
-ODOM_X = 12
-ODOM_Y = 16
-ODOM_THATE = 20
+ODOM_X = 10
+ODOM_Y = 14
+ODOM_THATE = 18
 # TRAN_X = 24
 # TRAN_Y = 28
 # TRAN_Z = 32
-TRAN_ROT_Z = 24
-TRAN_ROT_W = 28
+TRAN_ROT_Z = 22
+TRAN_ROT_W = 26
 
 class CloseDiffPublishRepose(RiCHeader):
 

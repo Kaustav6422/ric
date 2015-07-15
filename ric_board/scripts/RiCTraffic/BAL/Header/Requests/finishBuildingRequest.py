@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.RiCHeader import RiCHeader
 ID_REQ = 7
-LEN_REQ = 10
+LEN_REQ = 7
 
 
 class FinishBuildingRequest(RiCHeader):
@@ -17,4 +17,4 @@ class FinishBuildingRequest(RiCHeader):
 
 
     def dataTosend(self):
-        return RiCHeader.dataTosend(self) + struct.pack('<h', self._finish)
+        return RiCHeader.dataTosend(self) + struct.pack('<?', self._finish)

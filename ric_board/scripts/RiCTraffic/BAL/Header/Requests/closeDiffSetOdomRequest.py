@@ -3,7 +3,7 @@ import struct
 from BAL.Header.RiCHeader import RiCHeader
 
 REQ_ID = 81
-REQ_LEN = 20
+REQ_LEN = 18
 
 
 class CloseDiffSetOdomRequest(RiCHeader):

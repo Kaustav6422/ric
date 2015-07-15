@@ -1,7 +1,7 @@
 __author__ = 'tom1231'
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse, PPM
 
-MSG_LEN = 16
+MSG_LEN = 14
 
 
 class PPMParamResponse(ParamBuildResponse):

@@ -1,13 +1,16 @@
 import serial
 import time
 from BAL.Devices.DevicesBuilder.deviceBuilder import DeviceBuilder
+from BAL.Exceptions.VersionError import VersionError, NEED_TO_UPDATE
 from BAL.Handlers.incomingDataHandler import IncomingDataHandler
-from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES,GPS_RES, \
+from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES, \
+    GPS_RES, \
     PPM_RES, BAT_RES
 from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START, HEADER_DEBUG
 from BAL.Header.Response.IMUPublishResponse import IMUPublishResponse
 from BAL.Header.Response.ServoPublishResponse import ServoPublishResponse
 from BAL.Header.Response.URFPublishResponse import URFPublishResponse
+from BAL.Header.Response.VersionResponds import VersionResponds
 from BAL.Header.Response.batteryPublishResponse import BatteryPublishResponse
 from BAL.Header.Response.closeDiffPublishResponse import CloseDiffPublishRepose
 from BAL.Header.Response.closeLoopPublishResponse import CloseLoopPublishResponse
@@ -16,9 +19,11 @@ from BAL.Header.Response.ppmPublishResponse import PPMPublishResponse
 from BAL.Header.Response.switchResponse import SwitchResponse
 
 __author__ = 'tom1231'
-import roslib; roslib.load_manifest('ric_board')
+import roslib;
+
+roslib.load_manifest('ric_board')
 import rospy
-from rospy import Subscriber, Publisher,Service
+from rospy import Subscriber, Publisher, Service
 from BAL.Header.Response.ConnectionResponse import ConnectionResponse, RES_ID
 from BAL.Header.RiCHeader import RiCHeader
 from BAL.Header.Requests.ConnectionRequest import ConnectionRequest
@@ -36,8 +41,11 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-class Program:
+VER_RPE = 1
+VER_REL = 0
 
+
+class Program:
     def __init__(self):
         try:
             rospy.init_node('RiCTraffic')
@@ -57,69 +65,82 @@ class Program:
             devBuilder = DeviceBuilder(params, output, input, incomingHandler)
             gotHeaderStart = False
             gotHeaderDebug = False
+            rospy.loginfo("Current version: %s" % ".".join([str(VER_RPE), str(VER_REL)]))
 
             try:
-                self.waitForConnection(input, output)
-                rospy.loginfo("Configuring devices...")
-                devBuilder.createServos()
-                devBuilder.createCLMotors()
-                devBuilder.createDiff()
-                devBuilder.createURF()
-                devBuilder.createSwitchs()
-                devBuilder.createIMU()
-                devBuilder.createRelays()
-                devBuilder.createGPS()
-                devBuilder.createPPM()
-                devBuilder.createOpenLoopMotors()
-                devBuilder.createBattery()
-                devBuilder.createOpenDiff()
-                devBuilder.createDiffFour()
-                devs = devBuilder.getDevs()
-                devBuilder.sendFinishBuilding()
-                input.timeout = None
-                rospy.loginfo("Done, RiC Board is ready.")
-                while not rospy.is_shutdown():
-                    if gotHeaderStart:
-                        if len(data) < 2:
-                            data.append(input.read())
-                            if len(data) == 2:
-                                incomingLength ,headerId = incomingHandler.getIncomingHeaderSizeAndId(data)
-                        elif incomingLength >= 2:
-                            for i in range(2, incomingLength):
+                self.waitForConnection(output)
+                if self.checkVer(input):
+                    rospy.loginfo("Configuring devices...")
+                    devBuilder.createServos()
+                    devBuilder.createCLMotors()
+                    devBuilder.createDiff()
+                    devBuilder.createURF()
+                    devBuilder.createSwitchs()
+                    devBuilder.createIMU()
+                    devBuilder.createRelays()
+                    devBuilder.createGPS()
+                    devBuilder.createPPM()
+                    devBuilder.createOpenLoopMotors()
+                    devBuilder.createBattery()
+                    devBuilder.createOpenDiff()
+                    devBuilder.createDiffFour()
+                    devs = devBuilder.getDevs()
+                    devBuilder.sendFinishBuilding()
+                    input.timeout = None
+                    rospy.loginfo("Done, RiC Board is ready.")
+                    while not rospy.is_shutdown():
+                        if gotHeaderStart:
+                            if len(data) < 1:
                                 data.append(input.read())
-                            # print data
-                            msg = self.genData(data, headerId)
-                            if msg is not None:
-                                Thread(target=IncomingDataHandler(msg, output, devs).run, args=()).start()
-                            data = []
-                            gotHeaderStart = False
+                                incomingLength, headerId = incomingHandler.getIncomingHeaderSizeAndId(data)
+                            elif incomingLength >= 1:
+                                for i in range(1, incomingLength):
+                                    data.append(input.read())
+                                # print data
+                                msg = self.genData(data, headerId)
+                                if msg is not None:
+                                    Thread(target=IncomingDataHandler(msg, output, devs).run, args=()).start()
+                                data = []
+                                gotHeaderStart = False
+                            else:
+                                data = []
+                                gotHeaderStart = False
+                        elif gotHeaderDebug:
+                            size = ord(input.read())
+
+                            for i in xrange(size):
+                                toPrint += input.read()
+
+                            code = ord(input.read())
+
+                            if code == INFO:
+                                rospy.loginfo(toPrint)
+                            elif code == ERROR:
+                                rospy.logerr(toPrint)
+                            elif code == WARRNING:
+                                rospy.logwarn(toPrint)
+
+                            toPrint = ''
+                            gotHeaderDebug = False
                         else:
-                            data = []
-                            gotHeaderStart = False
-                    elif gotHeaderDebug:
-                        size = ord(input.read())
+                            checkHead = ord(input.read())
+                            if checkHead == HEADER_START:
+                                gotHeaderStart = True
+                            elif checkHead == HEADER_DEBUG:
+                                gotHeaderDebug = True
+                else:
+                    raise VersionError(NEED_TO_UPDATE)
+            except KeyboardInterrupt:
+                pass
 
-                        for i in xrange(size):
-                            toPrint += input.read()
+            except VersionError:
+                rospy.logerr("Can't load RiCBoard because the version don't mach please update the firmware.")
 
-                        code = ord(input.read())
-
-                        if code == INFO: rospy.loginfo(toPrint)
-                        elif code == ERROR: rospy.logerr(toPrint)
-                        elif code == WARRNING: rospy.logwarn(toPrint)
-
-                        toPrint = ''
-                        gotHeaderDebug = False
-                    else:
-                        checkHead = ord(input.read())
-                        if checkHead == HEADER_START: gotHeaderStart = True
-                        elif checkHead == HEADER_DEBUG: gotHeaderDebug = True
-
-            except KeyboardInterrupt: pass
             finally:
                 con = ConnectionResponse(False)
                 output.writeAndWaitForAck(con.dataTosend(), RES_ID)
                 ser.close()
+
         except SerialException:
             rospy.logerr("Can't find RiCBoard, please check if its connected to the computer.")
 
@@ -139,24 +160,39 @@ class Program:
         if result is not None: result.buildRequest(data)
         return result
 
-    def waitForConnection(self, input, output):
-        # isConnect = False
-        # gotHeaderStart = False
-        # data = []
-        # while not rospy.is_shutdown() and not isConnect:
-        #     if gotHeaderStart:
-        #         for i in xrange(10):
-        #             data.append(input.read())
-        #         conReq = ConnectionRequest()
-        #         conReq.buildRequest(data)
-        #         if conReq.checkPackage() and conReq.toConnect():
-        #             d = ConnectionResponse(True).dataTosend()
-        #             for i in d:
-        #                 print ord(i)
+    def waitForConnection(self, output):
+        output.writeAndWaitForAck(ConnectionResponse(True).dataTosend(), RES_ID)
 
-                    output.writeAndWaitForAck(ConnectionResponse(True).dataTosend(), RES_ID)
+    def checkVer(self, input):
+        data = []
+        gotHeaderStart = False
+        verInfo = VersionResponds()
+        input.setTimeout(1)
+        countUntilTimeout = 0
+        while not rospy.is_shutdown() and countUntilTimeout < 3:
+            try:
+                if gotHeaderStart:
+                    for i in range(1, 11):
+                        data.append(input.read())
+                    verInfo.buildRequest(data)
 
-        #             isConnect = True
-        #         gotHeaderStart = False
-        #     elif ord(input.read()) == HEADER_START: gotHeaderStart = True
-        #  return conReq.getDes()
+                    verToStr = str(verInfo.getVersion()).split('.')
+                    ricPre = int(verToStr[0])
+                    ricRel = int(verToStr[1][:2])
+                    if verInfo.checkPackage() and ricPre == VER_RPE:
+                        if ricRel < VER_REL:
+                            rospy.logwarn("RiCBord has a firmware %.2f please update the firmware for better performers" % (verInfo.getVersion()))
+                        elif ricRel > VER_REL:
+                            rospy.logwarn("RiCBord has a firmware %.2f please update your package for better performers" % (verInfo.getVersion()))
+                        return True
+                    else: return False
+
+                elif ord(input.read()) == HEADER_START:
+                    gotHeaderStart = True
+
+            except TypeError: pass
+            finally:
+                countUntilTimeout += 1
+        return False
+
+

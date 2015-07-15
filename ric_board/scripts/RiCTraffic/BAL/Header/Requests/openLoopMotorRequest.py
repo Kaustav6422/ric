@@ -3,7 +3,7 @@ import struct
 from BAL.Header.RiCHeader import RiCHeader
 from BAL.Handlers.incomingHandler import OPEN_LOOP_REQ
 
-MSG_LEN = 16
+MSG_LEN = 11
 
 class OpenLoopMotorRequest(RiCHeader):
     def __init__(self, motorNum, speed):
@@ -19,6 +19,6 @@ class OpenLoopMotorRequest(RiCHeader):
 
     def dataTosend(self):
         return RiCHeader.dataTosend(self) \
-               + struct.pack('<i', self._motorNum) \
+               + struct.pack('<B', self._motorNum) \
                + struct.pack('<f', self._speed)
 

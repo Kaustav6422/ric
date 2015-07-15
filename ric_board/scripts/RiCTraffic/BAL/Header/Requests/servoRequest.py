@@ -3,12 +3,12 @@ from BAL.Header.RiCHeader import RiCHeader
 import struct
 
 REQ_ID = 2
-REQ_LEN = 16
+REQ_LEN = 11
 
 class ServoRequest(RiCHeader):
     def dataTosend(self):
         return RiCHeader.dataTosend(self)\
-               + struct.pack('<i', self._servoId)\
+               + struct.pack('<B', self._servoId)\
                + struct.pack('<f', self._position)
 
     def __init__(self, servoId, position):

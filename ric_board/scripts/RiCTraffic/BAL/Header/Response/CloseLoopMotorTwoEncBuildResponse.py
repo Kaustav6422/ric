@@ -4,7 +4,7 @@ from BAL.Header.Response.ParamBuildResponse import EngineCL2
 
 __author__ = 'tom1231'
 
-LEN_MSG = 92
+LEN_MSG = 90
 
 
 class CloseLoopMotorTwoEncBuildResponse(CloseLoopMotorBuildResponse):

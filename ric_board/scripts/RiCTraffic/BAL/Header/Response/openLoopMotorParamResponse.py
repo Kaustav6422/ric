@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse, EngineOL
 import struct
 
-MSG_LEN = 32
+MSG_LEN = 30
 
 
 class OpenLoopMotorParamResponse(ParamBuildResponse):

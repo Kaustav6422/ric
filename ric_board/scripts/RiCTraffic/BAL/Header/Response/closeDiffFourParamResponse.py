@@ -2,7 +2,7 @@ import struct
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse, CloseDiffFour
 
 __author__ = 'tom1231'
-MSG_LEN = 44
+MSG_LEN = 42
 
 
 class CloseDIffFourParamResponse(ParamBuildResponse):

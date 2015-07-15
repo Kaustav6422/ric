@@ -3,7 +3,7 @@ import struct
 from BAL.Header.RiCHeader import RiCHeader
 
 REQ_ID = 8
-REQ_LEN = 16
+REQ_LEN = 14
 
 
 class CloseDiffRequest(RiCHeader):

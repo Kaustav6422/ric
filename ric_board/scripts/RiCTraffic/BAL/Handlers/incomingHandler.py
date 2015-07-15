@@ -16,24 +16,25 @@ IMU_RES = 111
 GPS_RES = 113
 PPM_RES = 114
 BAT_RES = 116
+VER_RES = 118
 
 class IncomingHandler:
 
     def getIncomingHeaderId(self, data):
-        return struct.unpack('<h', bytearray(data))[0]
+        return struct.unpack('<B', bytearray(data))[0]
 
     def getIncomingHeaderSizeAndId(self, data):
         id = self.getIncomingHeaderId(data)
-        if id == CON_REQ: return 10, id
-        if id == SERVO_RES: return 16, id
-        if id == ACK_RES: return 16, id
-        if id == MOTOR_RES: return 20, id
-        if id == CLOSE_DIFF_RES: return 28, id
-        if id == URF_RES: return 16, id
-        if id == SWITCH_RES: return 16, id
-        if id == IMU_RES: return 60, id
-        if id == GPS_RES: return 48, id
-        if id == PPM_RES: return 40, id
-        if id == BAT_RES: return 12, id
+        if id == CON_REQ: return 7, id
+        if id == SERVO_RES: return 11, id
+        if id == ACK_RES: return 8, id
+        if id == MOTOR_RES: return 15, id
+        if id == CLOSE_DIFF_RES: return 26, id
+        if id == URF_RES: return 11, id
+        if id == SWITCH_RES: return 8, id
+        if id == IMU_RES: return 58, id
+        if id == GPS_RES: return 23, id
+        if id == PPM_RES: return 38, id
+        if id == BAT_RES: return 10, id
         return 0, 0
 

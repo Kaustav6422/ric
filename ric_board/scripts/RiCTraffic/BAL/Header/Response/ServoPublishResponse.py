@@ -3,8 +3,8 @@ import struct
 __author__ = 'tom1231'
 from BAL.Header.RiCHeader import RiCHeader
 
-SERVO_NUM_PLACE = 12
-SERVO_POSITION_PLACE = 16
+SERVO_NUM_PLACE = 7
+SERVO_POSITION_PLACE = 11
 
 
 class ServoPublishResponse(RiCHeader):
@@ -19,7 +19,7 @@ class ServoPublishResponse(RiCHeader):
         while self.index < SERVO_NUM_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._servoNum = struct.unpack('<i', bytes)[0]
+        self._servoNum = struct.unpack('<B', bytes)[0]
         bytes = bytearray()
         while self.index < SERVO_POSITION_PLACE:
             bytes.append(data[self.index])

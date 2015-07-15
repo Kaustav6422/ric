@@ -3,7 +3,7 @@ import struct
 
 __author__ = 'tom1231'
 
-MSG_LEN = 20
+MSG_LEN = 18
 
 class BatteryParamResponse(ParamBuildResponse):
 

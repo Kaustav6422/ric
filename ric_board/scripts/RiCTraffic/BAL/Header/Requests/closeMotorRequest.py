@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 from BAL.Header.RiCHeader import RiCHeader
 import struct
 
-REQ_LEN = 16
+REQ_LEN = 11
 
 class CloseMotorRequest(RiCHeader):
     def __init__(self, motorNum, postion):
@@ -18,5 +18,5 @@ class CloseMotorRequest(RiCHeader):
 
     def dataTosend(self):
         return RiCHeader.dataTosend(self) \
-               + struct.pack('<I', self._motorId) \
+               + struct.pack('<B', self._motorId) \
                + struct.pack('<f', self._position)

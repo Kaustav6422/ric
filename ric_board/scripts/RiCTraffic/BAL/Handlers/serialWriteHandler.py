@@ -40,12 +40,11 @@ class SerialWriteHandler:
         try:
             while timeoutCount > 0:
                 if gotHeaderStart:
-                    if len(data) < 2:
+                    if len(data) < 1:
                         data.append(self._input.read())
-                        if len(data) == 2:
-                            incomingLength, headerId = self._incomingDataHandler.getIncomingHeaderSizeAndId(data)
-                    elif incomingLength >= 2 and headerId == ACK_RES:
-                        for i in range(2, incomingLength):
+                        incomingLength, headerId = self._incomingDataHandler.getIncomingHeaderSizeAndId(data)
+                    elif incomingLength >= 1 and headerId == ACK_RES:
+                        for i in range(1, incomingLength):
                             data.append(self._input.read())
                         ack = ACKResponse()
                         ack.buildRequest(data)

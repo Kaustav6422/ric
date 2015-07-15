@@ -1,23 +1,23 @@
-import struct
-
 __author__ = 'tom1231'
+import struct
 from BAL.Header.RiCHeader import RiCHeader
 
-CON_REQ_PLACE = 7
+VER_PLACE = 10
 
-class ConnectionRequest(RiCHeader):
-
+class VersionResponds(RiCHeader):
     def __init__(self):
         RiCHeader.__init__(self)
-        self._requestForConnection = 0
+        self._ver = 0.0
+
+    def getVersion(self):
+        return self._ver
 
     def buildRequest(self, data):
         RiCHeader.buildRequest(self, data)
         bytes = bytearray()
-        while self.index < CON_REQ_PLACE:
+        while self.index < VER_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._requestForConnection = struct.unpack('<B', bytes)[0]
+        self._ver = struct.unpack('<f', bytes)[0]
 
 
-    def toConnect(self): return self._requestForConnection

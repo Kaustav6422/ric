@@ -25,11 +25,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Program.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Program.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BAL/Program.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.8064516">
+            <state vertical-scroll-proportion="0.0">
               <caret line="163" column="54" selection-start-line="163" selection-start-column="54" selection-end-line="163" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RiCParam.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BAL/RiCParam/RiCParam.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IMUParamResponse.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BAL/Header/Response/IMUParamResponse.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.058064517">
+              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -57,12 +77,10 @@
         <option value="$PROJECT_DIR$/BAL/Devices/RiCOpenDiff.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RICOpenLoopMotor.py" />
         <option value="$PROJECT_DIR$/BAL/Devices/RiCServo.py" />
-        <option value="$PROJECT_DIR$/BAL/RiCParam/RiCParam.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/ackResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Requests/ConnectionRequest.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/ConnectionResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Handlers/serialWriteHandler.py" />
-        <option value="$PROJECT_DIR$/BAL/Header/Response/IMUParamResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/BatteryParamResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/BuildServoResponse.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/closeDiffFourParamResponse.py" />
@@ -98,6 +116,8 @@
         <option value="$PROJECT_DIR$/BAL/Header/RiCHeader.py" />
         <option value="$PROJECT_DIR$/BAL/Header/Response/VersionResponds.py" />
         <option value="$PROJECT_DIR$/BAL/Program.py" />
+        <option value="$PROJECT_DIR$/BAL/RiCParam/RiCParam.py" />
+        <option value="$PROJECT_DIR$/BAL/Header/Response/IMUParamResponse.py" />
       </list>
     </option>
   </component>
@@ -167,6 +187,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="BAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RiCTraffic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RiCTraffic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BAL" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="RiCParam" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -651,13 +689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/RiCParam/RiCParam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="192" column="8" selection-start-line="192" selection-start-column="8" selection-end-line="192" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Header/Response/ackResponse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -718,13 +749,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08737864">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/IMUParamResponse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08737864">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -965,8 +989,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Program.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.8064516">
+        <state vertical-scroll-proportion="0.0">
           <caret line="163" column="54" selection-start-line="163" selection-start-column="54" selection-end-line="163" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/RiCParam/RiCParam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="173" column="0" selection-start-line="173" selection-start-column="0" selection-end-line="173" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BAL/Header/Response/IMUParamResponse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.058064517">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
           <folding />
         </state>
       </provider>

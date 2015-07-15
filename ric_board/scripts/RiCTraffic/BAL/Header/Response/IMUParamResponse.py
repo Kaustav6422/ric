@@ -2,7 +2,7 @@ __author__ = 'tom1231'
 import struct
 from BAL.Header.Response.ParamBuildResponse import ParamBuildResponse,IMU
 
-RES_LEN = 18 # -2
+RES_LEN = 20 # -2
 
 class IMUParamResponse(ParamBuildResponse):
 
@@ -12,9 +12,13 @@ class IMUParamResponse(ParamBuildResponse):
         self._checkSum = 0
 
         self._camp = param.getIMUCamp()
+        self._fusionHz = param.getIMUFusionHz()
+
         self._checkSum = self.calCheckSum(self.dataTosend())
 
     def dataTosend(self):
-        return ParamBuildResponse.dataTosend(self) + struct.pack('<f', self._camp)
+        return ParamBuildResponse.dataTosend(self)\
+               + struct.pack('<f', self._camp) \
+               + struct.pack('<H', self._fusionHz)
 
 

@@ -11,6 +11,7 @@ class Imu(DeviceFrame):
         self._frameId = 'RiC_Frame'
         self._decAng = '0'
         self._orientation = '0'
+        self._fusionHz = '10'
 
     def fromDict(self, data):
         self._pubHz = data['pubHz']
@@ -19,6 +20,8 @@ class Imu(DeviceFrame):
         self._decAng = data['decAng']
         if data.has_key('orientation'):
             self._orientation = data['orientation']
+        if data.has_key('fusionHz'):
+            self._fusionHz = data['fusionHz']
 
     def toDict(self):
         data = dict()
@@ -29,6 +32,7 @@ class Imu(DeviceFrame):
         data['frameId'] = self._frameId
         data['decAng'] = self._decAng
         data['orientation'] = self._orientation
+        data['fusionHz'] = self._fusionHz
 
         return data
 
@@ -38,6 +42,7 @@ class Imu(DeviceFrame):
         self._frame.layout().addRow(QLabel('Frame id: '), QLabel(self._frameId))
         self._frame.layout().addRow(QLabel('Declination angle: '), QLabel(self._decAng))
         self._frame.layout().addRow(QLabel('Board orientation: '), QLabel(self._orientation))
+        self._frame.layout().addRow(QLabel('Fusion Hz: '), QLabel(self._fusionHz))
 
     def saveToFile(self, file):
         file.write('IMU/publishHz: ' + self._pubHz + '\n')
@@ -45,6 +50,7 @@ class Imu(DeviceFrame):
         file.write('IMU/frameId: ' + self._frameId + '\n')
         file.write('IMU/camp: ' + self._decAng + '\n')
         file.write('IMU/orientation: ' + self._orientation + '\n')
+        file.write('IMU/fusionHz: ' + self._fusionHz + '\n')
 
     def showDetails(self, items=None):
         self.pubHz = QLineEdit(self._pubHz)
@@ -52,12 +58,14 @@ class Imu(DeviceFrame):
         self.frameId = QLineEdit(self._frameId)
         self.decAng = QLineEdit(self._decAng)
         self.orientation = QLineEdit(self._orientation)
+        self.fusionHz = QLineEdit(self._fusionHz)
 
         self._frame.layout().addRow(QLabel('Publish Hz: '), self.pubHz)
         self._frame.layout().addRow(QLabel('Name: '), self.name)
         self._frame.layout().addRow(QLabel('Frame id: '), self.frameId)
         self._frame.layout().addRow(QLabel('Declination angle: '), self.decAng)
         self._frame.layout().addRow(QLabel('Board orientation: '), self.orientation)
+        self._frame.layout().addRow(QLabel('Fusion Hz: '), self.fusionHz)
 
     def getName(self):
         return self._name
@@ -77,3 +85,4 @@ class Imu(DeviceFrame):
         self._frameId = str(self.frameId.text())
         self._decAng = str(self.decAng.text())
         self._orientation = str(self.orientation.text())
+        self._fusionHz = str(self.fusionHz.text())

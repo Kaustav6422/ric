@@ -190,6 +190,9 @@ class RiCParam:
     def getIMUCamp(self):
         return float(rospy.get_param('IMU/camp', '0.0'))
 
+    def getIMUFusionHz(self):
+        return int(rospy.get_param('IMU/fusionHz', '0'))
+
     def getIMUOrientation(self):
         return float(rospy.get_param('IMU/orientation', '0.0'))
 

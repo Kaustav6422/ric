@@ -41,8 +41,7 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-VER_RPE = 1
-VER_REL = 0
+VERSION = 1.0
 
 
 class Program:
@@ -65,7 +64,7 @@ class Program:
             devBuilder = DeviceBuilder(params, output, input, incomingHandler)
             gotHeaderStart = False
             gotHeaderDebug = False
-            rospy.loginfo("Current version: %s" % ".".join([str(VER_RPE), str(VER_REL)]))
+            rospy.loginfo("Current version: %.2f" % VERSION)
 
             try:
                 self.waitForConnection(output)
@@ -177,13 +176,10 @@ class Program:
                         data.append(input.read())
                     verInfo.buildRequest(data)
 
-                    verToStr = str(verInfo.getVersion()).split('.')
-                    ricPre = int(verToStr[0])
-                    ricRel = int(verToStr[1][:2])
-                    if verInfo.checkPackage() and ricPre == VER_RPE:
-                        if ricRel < VER_REL:
+                    if verInfo.checkPackage() and abs(verInfo.getVersion() - VERSION) < 1:
+                        if verInfo.getVersion() < VERSION:
                             rospy.logwarn("RiCBord has a firmware %.2f please update the firmware for better performers" % (verInfo.getVersion()))
-                        elif ricRel > VER_REL:
+                        elif verInfo.getVersion() > VERSION:
                             rospy.logwarn("RiCBord has a firmware %.2f please update your package for better performers" % (verInfo.getVersion()))
                         return True
                     else: return False

@@ -351,15 +351,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         parent = self.root
         if self._ns != '':
             parent = SubElement(self.root, 'group', {'ns': self._ns})
+        for dev in self.data:
+            if dev.getDevType() != EX_DEV:
+                at = {
+                    'pkg': 'ric_board',
+                    'type': 'Start.py',
+                    'name': 'RiCTraffic',
+                    'output': 'screen'
+                }
 
-        at = {
-            'pkg': 'ric_board',
-            'type': 'Start.py',
-            'name': 'RiCTraffic',
-            'output': 'screen'
-        }
-
-        SubElement(parent, 'node', at)
+                SubElement(parent, 'node', at)
+                break
         initDiffClose = '0'
         initDiffOpen = '0'
         initDiffCloseFour = '0'

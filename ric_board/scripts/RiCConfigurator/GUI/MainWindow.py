@@ -37,7 +37,7 @@ import pickle
 import os.path
 from os import system
 import subprocess
-
+import re
 
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
@@ -140,6 +140,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.pushButton_2.setEnabled(False)
         self.pushButton_2.clicked.connect(self.launch)
 
+        allDev = subprocess.check_output(shlex.split("ls /dev"))
+
+        conDevs = re.findall('ttyUSB.*', allDev) + re.findall('ttyACM.*', allDev) + re.findall('RiCBoard', allDev)
+
+        for dev in conDevs: self.ConPortList.addItem(self.tr(dev))
+
+        self.ConPortList.setCurrentIndex(self.ConPortList.count() - 1)
+
     def launchRemote(self):
         dialog = RemoteLaunch(self)
         dialog.show()
@@ -239,6 +247,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             self._fileName = data[0]
             self._ns = data[1]
+
+            yaml = open("%s/config/%s.yaml" % (pkg, self._fileName))
+
+            conDev = yaml.readline().split(': ')[1][:-1]
+
+            allDevs = [str(self.ConPortList.itemText(i)) for i in xrange(self.ConPortList.count())]
+
+            for i in xrange(len(allDevs)):
+                if conDev == allDevs[i]:
+                    self.ConPortList.setCurrentIndex(i)
+                    break
 
             self.nameSpace.setText(self._ns)
             self.fileName.setText(self._fileName)
@@ -367,6 +386,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         initDiffCloseFour = '0'
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
+        toSave.write("CON_PORT: %s\n" % str(self.ConPortList.currentText()))
         for dev in self.data:
             if dev.getDevType() == EX_DEV:
                 #if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)

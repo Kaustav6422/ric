@@ -279,3 +279,6 @@ class RiCParam:
 
     def getCloseDiffMotorBR(self):
         return int(rospy.get_param('Diff/motorBR', 0))
+
+    def getConPort(self):
+        return rospy.get_param('CON_PORT', 'RiCBoard')

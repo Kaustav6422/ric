@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Mon Jun 29 15:08:05 2015
+# Created: Wed Jul 22 09:30:48 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -102,6 +102,12 @@ class Ui_MainWindow(object):
         self.pushButton_2 = QtGui.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(280, 10, 98, 27))
         self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.label_5 = QtGui.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(740, 10, 41, 21))
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.ConPortList = QtGui.QComboBox(self.centralwidget)
+        self.ConPortList.setGeometry(QtCore.QRect(790, 10, 121, 21))
+        self.ConPortList.setObjectName(_fromUtf8("ConPortList"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 923, 25))
@@ -237,7 +243,7 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.Delete, self.pushButton)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(_translate("MainWindow", "Configurator", None))
+        MainWindow.setWindowTitle(_translate("MainWindow", "RiConfigurator", None))
         self.Edit.setText(_translate("MainWindow", "Edit", None))
         self.Delete.setText(_translate("MainWindow", "Delete", None))
         self.label.setText(_translate("MainWindow", "Device Fields:", None))
@@ -249,6 +255,7 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "File Name:", None))
         self.fileName.setPlaceholderText(_translate("MainWindow", "Enter file name", None))
         self.pushButton_2.setText(_translate("MainWindow", "Launch", None))
+        self.label_5.setText(_translate("MainWindow", "Port:", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
         self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Board Device", None))

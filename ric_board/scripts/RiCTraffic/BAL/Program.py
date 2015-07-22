@@ -48,12 +48,11 @@ class Program:
     def __init__(self):
         try:
             rospy.init_node('RiCTraffic')
-            ser = Serial('/dev/RiCBoard')
+            params = RiCParam()
+            ser = Serial('/dev/%s' % params.getConPort()) #'/dev/RiCBoard'
             ser.flushInput()
             ser.flushOutput()
-            # ser = Serial('/dev/ttyUSB0')
             incomingHandler = IncomingHandler()
-            params = RiCParam()
             input = ser
             output = SerialWriteHandler(ser, incomingHandler, input)
             data = []

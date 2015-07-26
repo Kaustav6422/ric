@@ -15,7 +15,7 @@ class UsbCam(DeviceFrame):
         self._respawn = 'true'
         self._videoDevice = '/dev/video0'
         self._frameId = 'Head_Camera'
-        self._format = 'mjpeg'
+        self._format = 'yuyv'
         self._width = '640'
         self._height = '480'
 

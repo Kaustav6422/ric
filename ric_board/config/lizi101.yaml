@@ -1,3 +1,4 @@
+CON_PORT: RiCBoard
 closeLoop0/publishHz: 20
 closeLoop0/name: left_motor
 closeLoop0/LPFAlpha: 0.7

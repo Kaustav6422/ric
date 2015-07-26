@@ -64,6 +64,7 @@ class Program:
             devBuilder = DeviceBuilder(params, output, input, incomingHandler)
             gotHeaderStart = False
             gotHeaderDebug = False
+            msgHandler = None
             rospy.loginfo("Current version: %.2f" % VERSION)
             try:
                 self.waitForConnection(output)
@@ -139,12 +140,13 @@ class Program:
 
             except VersionError:
                 rospy.logerr("Can't load RiCBoard because the version don't mach please update the firmware.")
-            except: pass
+            except:
+                pass
             finally:
                 con = ConnectionResponse(False)
                 output.writeAndWaitForAck(con.dataTosend(), RES_ID)
                 ser.close()
-                msgHandler.close()
+                if msgHandler != None: msgHandler.close()
 
         except SerialException:
             rospy.logerr("Can't find RiCBoard, please check if its connected to the computer.")

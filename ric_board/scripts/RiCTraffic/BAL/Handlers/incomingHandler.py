@@ -5,6 +5,7 @@ __author__ = 'tom1231'
 CON_REQ = 1
 RELAY_REQ = 12
 OPEN_LOOP_REQ = 15
+RIG_REQ = 19
 
 SERVO_RES = 102
 ACK_RES = 105

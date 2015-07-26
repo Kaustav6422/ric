@@ -1,4 +1,9 @@
+import re
+from threading import Thread
 import rospy
+import rostopic
+from BAL.Header.Requests.PublishRequest import PublishRequest
+from BAL.Header.Response.ParamBuildResponse import IMU
 
 __author__ = 'tom1231'
 from rospy import Publisher
@@ -15,6 +20,8 @@ class RiCIMU(Device):
         self._angle = param.getIMUOrientation()
         self._pub = Publisher('%s_AGQ' % self._name, Imu, queue_size=param.getIMUPubHz())
         self._pubMag = Publisher('%s_M' % self._name, MagneticField, queue_size=param.getIMUPubHz())
+        self._haveRightToPublish = False
+        Thread(target=self.checkForSubscribers, args=()).start()
 
     def publish(self, data):
         q = data.getOrientation()
@@ -48,3 +55,17 @@ class RiCIMU(Device):
 
         self._pub.publish(msg)
         self._pubMag.publish(magMsg)
+
+    def checkForSubscribers(self):
+        try:
+            while not rospy.is_shutdown():
+                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+
+                if not self._haveRightToPublish and subCheck == '':
+                    self._output.write(PublishRequest(IMU, 0, True).dataTosend())
+                    self._haveRightToPublish = True
+
+                elif self._haveRightToPublish and subCheck == 'None':
+                    self._output.write(PublishRequest(IMU, 0, False).dataTosend())
+                    self._haveRightToPublish = False
+        except: pass

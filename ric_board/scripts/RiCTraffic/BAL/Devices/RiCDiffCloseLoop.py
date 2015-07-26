@@ -1,8 +1,12 @@
+import re
 from threading import Thread
 from nav_msgs.msg import Odometry
 import rospy
+import rostopic
+from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Requests.closeDiffRequest import CloseDiffRequest
 from BAL.Header.Requests.closeDiffSetOdomRequest import CloseDiffSetOdomRequest
+from BAL.Header.Response.ParamBuildResponse import DiffDriverCL
 
 __author__ = 'tom1231'
 from BAL.Interfaces.Device import Device
@@ -26,6 +30,8 @@ class RiCDiffCloseLoop(Device):
         self._broadCase = TransformBroadcaster()
         Subscriber('%s/command' % self._name, Twist, self.diffServiceCallback, queue_size=1)
         Service('%s/setOdometry' % self._name, set_odom, self.setOdom)
+        self._haveRightToPublish = False
+        Thread(target=self.checkForSubscribers, args=()).start()
 
     def diffServiceCallback(self, msg):
         Thread(target=self.sendMsg, args=(msg,)).start()
@@ -73,3 +79,16 @@ class RiCDiffCloseLoop(Device):
         traMsg.transform.rotation = q
         self._broadCase.sendTransformMessage(traMsg)
 
+    def checkForSubscribers(self):
+        try:
+            while not rospy.is_shutdown():
+                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+
+                if not self._haveRightToPublish and subCheck == '':
+                    self._output.write(PublishRequest(DiffDriverCL, 0, True).dataTosend())
+                    self._haveRightToPublish = True
+
+                elif self._haveRightToPublish and subCheck == 'None':
+                    self._output.write(PublishRequest(DiffDriverCL, 0, False).dataTosend())
+                    self._haveRightToPublish = False
+        except: pass

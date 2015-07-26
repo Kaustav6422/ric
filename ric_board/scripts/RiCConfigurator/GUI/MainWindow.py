@@ -663,6 +663,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.haveIMU = False
         if self.currentShowDev.getDevType() == PPM:
             self.havePPM = False
+        if self.currentShowDev.getDevType() == GPS:
+            self.haveGPS = False
         if self.currentShowDev.getDevType() == RELAY:
             self.relayPorts.addItem(self.currentShowDev.getPort())
         if self.currentShowDev.getDevType() == URF:

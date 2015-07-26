@@ -1,4 +1,9 @@
+import re
+from threading import Thread
 import rospy
+import rostopic
+from BAL.Header.Requests.PublishRequest import PublishRequest
+from BAL.Header.Response.ParamBuildResponse import GPS
 
 __author__ = 'tom1231'
 from rospy import Publisher
@@ -11,6 +16,8 @@ class RiCGPS(Device):
         Device.__init__(self, param.getGpsName(), output)
         self._frameId = param.getGpsFrameId()
         self._pub = Publisher('%s' % self._name, NavSatFix, queue_size=param.getGpsPubHz())
+        self._haveRightToPublish = False
+        Thread(target=self.checkForSubscribers, args=()).start()
 
     def publish(self, data):
         msg = NavSatFix()
@@ -29,3 +36,17 @@ class RiCGPS(Device):
         msg.position_covariance[8] = 4 * data.getHDOP() * data.getHDOP()
         msg.status.service = 1
         self._pub.publish(msg)
+
+    def checkForSubscribers(self):
+        try:
+            while not rospy.is_shutdown():
+                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+
+                if not self._haveRightToPublish and subCheck == '':
+                    self._output.write(PublishRequest(GPS, 0, True).dataTosend())
+                    self._haveRightToPublish = True
+
+                elif self._haveRightToPublish and subCheck == 'None':
+                    self._output.write(PublishRequest(GPS, 0, False).dataTosend())
+                    self._haveRightToPublish = False
+        except: pass

@@ -41,7 +41,7 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-VERSION = 1.0
+VERSION = 2.0
 
 
 class Program:
@@ -49,7 +49,7 @@ class Program:
         try:
             rospy.init_node('RiCTraffic')
             params = RiCParam()
-            ser = Serial('/dev/%s' % params.getConPort()) #'/dev/RiCBoard'
+            ser = Serial('/dev/%s' % params.getConPort())
             ser.flushInput()
             ser.flushOutput()
             incomingHandler = IncomingHandler()

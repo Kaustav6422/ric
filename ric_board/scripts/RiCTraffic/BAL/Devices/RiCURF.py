@@ -1,3 +1,7 @@
+import re
+from threading import Thread
+import rostopic
+from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Response.ParamBuildResponse import URF_HRLV
 
 __author__ = 'tom1231'
@@ -17,11 +21,16 @@ FIELD_OF_VIEW_URF_HRLV_MaxSonar = 0.7
 class RiCURF(Device):
 
 
-    def __init__(self, devId, param):
-        Device.__init__(self, param.getURFName(devId), None)
+    def __init__(self, devId, param, output):
+        Device.__init__(self, param.getURFName(devId), output)
         self._urfType = param.getURFType(devId)
         self._frameId = param.getURFFrameId(devId)
         self._pub = Publisher('%s' % self._name, Range, queue_size=param.getURFPubHz(devId))
+
+        self._devId = devId
+
+        self._haveRightToPublish = False
+        Thread(target=self.checkForSubscribers, args=()).start()
 
     def getType(self): return self._urfType
 
@@ -40,3 +49,17 @@ class RiCURF(Device):
         msg.radiation_type = Range.ULTRASOUND
         msg.range = data
         self._pub.publish(msg)
+
+    def checkForSubscribers(self):
+        try:
+            while not rospy.is_shutdown():
+                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+
+                if not self._haveRightToPublish and subCheck == '':
+                    self._output.write(PublishRequest(self.getType(), self._devId, True).dataTosend())
+                    self._haveRightToPublish = True
+
+                elif self._haveRightToPublish and subCheck == 'None':
+                    self._output.write(PublishRequest(self.getType(), self._devId, False).dataTosend())
+                    self._haveRightToPublish = False
+        except: pass

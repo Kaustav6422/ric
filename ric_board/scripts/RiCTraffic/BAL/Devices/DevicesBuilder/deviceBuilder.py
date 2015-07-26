@@ -98,18 +98,20 @@ class DeviceBuilder:
         URFAmount = self._param.getURFNum()
         for urfId in xrange(URFAmount):
             rospy.loginfo("Configuring URF: %s", self._param.getURFName(urfId))
-            urf = RiCURF(urfId, self._param)
+            urf = RiCURF(urfId, self._param, self._output)
             self._allDevs['urf'].append(urf)
             self._output.writeAndWaitForAck(URFParamResponse(urf.getType(), urfId, self._param).dataTosend(), urfId)
             rospy.loginfo("URF: %s is ready", self._param.getURFName(urfId))
+
     def createSwitchs(self):
         switchAmount = self._param.getSwitchSize()
         for switchNum in xrange(switchAmount):
             rospy.loginfo("Configuring switch: %s", self._param.getSwitchName(switchNum))
-            switch = RiCSwitch(switchNum, self._param)
+            switch = RiCSwitch(switchNum, self._param, self._output)
             self._allDevs['switch'].append(switch)
             self._output.writeAndWaitForAck(SwitchParamResponse(switchNum, self._param).dataTosend(), switchNum)
             rospy.loginfo("Switch: %s is ready", self._param.getSwitchName(switchNum))
+
     def createIMU(self):
         if self._param.isImuInit():
             rospy.loginfo("Configuring IMU: %s", self._param.getIMUName())
@@ -138,7 +140,7 @@ class DeviceBuilder:
     def createPPM(self):
         if self._param.isPPMInit():
             rospy.loginfo("Configuring PPM: %s", self._param.getPPMName())
-            ppm = RiCPPM(self._param)
+            ppm = RiCPPM(self._param, self._output)
             self._output.writeAndWaitForAck(PPMParamResponse(self._param).dataTosend(), 0)
             self._allDevs['ppm'].append(ppm)
             rospy.loginfo("PPM: %s is ready", self._param.getPPMName())
@@ -155,7 +157,7 @@ class DeviceBuilder:
     def createBattery(self):
         if self._param.isBatteryInit():
             rospy.loginfo("Configuring battery: %s", self._param.getBatteryName())
-            battery = RiCBattery(self._param)
+            battery = RiCBattery(self._param,self._output)
             self._allDevs['battery'].append(battery)
             self._output.writeAndWaitForAck(BatteryParamResponse(self._param).dataTosend(), 0)
             rospy.loginfo("Battery: %s is ready", self._param.getBatteryName())

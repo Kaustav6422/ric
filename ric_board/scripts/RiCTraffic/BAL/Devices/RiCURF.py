@@ -30,7 +30,7 @@ class RiCURF(Device):
         self._devId = devId
 
         self._haveRightToPublish = False
-        Thread(target=self.checkForSubscribers, args=()).start()
+
 
     def getType(self): return self._urfType
 
@@ -52,14 +52,13 @@ class RiCURF(Device):
 
     def checkForSubscribers(self):
         try:
-            while not rospy.is_shutdown():
-                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+            subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
 
-                if not self._haveRightToPublish and subCheck == '':
-                    self._output.write(PublishRequest(self.getType(), self._devId, True).dataTosend())
-                    self._haveRightToPublish = True
+            if not self._haveRightToPublish and subCheck == '':
+                self._output.write(PublishRequest(self.getType(), self._devId, True).dataTosend())
+                self._haveRightToPublish = True
 
-                elif self._haveRightToPublish and subCheck == 'None':
-                    self._output.write(PublishRequest(self.getType(), self._devId, False).dataTosend())
-                    self._haveRightToPublish = False
+            elif self._haveRightToPublish and subCheck == 'None':
+                self._output.write(PublishRequest(self.getType(), self._devId, False).dataTosend())
+                self._haveRightToPublish = False
         except: pass

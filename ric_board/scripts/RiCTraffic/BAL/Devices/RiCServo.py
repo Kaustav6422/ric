@@ -21,7 +21,7 @@ class RiCServo(Device):
         Subscriber('%s/command' % self._name, Float32, self.servoCallBack)
 
         self._haveRightToPublish = False
-        Thread(target=self.checkForSubscribers, args=()).start()
+
 
     def publish(self, data):
         msg = Float32()
@@ -40,14 +40,13 @@ class RiCServo(Device):
 
     def checkForSubscribers(self):
         try:
-            while not rospy.is_shutdown():
-                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+            subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
 
-                if not self._haveRightToPublish and subCheck == '':
-                    self._output.write(PublishRequest(SERVO, self._servoNum, True).dataTosend())
-                    self._haveRightToPublish = True
+            if not self._haveRightToPublish and subCheck == '':
+                self._output.write(PublishRequest(SERVO, self._servoNum, True).dataTosend())
+                self._haveRightToPublish = True
 
-                elif self._haveRightToPublish and subCheck == 'None':
-                    self._output.write(PublishRequest(SERVO, self._servoNum, False).dataTosend())
-                    self._haveRightToPublish = False
+            elif self._haveRightToPublish and subCheck == 'None':
+                self._output.write(PublishRequest(SERVO, self._servoNum, False).dataTosend())
+                self._haveRightToPublish = False
         except: pass

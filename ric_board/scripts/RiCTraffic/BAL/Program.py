@@ -6,6 +6,7 @@ from BAL.Handlers.incomingDataHandler import IncomingDataHandler
 from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES, \
     GPS_RES, \
     PPM_RES, BAT_RES
+from BAL.Handlers.incomingMsgHandler import IncomingMsgHandler
 from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START, HEADER_DEBUG
 from BAL.Header.Response.IMUPublishResponse import IMUPublishResponse
 from BAL.Header.Response.ServoPublishResponse import ServoPublishResponse
@@ -64,7 +65,6 @@ class Program:
             gotHeaderStart = False
             gotHeaderDebug = False
             rospy.loginfo("Current version: %.2f" % VERSION)
-
             try:
                 self.waitForConnection(output)
                 if self.checkVer(input):
@@ -87,6 +87,11 @@ class Program:
                     devBuilder.sendFinishBuilding()
                     input.timeout = None
                     rospy.loginfo("Done, RiC Board is ready.")
+
+                    msgHandler = IncomingMsgHandler(devs, output)
+
+                    Thread(target=self.checkForSubscribers, args=(devs,)).start()
+                    Thread(target=msgHandler.run, args=()).start()
                     while not rospy.is_shutdown():
                         if gotHeaderStart:
                             if len(data) < 1:
@@ -98,7 +103,7 @@ class Program:
                                 # print data
                                 msg = self.genData(data, headerId)
                                 if msg is not None:
-                                    Thread(target=IncomingDataHandler(msg, output, devs).run, args=()).start()
+                                    msgHandler.addMsg(msg)
                                 data = []
                                 gotHeaderStart = False
                             else:
@@ -134,14 +139,40 @@ class Program:
 
             except VersionError:
                 rospy.logerr("Can't load RiCBoard because the version don't mach please update the firmware.")
-
+            except: pass
             finally:
                 con = ConnectionResponse(False)
                 output.writeAndWaitForAck(con.dataTosend(), RES_ID)
                 ser.close()
+                msgHandler.close()
 
         except SerialException:
             rospy.logerr("Can't find RiCBoard, please check if its connected to the computer.")
+
+    def checkForSubscribers(self, devs):
+        while not rospy.is_shutdown():
+            if len(devs['servos']) > 0:
+                for servo in devs['servos']:
+                    servo.checkForSubscribers()
+            if len(devs['motorsCl']) > 0:
+                for motor in devs['motorsCl']:
+                    motor.checkForSubscribers()
+            if len(devs['urf']) > 0:
+                for urf in devs['urf']:
+                    urf.checkForSubscribers()
+            if len(devs['switch']) > 0:
+                for switch in devs['switch']:
+                    switch.checkForSubscribers()
+            if len(devs['diff']) > 0:
+                devs['diff'][0].checkForSubscribers()
+            if len(devs['imu']) > 0:
+                devs['imu'][0].checkForSubscribers()
+            if len(devs['gps']) > 0:
+                devs['gps'][0].checkForSubscribers()
+            if len(devs['ppm']) > 0:
+                devs['ppm'][0].checkForSubscribers()
+            if len(devs['battery']) > 0:
+                devs['battery'][0].checkForSubscribers()
 
     def genData(self, data, headerId):
         result = None
@@ -177,18 +208,25 @@ class Program:
 
                     if verInfo.checkPackage() and abs(verInfo.getVersion() - VERSION) < 1:
                         if verInfo.getVersion() < VERSION:
-                            rospy.logwarn("RiCBord has a firmware %.2f please update the firmware for better performers" % (verInfo.getVersion()))
+                            rospy.logwarn(
+                                "RiCBord has a firmware %.2f please update the firmware for better performers" % (
+                                    verInfo.getVersion()))
                         elif verInfo.getVersion() > VERSION:
-                            rospy.logwarn("RiCBord has a firmware %.2f please update your package for better performers" % (verInfo.getVersion()))
+                            rospy.logwarn(
+                                "RiCBord has a firmware %.2f please update your package for better performers" % (
+                                    verInfo.getVersion()))
                         return True
-                    else: return False
+                    else:
+                        return False
 
                 elif ord(input.read()) == HEADER_START:
                     gotHeaderStart = True
 
-            except TypeError: pass
+            except TypeError:
+                pass
             finally:
                 countUntilTimeout += 1
-        return False
+        retu
 
 
+False

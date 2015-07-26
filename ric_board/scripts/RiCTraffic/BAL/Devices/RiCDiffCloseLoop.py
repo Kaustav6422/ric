@@ -31,7 +31,7 @@ class RiCDiffCloseLoop(Device):
         Subscriber('%s/command' % self._name, Twist, self.diffServiceCallback, queue_size=1)
         Service('%s/setOdometry' % self._name, set_odom, self.setOdom)
         self._haveRightToPublish = False
-        Thread(target=self.checkForSubscribers, args=()).start()
+
 
     def diffServiceCallback(self, msg):
         Thread(target=self.sendMsg, args=(msg,)).start()
@@ -81,14 +81,13 @@ class RiCDiffCloseLoop(Device):
 
     def checkForSubscribers(self):
         try:
-            while not rospy.is_shutdown():
-                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+            subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
 
-                if not self._haveRightToPublish and subCheck == '':
-                    self._output.write(PublishRequest(DiffDriverCL, 0, True).dataTosend())
-                    self._haveRightToPublish = True
+            if not self._haveRightToPublish and subCheck == '':
+                self._output.write(PublishRequest(DiffDriverCL, 0, True).dataTosend())
+                self._haveRightToPublish = True
 
-                elif self._haveRightToPublish and subCheck == 'None':
-                    self._output.write(PublishRequest(DiffDriverCL, 0, False).dataTosend())
-                    self._haveRightToPublish = False
+            elif self._haveRightToPublish and subCheck == 'None':
+                self._output.write(PublishRequest(DiffDriverCL, 0, False).dataTosend())
+                self._haveRightToPublish = False
         except: pass

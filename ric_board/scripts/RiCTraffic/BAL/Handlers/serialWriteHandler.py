@@ -36,7 +36,7 @@ class SerialWriteHandler:
         incomingLength = 0
         headerId = 0
         data = []
-        timeoutCount = 100
+        timeoutCount = 3
         try:
             while timeoutCount > 0:
                 if gotHeaderStart:

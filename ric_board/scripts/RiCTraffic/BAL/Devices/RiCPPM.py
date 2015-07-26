@@ -16,7 +16,7 @@ class RiCPPM(Device):
         Device.__init__(self, param.getPPMName(), output)
         self._pub = Publisher('%s' % self._name, PPM, queue_size=param.getPPMPubHz())
         self._haveRightToPublish = False
-        Thread(target=self.checkForSubscribers, args=()).start()
+
 
     def publish(self, data):
         msg = PPM()
@@ -25,14 +25,13 @@ class RiCPPM(Device):
 
     def checkForSubscribers(self):
         try:
-            while not rospy.is_shutdown():
-                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+            subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
 
-                if not self._haveRightToPublish and subCheck == '':
-                    self._output.write(PublishRequest(7, 0, True).dataTosend())
-                    self._haveRightToPublish = True
+            if not self._haveRightToPublish and subCheck == '':
+                self._output.write(PublishRequest(7, 0, True).dataTosend())
+                self._haveRightToPublish = True
 
-                elif self._haveRightToPublish and subCheck == 'None':
-                    self._output.write(PublishRequest(7, 0, False).dataTosend())
-                    self._haveRightToPublish = False
+            elif self._haveRightToPublish and subCheck == 'None':
+                self._output.write(PublishRequest(7, 0, False).dataTosend())
+                self._haveRightToPublish = False
         except: pass

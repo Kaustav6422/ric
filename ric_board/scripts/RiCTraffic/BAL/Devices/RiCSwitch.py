@@ -17,7 +17,6 @@ class RiCSwitch(Device):
         self._pub = Publisher('%s' % self._name, Bool, queue_size=param.getSwitchPubHz(devId))
         self._switchId = devId
         self._haveRightToPublish = False
-        Thread(target=self.checkForSubscribers, args=()).start()
 
     def publish(self, data):
         msg = Bool()
@@ -26,14 +25,13 @@ class RiCSwitch(Device):
 
     def checkForSubscribers(self):
         try:
-            while not rospy.is_shutdown():
-                subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+            subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
 
-                if not self._haveRightToPublish and subCheck == '':
-                    self._output.write(PublishRequest(Button, self._switchId, True).dataTosend())
-                    self._haveRightToPublish = True
+            if not self._haveRightToPublish and subCheck == '':
+                self._output.write(PublishRequest(Button, self._switchId, True).dataTosend())
+                self._haveRightToPublish = True
 
-                elif self._haveRightToPublish and subCheck == 'None':
-                    self._output.write(PublishRequest(Button, self._switchId, False).dataTosend())
-                    self._haveRightToPublish = False
+            elif self._haveRightToPublish and subCheck == 'None':
+                self._output.write(PublishRequest(Button, self._switchId, False).dataTosend())
+                self._haveRightToPublish = False
         except: pass

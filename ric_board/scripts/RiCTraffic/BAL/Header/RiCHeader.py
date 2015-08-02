@@ -24,23 +24,23 @@ class RiCHeader:
         while self.index < ID_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._id = struct.unpack('<B', bytes)[0]
+        self._id = struct.unpack('<B', str(bytes))[0]
         bytes = bytearray()
         while self.index < LENGTH_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._length = struct.unpack('<B', bytes)[0]
+        self._length = struct.unpack('<B', str(bytes))[0]
         bytes = bytearray()
         while self.index < DES_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._des = struct.unpack('<H', bytes)[0]
+        self._des = struct.unpack('<H', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHECK_SUM_PLACE:
             bytes.append(data[self.index])
             data[self.index] = '\x00'
             self.index += 1
-        self._checkSum = struct.unpack('<H', bytes)[0]
+        self._checkSum = struct.unpack('<H', str(bytes))[0]
         self.checkSumRes = self.calCheckSum(data)
 
     def getId(self):

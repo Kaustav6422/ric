@@ -21,6 +21,7 @@ class RiCPPM(Device):
     def publish(self, data):
         msg = PPM()
         msg.channels = data.getChannels()
+	if msg.channels[2] < 1000: print msg.channels[2]
         self._pub.publish(msg)
 
     def checkForSubscribers(self):

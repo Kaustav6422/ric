@@ -1,3 +1,4 @@
+__author__ = 'tom1231'
 import json
 import rospkg
 import shlex
@@ -15,6 +16,7 @@ from BAL.Devices.Hokuyo import Hokuyo
 from BAL.Devices.Imu import Imu
 from BAL.Devices.OpenLoop import OpenLoop
 from BAL.Devices.Openni import Opennni
+from BAL.Devices.PPMReader import PPMReader
 from BAL.Devices.Ppm import Ppm
 from BAL.Devices.Relay import Relay
 from BAL.Devices.RobotModel import RobotModel
@@ -27,14 +29,11 @@ from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, REL
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM
 from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
-from GUI.UsbRolesDialog import UsbRolesDialog
 
-__author__ = 'tom1231'
 from PyQt4.QtGui import *
 from Schemes.main import Ui_MainWindow
 import webbrowser
 import pickle
-import os.path
 from os import system
 import subprocess
 import re
@@ -82,6 +81,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionAbout_RiC_Board.triggered.connect(self.aboutRiCBoard)
         self.actionSLAM.triggered.connect(self.addSLAM)
         self.actionRemote_robot_launch.triggered.connect(self.launchRemote)
+        self.actionPPM_Reader.triggered.connect(self.addPPmReader)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -132,6 +132,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.haveCloseLoop = False
         self.haveOpenLoop = False
         self.haveDiff = False
+        self.haveReader = False
 
         self.editMode = False
         self.listMode = False
@@ -221,6 +222,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.haveCloseLoop = False
         self.haveOpenLoop = False
         self.haveDiff = False
+        self.haveReader = False
 
         self.editMode = False
         self.listMode = False
@@ -331,6 +333,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == SLAM:
                     self.currentShowDev = Slam(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
+                elif dev['type'] == PPMReader:
+                    self.currentShowDev = PPMReader(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -387,6 +392,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
         toSave.write("CON_PORT: %s\n" % str(self.ConPortList.currentText()))
+        toSave.write("FILE_NAME: %s\n" % self._fileName)
         for dev in self.data:
             if dev.getDevType() == EX_DEV:
                 #if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
@@ -445,6 +451,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
         self.pushButton_2.setEnabled(True)
+
+    def addPPmReader(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = PPMReader(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
         
     def addSLAM(self):
         self.interruptHandler()

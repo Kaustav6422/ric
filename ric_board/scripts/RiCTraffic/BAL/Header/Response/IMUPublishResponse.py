@@ -96,67 +96,67 @@ class IMUPublishResponse(RiCHeader):
         while self.index < V_X_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._velocityX = struct.unpack('<f', bytes)[0]
+        self._velocityX = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < V_Y_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._velocityY = struct.unpack('<f', bytes)[0]
+        self._velocityY = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < V_Z_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._velocityZ = struct.unpack('<f', bytes)[0]
+        self._velocityZ = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < A_X_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._accelerationX = struct.unpack('<f', bytes)[0]
+        self._accelerationX = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < A_Y_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._accelerationY = struct.unpack('<f', bytes)[0]
+        self._accelerationY = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < A_Z_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._accelerationZ = struct.unpack('<f', bytes)[0]
+        self._accelerationZ = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < M_X_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._magnetometerX = struct.unpack('<f', bytes)[0]
+        self._magnetometerX = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < M_Y_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._magnetometerY = struct.unpack('<f', bytes)[0]
+        self._magnetometerY = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < M_Z_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._magnetometerZ = struct.unpack('<f', bytes)[0]
+        self._magnetometerZ = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < O_X_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._orientationX = struct.unpack('<f', bytes)[0]
+        self._orientationX = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < O_Y_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._orientationY = struct.unpack('<f', bytes)[0]
+        self._orientationY = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < O_Z_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._orientationZ = struct.unpack('<f', bytes)[0]
+        self._orientationZ = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < O_W_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._orientationW = struct.unpack('<f', bytes)[0]
+        self._orientationW = struct.unpack('<f', str(bytes))[0]
         # bytes = bytearray()
         # while self.index < ROLL_LEN:
         #     bytes.append(data[self.index])

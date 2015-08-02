@@ -140,8 +140,6 @@ class Program:
 
             except VersionError:
                 rospy.logerr("Can't load RiCBoard because the version don't mach please update the firmware.")
-            except:
-                pass
             finally:
                 con = ConnectionResponse(False)
                 output.writeAndWaitForAck(con.dataTosend(), RES_ID)

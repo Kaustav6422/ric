@@ -18,12 +18,12 @@ class URFPublishResponse(RiCHeader):
         while self.index < ID_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._urfId = struct.unpack('<B', bytes)[0]
+        self._urfId = struct.unpack('<B', str(bytes))[0]
         bytes = bytearray()
         while self.index < RANGE_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._range = struct.unpack('<f', bytes)[0]
+        self._range = struct.unpack('<f', str(bytes))[0]
 
     def getURFId(self): return self._urfId
 

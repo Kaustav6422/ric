@@ -17,12 +17,12 @@ class ACKResponse(RiCHeader):
         while self.index < DEVICE_ID_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._IdToAck = struct.unpack('<b', bytes)[0]
+        self._IdToAck = struct.unpack('<b', str(bytes))[0]
         bytes = bytearray()
         while self.index < REQ_LENGTH_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._requestLength = struct.unpack('<b', bytes)[0]
+        self._requestLength = struct.unpack('<b', str(bytes))[0]
 
     def getReqLen(self): return self._requestLength
 

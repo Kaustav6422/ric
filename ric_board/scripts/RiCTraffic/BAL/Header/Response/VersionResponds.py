@@ -18,6 +18,6 @@ class VersionResponds(RiCHeader):
         while self.index < VER_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._ver = struct.unpack('<f', bytes)[0]
+        self._ver = struct.unpack('<f', str(bytes))[0]
 
 

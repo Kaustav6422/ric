@@ -39,32 +39,32 @@ class GPSPublishResponse(RiCHeader):
         while self.index < LAT_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._lat = struct.unpack('<f', bytes)[0]
+        self._lat = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < LNG_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._lng = struct.unpack('<f', bytes)[0]
+        self._lng = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < METERS_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._meters = struct.unpack('<f', bytes)[0]
+        self._meters = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < HDOP_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._HDOP = struct.unpack('<h', bytes)[0]
+        self._HDOP = struct.unpack('<h', str(bytes))[0]
         bytes = bytearray()
         while self.index < SAT_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._satellites = struct.unpack('<h', bytes)[0]
+        self._satellites = struct.unpack('<h', str(bytes))[0]
         bytes = bytearray()
         while self.index < FIX_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._fix = struct.unpack('<b', bytes)[0]
+        self._fix = struct.unpack('<b', str(bytes))[0]
 
 
 

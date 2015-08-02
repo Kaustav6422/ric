@@ -17,7 +17,7 @@ class ConnectionRequest(RiCHeader):
         while self.index < CON_REQ_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._requestForConnection = struct.unpack('<B', bytes)[0]
+        self._requestForConnection = struct.unpack('<B', str(bytes))[0]
 
 
     def toConnect(self): return self._requestForConnection

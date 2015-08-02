@@ -11,7 +11,7 @@ from BAL.Header.Response.ParamBuildResponse import DiffDriverCL
 __author__ = 'tom1231'
 from BAL.Interfaces.Device import Device
 from rospy import Subscriber, Service, Publisher
-# from ric_board.msg import Odometry
+#from ric_board.msg import Odometry
 from ric_board.srv._set_odom import set_odom, set_odomResponse
 from tf import TransformBroadcaster
 from tf.transformations import quaternion_from_euler
@@ -72,12 +72,13 @@ class RiCDiffCloseLoop(Device):
         traMsg = TransformStamped()
         traMsg.header.frame_id = self._odom
         traMsg.header.stamp = rospy.get_rostime()
-        traMsg.child_frame_id = self._baseLink
+      	traMsg.child_frame_id = self._baseLink
         traMsg.transform.translation.x = data[0]
-        traMsg.transform.translation.y = data[1]
+       	traMsg.transform.translation.y = data[1]
         traMsg.transform.translation.z = 0
         traMsg.transform.rotation = q
-        self._broadCase.sendTransformMessage(traMsg)
+	traMsgArr = [traMsg] 
+	self._broadCase.pub_tf.publish(traMsgArr)
 
     def checkForSubscribers(self):
         try:

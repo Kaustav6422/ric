@@ -19,12 +19,12 @@ class ServoPublishResponse(RiCHeader):
         while self.index < SERVO_NUM_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._servoNum = struct.unpack('<B', bytes)[0]
+        self._servoNum = struct.unpack('<B', str(bytes))[0]
         bytes = bytearray()
         while self.index < SERVO_POSITION_PLACE:
             bytes.append(data[self.index])
             self.index += 1
-        self._position = struct.unpack('<f', bytes)[0]
+        self._position = struct.unpack('<f', str(bytes))[0]
 
     def getServoNum(self): return self._servoNum
 

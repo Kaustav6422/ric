@@ -20,17 +20,17 @@ class CloseLoopPublishResponse(RiCHeader):
         while self.index < MOTOR_ID:
             bytes.append(data[self.index])
             self.index += 1
-        self._devId = struct.unpack('<B', bytes)[0]
+        self._devId = struct.unpack('<B', str(bytes))[0]
         bytes = bytearray()
         while self.index < MOTOR_RAD:
             bytes.append(data[self.index])
             self.index += 1
-        self._rad = struct.unpack('<f', bytes)[0]
+        self._rad = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < MOTOR_RAD_S:
             bytes.append(data[self.index])
             self.index += 1
-        self._rad_s = struct.unpack('<f', bytes)[0]
+        self._rad_s = struct.unpack('<f', str(bytes))[0]
 
     def getMotorId(self):
         return self._devId

@@ -33,39 +33,39 @@ class PPMPublishResponse(RiCHeader):
         while self.index < CHANNEL_1:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch1 = struct.unpack('<f', bytes)[0]
+        self._ch1 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_2:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch2 = struct.unpack('<f', bytes)[0]
+        self._ch2 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_3:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch3 = struct.unpack('<f', bytes)[0]
+        self._ch3 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_4:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch4 = struct.unpack('<f', bytes)[0]
+        self._ch4 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_5:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch5 = struct.unpack('<f', bytes)[0]
+        self._ch5 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_6:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch6 = struct.unpack('<f', bytes)[0]
+        self._ch6 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_7:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch7 = struct.unpack('<f', bytes)[0]
+        self._ch7 = struct.unpack('<f', str(bytes))[0]
         bytes = bytearray()
         while self.index < CHANNEL_8:
             bytes.append(data[self.index])
             self.index += 1
-        self._ch8 = struct.unpack('<f', bytes)[0]
+        self._ch8 = struct.unpack('<f', str(bytes))[0]

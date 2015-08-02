@@ -22,7 +22,7 @@ VER_RES = 118
 class IncomingHandler:
 
     def getIncomingHeaderId(self, data):
-        return struct.unpack('<B', bytearray(data))[0]
+        return struct.unpack('<B', str(bytearray(data)))[0]
 
     def getIncomingHeaderSizeAndId(self, data):
         id = self.getIncomingHeaderId(data)

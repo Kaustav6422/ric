@@ -17,13 +17,13 @@ class SwitchResponse(RiCHeader):
         while self.index < ID_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._switchNum = struct.unpack('<B', bytes)[0]
+        self._switchNum = struct.unpack('<B', str(bytes))[0]
 
         bytes = bytearray()
         while self.index < STATUS_LEN:
             bytes.append(data[self.index])
             self.index += 1
-        self._status = struct.unpack('<?', bytes)[0]
+        self._status = struct.unpack('<?', str(bytes))[0]
 
     def getSwitchNum(self):
         return self._switchNum

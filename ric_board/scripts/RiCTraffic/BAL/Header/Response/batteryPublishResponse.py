@@ -19,5 +19,5 @@ class BatteryPublishResponse(RiCHeader):
         while self.index < BAT_STAT:
             bytes.append(data[self.index])
             self.index += 1
-        self._status = struct.unpack('<f', bytes)[0]
+        self._status = struct.unpack('<f', str(bytes))[0]
 

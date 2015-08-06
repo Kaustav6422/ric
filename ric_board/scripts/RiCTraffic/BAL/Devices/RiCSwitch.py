@@ -35,3 +35,5 @@ class RiCSwitch(Device):
                 self._output.write(PublishRequest(Button, self._switchId, False).dataTosend())
                 self._haveRightToPublish = False
         except: pass
+
+    def getType(self): return Button

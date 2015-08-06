@@ -22,7 +22,6 @@ class RiCServo(Device):
 
         self._haveRightToPublish = False
 
-
     def publish(self, data):
         msg = Float32()
         msg.data = data
@@ -32,6 +31,7 @@ class RiCServo(Device):
         Thread(target=self.sendMsg, args=(recv,)).start()
         # TOOD: ServoRequest
 
+    def getType(self): return SERVO
 
     def sendMsg(self, recv):
         position = recv.data

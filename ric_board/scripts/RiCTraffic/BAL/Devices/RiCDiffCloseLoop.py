@@ -8,13 +8,12 @@ from BAL.Header.Requests.closeDiffRequest import CloseDiffRequest
 from BAL.Header.Requests.closeDiffSetOdomRequest import CloseDiffSetOdomRequest
 from BAL.Header.Response.ParamBuildResponse import DiffDriverCL
 
+
 __author__ = 'tom1231'
 from BAL.Interfaces.Device import Device
 from rospy import Subscriber, Service, Publisher
-# from ric_board.msg import Odometry
 from ric_board.srv._set_odom import set_odom, set_odomResponse
 from tf import TransformBroadcaster
-from tf.transformations import quaternion_from_euler
 from geometry_msgs.msg import Twist, TransformStamped, Quaternion
 
 
@@ -32,6 +31,7 @@ class RiCDiffCloseLoop(Device):
         Service('%s/setOdometry' % self._name, set_odom, self.setOdom)
         self._haveRightToPublish = False
 
+    def getType(self): return DiffDriverCL
 
     def diffServiceCallback(self, msg):
         Thread(target=self.sendMsg, args=(msg,)).start()
@@ -82,12 +82,13 @@ class RiCDiffCloseLoop(Device):
     def checkForSubscribers(self):
         try:
             subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]
+            subTfCheck = re.search('Subscribers:.*', rostopic.get_info_text('/tf')).group(0).split(': ')[1]
 
-            if not self._haveRightToPublish and subCheck == '':
+            if not self._haveRightToPublish and (subCheck == '' or subTfCheck == ''):
                 self._output.write(PublishRequest(DiffDriverCL, 0, True).dataTosend())
                 self._haveRightToPublish = True
 
-            elif self._haveRightToPublish and subCheck == 'None':
+            elif self._haveRightToPublish and (subCheck == 'None' and subTfCheck == 'None'):
                 self._output.write(PublishRequest(DiffDriverCL, 0, False).dataTosend())
                 self._haveRightToPublish = False
         except: pass

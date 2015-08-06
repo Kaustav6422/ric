@@ -4,7 +4,6 @@ from PyQt4.QtGui import *
 from GUI.MainWindow import MainWindow
 import sys
 import rospy
-import rospkg
 
 
 def main():

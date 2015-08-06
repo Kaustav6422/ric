@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Jul 22 09:30:48 2015
+# Created: Sun Aug  2 14:31:00 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -194,6 +194,10 @@ class Ui_MainWindow(object):
         self.actionSLAM.setObjectName(_fromUtf8("actionSLAM"))
         self.actionRemote_robot_launch = QtGui.QAction(MainWindow)
         self.actionRemote_robot_launch.setObjectName(_fromUtf8("actionRemote_robot_launch"))
+        self.actionPPM_Reader = QtGui.QAction(MainWindow)
+        self.actionPPM_Reader.setObjectName(_fromUtf8("actionPPM_Reader"))
+        self.actionSet_parameters = QtGui.QAction(MainWindow)
+        self.actionSet_parameters.setObjectName(_fromUtf8("actionSet_parameters"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -222,6 +226,7 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionHakoyo)
         self.menuOther.addAction(self.actionRobot_Model)
         self.menuOther.addAction(self.actionSLAM)
+        self.menuOther.addAction(self.actionPPM_Reader)
         self.menuAdd_Device.addAction(self.menuRiC_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuExternal_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuOther.menuAction())
@@ -229,6 +234,7 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.actionAbout_RiC_Board)
         self.menuTools.addAction(self.actionReconfig_RiC_Board)
         self.menuTools.addAction(self.actionRemote_robot_launch)
+        self.menuTools.addAction(self.actionSet_parameters)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
         self.menubar.addAction(self.menuTools.menuAction())
@@ -255,6 +261,7 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "File Name:", None))
         self.fileName.setPlaceholderText(_translate("MainWindow", "Enter file name", None))
         self.pushButton_2.setText(_translate("MainWindow", "Launch", None))
+        self.pushButton_2.setShortcut(_translate("MainWindow", "Ctrl+L", None))
         self.label_5.setText(_translate("MainWindow", "Port:", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
@@ -300,5 +307,7 @@ class Ui_MainWindow(object):
         self.actionAbout_RiC_Board.setText(_translate("MainWindow", "RiC Board Ports", None))
         self.actionSLAM.setText(_translate("MainWindow", "SLAM", None))
         self.actionRemote_robot_launch.setText(_translate("MainWindow", "Remote robot launch", None))
+        self.actionPPM_Reader.setText(_translate("MainWindow", "PPM Reader", None))
+        self.actionSet_parameters.setText(_translate("MainWindow", "Set parameters", None))
 
 import resource_rc

@@ -1,4 +1,5 @@
 from threading import Thread
+from BAL.Header.Response.ParamBuildResponse import DiffDriverOL
 
 __author__ = 'tom1231'
 from BAL.Interfaces.Device import Device
@@ -11,6 +12,7 @@ from std_msgs.msg import Float32
     # openLoopCallback
 
 class RiCOpenDiff(Device):
+
     def __init__(self, param, motorL, motorR):
         Device.__init__(self, param.getCloseDiffName(), None)
         self._maxAng = param.getCloseDiffMaxAng()
@@ -46,6 +48,8 @@ class RiCOpenDiff(Device):
 
     def diffCallback(self, msg):
         Thread(target=self.sendMsg, args=(msg,)).start()
+
+    def getType(self): return DiffDriverOL
 
     def publish(self, data):
         pass

@@ -20,7 +20,6 @@ FIELD_OF_VIEW_URF_HRLV_MaxSonar = 0.7
 
 class RiCURF(Device):
 
-
     def __init__(self, devId, param, output):
         Device.__init__(self, param.getURFName(devId), output)
         self._urfType = param.getURFType(devId)
@@ -30,7 +29,6 @@ class RiCURF(Device):
         self._devId = devId
 
         self._haveRightToPublish = False
-
 
     def getType(self): return self._urfType
 

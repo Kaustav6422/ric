@@ -1,2 +1,4 @@
 string devName
-int8 status
+int8 type
+float32[] values
+

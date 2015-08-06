@@ -76,6 +76,9 @@ IMUClib.msg
 #   RGB.srv
    set_odom.srv
    Relay.srv
+   get_devs.srv
+   setParam.srv
+   calibIMU.srv
 #   Service1.srv
 #   Service2.srv
  )

@@ -23,6 +23,8 @@ class RiCBattery(Device):
         msg.data = data
         self._pub.publish(msg)
 
+    def getType(self): return Battery
+
     def checkForSubscribers(self):
         try:
             subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]

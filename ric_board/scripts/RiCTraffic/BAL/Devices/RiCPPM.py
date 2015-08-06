@@ -11,12 +11,12 @@ from BAL.Interfaces.Device import Device
 
 
 class RiCPPM(Device):
-
     def __init__(self, param, output):
         Device.__init__(self, param.getPPMName(), output)
         self._pub = Publisher('%s' % self._name, PPM, queue_size=param.getPPMPubHz())
         self._haveRightToPublish = False
 
+    def getType(self): return PPM
 
     def publish(self, data):
         msg = PPM()

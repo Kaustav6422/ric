@@ -282,3 +282,6 @@ class RiCParam:
 
     def getConPort(self):
         return rospy.get_param('CON_PORT', 'RiCBoard')
+
+    def getFileName(self):
+        return rospy.get_param('FILE_NAME', '')

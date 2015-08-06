@@ -37,6 +37,8 @@ class RiCGPS(Device):
         msg.status.service = 1
         self._pub.publish(msg)
 
+    def getType(self): return GPS
+
     def checkForSubscribers(self):
         try:
             subCheck = re.search('Subscribers:.*', rostopic.get_info_text(self._pub.name)).group(0).split(': ')[1]

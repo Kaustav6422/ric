@@ -3,9 +3,11 @@ import struct
 __author__ = 'tom1231'
 
 CON_REQ = 1
+IMU_REQ = 11
 RELAY_REQ = 12
 OPEN_LOOP_REQ = 15
 RIG_REQ = 19
+PSET_REQ = 20
 
 SERVO_RES = 102
 ACK_RES = 105

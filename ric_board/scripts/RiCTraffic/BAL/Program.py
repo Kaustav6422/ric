@@ -1,5 +1,7 @@
 import serial
 import time
+import roslaunch
+import rosnode
 from BAL.Devices.DevicesBuilder.deviceBuilder import DeviceBuilder
 from BAL.Exceptions.VersionError import VersionError, NEED_TO_UPDATE
 from BAL.Handlers.incomingDataHandler import IncomingDataHandler
@@ -19,18 +21,17 @@ from BAL.Header.Response.gpsPublishResponse import GPSPublishResponse
 from BAL.Header.Response.ppmPublishResponse import PPMPublishResponse
 from BAL.Header.Response.switchResponse import SwitchResponse
 
+from BAL.ServerPkg.server import Server
+
 __author__ = 'tom1231'
 import roslib;
 
 roslib.load_manifest('ric_board')
 import rospy
-from rospy import Subscriber, Publisher, Service
 from BAL.Header.Response.ConnectionResponse import ConnectionResponse, RES_ID
-from BAL.Header.RiCHeader import RiCHeader
 from BAL.Header.Requests.ConnectionRequest import ConnectionRequest
 from BAL.RiCParam.RiCParam import RiCParam
 from serial import Serial, SerialException
-import sys
 from threading import Thread
 
 CON_REQ = 1
@@ -42,7 +43,7 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-VERSION = 2.0
+VERSION = 3.0
 
 
 class Program:
@@ -65,6 +66,8 @@ class Program:
             gotHeaderStart = False
             gotHeaderDebug = False
             msgHandler = None
+            server = None
+
             rospy.loginfo("Current version: %.2f" % VERSION)
             try:
                 self.waitForConnection(output)
@@ -88,11 +91,11 @@ class Program:
                     devBuilder.sendFinishBuilding()
                     input.timeout = None
                     rospy.loginfo("Done, RiC Board is ready.")
-
                     msgHandler = IncomingMsgHandler(devs, output)
-
+                    server = Server(devs, params)
                     Thread(target=self.checkForSubscribers, args=(devs,)).start()
                     Thread(target=msgHandler.run, args=()).start()
+
                     while not rospy.is_shutdown():
                         if gotHeaderStart:
                             if len(data) < 1:
@@ -140,8 +143,7 @@ class Program:
 
             except VersionError:
                 rospy.logerr("Can't load RiCBoard because the version don't mach please update the firmware.")
-            except:
-                pass
+            except: pass
             finally:
                 con = ConnectionResponse(False)
                 output.writeAndWaitForAck(con.dataTosend(), RES_ID)
@@ -228,7 +230,4 @@ class Program:
                 pass
             finally:
                 countUntilTimeout += 1
-        retu
-
-
-False
+        return False

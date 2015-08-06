@@ -1,3 +1,5 @@
+from BAL.Header.Response.ParamBuildResponse import Rely
+
 __author__ = 'tom1231'
 from BAL.Header.Requests.relayRequest import RelayRequest
 from BAL.Interfaces.Device import Device
@@ -18,3 +20,5 @@ class RiCRelay(Device):
         else:
             self._output.write(RelayRequest(self._relayNum, 0).dataTosend())
         return RelayResponse(True)
+
+    def getType(self): return Rely

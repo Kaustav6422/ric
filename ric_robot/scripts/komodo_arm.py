@@ -160,7 +160,7 @@ def komodo_arm():
        msg.velocity.append(0.0)
        msg.effort.append(0.0)
        rospy.Subscriber("/"+ns+"/elevator_controller/state", dxl_JointState, elev_callback)
-       elevpub = rospy.Publisher("/"+ns+"/elevator_controller/command", Float64)
+       elevpub = rospy.Publisher("/"+ns+"/elevator_controller/command", Float64, queue_size=1)
        set_serv = rospy.Service("/"+ns+"/elevator_controller/set_position", set_elevator, handle_elev_set)
        home_serv = rospy.Service("/"+ns+"/elevator_controller/home", home_elevator, handle_elev_home)
        rospy.Subscriber("/"+ns+"/elevator_controller/pos_command", ric_elevator_command, epos_callback)
@@ -172,7 +172,7 @@ def komodo_arm():
     rospy.Subscriber("/"+ns+"/left_finger_controller/state", dxl_JointState, lf_callback)
     rospy.Subscriber("/"+ns+"/right_finger_controller/state", dxl_JointState, rf_callback)
     rospy.Subscriber("/"+ns+"/wrist_controller/state", dxl_JointState, wr_callback)
-    pub = rospy.Publisher('joint_states', JointState)
+    pub = rospy.Publisher('joint_states', JointState, queue_size=1)
    
     while not rospy.is_shutdown():
     	msg.header.stamp = rospy.Time.now()

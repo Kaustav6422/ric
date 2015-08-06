@@ -19,7 +19,7 @@
   
   
   
-  <group ns="komodo_$(arg id)">
+   <group ns="komodo_$(arg id)"> 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
     
     <param name="have_elevator" type="bool" value="$(arg have_elevator)" />
@@ -28,10 +28,10 @@
     
     <include file="$(find ric_robot)/launch/komodo_arm.launch">
       <arg name="have_elevator" value="$(arg have_elevator)" />
-    </include> 
+ </include> 
     
     
-  </group>
+   </group> 
   
 </launch>
 

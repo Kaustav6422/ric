@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Sun Aug  2 14:31:00 2015
+# Created: Thu Aug  6 16:27:41 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -131,6 +131,8 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.setObjectName(_fromUtf8("menuExternal_Device"))
         self.menuOther = QtGui.QMenu(self.menuAdd_Device)
         self.menuOther.setObjectName(_fromUtf8("menuOther"))
+        self.menuTeleoperation = QtGui.QMenu(self.menuOther)
+        self.menuTeleoperation.setObjectName(_fromUtf8("menuTeleoperation"))
         self.menuHelp = QtGui.QMenu(self.menubar)
         self.menuHelp.setObjectName(_fromUtf8("menuHelp"))
         self.menuTools = QtGui.QMenu(self.menubar)
@@ -198,6 +200,8 @@ class Ui_MainWindow(object):
         self.actionPPM_Reader.setObjectName(_fromUtf8("actionPPM_Reader"))
         self.actionSet_parameters = QtGui.QAction(MainWindow)
         self.actionSet_parameters.setObjectName(_fromUtf8("actionSet_parameters"))
+        self.actionKeyboard = QtGui.QAction(MainWindow)
+        self.actionKeyboard.setObjectName(_fromUtf8("actionKeyboard"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -224,9 +228,11 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionUSB_Camera)
         self.menuExternal_Device.addAction(self.actionOPENNI)
         self.menuExternal_Device.addAction(self.actionHakoyo)
+        self.menuTeleoperation.addAction(self.actionKeyboard)
         self.menuOther.addAction(self.actionRobot_Model)
         self.menuOther.addAction(self.actionSLAM)
         self.menuOther.addAction(self.actionPPM_Reader)
+        self.menuOther.addAction(self.menuTeleoperation.menuAction())
         self.menuAdd_Device.addAction(self.menuRiC_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuExternal_Device.menuAction())
         self.menuAdd_Device.addAction(self.menuOther.menuAction())
@@ -272,6 +278,7 @@ class Ui_MainWindow(object):
         self.menuClose_Loop_Drive.setTitle(_translate("MainWindow", "Close Loop Drive", None))
         self.menuExternal_Device.setTitle(_translate("MainWindow", "External Device", None))
         self.menuOther.setTitle(_translate("MainWindow", "Other", None))
+        self.menuTeleoperation.setTitle(_translate("MainWindow", "Teleoperation", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
         self.menuTools.setTitle(_translate("MainWindow", "Tools", None))
         self.actionNew.setText(_translate("MainWindow", "New", None))
@@ -309,5 +316,6 @@ class Ui_MainWindow(object):
         self.actionRemote_robot_launch.setText(_translate("MainWindow", "Remote robot launch", None))
         self.actionPPM_Reader.setText(_translate("MainWindow", "PPM Reader", None))
         self.actionSet_parameters.setText(_translate("MainWindow", "Set parameters", None))
+        self.actionKeyboard.setText(_translate("MainWindow", "Keyboard", None))
 
 import resource_rc

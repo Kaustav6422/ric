@@ -23,6 +23,7 @@ ROBOT_MODEL = 19
 SLAM = 20
 Keyboard = 21
 PPMReader = 22
+JOYSTICK = 23
 
 
 

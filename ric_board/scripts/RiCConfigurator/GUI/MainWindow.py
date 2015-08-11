@@ -1,5 +1,6 @@
 import socket
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
+from BAL.Devices.joystickTeleop import JoystickTeleop
 from GUI.ParamManager import ParamManager
 
 __author__ = 'tom1231'
@@ -29,7 +30,8 @@ from BAL.Devices.Switch import Switch
 from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
-    OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM, Keyboard
+    OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM, Keyboard, \
+    JOYSTICK
 from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 
@@ -40,6 +42,7 @@ import pickle
 from os import system
 import subprocess
 import re
+
 
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
@@ -87,6 +90,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionPPM_Reader.triggered.connect(self.addPPmReader)
         self.actionSet_parameters.triggered.connect(self.paramManager)
         self.actionKeyboard.triggered.connect(self.addKeyboard)
+        self.actionJoystick.triggered.connect(self.addJoystick)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -174,8 +178,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         pkg = rospkg.RosPack().get_path('ric_board')
         path = QFileDialog.getOpenFileName(self, self.tr("Load File"), "%s/setup" % pkg, self.tr("Hex files (*.hex)"))
         exitStatus = system("%s/setup/board_loader --mcu=mk20dx256 -sv %s" % (pkg, path))
-        if exitStatus > 0: QMessageBox.critical(self, "Error", "Could not build RiCBoard.")
-        else: QMessageBox.information(self, "Done", "Firmware successfully updated.")
+        if exitStatus > 0:
+            QMessageBox.critical(self, "Error", "Could not build RiCBoard.")
+        else:
+            QMessageBox.information(self, "Done", "Firmware successfully updated.")
 
     def new(self):
         self.interruptHandler()
@@ -242,9 +248,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nameSpace.setText(self._ns)
 
     def launch(self):
-        # args=["gnome-terminal", "--command=roslaunch ric_board %s.launch" % self._fileName], shell=True
         subprocess.Popen(shlex.split("gnome-terminal --command='roslaunch ric_board %s.launch'" % self._fileName))
-
 
     def load(self):
         pkg = rospkg.RosPack().get_path('ric_board')
@@ -347,6 +351,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == Keyboard:
                     self.currentShowDev = KeyboardTeleop(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
+                elif dev['type'] == JOYSTICK:
+                    self.currentShowDev = JoystickTeleop(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -356,7 +363,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.havePPM = True
                 if self.currentShowDev.getDevType() == GPS:
                     self.haveGPS = True
-                if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
+                if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (
+                    self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
                     self.haveCloseLoop = True
                     self.motors.append(self.currentShowDev.getName())
                 if self.currentShowDev.getDevType() == OPEN_LOP:
@@ -378,10 +386,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             QMessageBox.critical(self, "File error", "Can not save file without a name.")
             return
         if not self.override:
-            ans = QMessageBox.question(self, "Override", "Do you want to override this file", QMessageBox.Yes | QMessageBox.No)
+            ans = QMessageBox.question(self, "Override", "Do you want to override this file",
+                                       QMessageBox.Yes | QMessageBox.No)
             if ans == QMessageBox.Yes:
                 self.override = True
-            else: return
+            else:
+                return
 
         parent = self.root
         if self._ns != '':
@@ -402,27 +412,39 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         initDiffCloseFour = '0'
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
-        toSave.write("CON_PORT: %s\n" % str(self.ConPortList.currentText()))
+        if str(self.ConPortList.currentText()) != '':
+            toSave.write("CON_PORT: %s\n" % str(self.ConPortList.currentText()))
+        else:
+            toSave.write("CON_PORT: RiCBoard\n")
         toSave.write("FILE_NAME: %s\n" % self._fileName)
         for dev in self.data:
             if dev.getDevType() == EX_DEV:
-                #if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
-                #else: dev.saveToFile(parent)
-		dev.saveToFile(parent)
-            else: dev.saveToFile(toSave)
+                # if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
+                # else: dev.saveToFile(parent)
+                dev.saveToFile(parent)
+            else:
+                dev.saveToFile(toSave)
 
             if dev.getDevType() == DIFF_OPEN: initDiffOpen = '1'
             if dev.getDevType() == DIFF_CLOSE: initDiffClose = '1'
             if dev.getDevType() == DIFF_CLOSE_FOUR: initDiffCloseFour = '1'
 
-        if self.haveIMU: toSave.write('IMU_INIT: 1' + '\n')
-        else: toSave.write('IMU_INIT: 0' + '\n')
-        if self.haveGPS: toSave.write('GPS_INIT: 1' + '\n')
-        else: toSave.write('GPS_INIT: 0' + '\n')
-        if self.havePPM: toSave.write('PPM_INIT: 1' + '\n')
-        else: toSave.write('PPM_INIT: 0' + '\n')
-        if self.haveBattery: toSave.write('BAT_INIT: 1' + '\n')
-        else: toSave.write('BAT_INIT: 0' + '\n')
+        if self.haveIMU:
+            toSave.write('IMU_INIT: 1' + '\n')
+        else:
+            toSave.write('IMU_INIT: 0' + '\n')
+        if self.haveGPS:
+            toSave.write('GPS_INIT: 1' + '\n')
+        else:
+            toSave.write('GPS_INIT: 0' + '\n')
+        if self.havePPM:
+            toSave.write('PPM_INIT: 1' + '\n')
+        else:
+            toSave.write('PPM_INIT: 0' + '\n')
+        if self.haveBattery:
+            toSave.write('BAT_INIT: 1' + '\n')
+        else:
+            toSave.write('BAT_INIT: 0' + '\n')
         toSave.write('DIFF_INIT: ' + initDiffClose + '\n')
         toSave.write('DIFF_INIT_OP: ' + initDiffOpen + '\n')
         toSave.write('DIFF_CLOSE_FOUR: ' + initDiffCloseFour + '\n')
@@ -433,7 +455,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         toSave.write('relayNum: ' + str(Relay.relayCount) + '\n')
         toSave.write('URFNum: ' + str(Urf.urfCount) + '\n')
         toSave.write('openLoopNum: ' + str(OpenLoop.openLoopNum) + '\n')
-
 
         SubElement(parent, 'rosparam', {
             'file': '$(find ric_board)/config/' + self._fileName + '.yaml',
@@ -463,6 +484,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
         self.pushButton_2.setEnabled(True)
 
+    def addJoystick(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = JoystickTeleop(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
+
     def addKeyboard(self):
         self.interruptHandler()
         self.newDevMode = True
@@ -476,7 +504,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.currentShowDev = PPMReader(self.DevFrame, self.data)
         self.currentShowDev.showDetails()
         self.pushButton.clicked.connect(self.addDevToList)
-        
+
     def addSLAM(self):
         self.interruptHandler()
         self.newDevMode = True
@@ -799,7 +827,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.havePPM = True
             if self.currentShowDev.getDevType() == GPS:
                 self.haveGPS = True
-            if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
+            if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (
+                self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
                 self.haveCloseLoop = True
                 self.motors.append(self.currentShowDev.getName())
             if self.currentShowDev.getDevType() == OPEN_LOP:

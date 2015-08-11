@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<launch>
+	<arg name="maxspeed" default='1'/>  
+	<arg name="boost" default='2'/>  
+	<arg name="topic" default='diff'/>  
+	<node name="joystick_teleop" output="screen" pkg="ric_base_station" type="Program.py" args="$(arg maxspeed) $(arg boost) $(arg topic)"/>
+</launch>

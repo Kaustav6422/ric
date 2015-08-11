@@ -8,6 +8,7 @@ from geometry_msgs.msg import Twist
 
 import sys, select, termios, tty
 
+
 msg = """
 Reading from the keyboard  and Publishing to Twist!
 ---------------------------

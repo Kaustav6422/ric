@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Thu Aug  6 16:27:41 2015
+# Created: Mon Aug 10 16:26:23 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -202,6 +202,8 @@ class Ui_MainWindow(object):
         self.actionSet_parameters.setObjectName(_fromUtf8("actionSet_parameters"))
         self.actionKeyboard = QtGui.QAction(MainWindow)
         self.actionKeyboard.setObjectName(_fromUtf8("actionKeyboard"))
+        self.actionJoystick = QtGui.QAction(MainWindow)
+        self.actionJoystick.setObjectName(_fromUtf8("actionJoystick"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -229,6 +231,7 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionOPENNI)
         self.menuExternal_Device.addAction(self.actionHakoyo)
         self.menuTeleoperation.addAction(self.actionKeyboard)
+        self.menuTeleoperation.addAction(self.actionJoystick)
         self.menuOther.addAction(self.actionRobot_Model)
         self.menuOther.addAction(self.actionSLAM)
         self.menuOther.addAction(self.actionPPM_Reader)
@@ -317,5 +320,6 @@ class Ui_MainWindow(object):
         self.actionPPM_Reader.setText(_translate("MainWindow", "PPM Reader", None))
         self.actionSet_parameters.setText(_translate("MainWindow", "Set parameters", None))
         self.actionKeyboard.setText(_translate("MainWindow", "Keyboard", None))
+        self.actionJoystick.setText(_translate("MainWindow", "Joystick", None))
 
 import resource_rc

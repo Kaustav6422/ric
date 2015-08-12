@@ -77,14 +77,16 @@ include_directories(include
 
 ## Declare a cpp executable
 add_executable(ric_node src/ric_node.cpp)
-
+add_executable(ric_node2 src/ric_node2.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 add_dependencies(ric_node ${PROJECT_NAME}_generate_messages_cpp)
-
+add_dependencies(ric_node2 ${PROJECT_NAME}_generate_messages_cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(ric_node
    ${catkin_LIBRARIES}
 )
-
+target_link_libraries(ric_node2
+   ${catkin_LIBRARIES}
+)
 

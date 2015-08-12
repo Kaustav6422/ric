@@ -12,56 +12,56 @@ from std_msgs.msg import Float64
 
 def br_callback(data):       
     global msg,ns
-    msg.name[0]=ns+"_"+data.name
+    msg.name[0]=data.name
     msg.position[0]=data.current_pos
     msg.velocity[0]=data.velocity
     msg.effort[0]=data.load
 
 def sh_callback(data):       
     global msg,ns
-    msg.name[1]=ns+"_"+data.name
+    msg.name[1]=data.name
     msg.position[1]=data.current_pos
     msg.velocity[1]=data.velocity
     msg.effort[1]=data.load
 
 def e1_callback(data):       
     global msg,ns
-    msg.name[2]=ns+"_"+data.name
+    msg.name[2]=data.name
     msg.position[2]=data.current_pos
     msg.velocity[2]=data.velocity
     msg.effort[2]=data.load
 
 def e2_callback(data):       
     global msg,ns
-    msg.name[3]=ns+"_"+data.name
+    msg.name[3]=data.name
     msg.position[3]=data.current_pos
     msg.velocity[3]=data.velocity
     msg.effort[3]=data.load
 
 def wr_callback(data):       
     global msg,ns
-    msg.name[4]=ns+"_"+data.name
+    msg.name[4]=data.name
     msg.position[4]=data.current_pos
     msg.velocity[4]=data.velocity
     msg.effort[4]=data.load
 
 def lf_callback(data):       
     global msg,ns
-    msg.name[5]=ns+"_"+data.name
+    msg.name[5]=data.name
     msg.position[5]=data.current_pos
     msg.velocity[5]=data.velocity
     msg.effort[5]=data.load
 
 def rf_callback(data):       
     global msg,ns
-    msg.name[6]=ns+"_"+data.name
+    msg.name[6]=data.name
     msg.position[6]=data.current_pos
     msg.velocity[6]=data.velocity
     msg.effort[6]=data.load
 
 def elev_callback(data):       
     global msg,pre_pos,pre_epos,final_epos,ns
-    msg.name[7]=ns+"_"+data.name
+    msg.name[7]=data.name
     epos=data.current_pos*elev_rad2m
     msg.velocity[7]=data.velocity*elev_rad2m
     msg.effort[7]=data.load

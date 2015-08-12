@@ -19,7 +19,8 @@
 
     <rosparam file="$(find ric_robot)/config/komodo_arm.yaml" command="load"/>
     <rosparam file="$(find ric_robot)/config/komodo_arm_joints_trajectory_controller.yaml" command="load"/>
-    
+     <rosparam file="$(find ric_robot)/config/komodo_gripper_joints_trajectory_controller.yaml" command="load"/>
+        
 <group if="$(arg have_elevator)">
   <node name="arm_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
@@ -42,10 +43,7 @@
                 shoulder_controller
 		elbow1_controller
 		elbow2_controller
-		wrist_controller
-		left_finger_controller
-		right_finger_controller
-		elevator_controller"
+		wrist_controller"
                 output="screen"/>
 </group>
 
@@ -70,21 +68,25 @@
                 shoulder_controller
 		elbow1_controller
 		elbow2_controller
-		wrist_controller
-		left_finger_controller
-		right_finger_controller"
+		wrist_controller"
                 output="screen"/>
           
 </group>
 
   
-  
+     <node name="gripper_controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                komodo_gripper_controller
+		left_finger_controller
+		right_finger_controller"
+                output="screen"/> 
   
   
 
   
   
 
-<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> 
-
+<!--<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> -->
+<node name="komodo_arm" pkg="ric_robot" type="komodo_arm2.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> 
 </launch>

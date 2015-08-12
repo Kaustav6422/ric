@@ -40,7 +40,7 @@ class KeyboardTeleop(DeviceFrame):
         })
         SubElement(element, 'arg', {
             'name': 'topic',
-            'value': '%s/command' % self._cmd
+            'value': self._cmd
         })
 
     def toDict(self):

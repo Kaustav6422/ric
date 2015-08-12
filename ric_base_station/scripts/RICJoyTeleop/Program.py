@@ -17,19 +17,22 @@ class Program:
     def __init__(self):
         self._axes = [0.0, 0.0]
         self._enable = False
-        self._maxSpeed = float(sys.argv[1])
-        self._maxSpeedWithBoot = float(sys.argv[2])
-        self._factor = self._maxSpeed
+        self._maxSpeedLinear = float(sys.argv[1])
+        self._maxSpeedAngular = float(sys.argv[5])
+        self._scale = float(sys.argv[2])
+        self._factor = 1
         self._lock = RLock()
 
         rospy.init_node('ric_joyTeleop')
-        self._pub = rospy.Publisher('%s/command' % sys.argv[3], Twist, queue_size=1)
+        self._pub = rospy.Publisher('%s' % sys.argv[3], Twist, queue_size=1)
 
         rospy.loginfo("listen to %s" % self._pub.name)
 
         Thread(target=self.listenToJoystick, args=()).start()
 
-        rate = rospy.Rate(20)
+        pubHz = int(sys.argv[4])
+
+        rate = rospy.Rate(pubHz)
         try:
             while not rospy.is_shutdown():
                 if self.isEnable():
@@ -55,11 +58,11 @@ class Program:
 
     def getLeftAndRightAxes(self):
         with self._lock:
-            return self._axes[LEFT_RIGHT_NUM] * self.getFactor()
+            return self._axes[LEFT_RIGHT_NUM] * self.getMaxSpeedAngular() * self.getFactor()
 
     def getUpAndDownAxes(self):
         with self._lock:
-            return self._axes[UP_DOWN_NUM] * self.getFactor()
+            return self._axes[UP_DOWN_NUM] * self.getMaxSpeedLinear() * self.getFactor()
 
     def setEnable(self, newVal):
         with self._lock:
@@ -76,6 +79,14 @@ class Program:
     def getFactor(self):
         with self._lock:
             return self._factor
+
+    def getMaxSpeedLinear(self):
+        with self._lock:
+            return self._maxSpeedLinear
+
+    def getMaxSpeedAngular(self):
+        with self._lock:
+            return self._maxSpeedAngular
 
     def listenToJoystick(self):
         pygame.init()
@@ -100,13 +111,13 @@ class Program:
 
             elif event.type == JOYBUTTONDOWN:
                 if event.dict['button'] == BOOST_SPEED_BUTTON:
-                    self.setFactor(self._maxSpeedWithBoot)
+                    self.setFactor(self._scale)
                 elif event.dict['button'] == ENABLE_BUTTON:
                     self.setEnable(True)
 
             elif event.type == JOYBUTTONUP:
                 if event.dict['button'] == BOOST_SPEED_BUTTON:
-                    self.setFactor(self._maxSpeed)
+                    self.setFactor(1.0)
                 elif event.dict['button'] == ENABLE_BUTTON:
                     self.setEnable(False)
                     self.setLeftAndRightAxes(0.0)

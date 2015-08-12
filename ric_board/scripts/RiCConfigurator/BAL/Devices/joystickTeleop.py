@@ -8,17 +8,23 @@ class JoystickTeleop(DeviceFrame):
     def __init__(self, frame, data):
         DeviceFrame.__init__(self, EX_DEV, frame, data)
         self._maxSpeed = '1'
+        self._maxSpeedAngular = '0.5'
         self._boost = '2'
-        self._topic = 'diff'
+        self._topic = 'diff/command'
+        self._pubHz = '20'
 
     def showDetails(self, items=None):
         self.maxSpeed = QLineEdit(self._maxSpeed)
+        self.maxSpeedAngular = QLineEdit(self._maxSpeedAngular)
         self.boost = QLineEdit(self._boost)
         self.topic = QLineEdit(self._topic)
+        self.pubHz = QLineEdit(self._pubHz)
 
-        self._frame.layout().addRow(QLabel('Differential drive name: '), self.topic)
-        self._frame.layout().addRow(QLabel('Max Speed: '), self.maxSpeed)
-        self._frame.layout().addRow(QLabel('Boost to max speed: '), self.boost)
+        self._frame.layout().addRow(QLabel('Publish Hz: '), self.pubHz)
+        self._frame.layout().addRow(QLabel('Differential drive topic: '), self.topic)
+        self._frame.layout().addRow(QLabel('Max Speed linear: '), self.maxSpeed)
+        self._frame.layout().addRow(QLabel('Max Speed angular: '), self.maxSpeedAngular)
+        self._frame.layout().addRow(QLabel('Scale: '), self.boost)
 
     def add(self):
         if not self.nameIsValid():
@@ -32,12 +38,16 @@ class JoystickTeleop(DeviceFrame):
         self._maxSpeed = str(self.maxSpeed.text())
         self._boost = str(self.boost.text())
         self._topic = str(self.topic.text())
+        self._pubHz = str(self.pubHz.text())
+        self._maxSpeedAngular = str(self.maxSpeedAngular.text())
         self._isValid = True
 
     def printDetails(self):
-        self._frame.layout().addRow(QLabel('Differential drive name: '), QLabel(self._topic))
-        self._frame.layout().addRow(QLabel('Max Speed: '), QLabel(self._maxSpeed))
-        self._frame.layout().addRow(QLabel('Boost to max speed: '), QLabel(self._boost))
+        self._frame.layout().addRow(QLabel('Publish Hz: '), QLabel(self._pubHz))
+        self._frame.layout().addRow(QLabel('Differential drive topic: '), QLabel(self._topic))
+        self._frame.layout().addRow(QLabel('Max Speed linear: '), QLabel(self._maxSpeed))
+        self._frame.layout().addRow(QLabel('Max Speed angular: '), QLabel(self._maxSpeedAngular))
+        self._frame.layout().addRow(QLabel('Scale: '), QLabel(self._boost))
 
     def getName(self):
         return 'joystick_teleop'
@@ -49,6 +59,8 @@ class JoystickTeleop(DeviceFrame):
         data['maxSpeed'] = self._maxSpeed
         data['boost'] = self._boost
         data['topic'] = self._topic
+        data['maxSpeedAngular'] = self._maxSpeedAngular
+        data['pubHz'] = self._pubHz
 
         return data
 
@@ -56,6 +68,10 @@ class JoystickTeleop(DeviceFrame):
         self._maxSpeed = data['maxSpeed']
         self._boost = data['boost']
         self._topic = data['topic']
+        if data.has_key('maxSpeedAngular'):
+            self._maxSpeedAngular = data['maxSpeedAngular']
+        if data.has_key('maxSpeedAngular'):
+            self._pubHz = data['pubHz']
 
     def saveToFile(self, parent):
         element = SubElement(parent, 'include', {
@@ -75,4 +91,14 @@ class JoystickTeleop(DeviceFrame):
         SubElement(element, 'arg', {
             'name': 'topic',
             'value': self._topic
+        })
+
+        SubElement(element, 'arg', {
+            'name': 'pubHz',
+            'value': self._pubHz
+        })
+
+        SubElement(element, 'arg', {
+            'name': 'maxSpeedAngular',
+            'value': self._maxSpeedAngular
         })

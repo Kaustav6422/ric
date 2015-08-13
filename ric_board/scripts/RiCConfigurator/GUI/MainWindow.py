@@ -36,6 +36,7 @@ from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 
 from PyQt4.QtGui import *
+from PyQt4.QtCore import *
 from Schemes.main import Ui_MainWindow
 import webbrowser
 import pickle
@@ -143,6 +144,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.haveDiff = False
         self.haveReader = False
 
+        self.diffEnable = False
+
         self.editMode = False
         self.listMode = False
         self.newDevMode = False
@@ -237,6 +240,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.haveOpenLoop = False
         self.haveDiff = False
         self.haveReader = False
+
+        self.diffEnable = False
 
         self.editMode = False
         self.listMode = False
@@ -372,6 +377,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.motors.append(self.currentShowDev.getName())
                 if self.currentShowDev.getDevType() == DIFF_CLOSE or self.currentShowDev.getDevType() == DIFF_OPEN or self.currentShowDev.getDevType() == DIFF_CLOSE_FOUR:
                     self.haveDiff = True
+                    self.diffEnable = True
                 self.devList.addItem(QListWidgetItem(self.currentShowDev.getName()))
                 self.data.append(self.currentShowDev)
                 self.currentShowDev = None
@@ -397,7 +403,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self._ns != '':
             parent = SubElement(self.root, 'group', {'ns': self._ns})
         for dev in self.data:
-            if dev.getDevType() != EX_DEV:
+            if dev.getDevType() != EX_DEV and dev.isToSave():
                 at = {
                     'pkg': 'ric_board',
                     'type': 'Start.py',
@@ -410,6 +416,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         initDiffClose = '0'
         initDiffOpen = '0'
         initDiffCloseFour = '0'
+        initIMU = '0'
+        initGPS = '0'
+        initPPM = '0'
+        initBAT = '0'
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
         if str(self.ConPortList.currentText()) != '':
@@ -418,33 +428,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             toSave.write("CON_PORT: RiCBoard\n")
         toSave.write("FILE_NAME: %s\n" % self._fileName)
         for dev in self.data:
-            if dev.getDevType() == EX_DEV:
-                # if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
-                # else: dev.saveToFile(parent)
-                dev.saveToFile(parent)
-            else:
-                dev.saveToFile(toSave)
+            if dev.isToSave():
+                if dev.getDevType() == EX_DEV:
+                    # if dev.toDict()['type'] == ROBOT_MODEL: dev.saveToFile(self.root)
+                    # else: dev.saveToFile(parent)
+                    dev.saveToFile(parent)
+                else:
+                    dev.saveToFile(toSave)
 
-            if dev.getDevType() == DIFF_OPEN: initDiffOpen = '1'
-            if dev.getDevType() == DIFF_CLOSE: initDiffClose = '1'
-            if dev.getDevType() == DIFF_CLOSE_FOUR: initDiffCloseFour = '1'
+                    if dev.getDevType() == DIFF_OPEN: initDiffOpen = '1'
+                    elif dev.getDevType() == DIFF_CLOSE: initDiffClose = '1'
+                    elif dev.getDevType() == DIFF_CLOSE_FOUR: initDiffCloseFour = '1'
+                    elif dev.getDevType() == IMU: initIMU = '1'
+                    elif dev.getDevType() == GPS: initGPS = '1'
+                    elif dev.getDevType() == PPM: initPPM = '1'
+                    elif dev.getDevType() == BATTERY: initBAT = '1'
 
-        if self.haveIMU:
-            toSave.write('IMU_INIT: 1' + '\n')
-        else:
-            toSave.write('IMU_INIT: 0' + '\n')
-        if self.haveGPS:
-            toSave.write('GPS_INIT: 1' + '\n')
-        else:
-            toSave.write('GPS_INIT: 0' + '\n')
-        if self.havePPM:
-            toSave.write('PPM_INIT: 1' + '\n')
-        else:
-            toSave.write('PPM_INIT: 0' + '\n')
-        if self.haveBattery:
-            toSave.write('BAT_INIT: 1' + '\n')
-        else:
-            toSave.write('BAT_INIT: 0' + '\n')
+        toSave.write('IMU_INIT: ' + initIMU + '\n')
+        toSave.write('GPS_INIT: ' + initGPS + '\n')
+        toSave.write('PPM_INIT: ' + initPPM + '\n')
+        toSave.write('BAT_INIT: ' + initBAT + '\n')
         toSave.write('DIFF_INIT: ' + initDiffClose + '\n')
         toSave.write('DIFF_INIT_OP: ' + initDiffOpen + '\n')
         toSave.write('DIFF_CLOSE_FOUR: ' + initDiffCloseFour + '\n')
@@ -701,8 +704,38 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.listMode = True
         self.currentShowDev = self.data[index]
         self.currentShowDev.printDetails()
+
         self.Edit.clicked.connect(self.devEdit)
         self.Delete.clicked.connect(self.devDelete)
+        self.saveStatus.clicked.connect(self.changeDevSaveStatus)
+
+    def changeDevSaveStatus(self):
+        self.interruptHandler()
+        index = self.devList.currentRow()
+        self.currentShowDev = self.data[index]
+
+        if self.currentShowDev.getDevType() in [CLOSE_LOP_ONE, CLOSE_LOP_TWO, OPEN_LOP] and self.diffEnable:
+            QMessageBox.critical(self, "Error", "Can't disable a motor while differential drive is present")
+            return
+
+        motorCount = 0
+        if self.currentShowDev.getDevType() in [DIFF_CLOSE, DIFF_OPEN, DIFF_CLOSE_FOUR] and not self.diffEnable:
+            for dev in self.data:
+                if dev.getDevType() in [CLOSE_LOP_ONE, CLOSE_LOP_TWO, OPEN_LOP] and dev.isToSave(): motorCount += 1
+
+            if (motorCount <= 1) or (motorCount < 4 and self.currentShowDev.getDevType() == CLOSE_LOP_ONE):
+                QMessageBox.critical(self, "Error", "Can't enable  differential drive motor while motors are disable")
+                return
+            
+        if self.currentShowDev.getDevType() in [DIFF_CLOSE, DIFF_OPEN, DIFF_CLOSE_FOUR]:
+            self.diffEnable = not self.currentShowDev.isToSave()
+
+        if self.currentShowDev.isToSave():
+            self.devList.item(index).setForeground(QColor(255, 0, 0))
+            self.currentShowDev.setToSave(False)
+        else:
+            self.devList.item(index).setForeground(QColor(0, 0, 0))
+            self.currentShowDev.setToSave(True)
 
     def namespaceEven(self, text):
         self._ns = str(text)
@@ -748,6 +781,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.motors.remove(self.currentShowDev.getName())
         if self.currentShowDev.getDevType() == DIFF_CLOSE or self.currentShowDev.getDevType() == DIFF_OPEN or self.currentShowDev.getDevType() == DIFF_CLOSE_FOUR:
             self.haveDiff = False
+            self.diffEnable = False
 
         self.data.remove(self.currentShowDev)
         self.devList.takeItem(self.devList.currentRow())
@@ -789,6 +823,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.listMode:
             self.Edit.clicked.disconnect(self.devEdit)
             self.Delete.clicked.disconnect(self.devDelete)
+            self.saveStatus.clicked.disconnect(self.changeDevSaveStatus)
             self.listMode = False
         if self.editMode:
             self.pushButton.clicked.disconnect(self.editList)
@@ -818,6 +853,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def addDevToList(self):
         self.currentShowDev.add()
+
         if self.currentShowDev.isValid():
             if self.currentShowDev.getDevType() == BATTERY:
                 self.haveBattery = True
@@ -836,7 +872,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.motors.append(self.currentShowDev.getName())
             if self.currentShowDev.getDevType() == DIFF_CLOSE or self.currentShowDev.getDevType() == DIFF_OPEN or self.currentShowDev.getDevType() == DIFF_CLOSE_FOUR:
                 self.haveDiff = True
+                self.diffEnable = True
+
             self.devList.addItem(QListWidgetItem(self.currentShowDev.getName()))
+            # self.devList.item(0).setForeground(QColor(255, 0, 0))
             self.data.append(self.currentShowDev)
             self.removeAllFields()
             self.currentShowDev = None

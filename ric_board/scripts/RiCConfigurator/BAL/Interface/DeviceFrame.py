@@ -35,6 +35,8 @@ class DeviceFrame():
         self._frame = frame
         self._isValid = False
 
+        self._toSave = True
+
     def nameIsValid(self):
         for dev in self._otherDevs:
             if dev != self and dev.getName() == self.getName(): return False
@@ -48,6 +50,12 @@ class DeviceFrame():
 
     def setType(self, devType):
         self._type = devType
+
+    def isToSave(self):
+        return self._toSave
+
+    def setToSave(self, val):
+        self._toSave = val
 
     def saveToFile(self, file):
         raise NotImplementedError

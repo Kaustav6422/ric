@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Mon Aug 10 16:26:23 2015
+# Created: Thu Aug 13 14:00:17 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -108,6 +108,9 @@ class Ui_MainWindow(object):
         self.ConPortList = QtGui.QComboBox(self.centralwidget)
         self.ConPortList.setGeometry(QtCore.QRect(790, 10, 121, 21))
         self.ConPortList.setObjectName(_fromUtf8("ConPortList"))
+        self.saveStatus = QtGui.QPushButton(self.centralwidget)
+        self.saveStatus.setGeometry(QtCore.QRect(50, 630, 171, 27))
+        self.saveStatus.setObjectName(_fromUtf8("saveStatus"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 923, 25))
@@ -272,6 +275,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Launch", None))
         self.pushButton_2.setShortcut(_translate("MainWindow", "Ctrl+L", None))
         self.label_5.setText(_translate("MainWindow", "Port:", None))
+        self.saveStatus.setText(_translate("MainWindow", "run/don\'t run on start", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
         self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Board Device", None))

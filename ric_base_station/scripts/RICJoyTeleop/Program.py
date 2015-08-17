@@ -39,7 +39,7 @@ class Program:
                     msg = Twist()
 
                     msg.linear.x = -self.getUpAndDownAxes()
-                    msg.angular.z = self.getLeftAndRightAxes()
+                    msg.angular.z = -self.getLeftAndRightAxes()
 
                     self._pub.publish(msg)
                 rate.sleep()
@@ -122,6 +122,13 @@ class Program:
                     self.setEnable(False)
                     self.setLeftAndRightAxes(0.0)
                     self.setUpAndDownAxes(0.0)
+
+                    msg = Twist()
+
+                    msg.linear.x = -self.getUpAndDownAxes()
+                    msg.angular.z = -self.getLeftAndRightAxes()
+
+                    self._pub.publish(msg)
 
 
 if __name__ == '__main__':

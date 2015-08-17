@@ -31,7 +31,13 @@ class Server:
     def getDevsOnline(self, req):
         devs = MonitorDevs()
 
-        if req.req: devs = self._monitor
+        if req.req:
+            devs = self._monitor
+            index = 0
+            for dev in devs.devs:
+                motor = self._devs['motorsCl'][index]
+                dev.values = [motor.getKp(), motor.getKi(), motor.getKd()]
+                index += 1
 
         return {'devs': devs}
 

@@ -59,6 +59,8 @@ class MainWindow(QDialog, Ui_main):
             ki = float(self.devFrame.layout().itemAt(3).widget().text())
             kd = float(self.devFrame.layout().itemAt(5).widget().text())
 
+            motor.values = [kp, ki, kd]
+
             request = setParamRequest()
 
             request.dev.devName = motor.devName

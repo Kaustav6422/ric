@@ -2,7 +2,6 @@ import socket
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
 from GUI.ParamManager import ParamManager
-
 __author__ = 'tom1231'
 import rospkg
 import shlex
@@ -726,7 +725,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if (motorCount <= 1) or (motorCount < 4 and self.currentShowDev.getDevType() == CLOSE_LOP_ONE):
                 QMessageBox.critical(self, "Error", "Can't enable  differential drive motor while motors are disable")
                 return
-            
+
         if self.currentShowDev.getDevType() in [DIFF_CLOSE, DIFF_OPEN, DIFF_CLOSE_FOUR]:
             self.diffEnable = not self.currentShowDev.isToSave()
 
@@ -875,7 +874,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.diffEnable = True
 
             self.devList.addItem(QListWidgetItem(self.currentShowDev.getName()))
-            # self.devList.item(0).setForeground(QColor(255, 0, 0))
             self.data.append(self.currentShowDev)
             self.removeAllFields()
             self.currentShowDev = None

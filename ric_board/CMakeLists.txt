@@ -8,8 +8,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-sensor_msgs
-geometry_msgs
+  sensor_msgs
+  geometry_msgs
   message_generation
 )
 
@@ -94,8 +94,8 @@ IMUClib.msg
  generate_messages(
    DEPENDENCIES
    std_msgs
-sensor_msgs
-geometry_msgs
+   sensor_msgs
+   geometry_msgs
 
  )
 

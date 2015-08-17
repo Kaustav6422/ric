@@ -19,6 +19,7 @@ REV_LEFT_RIGHT = int(sys.argv[12])
 
 class Program:
     def __init__(self):
+        rospy.wait_for_service('/devsOnline')
         self._axes = [0.0, 0.0]
         self._enable = False
         self._maxSpeedLinear = float(sys.argv[1])
@@ -95,44 +96,46 @@ class Program:
     def listenToJoystick(self):
         pygame.init()
         pygame.joystick.init()
+        try:
+            joystick = pygame.joystick.Joystick(JOY_NUM)
+            joystick.init()
+            quitLoop = False
 
-        joystick = pygame.joystick.Joystick(JOY_NUM)
-        joystick.init()
-        quitLoop = False
+            while not quitLoop:
+                event = pygame.event.wait()
+                if event.type == QUIT:
+                    quitLoop = True
 
-        while not quitLoop:
-            event = pygame.event.wait()
-            if event.type == QUIT:
-                quitLoop = True
+                elif event.type == JOYAXISMOTION:
+                    if self.isEnable():
+                        data = event.dict
+                        if data['axis'] == LEFT_RIGHT_NUM:
+                            self.setLeftAndRightAxes(data['value'])
+                        elif data['axis'] == UP_DOWN_NUM:
+                            self.setUpAndDownAxes(data['value'])
 
-            elif event.type == JOYAXISMOTION:
-                if self.isEnable():
-                    data = event.dict
-                    if data['axis'] == LEFT_RIGHT_NUM:
-                        self.setLeftAndRightAxes(data['value'])
-                    elif data['axis'] == UP_DOWN_NUM:
-                        self.setUpAndDownAxes(data['value'])
+                elif event.type == JOYBUTTONDOWN:
+                    if event.dict['button'] == BOOST_SPEED_BUTTON:
+                        self.setFactor(self._scale)
+                    elif event.dict['button'] == ENABLE_BUTTON:
+                        self.setEnable(True)
 
-            elif event.type == JOYBUTTONDOWN:
-                if event.dict['button'] == BOOST_SPEED_BUTTON:
-                    self.setFactor(self._scale)
-                elif event.dict['button'] == ENABLE_BUTTON:
-                    self.setEnable(True)
+                elif event.type == JOYBUTTONUP:
+                    if event.dict['button'] == BOOST_SPEED_BUTTON:
+                        self.setFactor(1.0)
+                    elif event.dict['button'] == ENABLE_BUTTON:
+                        self.setEnable(False)
+                        self.setLeftAndRightAxes(0.0)
+                        self.setUpAndDownAxes(0.0)
 
-            elif event.type == JOYBUTTONUP:
-                if event.dict['button'] == BOOST_SPEED_BUTTON:
-                    self.setFactor(1.0)
-                elif event.dict['button'] == ENABLE_BUTTON:
-                    self.setEnable(False)
-                    self.setLeftAndRightAxes(0.0)
-                    self.setUpAndDownAxes(0.0)
+                        msg = Twist()
 
-                    msg = Twist()
+                        msg.linear.x = self.getUpAndDownAxes() * REV_UP_DOWN
+                        msg.angular.z = self.getLeftAndRightAxes() * REV_LEFT_RIGHT
 
-                    msg.linear.x = self.getUpAndDownAxes() * REV_UP_DOWN
-                    msg.angular.z = self.getLeftAndRightAxes() * REV_LEFT_RIGHT
-
-                    self._pub.publish(msg)
+                        self._pub.publish(msg)
+        except:
+            rospy.logerr("Joystick [%d] not found" % JOY_NUM)
 
 
 if __name__ == '__main__':

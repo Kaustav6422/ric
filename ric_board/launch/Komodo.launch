@@ -23,6 +23,13 @@
     <arg name="topic" value="diff_driver/command"/>
     <arg name="pubHz" value="20"/>
     <arg name="maxSpeedAngular" value="4.0"/>
+    <arg name="LEFT_RIGHT_NUM" value="0"/>
+    <arg name="UP_DOWN_NUM" value="1"/>
+    <arg name="BOOST_SPEED_BUTTON" value="5"/>
+    <arg name="ENABLE_BUTTON" value="4"/>
+    <arg name="JOY_NUM" value="0"/>
+    <arg name="REV_UP_DOWN" value="-1"/>
+    <arg name="REV_LEFT_RIGHT" value="-1"/>
   </include>
   <rosparam command="load" file="$(find ric_board)/config/Komodo.yaml"/>
 </launch>

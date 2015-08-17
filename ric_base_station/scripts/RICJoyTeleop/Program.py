@@ -7,11 +7,15 @@ import sys
 from threading import Thread, RLock
 from geometry_msgs.msg import Twist
 
-LEFT_RIGHT_NUM = 0
-UP_DOWN_NUM = 1
+LEFT_RIGHT_NUM = int(sys.argv[6])
+UP_DOWN_NUM = int(sys.argv[7])
 
-BOOST_SPEED_BUTTON = 4
-ENABLE_BUTTON = 5
+BOOST_SPEED_BUTTON = int(sys.argv[8])
+ENABLE_BUTTON = int(sys.argv[9])
+JOY_NUM = int(sys.argv[10])
+
+REV_UP_DOWN = int(sys.argv[11])
+REV_LEFT_RIGHT = int(sys.argv[12])
 
 class Program:
     def __init__(self):
@@ -38,8 +42,8 @@ class Program:
                 if self.isEnable():
                     msg = Twist()
 
-                    msg.linear.x = -self.getUpAndDownAxes()
-                    msg.angular.z = -self.getLeftAndRightAxes()
+                    msg.linear.x = self.getUpAndDownAxes() * REV_UP_DOWN
+                    msg.angular.z = self.getLeftAndRightAxes() * REV_LEFT_RIGHT
 
                     self._pub.publish(msg)
                 rate.sleep()
@@ -92,7 +96,7 @@ class Program:
         pygame.init()
         pygame.joystick.init()
 
-        joystick = pygame.joystick.Joystick(0)
+        joystick = pygame.joystick.Joystick(JOY_NUM)
         joystick.init()
         quitLoop = False
 
@@ -125,8 +129,8 @@ class Program:
 
                     msg = Twist()
 
-                    msg.linear.x = -self.getUpAndDownAxes()
-                    msg.angular.z = -self.getLeftAndRightAxes()
+                    msg.linear.x = self.getUpAndDownAxes() * REV_UP_DOWN
+                    msg.angular.z = self.getLeftAndRightAxes() * REV_LEFT_RIGHT
 
                     self._pub.publish(msg)
 

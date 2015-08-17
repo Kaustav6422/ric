@@ -26,8 +26,8 @@ closeLoop0/driverAddress: 999
 closeLoop0/channel: 1
 closeLoop0/port: 1
 closeLoop0/PIDHz: 1000
-closeLoop0/kP: 5.0
-closeLoop0/kI: 8.0
+closeLoop0/kP: 10.0
+closeLoop0/kI: 25.0
 closeLoop0/kD: 0
 closeLoop0/limit: 1.0
 closeLoop0/maxSpeed: 16.0
@@ -45,8 +45,8 @@ closeLoop1/driverAddress: 999
 closeLoop1/channel: 0
 closeLoop1/port: 2
 closeLoop1/PIDHz: 1000
-closeLoop1/kP: 5.0
-closeLoop1/kI: 8.0
+closeLoop1/kP: 10.0
+closeLoop1/kI: 25.0
 closeLoop1/kD: 0
 closeLoop1/limit: 1.0
 closeLoop1/maxSpeed: 16.0
@@ -62,7 +62,7 @@ Diff/rWheel: 0.1311
 Diff/width: 0.396
 Diff/baseLink: base_link
 Diff/odom: odom_link
-Diff/slip: 0.85
+Diff/slip: 0.80
 Diff/maxAng: 16.0
 Diff/maxLin: 16.0
 Diff/motorL: 0

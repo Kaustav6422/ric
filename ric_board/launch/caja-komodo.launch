@@ -2,10 +2,10 @@
 <launch>
   <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
   <include file="$(find ric_board)/scripts/velocity_smoother.launch">
-    <arg name="raw_cmd_vel_topic" value="diff/smooth_command"/>
-    <arg name="smooth_cmd_vel_topic" value="diff/command"/>
-    <arg name="robot_cmd_vel_topic" value="diff/command"/>
-    <arg name="odom_topic" value="diff/odometry"/>
+    <arg name="raw_cmd_vel_topic" value="diff_driver/smooth_command"/>
+    <arg name="smooth_cmd_vel_topic" value="diff_driver/command"/>
+    <arg name="robot_cmd_vel_topic" value="diff_driver/command"/>
+    <arg name="odom_topic" value="diff_driver/odometry"/>
     <arg name="SPEED_LIM_V" value="16.0"/>
     <arg name="SPEED_LIM_W" value="16.0"/>
     <arg name="ACCEL_LIM_V" value="0.3"/>

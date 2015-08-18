@@ -35,7 +35,7 @@ class RemoteLaunch(QDialog, Ui_Dialog):
             return
 
         pkg = rospkg.RosPack().get_path('ric_board')
-        subprocess.Popen(shlex.split('gnome-terminal -e "%s/scripts/envGui.sh %s %s"' % (pkg,str(self.hostIpAdd.text()),str(self.localIP.text()))))
+        subprocess.Popen(shlex.split('gnome-terminal -e "%s/scripts/envGui.sh %s %s"' % (pkg, str(self.hostIpAdd.text()), str(self.localIP.text()))))
 
     def browseLaunch(self):
         self._file = basename(str(QFileDialog.getOpenFileName(self, self.tr("Choose remote launch"), '.', self.tr("Launch file (*.launch)"))))

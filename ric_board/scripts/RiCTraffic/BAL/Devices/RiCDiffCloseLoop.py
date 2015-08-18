@@ -78,7 +78,7 @@ class RiCDiffCloseLoop(Device):
 
         velocity = Twist()
 
-        deltaTime = odomMsg.header.stamp.to_nsec() - self._prevOdom.header.stamp.to_nsec()
+        deltaTime = odomMsg.header.stamp.to_sec() - self._prevOdom.header.stamp.to_sec()
         roll, pitch, yaw = euler_from_quaternion([odomMsg.pose.pose.orientation.w, odomMsg.pose.pose.orientation.x, odomMsg.pose.pose.orientation.y, odomMsg.pose.pose.orientation.z])
         prevRoll, prevPitch, prevYaw = euler_from_quaternion([self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x, self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
 

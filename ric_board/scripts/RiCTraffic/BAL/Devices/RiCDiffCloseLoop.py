@@ -85,9 +85,7 @@ class RiCDiffCloseLoop(Device):
             [self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x,
              self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
 
-        velocity.linear.x = math.sqrt(math.pow((odomMsg.pose.pose.position.x - self._prevOdom.pose.pose.position.x),
-                                     2) + math.pow((odomMsg.pose.pose.position.y - self._prevOdom.pose.pose.position.y),
-                                                   2)) / deltaTime
+        velocity.linear.x = data[8]
         velocity.angular.z = -((yaw - prevYaw) / deltaTime)
 
         odomMsg.twist.twist = velocity

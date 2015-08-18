@@ -10,6 +10,7 @@ ODOM_THATE = 18
 # TRAN_Z = 32
 TRAN_ROT_Z = 22
 TRAN_ROT_W = 26
+LINEAR_VEL = 30
 
 class CloseDiffPublishRepose(RiCHeader):
 
@@ -23,6 +24,7 @@ class CloseDiffPublishRepose(RiCHeader):
         self._translationZ = 0.0
         self._translationRotationZ = 0.0
         self._translationRotationW = 0.0
+        self._linearVelocity = 0.0
 
     def buildRequest(self, data):
         RiCHeader.buildRequest(self, data)
@@ -66,7 +68,11 @@ class CloseDiffPublishRepose(RiCHeader):
             bytes.append(data[self.index])
             self.index += 1
         self._translationRotationW = struct.unpack('<f', bytes)[0]
-
+        bytes = bytearray()
+        while self.index < LINEAR_VEL:
+            bytes.append(data[self.index])
+            self.index += 1
+        self._linearVelocity = struct.unpack('<f', bytes)[0]
 
     def getPublishData(self):
         return self._odomX,\
@@ -76,4 +82,5 @@ class CloseDiffPublishRepose(RiCHeader):
                self._translationY,\
                self._translationZ,\
                self._translationRotationZ,\
-               self._translationRotationW
+               self._translationRotationW,\
+               self._linearVelocity

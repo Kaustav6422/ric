@@ -8,7 +8,6 @@ from BAL.Header.Requests.closeDiffRequest import CloseDiffRequest
 from BAL.Header.Requests.closeDiffSetOdomRequest import CloseDiffSetOdomRequest
 from BAL.Header.Response.ParamBuildResponse import DiffDriverCL
 
-
 __author__ = 'tom1231'
 from BAL.Interfaces.Device import Device
 from rospy import Subscriber, Service, Publisher
@@ -16,10 +15,10 @@ from ric_board.srv._set_odom import set_odom, set_odomResponse
 from tf import TransformBroadcaster
 from tf.transformations import euler_from_quaternion
 from geometry_msgs.msg import Twist, TransformStamped, Quaternion
+import math
 
 
 class RiCDiffCloseLoop(Device):
-
     def __init__(self, param, output):
         Device.__init__(self, param.getCloseDiffName(), output)
         self._baseLink = param.getCloseDiffBaseLink()
@@ -34,7 +33,8 @@ class RiCDiffCloseLoop(Device):
         self._prevOdom = None
         self._firstTimePub = True
 
-    def getType(self): return DiffDriverCL
+    def getType(self):
+        return DiffDriverCL
 
     def diffServiceCallback(self, msg):
         Thread(target=self.sendMsg, args=(msg,)).start()
@@ -51,7 +51,6 @@ class RiCDiffCloseLoop(Device):
             msg.linear.x = -self._maxLin
         # print msg.angular.z, msg.linear.x
         self._output.write(CloseDiffRequest(msg.angular.z, msg.linear.x).dataTosend())
-
 
     def setOdom(self, req):
         self._output.write(CloseDiffSetOdomRequest(req.x, req.y, req.theta).dataTosend())
@@ -79,11 +78,17 @@ class RiCDiffCloseLoop(Device):
         velocity = Twist()
 
         deltaTime = odomMsg.header.stamp.to_sec() - self._prevOdom.header.stamp.to_sec()
-        yaw, pitch, roll = euler_from_quaternion([odomMsg.pose.pose.orientation.w, odomMsg.pose.pose.orientation.x, odomMsg.pose.pose.orientation.y, odomMsg.pose.pose.orientation.z])
-        prevYaw, prevPitch, prevRollprevYaw = euler_from_quaternion([self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x, self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
+        yaw, pitch, roll = euler_from_quaternion(
+            [odomMsg.pose.pose.orientation.w, odomMsg.pose.pose.orientation.x, odomMsg.pose.pose.orientation.y,
+             odomMsg.pose.pose.orientation.z])
+        prevYaw, prevPitch, prevRollprevYaw = euler_from_quaternion(
+            [self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x,
+             self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
 
-        velocity.linear.x = (odomMsg.pose.pose.position.x - self._prevOdom.pose.pose.position.x) / deltaTime
-        velocity.angular.z = (yaw - prevYaw) / deltaTime
+        velocity.linear.x = math.sqrt(math.pow((odomMsg.pose.pose.position.x - self._prevOdom.pose.pose.position.x),
+                                     2) + math.pow((odomMsg.pose.pose.position.y - self._prevOdom.pose.pose.position.y),
+                                                   2)) / deltaTime
+        velocity.angular.z = -((yaw - prevYaw) / deltaTime)
 
         odomMsg.twist.twist = velocity
 
@@ -114,4 +119,5 @@ class RiCDiffCloseLoop(Device):
                 self._output.write(PublishRequest(DiffDriverCL, 0, False).dataTosend())
                 self._haveRightToPublish = False
                 self._firstTimePub = True
-        except: pass
+        except:
+            pass

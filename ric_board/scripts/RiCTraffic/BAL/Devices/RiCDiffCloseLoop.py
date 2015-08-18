@@ -89,7 +89,7 @@ class RiCDiffCloseLoop(Device):
 
         self._prevOdom = odomMsg
 
-        rospy.loginfo("yaw: %0.2f\t\t prevYaw: %0.2f" % (yaw, prevYaw))
+        rospy.loginfo("yaw: %0.2f\t\t roll: %0.2f \t\t pitch: %0.2f" % (yaw, roll,pitch))
 
         traMsg = TransformStamped()
         traMsg.header.frame_id = self._odom

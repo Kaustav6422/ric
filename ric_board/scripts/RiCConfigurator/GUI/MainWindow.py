@@ -1,6 +1,7 @@
 import socket
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
+from BAL.Devices.velocitySmoother import VelocitySmoother
 from GUI.ParamManager import ParamManager
 __author__ = 'tom1231'
 import rospkg
@@ -30,7 +31,7 @@ from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM, Keyboard, \
-    JOYSTICK
+    JOYSTICK, SMOOTHER
 from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 
@@ -91,6 +92,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionSet_parameters.triggered.connect(self.paramManager)
         self.actionKeyboard.triggered.connect(self.addKeyboard)
         self.actionJoystick.triggered.connect(self.addJoystick)
+        self.actionDifferential_Drive_smoother.triggered.connect(self.addDiffSmooth)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -358,6 +360,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == JOYSTICK:
                     self.currentShowDev = JoystickTeleop(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
+                elif dev['type'] == SMOOTHER:
+                    self.currentShowDev = VelocitySmoother(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -485,6 +490,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
         self.pushButton_2.setEnabled(True)
+
+    def addDiffSmooth(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = VelocitySmoother(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
 
     def addJoystick(self):
         self.interruptHandler()

@@ -10,7 +10,7 @@
 #echo -e "\e[34mFinish installing idle package..\e[0m"
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 echo -e "\e[34mInstalling additional resources...\e[0m"
-apt-get -y install chrony openssh-server expect espeak ros-indigo-joy ros-indigo-hector-slam ros-indigo-usb-cam ros-indigo-openni2* ros-indigo-hokuyo-node ros-indigo-dynamixel-motor python-pygame
+apt-get -y install chrony openssh-server expect espeak ros-indigo-joy ros-indigo-hector-slam ros-indigo-usb-cam ros-indigo-openni2* ros-indigo-hokuyo-node ros-indigo-dynamixel-motor python-pygame ros-indigo-yocs-velocity-smoother
 
 echo -e "\e[34mSyncing clock...\e[0m"
 ntpdate ntp.ubuntu.com

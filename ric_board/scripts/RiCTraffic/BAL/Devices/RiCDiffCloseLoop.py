@@ -14,6 +14,7 @@ from BAL.Interfaces.Device import Device
 from rospy import Subscriber, Service, Publisher
 from ric_board.srv._set_odom import set_odom, set_odomResponse
 from tf import TransformBroadcaster
+from tf.transformations import euler_from_quaternion
 from geometry_msgs.msg import Twist, TransformStamped, Quaternion
 
 
@@ -30,6 +31,8 @@ class RiCDiffCloseLoop(Device):
         Subscriber('%s/command' % self._name, Twist, self.diffServiceCallback, queue_size=1)
         Service('%s/setOdometry' % self._name, set_odom, self.setOdom)
         self._haveRightToPublish = False
+        self._prevOdom = None
+        self._firstTimePub = True
 
     def getType(self): return DiffDriverCL
 
@@ -68,7 +71,24 @@ class RiCDiffCloseLoop(Device):
         odomMsg.pose.pose.position.y = data[1]
         odomMsg.pose.pose.position.z = 0
         odomMsg.pose.pose.orientation = q
-        self._pub.publish(odomMsg)
+        if self._firstTimePub:
+            self._prevOdom = odomMsg
+            self._firstTimePub = False
+            return
+
+        velocity = Twist()
+
+        deltaTime = odomMsg.header.stamp.to_nsec() - self._prevOdom.header.stamp.to_nsec()
+        roll, pitch, yaw = euler_from_quaternion([odomMsg.pose.pose.orientation.w, odomMsg.pose.pose.orientation.x, odomMsg.pose.pose.orientation.y, odomMsg.pose.pose.orientation.z])
+        prevRoll, prevPitch, prevYaw = euler_from_quaternion([self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x, self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
+
+        velocity.linear.x = (odomMsg.pose.pose.position.x - self._prevOdom.pose.pose.position.x) / deltaTime
+        velocity.angular.z = (yaw - prevYaw) / deltaTime
+
+        odomMsg.twist.twist = velocity
+
+        self._prevOdom = odomMsg
+
         traMsg = TransformStamped()
         traMsg.header.frame_id = self._odom
         traMsg.header.stamp = rospy.get_rostime()
@@ -77,6 +97,8 @@ class RiCDiffCloseLoop(Device):
         traMsg.transform.translation.y = data[1]
         traMsg.transform.translation.z = 0
         traMsg.transform.rotation = q
+
+        self._pub.publish(odomMsg)
         self._broadCase.sendTransformMessage(traMsg)
 
     def checkForSubscribers(self):
@@ -91,4 +113,5 @@ class RiCDiffCloseLoop(Device):
             elif self._haveRightToPublish and (subCheck == 'None' and subTfCheck == 'None'):
                 self._output.write(PublishRequest(DiffDriverCL, 0, False).dataTosend())
                 self._haveRightToPublish = False
+                self._firstTimePub = True
         except: pass

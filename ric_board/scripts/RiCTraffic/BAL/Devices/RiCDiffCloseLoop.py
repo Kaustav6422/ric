@@ -89,14 +89,14 @@ class RiCDiffCloseLoop(Device):
 
         deltaYaw = yaw - prevYaw
 
-        rospy.loginfo("yaw: %f\t\tpevYaw: %f\t\tdeltaYaw: %f" % (yaw,prevYaw,deltaYaw))
+        # rospy.loginfo("yaw: %f\t\tpevYaw: %f\t\tdeltaYaw: %f" % (yaw,prevYaw,deltaYaw))
 
         if deltaYaw > math.pi: deltaYaw -= 2 * math.pi
         elif deltaYaw < -math.pi: deltaYaw += 2 * math.pi
 
         velocity.angular.z = -(deltaYaw / deltaTime)
 
-        rospy.loginfo("deltaYaw after check: %f\t\t angular: %f" % (deltaYaw, velocity.angular.z))
+        # rospy.loginfo("deltaYaw after check: %f\t\t angular: %f" % (deltaYaw, velocity.angular.z))
 
         odomMsg.twist.twist = velocity
 

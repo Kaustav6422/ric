@@ -86,7 +86,13 @@ class RiCDiffCloseLoop(Device):
              self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
         rospy.loginfo("SAV: %f" % (data[8] / deltaTime))
         velocity.linear.x = (data[8] / deltaTime)
-        velocity.angular.z = -((yaw - prevYaw) / deltaTime)
+
+        deltaYaw = yaw - prevYaw
+
+        if deltaYaw > 180: deltaYaw -= 180
+        elif deltaYaw < -180: deltaYaw += 180
+
+        velocity.angular.z = -(deltaYaw / deltaTime)
 
         odomMsg.twist.twist = velocity
 

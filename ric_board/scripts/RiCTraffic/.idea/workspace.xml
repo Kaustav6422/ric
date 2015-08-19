@@ -35,8 +35,8 @@
       <file leaf-file-name="RiCDiffCloseLoop.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCDiffCloseLoop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.67096776">
-              <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.4967742">
+              <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -845,8 +845,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BAL/Devices/RiCDiffCloseLoop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67096776">
-          <caret line="95" column="0" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.4967742">
+          <caret line="86" column="8" selection-start-line="86" selection-start-column="8" selection-end-line="86" selection-end-column="8" />
           <folding />
         </state>
       </provider>

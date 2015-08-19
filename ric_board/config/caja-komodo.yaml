@@ -41,7 +41,7 @@ closeLoop1/motorType: 1
 closeLoop1/encoderType: 1
 closeLoop1/direction: 1
 closeLoop1/directionE: 1
-Diff/publishHz: 50
+Diff/publishHz: 10
 Diff/name: diff_driver
 Diff/rWheel: 0.1311
 Diff/width: 0.396

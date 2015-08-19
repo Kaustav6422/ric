@@ -84,10 +84,12 @@ class RiCDiffCloseLoop(Device):
         prevYaw, prevPitch, prevRollprevYaw = euler_from_quaternion(
             [self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x,
              self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
-        
+
         velocity.linear.x = (data[8] / deltaTime)
 
         deltaYaw = yaw - prevYaw
+
+        rospy.loginfo("yaw: %f\t\tpevYaw: %f\t\tdeltaYaw: %f" % (yaw,prevYaw,deltaYaw))
 
         if deltaYaw > 180: deltaYaw -= 180
         elif deltaYaw < -180: deltaYaw += 180

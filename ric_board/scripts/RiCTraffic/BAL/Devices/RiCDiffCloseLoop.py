@@ -84,8 +84,8 @@ class RiCDiffCloseLoop(Device):
         prevYaw, prevPitch, prevRollprevYaw = euler_from_quaternion(
             [self._prevOdom.pose.pose.orientation.w, self._prevOdom.pose.pose.orientation.x,
              self._prevOdom.pose.pose.orientation.y, self._prevOdom.pose.pose.orientation.z])
-        rospy.loginfo("SAV: %f" % data[8] / deltaTime)
-        velocity.linear.x = data[8] / deltaTime
+        rospy.loginfo("SAV: %f" % (data[8] / deltaTime))
+        velocity.linear.x = (data[8] / deltaTime)
         velocity.angular.z = -((yaw - prevYaw) / deltaTime)
 
         odomMsg.twist.twist = velocity

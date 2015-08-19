@@ -91,8 +91,8 @@ class RiCDiffCloseLoop(Device):
 
         rospy.loginfo("yaw: %f\t\tpevYaw: %f\t\tdeltaYaw: %f" % (yaw,prevYaw,deltaYaw))
 
-        if deltaYaw > 180: deltaYaw -= 180
-        elif deltaYaw < -180: deltaYaw += 180
+        if deltaYaw > math.pi: deltaYaw -= math.pi
+        elif deltaYaw < -math.pi: deltaYaw += math.pi
 
         velocity.angular.z = -(deltaYaw / deltaTime)
 

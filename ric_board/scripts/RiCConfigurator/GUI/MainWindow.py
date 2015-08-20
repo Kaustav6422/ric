@@ -2,6 +2,7 @@ import socket
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
 from BAL.Devices.velocitySmoother import VelocitySmoother
+from GUI.AboutWindow import About
 from GUI.ParamManager import ParamManager
 
 __author__ = 'tom1231'
@@ -40,7 +41,7 @@ from PyQt4.QtGui import *
 from Schemes.main import Ui_MainWindow
 import webbrowser
 import pickle
-from os import system
+from os import system, path
 import subprocess
 import re
 
@@ -93,6 +94,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionKeyboard.triggered.connect(self.addKeyboard)
         self.actionJoystick.triggered.connect(self.addJoystick)
         self.actionDifferential_Drive_smoother.triggered.connect(self.addDiffSmooth)
+        self.actionAbout.triggered.connect(self.showAbout)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -161,6 +163,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for dev in conDevs: self.ConPortList.addItem(self.tr(dev))
 
         self.ConPortList.setCurrentIndex(self.ConPortList.count() - 1)
+
+    def showAbout(self):
+        dialog = About(self)
+        dialog.show()
+        dialog.exec_()
 
     def launchRemote(self):
         dialog = RemoteLaunch(self)
@@ -395,7 +402,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self._fileName == '':
             QMessageBox.critical(self, "File error", "Can not save file without a name.")
             return
-        if not self.override:
+        if not self.override and path.isfile('%s/config/%s.yaml' % (pkg, self._fileName)):
             ans = QMessageBox.question(self, "Override", "Do you want to override this file",
                                        QMessageBox.Yes | QMessageBox.No)
             if ans == QMessageBox.Yes:

@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Tue Aug 18 10:20:14 2015
-#      by: PyQt4 UI code generator 4.11.3
+# Created: Thu Aug 20 12:25:30 2015
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -209,6 +209,8 @@ class Ui_MainWindow(object):
         self.actionJoystick.setObjectName(_fromUtf8("actionJoystick"))
         self.actionDifferential_Drive_smoother = QtGui.QAction(MainWindow)
         self.actionDifferential_Drive_smoother.setObjectName(_fromUtf8("actionDifferential_Drive_smoother"))
+        self.actionAbout = QtGui.QAction(MainWindow)
+        self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -247,6 +249,7 @@ class Ui_MainWindow(object):
         self.menuAdd_Device.addAction(self.menuOther.menuAction())
         self.menuHelp.addAction(self.actionAbout_RIC)
         self.menuHelp.addAction(self.actionAbout_RiC_Board)
+        self.menuHelp.addAction(self.actionAbout)
         self.menuTools.addAction(self.actionReconfig_RiC_Board)
         self.menuTools.addAction(self.actionRemote_robot_launch)
         self.menuTools.addAction(self.actionSet_parameters)
@@ -329,5 +332,6 @@ class Ui_MainWindow(object):
         self.actionKeyboard.setText(_translate("MainWindow", "Keyboard", None))
         self.actionJoystick.setText(_translate("MainWindow", "Joystick", None))
         self.actionDifferential_Drive_smoother.setText(_translate("MainWindow", "Differential Drive smoother", None))
+        self.actionAbout.setText(_translate("MainWindow", "About", None))
 
 import resource_rc

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Thu Aug 20 12:25:30 2015
+# Created: Thu Aug 20 13:10:54 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -282,6 +282,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setShortcut(_translate("MainWindow", "Ctrl+L", None))
         self.label_5.setText(_translate("MainWindow", "Port:", None))
         self.saveStatus.setText(_translate("MainWindow", "run/don\'t run on start", None))
+        self.saveStatus.setShortcut(_translate("MainWindow", "Ctrl+D", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
         self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Board Device", None))

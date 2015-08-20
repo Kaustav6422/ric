@@ -1,15 +1,13 @@
-import socket
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
 from BAL.Devices.velocitySmoother import VelocitySmoother
 from GUI.AboutWindow import About
-from GUI.ParamManager import ParamManager
 
 __author__ = 'tom1231'
 import rospkg
 import shlex
 from xml.etree import ElementTree
-from lxml.etree import Element, SubElement, XML
+from lxml.etree import Element, SubElement
 from xml.dom import minidom
 from BAL.Devices.CloseLoopTwo import CloseLoopTwo
 from BAL.Devices.Battery import Battery
@@ -261,6 +259,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.nameSpace.setText(self._ns)
 
     def launch(self):
+        pkg = rospkg.RosPack().get_path('ric_board')
+        if path.isfile('%s/DATA/%s.RIC' % (pkg, self._fileName)):
+            devices = pickle.load(open('%s/DATA/%s.RIC' % (pkg, self._fileName)))[2]
+            newDevices = []
+
+            for dev in self.data:
+                newDevices.append(dev.toDict())
+
+            if devices != newDevices:
+                ans = QMessageBox.warning(self, "Warning",
+                                          "There is some changes in the file, if you don`t save them the 'RiCboard' won`t be able to recognize the changes.\n\nDo you want to save before launch?",
+                                          QMessageBox.Yes | QMessageBox.No)
+                if ans == QMessageBox.Yes:
+                    self.override = True
+                    self.save()
         subprocess.Popen(shlex.split("gnome-terminal --command='roslaunch ric_board %s.launch'" % self._fileName))
 
     def load(self):

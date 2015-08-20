@@ -196,6 +196,9 @@ class RiCParam:
     def getIMUOrientation(self):
         return float(rospy.get_param('IMU/orientation', '0.0'))
 
+    def isIMUFuseGyro(self):
+        return int(rospy.get_param('IMU/fuseGyro', '0')) == 1
+
     def getRelaysSize(self):
         return int(rospy.get_param('relayNum', '0'))
 

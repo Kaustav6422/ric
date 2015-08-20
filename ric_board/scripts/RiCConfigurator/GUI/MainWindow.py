@@ -3,6 +3,7 @@ from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
 from BAL.Devices.velocitySmoother import VelocitySmoother
 from GUI.ParamManager import ParamManager
+
 __author__ = 'tom1231'
 import rospkg
 import shlex
@@ -36,7 +37,6 @@ from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 
 from PyQt4.QtGui import *
-from PyQt4.QtCore import *
 from Schemes.main import Ui_MainWindow
 import webbrowser
 import pickle
@@ -373,7 +373,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 if self.currentShowDev.getDevType() == GPS:
                     self.haveGPS = True
                 if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (
-                    self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
+                            self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
                     self.haveCloseLoop = True
                     self.motors.append(self.currentShowDev.getName())
                 if self.currentShowDev.getDevType() == OPEN_LOP:
@@ -440,13 +440,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 else:
                     dev.saveToFile(toSave)
 
-                    if dev.getDevType() == DIFF_OPEN: initDiffOpen = '1'
-                    elif dev.getDevType() == DIFF_CLOSE: initDiffClose = '1'
-                    elif dev.getDevType() == DIFF_CLOSE_FOUR: initDiffCloseFour = '1'
-                    elif dev.getDevType() == IMU: initIMU = '1'
-                    elif dev.getDevType() == GPS: initGPS = '1'
-                    elif dev.getDevType() == PPM: initPPM = '1'
-                    elif dev.getDevType() == BATTERY: initBAT = '1'
+                    if dev.getDevType() == DIFF_OPEN:
+                        initDiffOpen = '1'
+                    elif dev.getDevType() == DIFF_CLOSE:
+                        initDiffClose = '1'
+                    elif dev.getDevType() == DIFF_CLOSE_FOUR:
+                        initDiffCloseFour = '1'
+                    elif dev.getDevType() == IMU:
+                        initIMU = '1'
+                    elif dev.getDevType() == GPS:
+                        initGPS = '1'
+                    elif dev.getDevType() == PPM:
+                        initPPM = '1'
+                    elif dev.getDevType() == BATTERY:
+                        initBAT = '1'
 
         toSave.write('IMU_INIT: ' + initIMU + '\n')
         toSave.write('GPS_INIT: ' + initGPS + '\n')
@@ -875,7 +882,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.currentShowDev.getDevType() == GPS:
                 self.haveGPS = True
             if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (
-                self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
+                        self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
                 self.haveCloseLoop = True
                 self.motors.append(self.currentShowDev.getName())
             if self.currentShowDev.getDevType() == OPEN_LOP:

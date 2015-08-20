@@ -43,7 +43,7 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-VERSION = 4.0
+VERSION = 5.0
 
 
 class Program:

@@ -14,5 +14,8 @@
     <arg name="DECEL_FACTOR" value="1.0"/>
     <arg name="ROBOT_FEEDBACK" value="2"/>
   </include>
+  <include file="$(find caja_fusion)/scripts/encoder_listener.launch">
+  
+  </include>
   <rosparam command="load" file="$(find ric_board)/config/caja-komodo.yaml"/>
 </launch>

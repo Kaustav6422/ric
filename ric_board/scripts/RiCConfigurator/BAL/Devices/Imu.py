@@ -105,4 +105,9 @@ class Imu(DeviceFrame):
         self._orientation = str(self.orientation.text())
         self._fusionHz = str(self.fusionHz.text())
         self._enableFuseGyro = self.enableFuseGyro.isChecked()
+
+        if int(self._pubHz) < int(self._fusionHz):
+            QMessageBox.critical(self._frame, "Error", "Fusion Hz must be equal or bigger then publish Hz.")
+            return
+
         self._isValid = True

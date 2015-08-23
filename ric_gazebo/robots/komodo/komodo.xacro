@@ -18,37 +18,22 @@
   
 <xacro:if value="$(arg gazebo)">
 <!-- Dummy inertia link & Joint -->
-  <link
-    name="dummy_link">    
-</link>
-  <joint
-    name="dummy_joint"
-    type="fixed">
-    <origin
-      xyz="0.0 0.0 0.0"
-      rpy="0 0 0" />
-    <parent
-      link="dummy_link" />
-    <child
-      link="base_link" />
-    <axis
-      xyz="0 0 0" />
+  <link name="dummy_link">
+  </link>
+  <joint name="dummy_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
+    <parent link="dummy_link" />
+    <child link="base_link" />
+    <axis xyz="0 0 0" />
   </joint>
 </xacro:if>
 
 
-  <link
-    name="base_link">
+  <link name="base_link">
     <inertial>
-      <origin
-        xyz="-0.0205330571995271 4.54409684683429E-05 0.00735986203300292"
-        rpy="0 0 0" />
-      <mass
-        value="45.0894999160313" />
-      <inertia
-        ixx="0.723503030508731"
-        ixy="-46.8485359152423E-05"
-        ixz="-0.0875564429068847"
+      <origin xyz="-0.0205330571995271 4.54409684683429E-05 0.00735986203300292" rpy="0 0 0" />
+      <mass value="45.0894999160313" />
+      <inertia ixx="0.723503030508731" ixy="-46.8485359152423E-05" ixz="-0.0875564429068847"
         iyy="1.38127064231828"
         iyz="11.9695110167269E-05"
         izz="1.94371448739423" />

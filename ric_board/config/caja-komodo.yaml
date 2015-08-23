@@ -3,7 +3,7 @@ FILE_NAME: caja-komodo
 Battery/name: battery_monitor
 Battery/pubHz: 10
 Battery/voltageDividerRatio: 5.98
-closeLoop0/publishHz: 20
+closeLoop0/publishHz: 50
 closeLoop0/name: left_motor
 closeLoop0/LPFAlpha: 0.7
 closeLoop0/LPFHz: 50
@@ -22,7 +22,7 @@ closeLoop0/motorType: 1
 closeLoop0/encoderType: 1
 closeLoop0/direction: 1
 closeLoop0/directionE: -1
-closeLoop1/publishHz: 20
+closeLoop1/publishHz: 50
 closeLoop1/name: right_motor
 closeLoop1/LPFAlpha: 0.7
 closeLoop1/LPFHz: 50

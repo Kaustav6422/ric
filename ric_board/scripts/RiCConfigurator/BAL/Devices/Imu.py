@@ -3,6 +3,7 @@ from BAL.Interface.DeviceFrame import DeviceFrame, IMU
 from PyQt4.QtGui import *
 
 
+
 class Imu(DeviceFrame):
     def __init__(self, frame, data):
         DeviceFrame.__init__(self, IMU, frame, data)
@@ -13,6 +14,7 @@ class Imu(DeviceFrame):
         self._orientation = '0'
         self._fusionHz = '10'
         self._enableFuseGyro = False
+
 
     def fromDict(self, data):
         self._pubHz = data['pubHz']
@@ -106,7 +108,7 @@ class Imu(DeviceFrame):
         self._fusionHz = str(self.fusionHz.text())
         self._enableFuseGyro = self.enableFuseGyro.isChecked()
 
-        if int(self._pubHz) < int(self._fusionHz):
+        if int(self._pubHz) > int(self._fusionHz):
             QMessageBox.critical(self._frame, "Error", "Fusion Hz must be equal or bigger then publish Hz.")
             return
 

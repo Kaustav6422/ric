@@ -40,6 +40,6 @@ class IncomingHandler:
         if id == GPS_RES: return 23, id
         if id == PPM_RES: return 38, id
         if id == BAT_RES: return 10, id
-        if id == IMU_CLIB_RES: return 30, id
+        if id == IMU_CLIB_RES: return 18, id
         return 0, 0
 

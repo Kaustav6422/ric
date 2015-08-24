@@ -95,21 +95,34 @@ class RiCIMU(Device):
             self._pubMag.publish(magMsg)
 
         elif data.getImuMsgId() == CALIB_ID:
-            xMax, yMax, zMax, xMin, yMin, zMin = data.getValues()
+            x, y, z = data.getValues()
             msg = imuCalib()
 
-            msg.x.fieldMax = xMax
-            msg.x.fieldMin = xMin
+            if x > self._xMax:
+                self._xMax = x
+            if x < self._xMin:
+                self._xMin = x
+
+            if y > self._yMax:
+                self._yMax = y
+            if y < self._yMin:
+                self._yMin = y
+
+            if z > self._zMax:
+                self._zMax = z
+            if z < self._zMin:
+                self._zMin = z
+
+
+            msg.x.data = x
             msg.x.max = self._xMax
             msg.x.min = self._xMin
 
-            msg.y.fieldMax = yMax
-            msg.y.fieldMin = yMin
+            msg.y.data = y
             msg.y.max = self._yMax
             msg.y.min = self._yMin
 
-            msg.z.fieldMax = zMax
-            msg.z.fieldMin = zMin
+            msg.z.data = z
             msg.z.max = self._zMax
             msg.z.min = self._zMin
 

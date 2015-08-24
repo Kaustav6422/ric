@@ -20,6 +20,7 @@ GPS_RES = 113
 PPM_RES = 114
 BAT_RES = 116
 VER_RES = 118
+IMU_CLIB_RES = 121
 
 class IncomingHandler:
 
@@ -39,5 +40,6 @@ class IncomingHandler:
         if id == GPS_RES: return 23, id
         if id == PPM_RES: return 38, id
         if id == BAT_RES: return 10, id
+        if id == IMU_CLIB_RES: return 30, id
         return 0, 0
 

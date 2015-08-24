@@ -7,7 +7,7 @@ from BAL.Exceptions.VersionError import VersionError, NEED_TO_UPDATE
 from BAL.Handlers.incomingDataHandler import IncomingDataHandler
 from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES, \
     GPS_RES, \
-    PPM_RES, BAT_RES
+    PPM_RES, BAT_RES, IMU_CLIB_RES
 from BAL.Handlers.incomingMsgHandler import IncomingMsgHandler
 from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START, HEADER_DEBUG
 from BAL.Header.Response.IMUPublishResponse import IMUPublishResponse
@@ -18,6 +18,7 @@ from BAL.Header.Response.batteryPublishResponse import BatteryPublishResponse
 from BAL.Header.Response.closeDiffPublishResponse import CloseDiffPublishRepose
 from BAL.Header.Response.closeLoopPublishResponse import CloseLoopPublishResponse
 from BAL.Header.Response.gpsPublishResponse import GPSPublishResponse
+from BAL.Header.Response.imuCalibResponse import ImuCalibResponse
 from BAL.Header.Response.ppmPublishResponse import PPMPublishResponse
 from BAL.Header.Response.switchResponse import SwitchResponse
 
@@ -43,7 +44,7 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-VERSION = 5.0
+VERSION = 6.0
 
 
 class Program:
@@ -190,6 +191,7 @@ class Program:
         if headerId == GPS_RES: result = GPSPublishResponse()
         if headerId == PPM_RES: result = PPMPublishResponse()
         if headerId == BAT_RES: result = BatteryPublishResponse()
+        if headerId == IMU_CLIB_RES: result = ImuCalibResponse()
 
         if result is not None: result.buildRequest(data)
         return result

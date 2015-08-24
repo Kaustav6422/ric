@@ -3,7 +3,7 @@ from PyQt4.QtGui import *
 from GUI.Scheme.SetParams import Ui_main
 import rospy.exceptions
 from ric_board.srv._get_devs import get_devs, get_devsRequest
-from ric_board.srv._setParam import setParam,setParamRequest
+from ric_board.srv._setParam import setParam, setParamRequest
 
 
 class MainWindow(QDialog, Ui_main):

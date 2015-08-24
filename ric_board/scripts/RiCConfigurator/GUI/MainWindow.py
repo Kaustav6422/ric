@@ -93,6 +93,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionJoystick.triggered.connect(self.addJoystick)
         self.actionDifferential_Drive_smoother.triggered.connect(self.addDiffSmooth)
         self.actionAbout.triggered.connect(self.showAbout)
+        self.actionImu_calibration.triggered.connect(self.showImuCalib)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -174,6 +175,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def paramManager(self):
         subprocess.Popen(shlex.split('roslaunch ric_board startParamMsg.launch'))
+
+    def showImuCalib(self):
+        subprocess.Popen(shlex.split('roslaunch ric_board startImuCalib.launch'))
 
     def about(self):
         webbrowser.open('http://wiki.ros.org/ric_board?distro=indigo')

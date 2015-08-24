@@ -1,7 +1,7 @@
 from BAL.Header.Response.ConnectionResponse import ConnectionResponse
 from BAL.Interfaces.Runnable import Runnable
 from BAL.Handlers.incomingHandler import SERVO_RES, CON_REQ, MOTOR_RES, CLOSE_DIFF_RES, URF_RES, SWITCH_RES, IMU_RES, GPS_RES, \
-    PPM_RES, BAT_RES
+    PPM_RES, BAT_RES, IMU_CLIB_RES
 import rospy
 
 __author__ = 'tom1231'
@@ -29,7 +29,7 @@ class IncomingDataHandler(Runnable):
                 self._dev['diff'][0].publish(self._data.getPublishData())
             elif self._data.getId() == SWITCH_RES:
                 self._dev['switch'][self._data.getSwitchNum()].publish(self._data.getStatus())
-            elif self._data.getId() == IMU_RES:
+            elif self._data.getId() in [IMU_RES, IMU_CLIB_RES]:
                 self._dev['imu'][0].publish(self._data)
             elif self._data.getId() == GPS_RES:
                 self._dev['gps'][0].publish(self._data)

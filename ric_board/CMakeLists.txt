@@ -64,7 +64,9 @@ StatusMsg.msg
 DevStatus.msg
 MonitorDevs.msg
 PPM.msg
-IMUClib.msg
+calibField.msg
+imuCalib.msg
+#IMUClib.msg
 #   Message1.msg
 #   Message2.msg
  )

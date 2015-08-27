@@ -394,7 +394,7 @@ class ImuRead:
     def __init__(self):
         self._roll = 0.0
         self._pitch = 0.0
-        Subscriber('imu_AGQ', Imu, self.imuCallback)
+        Subscriber(sys.argv[1], Imu, self.imuCallback)
 
     def imuCallback(self, msg):
         q = msg.orientation

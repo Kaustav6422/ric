@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<launch>
+	<arg name="imuTopic" default='/RiC_PPM'/> 
+	<node name="ric_artificial_horizon" output="screen" pkg="ric_board" type="dial.py" args="$(arg imuTopic)"/>
+</launch>

@@ -2,6 +2,7 @@ from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
 from BAL.Devices.velocitySmoother import VelocitySmoother
 from GUI.AboutWindow import About
+from GUI.SimulationWindow import SimulationWindow
 
 __author__ = 'tom1231'
 import rospkg
@@ -94,6 +95,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionDifferential_Drive_smoother.triggered.connect(self.addDiffSmooth)
         self.actionAbout.triggered.connect(self.showAbout)
         self.actionImu_calibration.triggered.connect(self.showImuCalib)
+        self.actionRobot_simulation.triggered.connect(self.startSimGUI)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -162,6 +164,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for dev in conDevs: self.ConPortList.addItem(self.tr(dev))
 
         self.ConPortList.setCurrentIndex(self.ConPortList.count() - 1)
+
+    def startSimGUI(self):
+        pass
+        # dialog = SimulationWindow()
+        # dialog.show()
+        # dialog.exec_()
 
     def showAbout(self):
         dialog = About(self)

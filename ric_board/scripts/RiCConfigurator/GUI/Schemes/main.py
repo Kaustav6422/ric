@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Mon Aug 24 17:10:05 2015
+# Created: Wed Aug 26 10:29:52 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -213,6 +213,8 @@ class Ui_MainWindow(object):
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
         self.actionImu_calibration = QtGui.QAction(MainWindow)
         self.actionImu_calibration.setObjectName(_fromUtf8("actionImu_calibration"))
+        self.actionRobot_simulation = QtGui.QAction(MainWindow)
+        self.actionRobot_simulation.setObjectName(_fromUtf8("actionRobot_simulation"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -256,6 +258,7 @@ class Ui_MainWindow(object):
         self.menuTools.addAction(self.actionRemote_robot_launch)
         self.menuTools.addAction(self.actionSet_parameters)
         self.menuTools.addAction(self.actionImu_calibration)
+        self.menuTools.addAction(self.actionRobot_simulation)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
         self.menubar.addAction(self.menuTools.menuAction())
@@ -338,5 +341,6 @@ class Ui_MainWindow(object):
         self.actionDifferential_Drive_smoother.setText(_translate("MainWindow", "Differential Drive smoother", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
         self.actionImu_calibration.setText(_translate("MainWindow", "Imu calibration", None))
+        self.actionRobot_simulation.setText(_translate("MainWindow", "Robot simulation", None))
 
 import resource_rc

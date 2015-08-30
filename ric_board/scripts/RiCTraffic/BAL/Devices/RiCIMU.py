@@ -70,14 +70,14 @@ class RiCIMU(Device):
         if not self._calib and data.getImuMsgId() == PUB_ID:
             q = data.getOrientation()
             roll, pitch, yaw = euler_from_quaternion([q.w, q.x, q.y, q.z])
-
+            print self._angle
             array = quaternion_from_euler(roll, pitch, yaw + (self._angle * pi / 180))
 
             res = Quaternion()
-            res.w = array[0]
-            res.x = array[1]
-            res.y = array[2]
-            res.z = array[3]
+            res.x = array[0]
+            res.y = array[1]
+            res.z = array[2]
+            res.w = array[3]
 
             msg = Imu()
             msg.header.frame_id = self._frameId

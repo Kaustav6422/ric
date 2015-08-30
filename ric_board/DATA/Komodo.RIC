@@ -286,13 +286,13 @@ S'0'
 p119
 sS'fusionHz'
 p120
-S'10'
+S'50'
 p121
 sg15
 S'RiC_Frame'
 p122
 sg5
-S'50'
+S'20'
 p123
 sS'enableFuseGyro'
 p124

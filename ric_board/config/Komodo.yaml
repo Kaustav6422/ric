@@ -71,12 +71,12 @@ GPS/publishHz: 10
 GPS/name: GPS
 GPS/frameId: GPS_Frame
 GPS/baudrate: 9600
-IMU/publishHz: 50
+IMU/publishHz: 20
 IMU/name: IMU
 IMU/frameId: RiC_Frame
 IMU/camp: 0
 IMU/orientation: 0
-IMU/fusionHz: 10
+IMU/fusionHz: 50
 IMU/fuseGyro: 0
 PPM/publishHz: 20
 PPM/name: RiC_PPM

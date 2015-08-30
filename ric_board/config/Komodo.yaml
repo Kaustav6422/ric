@@ -75,7 +75,7 @@ IMU/publishHz: 20
 IMU/name: IMU
 IMU/frameId: RiC_Frame
 IMU/camp: 0
-IMU/orientation: 0
+IMU/orientation: 50
 IMU/fusionHz: 50
 IMU/fuseGyro: 0
 PPM/publishHz: 20

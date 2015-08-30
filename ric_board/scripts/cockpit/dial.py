@@ -48,6 +48,7 @@ import rospy
 from rospy import Subscriber
 from tf.transformations import euler_from_quaternion
 
+REV_MODE = -1
 
 class Dial:
     """
@@ -347,7 +348,6 @@ class TxSerial:
         try:
             self.serial = serial.Serial(port, baud, timeout=1)
         except serial.SerialException:
-            print serialPort + " not found."
             print
             print "Usage: " + sys.argv[0] + " [SERIAL_DEVICE]"
             print " Opens SERIAL_DEVICE and lisens for telemitery data."
@@ -394,6 +394,12 @@ class ImuRead:
     def __init__(self):
         self._roll = 0.0
         self._pitch = 0.0
+
+        self._scaleForPitch = float(sys.argv[2])
+        self._scaleForRoll = float(sys.argv[3])
+        self._offsetForRoll = float(sys.argv[4])
+        self._offsetForPitch = float(sys.argv[5])
+        self._revMode = int(sys.argv[6]) == REV_MODE
         Subscriber(sys.argv[1], Imu, self.imuCallback)
 
     def imuCallback(self, msg):
@@ -403,18 +409,20 @@ class ImuRead:
         roll = (roll*180/math.pi) + 180
         pitch = (pitch*180/math.pi)
 
-
         if roll > 180.0:
             roll -= 360
-
-        self._roll = roll
-        self._pitch = pitch
+        if not self._revMode:
+            self._roll = roll
+            self._pitch = pitch
+        else:
+            self._roll = pitch
+            self._pitch = roll
 
     def getRoll(self):
-        return math.floor(75*self._roll/90 + 127)
+        return math.floor(self._scaleForRoll * self._roll / 90 + 127) + self._offsetForRoll
 
     def getPitch(self):
-        return math.floor(75*self._pitch/90 + 127) + 5
+        return math.floor(self._scaleForPitch * self._pitch / 90 + 127) + self._offsetForPitch
 
 pkg = rospkg.RosPack().get_path('ric_board')
 rospy.init_node('ric_artificial_horizon')
@@ -452,8 +460,7 @@ while 1:
 
     pygame.time.delay(100)
 
-    if (rf_data):
-
+    if rf_data:
         a += 1
 
         # Update dials.

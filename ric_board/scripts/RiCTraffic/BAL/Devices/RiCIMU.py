@@ -73,10 +73,10 @@ class RiCIMU(Device):
             array = quaternion_from_euler(roll, pitch, yaw + (self._angle * pi / 180))
 
             res = Quaternion()
-            res.x = array[0]
-            res.y = array[1]
-            res.z = array[2]
-            res.w = array[3]
+            res.w = array[0]
+            res.x = array[1]
+            res.y = array[2]
+            res.z = array[3]
 
             msg = Imu()
             msg.header.frame_id = self._frameId

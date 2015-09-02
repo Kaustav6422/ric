@@ -50,14 +50,18 @@ class Gps(DeviceFrame):
         return self._name
 
     def add(self):
+        old = self._name
         self._name = str(self.name.text())
+
         if not self.nameIsValid():
             error = QErrorMessage()
             error.setWindowTitle("Same name error")
             error.showMessage("Name already taken.")
             error.exec_()
+            self._name = old
             self._isValid = False
             return
+
         self._isValid = True
         self._pubHz = str(self.pubHz.text())
         self._name = str(self.name.text())

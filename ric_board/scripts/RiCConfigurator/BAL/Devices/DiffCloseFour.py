@@ -38,6 +38,7 @@ class DiffCloseFour(DeviceFrame):
         self._motorBR = data['motorBR']
 
     def add(self):
+        old = self._name
         self._name = str(self.name.text())
         self._motorFL = str(self.motorsFL.itemData(self.motorsFL.currentIndex()).toString())
         self._motorFR = str(self.motorsFR.itemData(self.motorsFR.currentIndex()).toString())
@@ -49,8 +50,10 @@ class DiffCloseFour(DeviceFrame):
             error.setWindowTitle("Same name error")
             error.showMessage("Name already taken.")
             error.exec_()
+            self._name = old
             self._isValid = False
             return
+
         if self._motorFL == self._motorFR or self._motorBL == self._motorBR or self._motorFL == self._motorBL or self._motorFL == self._motorBR or self._motorFR == self._motorBL or self._motorFR == self._motorBR:
             error = QErrorMessage()
             error.setWindowTitle(" Error")

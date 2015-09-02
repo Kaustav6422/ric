@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Wed Aug 26 10:29:52 2015
+# Created: Tue Sep  1 16:25:40 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -215,6 +215,10 @@ class Ui_MainWindow(object):
         self.actionImu_calibration.setObjectName(_fromUtf8("actionImu_calibration"))
         self.actionRobot_simulation = QtGui.QAction(MainWindow)
         self.actionRobot_simulation.setObjectName(_fromUtf8("actionRobot_simulation"))
+        self.actionInclude_roslaunch = QtGui.QAction(MainWindow)
+        self.actionInclude_roslaunch.setObjectName(_fromUtf8("actionInclude_roslaunch"))
+        self.actionInclude_ros_node = QtGui.QAction(MainWindow)
+        self.actionInclude_ros_node.setObjectName(_fromUtf8("actionInclude_ros_node"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -241,6 +245,8 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionUSB_Camera)
         self.menuExternal_Device.addAction(self.actionOPENNI)
         self.menuExternal_Device.addAction(self.actionHakoyo)
+        self.menuExternal_Device.addAction(self.actionInclude_ros_node)
+        self.menuExternal_Device.addAction(self.actionInclude_roslaunch)
         self.menuTeleoperation.addAction(self.actionKeyboard)
         self.menuTeleoperation.addAction(self.actionJoystick)
         self.menuOther.addAction(self.actionRobot_Model)
@@ -342,5 +348,7 @@ class Ui_MainWindow(object):
         self.actionAbout.setText(_translate("MainWindow", "About", None))
         self.actionImu_calibration.setText(_translate("MainWindow", "Imu calibration", None))
         self.actionRobot_simulation.setText(_translate("MainWindow", "Robot simulation", None))
+        self.actionInclude_roslaunch.setText(_translate("MainWindow", "Include ros launch ", None))
+        self.actionInclude_ros_node.setText(_translate("MainWindow", "Include ros node", None))
 
 import resource_rc

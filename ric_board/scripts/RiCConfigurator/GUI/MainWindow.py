@@ -1,5 +1,7 @@
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
 from BAL.Devices.joystickTeleop import JoystickTeleop
+from BAL.Devices.launchFile import RosLaunch
+from BAL.Devices.rosNode import RosNode
 from BAL.Devices.velocitySmoother import VelocitySmoother
 from GUI.AboutWindow import About
 from GUI.SimulationWindow import SimulationWindow
@@ -32,7 +34,7 @@ from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM, Keyboard, \
-    JOYSTICK, SMOOTHER
+    JOYSTICK, SMOOTHER, LAUNCH, NODE
 from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 
@@ -96,6 +98,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionAbout.triggered.connect(self.showAbout)
         self.actionImu_calibration.triggered.connect(self.showImuCalib)
         self.actionRobot_simulation.triggered.connect(self.startSimGUI)
+        self.actionInclude_roslaunch.triggered.connect(self.addRosLaunch)
+        self.actionInclude_ros_node.triggered.connect(self.addRosNode)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -395,6 +399,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == SMOOTHER:
                     self.currentShowDev = VelocitySmoother(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
+                elif dev['type'] == LAUNCH:
+                    self.currentShowDev = RosLaunch(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
+                elif dev['type'] == NODE:
+                    self.currentShowDev = RosNode(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
+
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -529,6 +540,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
         self.pushButton_2.setEnabled(True)
+
+    def addRosNode(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = RosNode(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
+
+    def addRosLaunch(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = RosLaunch(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
 
     def addDiffSmooth(self):
         self.interruptHandler()

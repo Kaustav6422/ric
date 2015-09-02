@@ -33,18 +33,18 @@ class CloseLoopTwo(CloseLoop):
         self._encoder2 = data['encoder2']
 
     def add(self):
-        # CloseLoop.add(self)
-        # if self._isValid:
-        #     self._encoder2 = str(self.encoders2.currentText())
-        #     self.mainPorts.self.mainPorts.removeItem(self.encoders2.currentIndex())
+        old = self._name
         self._name = str(self.name.text())
+
         if not self.nameIsValid():
             error = QErrorMessage()
             error.setWindowTitle("Same name error")
             error.showMessage("Name already taken.")
             error.exec_()
+            self._name = old
             self._isValid = False
             return
+
         self._encoder = str(self.encoders.currentText())
         self._encoder2 = str(self.encoders2.currentText())
         if self._encoder == self._encoder2:

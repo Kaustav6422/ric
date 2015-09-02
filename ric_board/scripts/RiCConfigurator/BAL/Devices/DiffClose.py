@@ -97,16 +97,20 @@ class DiffClose(DeviceFrame):
         self._frame.layout().addRow(self.motorsL, self.motorsR)
 
     def add(self):
+        old = self._name
         self._name = str(self.name.text())
         self._motorL = str(self.motorsL.itemData(self.motorsL.currentIndex()).toString())
         self._motorR = str(self.motorsR.itemData(self.motorsR.currentIndex()).toString())
+
         if not self.nameIsValid():
             error = QErrorMessage()
             error.setWindowTitle("Same name error")
             error.showMessage("Name already taken.")
             error.exec_()
+            self._name = old
             self._isValid = False
             return
+
         if self._motorL == self._motorR:
             error = QErrorMessage()
             error.setWindowTitle(" Error")

@@ -1,3 +1,6 @@
+import shlex
+import subprocess
+import re
 
 __author__ = 'tom1231'
 from PyQt4.QtCore import QUrl
@@ -28,6 +31,9 @@ class UsbCam(DeviceFrame):
         self._format = data['format']
         self._width = data['width']
         self._height = data['height']
+        index = self._videoDevice.find('/dev/')
+        if index != -1:
+            self._videoDevice = self._videoDevice[index + 5:]
 
     def toDict(self):
         data = dict()
@@ -57,15 +63,28 @@ class UsbCam(DeviceFrame):
     def getName(self):
         return self._name
 
+    def findItem(self):
+        for i in xrange(self.videoDevice.count()):
+            if self._videoDevice == str(self.videoDevice.itemText(i)):
+                return i
+        return -1
+
     def showDetails(self, items=None):
         self.name = QLineEdit(self._name)
         self.output = QLineEdit(self._output)
         self.respawn = QLineEdit(self._respawn)
-        self.videoDevice = QLineEdit(self._videoDevice)
+        self.videoDevice = QComboBox()
         self.frameId = QLineEdit(self._frameId)
         self.format = QLineEdit(self._format)
         self.width = QLineEdit(self._width)
         self.height = QLineEdit(self._height)
+
+        allDev = subprocess.check_output(shlex.split("ls /dev"))
+        videoDevs = re.findall('video.*', allDev)
+
+        self.videoDevice.addItems(videoDevs)
+        index = self.findItem()
+        if index != -1: self.videoDevice.setCurrentIndex(index)
 
         link = QLabel("<a href = http://wiki.ros.org/usb_cam> Usb Camera Wiki </a>")
         link.linkActivated.connect(self.onLink)
@@ -84,24 +103,27 @@ class UsbCam(DeviceFrame):
         QDesktopServices().openUrl(QUrl(URL))
 
     def add(self):
+        old = self._name
         self._name = str(self.name.text())
+
         if not self.nameIsValid():
             error = QErrorMessage()
             error.setWindowTitle("Same name error")
             error.showMessage("Name already taken.")
             error.exec_()
+            self._name = old
             self._isValid = False
             return
+
         self._isValid = True
         self._name = str(self.name.text())
         self._output = str(self.output.text())
         self._respawn = str(self.respawn.text())
-        self._videoDevice = str(self.videoDevice.text())
+        self._videoDevice = str(self.videoDevice.currentText())
         self._format = str(self.format.text())
         self._frameId = str(self.frameId.text())
         self._width = str(self.width.text())
         self._height = str(self.height.text())
-
 
     def saveToFile(self, parent):
             nodeAt = {
@@ -114,7 +136,7 @@ class UsbCam(DeviceFrame):
             element = SubElement(parent, 'node', nodeAt)
             SubElement(element, 'param', {
                 'name': 'video_device',
-                'value': self._videoDevice
+                'value': '/dev/%s' % self._videoDevice
             })
             SubElement(element, 'param', {
                 'name': 'camera_frame_id',

@@ -32,9 +32,9 @@ class IncomingMsgHandler(Runnable):
             self._lock.notifyAll()
 
     def run(self):
-        while not rospy.is_shutdown():
+        while not self._close:
             msg = self.getMsg()
-            if self._close: continue
-            IncomingDataHandler(msg, self._output, self._devs).run()
+            if msg is not None:
+                IncomingDataHandler(msg, self._output, self._devs).run()
 
 

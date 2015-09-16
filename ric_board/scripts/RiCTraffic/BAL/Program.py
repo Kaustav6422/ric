@@ -44,12 +44,15 @@ INFO = 0
 ERROR = 1
 WARRNING = 2
 
-VERSION = 6.0
+VERSION = 7.0
 
 
 class Program:
     def __init__(self):
         try:
+
+            self._toQuit = False
+
             rospy.init_node('RiCTraffic')
             params = RiCParam()
             ser = Serial('/dev/%s' % params.getConPort())
@@ -107,8 +110,11 @@ class Program:
                                     data.append(input.read())
                                 # print data
                                 msg = self.genData(data, headerId)
-                                if msg is not None:
+                                if msg is not None and msg.getId() != CON_REQ:
                                     msgHandler.addMsg(msg)
+                                elif msg.getId() == CON_REQ and not msg.toConnect():
+                                    rospy.logerr("Emergency button is activated.")
+                                    break
                                 data = []
                                 gotHeaderStart = False
                             else:
@@ -150,12 +156,14 @@ class Program:
                 output.writeAndWaitForAck(con.dataTosend(), RES_ID)
                 ser.close()
                 if msgHandler != None: msgHandler.close()
+                self._toQuit = True
+
 
         except SerialException:
             rospy.logerr("Can't find RiCBoard, please check if its connected to the computer.")
 
     def checkForSubscribers(self, devs):
-        while not rospy.is_shutdown():
+        while not self._toQuit:
             if len(devs['servos']) > 0:
                 for servo in devs['servos']:
                     servo.checkForSubscribers()

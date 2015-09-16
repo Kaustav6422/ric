@@ -46,7 +46,7 @@
     </node>
     
     <node pkg="usb_cam" type="usb_cam_node" name="arm_cam_node" output="screen"  respawn="true">
-      <param name="~video_device" value="/dev/video1" />
+      <param name="~video_device" value="/dev/video2" />
       <param name="~camera_frame_id" value="komodo_$(arg id)_Arm_Camera_link" />
       <param name="~pixel_format" value="yuyv" />
       <param name="~image_width" value="320" />
@@ -54,7 +54,7 @@
     </node>
     
     <node pkg="usb_cam" type="usb_cam_node" name="rear_cam_node" output="screen"  respawn="true">
-      <param name="~video_device" value="/dev/video3" />
+      <param name="~video_device" value="/dev/video1" />
       <param name="~camera_frame_id" value="komodo_$(arg id)_Rear_Camera_link" />
       <param name="~pixel_format" value="yuyv" />
       <param name="~image_width" value="320" />

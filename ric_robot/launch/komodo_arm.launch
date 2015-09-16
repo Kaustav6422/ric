@@ -88,5 +88,5 @@
   
 
 <!--<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> -->
-<node name="komodo_arm" pkg="ric_robot" type="komodo_arm2.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> 
+<node name="komodo_arm" pkg="ric_robot" type="komodo_arm.py"  output="screen" respawn="true" args="$(arg have_elevator)" /> 
 </launch>

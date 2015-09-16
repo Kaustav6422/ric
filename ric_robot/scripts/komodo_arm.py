@@ -147,7 +147,8 @@ def upper_switch_callback(msg):
     if not upper_press and msg.data:
         req = set_elevatorRequest()
         req.pos = 0.407
-        epos_callback(req)
+        handle_elev_set(req)
+        upper_press = True
         rospy.loginfo("Upper home switch activated")
     elif upper_press and not msg.data:
         upper_press = False
@@ -159,7 +160,8 @@ def lower_switch_callback(msg):
     if not lower_press and msg.data:
         req = set_elevatorRequest()
         req.pos = -0.01
-        epos_callback(req)
+        handle_elev_set(req)
+        lower_press = True
         rospy.loginfo("Lower home switch activated")
     elif lower_press and not msg.data:
         lower_press = False

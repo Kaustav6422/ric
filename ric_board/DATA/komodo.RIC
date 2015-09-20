@@ -19,7 +19,7 @@ p9
 sa(dp10
 S'name'
 p11
-S'rear_urf'
+S'left_urf'
 p12
 sS'urfType'
 p13
@@ -27,7 +27,7 @@ S'10'
 p14
 sS'frameId'
 p15
-S'Rear_URF_link'
+S'Left_URF_link'
 p16
 sS'pubHz'
 p17
@@ -41,13 +41,13 @@ S'1'
 p20
 sa(dp21
 g11
-S'right_urf'
+S'rear_urf'
 p22
 sg13
 S'10'
 p23
 sg15
-S'Right_URF_link'
+S'Rear_URF_link'
 p24
 sg17
 S'50'
@@ -59,13 +59,13 @@ S'2'
 p26
 sa(dp27
 g11
-S'left_urf'
+S'right_urf'
 p28
 sg13
 S'10'
 p29
 sg15
-S'Left_URF_link'
+S'Right_URF_link'
 p30
 sg17
 S'50'
@@ -86,7 +86,7 @@ S'16.0'
 p37
 sS'dirMotor'
 p38
-I01
+I00
 sg11
 S'left_motor'
 p39
@@ -148,7 +148,7 @@ p65
 I01
 sS'channel'
 p66
-S'1'
+S'0'
 p67
 sa(dp68
 g34
@@ -206,7 +206,7 @@ I9
 sg65
 I00
 sg66
-S'0'
+S'1'
 p85
 sa(dp86
 g11

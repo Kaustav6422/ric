@@ -6,9 +6,19 @@
   <include file="$(find openni2_launch)/launch/openni2.launch">
     <arg name="camera" value="Asus_Camera"/>
   </include>
-  <node name="hokuyo_node" output="screen" pkg="hokuyo_node" type="hokuyo_node">
-    <param name="port" value="/dev/Hokuyo"/>
-    <param name="frame_id" value="Laser_link"/>
+  <node name="front_cam" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+    <param name="video_device" value="/dev/video0"/>
+    <param name="camera_frame_id" value="front_cam"/>
+    <param name="pixel_format" value="yuyv"/>
+    <param name="image_width" value="640"/>
+    <param name="image_height" value="480"/>
+  </node>
+  <node name="arm_cam" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+    <param name="video_device" value="/dev/video1"/>
+    <param name="camera_frame_id" value="arm_cam"/>
+    <param name="pixel_format" value="yuyv"/>
+    <param name="image_width" value="640"/>
+    <param name="image_height" value="480"/>
   </node>
   <rosparam command="load" file="$(find ric_board)/config/komodo.yaml"/>
 </launch>

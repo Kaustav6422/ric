@@ -577,4 +577,5 @@
 			</plugin>
 		</gazebo>
 	</xacro:if>
+	
 </robot>

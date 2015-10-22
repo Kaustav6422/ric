@@ -37,9 +37,10 @@ class Joint:
 def main():
             arm = Joint('komodo_arm_controller')
             arm.move_joint([0.2,0.2,0.0,0.2,1.0])
+            rospy.sleep(5.0)
             arm.move_joint([-0.2,-0.2,-0.0,-0.2,-1.0])
+            rospy.sleep(5.0)
             arm.move_joint([0.0,0.0,0.0,0.0,0])
-           
 def myhook():
   print "Done!"
   

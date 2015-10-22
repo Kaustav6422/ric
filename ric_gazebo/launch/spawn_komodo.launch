@@ -17,10 +17,8 @@
   <arg name="P" default="0.0" />
   <arg name="Y" default="0.0" />
   
-  
-  
   <group ns="$(arg name)">
-    
+  <include file="$(find ric_robot)/launch/ric_jta_controller.launch" />  
     
     <param name="tf_prefix" value="$(arg name)" />
     
@@ -58,7 +56,6 @@
 					   right_finger_controller
 					   joint_state_controller 
 					   "/>
-    
     
     <node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 /map /$(arg name)/odom_link 20" />
     

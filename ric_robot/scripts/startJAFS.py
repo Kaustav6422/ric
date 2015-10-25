@@ -62,7 +62,8 @@ class FollowController:
         rospy.loginfo(self.name + ': Action goal received.')
         traj = goal.trajectory
         if set(self.joints_names) != set(traj.joint_names):
-
+            print set(self.joints_names)
+            print set(traj.joint_names)
             msg = "Trajectory joint does not match action controlled joints" + str(traj.joint_names)
             rospy.logerr(msg)
             self.server.set_aborted(text=msg)

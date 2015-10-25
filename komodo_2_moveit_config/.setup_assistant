@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: ric_gazebo
+    relative_path: robots/komodo/komodo.xacro
+  SRDF:
+    relative_path: config/komodo.srdf
+  CONFIG:
+    generated_timestamp: 1445771808

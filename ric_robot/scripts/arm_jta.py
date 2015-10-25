@@ -23,7 +23,7 @@ class Joint:
             
         def move_joint(self, angles):
             goal = FollowJointTrajectoryGoal()                  
-            goal.trajectory.joint_names = ['base_rotation_joint','shoulder_joint','elbow1_joint','elbow2_joint','wrist_joint','left_finger_joint','right_finger_joint']
+            goal.trajectory.joint_names = ['base_rotation_joint','shoulder_joint','elbow1_joint','elbow2_joint','wrist_joint']
             point = JointTrajectoryPoint()
             point.positions = angles
             point.time_from_start = rospy.Duration(5)                   
@@ -36,11 +36,11 @@ class Joint:
 
 def main():
             arm = Joint('komodo_arm_controller')
-            arm.move_joint([0.2,0.2,0.0,0.2,1.0,0.5,-0.5])
+            arm.move_joint([0.2,0.2,0.0,0.2,1.0])
             rospy.sleep(5.0)
-            arm.move_joint([-0.2,-0.2,-0.0,-0.2,-1.0,0.5,-0.5])
+            arm.move_joint([-0.2,-0.2,-0.0,-0.2,-1.0])
             rospy.sleep(5.0)
-            arm.move_joint([0.0,0.0,0.0,0.0,0,0.5,-0.5])
+            arm.move_joint([0.0,0.0,0.0,0.0,0])
 def myhook():
   print "Done!"
   

@@ -22,7 +22,7 @@
   <group ns="komodo_$(arg id)">
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" /> 
     
-    <param name="have_elevator" type="bool" value="$(arg have_elevator)" />
+  
     <param name="have_pan_tilt" type="bool" value="$(arg have_pan_tilt)" />
     
     <rosparam file="$(find ric_robot)/config/default_komodo.yaml" command="load" />

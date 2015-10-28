@@ -3,6 +3,7 @@
 <launch>
 
 <arg name="have_elevator" default="False"/> 
+<param name="have_elevator" type="bool" value="$(arg have_elevator)" />
 
     <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
         <rosparam>

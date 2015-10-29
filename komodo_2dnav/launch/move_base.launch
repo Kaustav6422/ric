@@ -2,7 +2,7 @@
   <master auto="start"/>
 
   <!-- Run the map server -->
-  <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find komodo_2dnav)/maps/map.yaml"/> --> 
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find komodo_2dnav)/maps/map.yaml"/> 
 
   <!--- Run AMCL -->
   <include file="$(find komodo_2dnav)/launch/ric_amcl.launch" />

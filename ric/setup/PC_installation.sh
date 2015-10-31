@@ -27,5 +27,6 @@ sudo ./setup.sh
 cd ~/catkin_ws
 catkin_make
 sudo rosdep fix-permissions
+sudo chown -R $USER:$USER ~/catkin_ws
 exit
 #END

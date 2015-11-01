@@ -63,7 +63,7 @@ def vels(speed, turn):
 
 
 if __name__ == "__main__":
-    rospy.wait_for_service('/devsOnline')
+    #rospy.wait_for_service('/devsOnline')
     settings = termios.tcgetattr(sys.stdin)
     if (len(sys.argv) == 1):
         topic = "cmd_vel"

@@ -12,9 +12,9 @@ def main():
 
     goal = MoveBaseGoal()
 
-    goal.target_pose.header.frame_id = 'base_link'
+    goal.target_pose.header.frame_id = 'komodo_1/base_link'
     goal.target_pose.header.stamp = rospy.Time.now()
-    goal.target_pose.pose.position.x = 1.0
+    goal.target_pose.pose.position.x = -1.0
     goal.target_pose.pose.orientation.w = 1.0
 
     rospy.loginfo('Sending goal')

@@ -29,6 +29,8 @@ import roslib;
 
 roslib.load_manifest('ric_board')
 import rospy
+import subprocess
+import shlex
 from BAL.Header.Response.ConnectionResponse import ConnectionResponse, RES_ID
 from BAL.Header.Requests.ConnectionRequest import ConnectionRequest
 from BAL.RiCParam.RiCParam import RiCParam
@@ -113,6 +115,7 @@ class Program:
                                 if msg is not None and msg.getId() != CON_REQ:
                                     msgHandler.addMsg(msg)
                                 elif msg.getId() == CON_REQ and not msg.toConnect():
+                                    subprocess.Popen(shlex.split("pkill -f ros"))
                                     rospy.logerr("Emergency button is activated.")
                                     break
                                 data = []

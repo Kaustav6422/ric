@@ -12,6 +12,34 @@
       <param name="port" value="/dev/Hokuyo"/>
       <param name="frame_id" value="Laser_link"/>
     </node>
+    <node name="front_cam_node" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+      <param name="video_device" value="/dev/video0"/>
+      <param name="camera_frame_id" value="Front_Camera_link"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="image_width" value="320"/>
+      <param name="image_height" value="240"/>
+    </node>
+    <node name="arm_cam_node" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+      <param name="video_device" value="/dev/video2"/>
+      <param name="camera_frame_id" value="Arm_Camera_link"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="image_width" value="320"/>
+      <param name="image_height" value="240"/>
+    </node>
+    <node name="rear_cam_node" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+      <param name="video_device" value="/dev/video1"/>
+      <param name="camera_frame_id" value="Rear_Camera_link"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="image_width" value="320"/>
+      <param name="image_height" value="240"/>
+    </node>
+    <node name="top_cam_node" output="screen" pkg="usb_cam" respawn="true" type="usb_cam_node">
+      <param name="video_device" value="/dev/video4"/>
+      <param name="camera_frame_id" value="Top_Camera_link"/>
+      <param name="pixel_format" value="yuyv"/>
+      <param name="image_width" value="320"/>
+      <param name="image_height" value="240"/>
+    </node>
     <rosparam command="load" file="$(find ric_board)/config/komodo_bgu.yaml"/>
   </group>
 </launch>

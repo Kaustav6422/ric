@@ -8,7 +8,7 @@ from sensor_msgs.msg import JointState
 from math import *
 from ric_robot.srv import *
 from ric_robot.msg import *
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, Bool
 
 def br_callback(data):       
     global msg,ns
@@ -126,13 +126,42 @@ def handle_elev_home(req):
        rospy.loginfo("Please choose homing direction (1 - up / -1 - down)")
        return False
        
-       
+def upper_switch_callback(msg):
+    global upper_press
+
+    if not upper_press and msg.data:
+        req = set_elevatorRequest()
+        req.pos = 0.407
+        handle_elev_set(req)
+        upper_press = True
+        rospy.loginfo("Upper home switch activated")
+    elif upper_press and not msg.data:
+        upper_press = False
+
+
+def lower_switch_callback(msg):
+    global lower_press
+
+    if not lower_press and msg.data:
+        req = set_elevatorRequest()
+        req.pos = -0.01
+        handle_elev_set(req)
+        lower_press = True
+        rospy.loginfo("Lower home switch activated")
+    elif lower_press and not msg.data:
+        lower_press = False      
     
 def komodo_arm():
     global pub,msg,ns
     global elev_rad2m
     global pre_epos,final_epos,elev_goal_pos,elev_move,epos_tol,max_elev_speed, min_elev_pos,max_elev_pos,elevpub
     global home_ok
+    
+    global upper_press, lower_press
+
+    upper_press = False
+    lower_press = False
+    
     fr=0
     ns=rospy.get_namespace()
     ns=ns[1:-1]
@@ -164,6 +193,8 @@ def komodo_arm():
        set_serv = rospy.Service("elevator_controller/set_position", set_elevator, handle_elev_set)
        home_serv = rospy.Service("elevator_controller/home", home_elevator, handle_elev_home)
        rospy.Subscriber("elevator_controller/pos_command", ric_elevator_command, epos_callback)
+       rospy.Subscriber("elevator_upper_switch", Bool, upper_switch_callback)
+       rospy.Subscriber("elevator_lower_switch", Bool, lower_switch_callback)
        rospy.loginfo("Seting up elevator...")
     rospy.Subscriber("base_rotation_controller/state", dxl_JointState, br_callback)
     rospy.Subscriber("shoulder_controller/state", dxl_JointState, sh_callback)

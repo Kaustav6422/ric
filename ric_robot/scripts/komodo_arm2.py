@@ -236,6 +236,8 @@ def komodo_arm():
     pub = rospy.Publisher('joint_states', JointState, queue_size=1)
 
     quit_loop = False
+    if have_elevator:
+       rospy.wait_for_service('/devsOnline')
 
     while not rospy.is_shutdown() and not quit_loop:
         msg.header.stamp = rospy.Time.now()
@@ -253,10 +255,10 @@ def komodo_arm():
                 elif epos_err < 0:
                     speed = -max_elev_speed
                 elevpub.publish(speed / elev_rad2m)
-        if int(round(time.time() * 1000)) - watch_dog_time > 1000:
-            quit_loop = True
-            subprocess.Popen(shlex.split("pkill -f ros"))
-            rospy.logerr("ric_board is stack, from elevator node")
+            if int(round(time.time() * 1000)) - watch_dog_time > 1000:
+                quit_loop = True
+                subprocess.Popen(shlex.split("pkill -f ros"))
+                rospy.logerr("ric_board is stack, from elevator node")
         rospy.sleep(0.05)
 
 

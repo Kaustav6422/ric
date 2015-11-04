@@ -82,7 +82,7 @@
   </link>
   <joint
     name="FR_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="0.173999999999995 -0.2009 0"
       rpy="0 2.91353065389309E-16 -1.5707963267949" />
@@ -135,7 +135,7 @@
   </link>
   <joint
     name="FL_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="0.173999999999995 0.2009 0"
       rpy="0 -1.52736144460753E-16 1.5707963267949" />
@@ -188,7 +188,7 @@
   </link>
   <joint
     name="RR_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="-0.156000000000005 -0.2009 0"
       rpy="0 2.91353065389309E-16 -1.5707963267949" />
@@ -241,7 +241,7 @@
   </link>
   <joint
     name="RL_Wheel_joint"
-    type="continuous">
+    type="fixed">
     <origin
       xyz="-0.156000000000005 0.2009 0"
       rpy="0 -1.52736144460753E-16 1.5707963267949" />

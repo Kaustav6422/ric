@@ -1,6 +1,7 @@
 import re
 from threading import Thread
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Response.ParamBuildResponse import URF_HRLV
 
@@ -25,7 +26,7 @@ class RiCURF(Device):
         self._urfType = param.getURFType(devId)
         self._frameId = param.getURFFrameId(devId)
         self._pub = Publisher('%s' % self._name, Range, queue_size=param.getURFPubHz(devId))
-
+        KeepAliveHandler(self._name, Range)
         self._devId = devId
 
         self._haveRightToPublish = False

@@ -2,6 +2,7 @@ import re
 from threading import Thread
 import rospy
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Requests.imuRequest import IMURequest
 from BAL.Header.Response.ParamBuildResponse import IMU
@@ -30,13 +31,13 @@ class RiCIMU(Device):
         Service('/imu_Calibration', calibIMU, self.serviceCallBack)
         self._haveRightToPublish = False
         self._calib = False
-
         self._xMax = 0.0
         self._yMax = 0.0
         self._zMax = 0.0
         self._xMin = 0.0
         self._yMin = 0.0
         self._zMin = 0.0
+        KeepAliveHandler('%s_AGQ' % self._name, Imu)
 
     def getType(self):
         return IMU

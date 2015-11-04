@@ -2,6 +2,7 @@ import re
 from threading import Thread
 import rospy
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Requests.servoRequest import ServoRequest
 from BAL.Header.Response.ParamBuildResponse import SERVO
@@ -19,7 +20,7 @@ class RiCServo(Device):
         self._servoNum = servoNum
         self._pub = Publisher('%s/Position' % self._name, Float32, queue_size=params.getServoPublishHz(servoNum))
         Subscriber('%s/command' % self._name, Float32, self.servoCallBack)
-
+        KeepAliveHandler('%s/Position' % self._name, Float32)
         self._haveRightToPublish = False
 
     def publish(self, data):

@@ -2,6 +2,7 @@ import re
 from threading import Thread
 import rospy
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Response.ParamBuildResponse import Button
 
@@ -17,6 +18,7 @@ class RiCSwitch(Device):
         self._pub = Publisher('%s' % self._name, Bool, queue_size=param.getSwitchPubHz(devId))
         self._switchId = devId
         self._haveRightToPublish = False
+        KeepAliveHandler(self._name, Bool)
 
     def publish(self, data):
         msg = Bool()

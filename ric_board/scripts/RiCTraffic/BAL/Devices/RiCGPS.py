@@ -2,6 +2,7 @@ import re
 from threading import Thread
 import rospy
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Response.ParamBuildResponse import GPS
 
@@ -17,7 +18,7 @@ class RiCGPS(Device):
         self._frameId = param.getGpsFrameId()
         self._pub = Publisher('%s' % self._name, NavSatFix, queue_size=param.getGpsPubHz())
         self._haveRightToPublish = False
-
+        KeepAliveHandler(self._name, NavSatFix)
 
     def publish(self, data):
         msg = NavSatFix()

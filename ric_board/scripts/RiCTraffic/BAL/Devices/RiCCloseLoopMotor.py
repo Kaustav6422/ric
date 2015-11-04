@@ -2,6 +2,7 @@ import re
 from threading import Thread
 import rospy
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Requests.SetParamRequest import SetParamRequest
 from BAL.Header.Requests.closeMotorRequest import CloseMotorRequest
@@ -28,6 +29,7 @@ class RiCCloseLoopMotor(Device):
         self._pub = Publisher('%s/feedback' % self._name, Motor, queue_size=param.getCloseLoopMotorPubHz(motorNum))
         Subscriber('%s/command' % self._name, Float32, self.MotorCallback, queue_size=1)
         self._haveRightToPublish = False
+        KeepAliveHandler('%s/feedback' % self._name, Motor)
 
     def publish(self, data):
         msg = Motor()

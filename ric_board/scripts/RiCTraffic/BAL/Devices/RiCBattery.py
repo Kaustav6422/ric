@@ -7,16 +7,17 @@ from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Response.ParamBuildResponse import Battery
 
 __author__ = 'tom1231'
+import re
 from rospy import Publisher
 from std_msgs.msg import Float32
 from BAL.Interfaces.Device import Device
-import re
-
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 class RiCBattery(Device):
     def __init__(self, param, output):
         Device.__init__(self, param.getBatteryName(), output)
         self._pub = Publisher('%s' % self._name, Float32, queue_size=param.getBatteryPubHz())
         self._haveRightToPublish = False
+        KeepAliveHandler(self._name, Float32)
 
     def publish(self, data):
         msg = Float32()

@@ -1,6 +1,7 @@
 import re
 from threading import Thread
 import rostopic
+from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 
 __author__ = 'tom1231'
@@ -15,6 +16,7 @@ class RiCPPM(Device):
         Device.__init__(self, param.getPPMName(), output)
         self._pub = Publisher('%s' % self._name, PPM, queue_size=param.getPPMPubHz())
         self._haveRightToPublish = False
+        KeepAliveHandler(self._name, PPM)
 
     def getType(self): return PPM
 

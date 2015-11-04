@@ -214,6 +214,7 @@ def komodo_arm():
         msg.velocity.append(0.0)
         msg.effort.append(0.0)
     if have_elevator:
+        rospy.wait_for_service('/devsOnline')
         msg.name.append("")
         msg.position.append(0.0)
         msg.velocity.append(0.0)
@@ -236,8 +237,6 @@ def komodo_arm():
     pub = rospy.Publisher('joint_states', JointState, queue_size=1)
 
     quit_loop = False
-    if have_elevator:
-       rospy.wait_for_service('/devsOnline')
 
     while not rospy.is_shutdown() and not quit_loop:
         msg.header.stamp = rospy.Time.now()

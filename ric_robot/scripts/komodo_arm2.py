@@ -233,7 +233,7 @@ def komodo_arm():
     rospy.Subscriber("left_finger_controller/state", dxl_JointState, lf_callback)
     rospy.Subscriber("right_finger_controller/state", dxl_JointState, rf_callback)
     rospy.Subscriber("wrist_controller/state", dxl_JointState, wr_callback)
-    pub = rospy.Publisher('/joint_states', JointState, queue_size=1)
+    pub = rospy.Publisher('joint_states', JointState, queue_size=1)
 
     quit_loop = False
 

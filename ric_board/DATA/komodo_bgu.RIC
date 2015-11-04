@@ -137,7 +137,7 @@ S'50'
 p58
 sS'encoder'
 p59
-S'4'
+S'2'
 p60
 sS'pidHz'
 p61
@@ -170,10 +170,10 @@ sg7
 I9
 sS'dirEnc'
 p74
-I01
+I00
 sS'channel'
 p75
-S'1'
+S'0'
 p76
 sa(dp77
 g43
@@ -229,9 +229,9 @@ p93
 sg7
 I9
 sg74
-I00
+I01
 sg75
-S'0'
+S'1'
 p94
 sa(dp95
 g8

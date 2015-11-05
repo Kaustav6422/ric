@@ -40,6 +40,7 @@
       <param name="image_width" value="320"/>
       <param name="image_height" value="240"/>
     </node>
+    <include file="$(find komodo_arm_moveit_config)/launch/move_group.launch"/>
     <rosparam command="load" file="$(find ric_board)/config/komodo_bgu.yaml"/>
   </group>
 </launch>

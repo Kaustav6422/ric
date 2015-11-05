@@ -477,4 +477,16 @@ sS'voltDivRation'
 p187
 S'6'
 p188
+sa(dp189
+g7
+I25
+sg8
+S'moveit'
+p190
+sg14
+S'/launch/move_group.launch'
+p191
+sg16
+S'komodo_arm_moveit_config'
+p192
 saa.

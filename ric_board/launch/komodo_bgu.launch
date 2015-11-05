@@ -10,7 +10,7 @@
 	<remap from="left_urf" to="Rangers/Left_URF" />
 	<remap from="right_urf" to="Rangers/Right_URF" />
 	<remap from="rear_urf" to="Rangers/Rear_URF" />	
-    </node>
+   </node>
     <include file="$(find ric_robot)/launch/elevator.launch"/>
     <param command="$(find xacro)/xacro.py '$(find ric_description)/komodo/komodo_elevator2.xacro'" name="robot_description"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
@@ -50,6 +50,17 @@
       <param name="image_height" value="240"/>
     </node>
     <include file="$(find komodo_arm_moveit_config)/launch/move_group.launch"/>
+    <include file="$(find komodo_2dnav)/launch/move_base.launch"/>
+    <include file="$(find ric_board)/launch/hector_slam.launch">
+      <arg name="tf_map_scanmatch_transform_frame_name" value="scanmatcher_frame"/>
+      <arg name="base_frame" value="base_link"/>
+      <arg name="odom_frame" value="odom_link"/>
+      <arg name="map_frame" value="map"/>
+      <arg default="true" name="pub_map_odom_transform"/>
+      <arg default="5" name="scan_subscriber_queue_size"/>
+      <arg name="scan_topic" value="scan"/>
+      <arg default="2048" name="map_size"/>
+    </include>
     <rosparam command="load" file="$(find ric_board)/config/komodo_bgu.yaml"/>
   </group>
 </launch>

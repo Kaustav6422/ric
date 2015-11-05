@@ -1,7 +1,16 @@
 <?xml version="1.0" ?>
 <launch>
   <group ns="komodo_1">
-    <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py"/>
+    <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py" >
+    	<remap from="diff_driver/command" to="cmd_vel" />
+	<remap from="diff_driver/command" to="/cmd_vel" />
+	<remap from="diff_driver/odometry" to="odom_pub" />
+	<remap from="imu_AGQ" to="imu_pub" />
+	<remap from="gps" to="gps_pub" />
+	<remap from="left_urf" to="Rangers/Left_URF" />
+	<remap from="right_urf" to="Rangers/Right_URF" />
+	<remap from="rear_urf" to="Rangers/Rear_URF" />	
+    </node>
     <include file="$(find ric_robot)/launch/elevator.launch"/>
     <param command="$(find xacro)/xacro.py '$(find ric_description)/komodo/komodo_elevator2.xacro'" name="robot_description"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>

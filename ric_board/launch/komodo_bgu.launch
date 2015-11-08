@@ -3,7 +3,6 @@
   <group ns="komodo_1">
     <node name="RiCTraffic" output="screen" pkg="ric_board" type="Start.py" >
     	<remap from="diff_driver/command" to="cmd_vel" />
-	<remap from="diff_driver/command" to="/cmd_vel" />
 	<remap from="diff_driver/odometry" to="odom_pub" />
 	<remap from="imu_AGQ" to="imu_pub" />
 	<remap from="gps" to="gps_pub" />
@@ -50,7 +49,6 @@
       <param name="image_height" value="240"/>
     </node>
     <include file="$(find komodo_arm_moveit_config)/launch/move_group.launch"/>
-    <include file="$(find komodo_2dnav)/launch/move_base.launch"/>
     <include file="$(find ric_board)/launch/hector_slam.launch">
       <arg name="tf_map_scanmatch_transform_frame_name" value="scanmatcher_frame"/>
       <arg name="base_frame" value="base_link"/>
@@ -63,4 +61,5 @@
     </include>
     <rosparam command="load" file="$(find ric_board)/config/komodo_bgu.yaml"/>
   </group>
+  <include file="$(find komodo_2dnav)/launch/move_base.launch"/>
 </launch>

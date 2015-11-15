@@ -73,10 +73,10 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes_elevator/FR_Wheel_link.STL" />
+        <!-- <mesh filename="package://ric_description/komodo/meshes_elevator/FR_Wheel_link.STL" /> -->
+        <cylinder length="0.05" radius="0.1" />
       </geometry>
     </collision>
   </link>
@@ -126,10 +126,10 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes_elevator/FL_Wheel_link.STL" />
+        <!-- <mesh filename="package://ric_description/komodo/meshes_elevator/FL_Wheel_link.STL" /> -->
+        <cylinder length="0.05" radius="0.1" />
       </geometry>
     </collision>
   </link>
@@ -179,10 +179,10 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes_elevator/RR_Wheel_link.STL" />
+        <!-- <mesh filename="package://ric_description/komodo/meshes_elevator/RR_Wheel_link.STL" /> -->
+        <cylinder length="0.05" radius="0.1" />
       </geometry>
     </collision>
   </link>
@@ -232,10 +232,10 @@
     <collision>
       <origin
         xyz="0 0 0"
-        rpy="0 0 0" />
+        rpy="0 1.5 0" />
       <geometry>
-        <mesh
-          filename="package://ric_description/komodo/meshes_elevator/RL_Wheel_link.STL" />
+        <!-- <mesh filename="package://ric_description/komodo/meshes_elevator/RL_Wheel_link.STL" /> -->
+        <cylinder length="0.05" radius="0.1" />
       </geometry>
     </collision>
   </link>

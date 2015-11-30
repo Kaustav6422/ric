@@ -26,7 +26,7 @@ class RiCURF(Device):
         self._urfType = param.getURFType(devId)
         self._frameId = param.getURFFrameId(devId)
         self._pub = Publisher('%s' % self._name, Range, queue_size=param.getURFPubHz(devId))
-        KeepAliveHandler(self._name, Range)
+        #KeepAliveHandler(self._name, Range)
         self._devId = devId
 
         self._haveRightToPublish = False

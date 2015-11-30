@@ -20,7 +20,7 @@ class RiCServo(Device):
         self._servoNum = servoNum
         self._pub = Publisher('%s/Position' % self._name, Float32, queue_size=params.getServoPublishHz(servoNum))
         Subscriber('%s/command' % self._name, Float32, self.servoCallBack)
-        KeepAliveHandler('%s/Position' % self._name, Float32)
+        #KeepAliveHandler('%s/Position' % self._name, Float32)
         self._haveRightToPublish = False
 
     def publish(self, data):

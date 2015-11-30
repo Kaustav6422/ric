@@ -29,7 +29,7 @@ class RiCCloseLoopMotor(Device):
         self._pub = Publisher('%s/feedback' % self._name, Motor, queue_size=param.getCloseLoopMotorPubHz(motorNum))
         Subscriber('%s/command' % self._name, Float32, self.MotorCallback, queue_size=1)
         self._haveRightToPublish = False
-        KeepAliveHandler('%s/feedback' % self._name, Motor)
+        #KeepAliveHandler('%s/feedback' % self._name, Motor)
 
     def publish(self, data):
         msg = Motor()

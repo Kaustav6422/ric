@@ -17,7 +17,7 @@ class RiCBattery(Device):
         Device.__init__(self, param.getBatteryName(), output)
         self._pub = Publisher('%s' % self._name, Float32, queue_size=param.getBatteryPubHz())
         self._haveRightToPublish = False
-        KeepAliveHandler(self._name, Float32)
+        #KeepAliveHandler(self._name, Float32)
 
     def publish(self, data):
         msg = Float32()

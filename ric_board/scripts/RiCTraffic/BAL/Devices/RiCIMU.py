@@ -37,7 +37,7 @@ class RiCIMU(Device):
         self._xMin = 0.0
         self._yMin = 0.0
         self._zMin = 0.0
-        KeepAliveHandler('%s_AGQ' % self._name, Imu)
+        #KeepAliveHandler('%s_AGQ' % self._name, Imu)
 
     def getType(self):
         return IMU

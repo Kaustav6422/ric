@@ -18,7 +18,7 @@ class RiCGPS(Device):
         self._frameId = param.getGpsFrameId()
         self._pub = Publisher('%s' % self._name, NavSatFix, queue_size=param.getGpsPubHz())
         self._haveRightToPublish = False
-        KeepAliveHandler(self._name, NavSatFix)
+        #KeepAliveHandler(self._name, NavSatFix)
 
     def publish(self, data):
         msg = NavSatFix()

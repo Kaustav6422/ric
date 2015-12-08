@@ -9,7 +9,7 @@ from BAL.Handlers.incomingHandler import IncomingHandler, MOTOR_RES, CLOSE_DIFF_
     GPS_RES, \
     PPM_RES, BAT_RES, IMU_CLIB_RES
 from BAL.Handlers.incomingMsgHandler import IncomingMsgHandler
-from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START, HEADER_DEBUG
+from BAL.Handlers.serialWriteHandler import SerialWriteHandler, HEADER_START, HEADER_DEBUG, KEEP_ALIVE_HEADER
 from BAL.Header.Response.IMUPublishResponse import IMUPublishResponse
 from BAL.Header.Response.ServoPublishResponse import ServoPublishResponse
 from BAL.Header.Response.URFPublishResponse import URFPublishResponse
@@ -48,6 +48,8 @@ WARRNING = 2
 
 VERSION = 7.0
 
+WD_TIMEOUT = 5000
+
 
 class Program:
     def __init__(self):
@@ -75,6 +77,7 @@ class Program:
             server = None
 
             rospy.loginfo("Current version: %.2f" % VERSION)
+            is_wd_active = False
             try:
                 self.waitForConnection(output)
                 if self.checkVer(input):
@@ -101,8 +104,8 @@ class Program:
                     server = Server(devs, params)
                     Thread(target=self.checkForSubscribers, args=(devs,)).start()
                     Thread(target=msgHandler.run, args=()).start()
-
-                    while not rospy.is_shutdown():
+                    wd_keep_alive = int(round(time.time() * 1000))
+                    while not rospy.is_shutdown() and not is_wd_active:
                         if gotHeaderStart:
                             if len(data) < 1:
                                 data.append(input.read())
@@ -110,7 +113,6 @@ class Program:
                             elif incomingLength >= 1:
                                 for i in range(1, incomingLength):
                                     data.append(input.read())
-                                # print data
                                 msg = self.genData(data, headerId)
                                 if msg is not None and msg.getId() != CON_REQ:
                                     msgHandler.addMsg(msg)
@@ -140,27 +142,38 @@ class Program:
 
                             toPrint = ''
                             gotHeaderDebug = False
-                        else:
+                        elif input.inWaiting() > 0:
                             checkHead = ord(input.read())
                             if checkHead == HEADER_START:
                                 gotHeaderStart = True
                             elif checkHead == HEADER_DEBUG:
                                 gotHeaderDebug = True
+                            elif checkHead == KEEP_ALIVE_HEADER:
+                                wd_keep_alive = int(round(time.time() * 1000))
+                        is_wd_active = (int(round(time.time() * 1000)) - wd_keep_alive) > WD_TIMEOUT
                 else:
                     raise VersionError(NEED_TO_UPDATE)
+                if is_wd_active:
+                    rospy.logerr(
+                        "RiCBoard isn't responding.\nThe Following things can make this happen:"
+                        "\n1) If accidentally the manual driving is turn on, If so turn it off the relaunch the RiCBoard"
+                        "\n2) If accidentally the RiCTakeovver gui is turn on,If so turn it off the relaunch the RiCBoard"
+                        "\n3) The RiCBoard is stuck, If so please power off the robot and start it again. And contact RobotICan support by this email: tom@robotican.net")
             except KeyboardInterrupt:
                 pass
 
             except VersionError:
                 rospy.logerr("Can't load RiCBoard because the version don't mach please update the firmware.")
-            except: pass
+            except:
+                pass
+
             finally:
-                con = ConnectionResponse(False)
-                output.writeAndWaitForAck(con.dataTosend(), RES_ID)
+                if not is_wd_active:
+                    con = ConnectionResponse(False)
+                    output.writeAndWaitForAck(con.dataTosend(), RES_ID)
                 ser.close()
                 if msgHandler != None: msgHandler.close()
                 self._toQuit = True
-
 
         except SerialException:
             rospy.logerr("Can't find RiCBoard, please check if its connected to the computer.")

@@ -7,6 +7,7 @@ __author__ = 'tom1231'
 from threading import RLock
 HEADER_START = 0xfe
 HEADER_DEBUG = 0xfd
+KEEP_ALIVE_HEADER = 0xf9
 
 class SerialWriteHandler:
     def __init__(self, ser, incomingDataHandler, input):

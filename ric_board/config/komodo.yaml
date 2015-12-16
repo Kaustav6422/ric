@@ -1,4 +1,4 @@
-CON_PORT: RiCBoard
+CON_PORT: ttyUSB0
 FILE_NAME: komodo
 URF0/publishHz: 20
 URF0/name: left_urf

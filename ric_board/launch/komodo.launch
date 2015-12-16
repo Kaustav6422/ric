@@ -13,5 +13,9 @@
     <param name="image_width" value="640"/>
     <param name="image_height" value="480"/>
   </node>
+  <node name="laser" output="screen" pkg="hokuyo_node" type="hokuyo_node">
+    <param name="port" value="/dev/Hokuyo"/>
+    <param name="frame_id" value="Laser_link"/>
+  </node>
   <rosparam command="load" file="$(find ric_board)/config/komodo.yaml"/>
 </launch>

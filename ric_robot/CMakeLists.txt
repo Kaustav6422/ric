@@ -4,7 +4,7 @@ project(ric_robot)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS geometry_msgs roscpp rospy sensor_msgs std_msgs tf message_generation)
+find_package(catkin REQUIRED COMPONENTS geometry_msgs roscpp rospy sensor_msgs std_msgs tf message_generation moveit_ros_planning_interface)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -74,19 +74,23 @@ include_directories(include
 )
 
 
-
 ## Declare a cpp executable
 add_executable(ric_node src/ric_node.cpp)
 add_executable(ric_node2 src/ric_node2.cpp)
+add_executable(moveit_group_api src/moveit_group_api.cpp)
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 add_dependencies(ric_node ${PROJECT_NAME}_generate_messages_cpp)
 add_dependencies(ric_node2 ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(moveit_group_api ${PROJECT_NAME}_generate_messages_cpp)
 ## Specify libraries to link a library or executable target against
 target_link_libraries(ric_node
    ${catkin_LIBRARIES}
 )
 target_link_libraries(ric_node2
+   ${catkin_LIBRARIES}
+)
+target_link_libraries(moveit_group_api
    ${catkin_LIBRARIES}
 )
 

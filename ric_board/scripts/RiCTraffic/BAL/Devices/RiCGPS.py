@@ -2,6 +2,7 @@ import re
 from threading import Thread
 import rospy
 import rostopic
+import time
 from BAL.Handlers.keepAliveHandler import KeepAliveHandler
 from BAL.Header.Requests.PublishRequest import PublishRequest
 from BAL.Header.Response.ParamBuildResponse import GPS
@@ -11,6 +12,7 @@ from rospy import Publisher
 from sensor_msgs.msg import NavSatFix
 from BAL.Interfaces.Device import Device
 
+GPS_WD_TIMEOUT = 300
 
 class RiCGPS(Device):
     def __init__(self, param, output):
@@ -18,16 +20,25 @@ class RiCGPS(Device):
         self._frameId = param.getGpsFrameId()
         self._pub = Publisher('%s' % self._name, NavSatFix, queue_size=param.getGpsPubHz())
         self._haveRightToPublish = False
-        #KeepAliveHandler(self._name, NavSatFix)
+        self._old_fix = 0
+        self._wd = int(round(time.time() * 1000))
+        KeepAliveHandler(self._name, NavSatFix)
 
     def publish(self, data):
+        now = int(round(time.time() * 1000))
         msg = NavSatFix()
         msg.header.frame_id = self._frameId
         msg.header.stamp = rospy.get_rostime()
         msg.latitude = data.getLat()
         msg.longitude = data.getLng()
         msg.altitude = data.getMeters()
-        if data.getFix() == 1:
+        cur_fix =  data.getFix()
+        #print cur_fix
+        if  (cur_fix != self._old_fix):
+            msg.status.status = 0
+            self._old_fix = cur_fix
+            self._wd = now
+	elif (now - self._wd) < GPS_WD_TIMEOUT:
             msg.status.status = 0
         else:
             msg.status.status = -1

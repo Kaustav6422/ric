@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'Main.ui'
 #
-# Created: Tue Sep  1 16:25:40 2015
+# Created: Thu Dec 17 10:54:43 2015
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -209,16 +209,18 @@ class Ui_MainWindow(object):
         self.actionJoystick.setObjectName(_fromUtf8("actionJoystick"))
         self.actionDifferential_Drive_smoother = QtGui.QAction(MainWindow)
         self.actionDifferential_Drive_smoother.setObjectName(_fromUtf8("actionDifferential_Drive_smoother"))
+        self.actionEmergency_button = QtGui.QAction(MainWindow)
+        self.actionEmergency_button.setObjectName(_fromUtf8("actionEmergency_button"))
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
         self.actionImu_calibration = QtGui.QAction(MainWindow)
         self.actionImu_calibration.setObjectName(_fromUtf8("actionImu_calibration"))
-        self.actionRobot_simulation = QtGui.QAction(MainWindow)
-        self.actionRobot_simulation.setObjectName(_fromUtf8("actionRobot_simulation"))
-        self.actionInclude_roslaunch = QtGui.QAction(MainWindow)
-        self.actionInclude_roslaunch.setObjectName(_fromUtf8("actionInclude_roslaunch"))
         self.actionInclude_ros_node = QtGui.QAction(MainWindow)
         self.actionInclude_ros_node.setObjectName(_fromUtf8("actionInclude_ros_node"))
+        self.actionInclude_ros_launch = QtGui.QAction(MainWindow)
+        self.actionInclude_ros_launch.setObjectName(_fromUtf8("actionInclude_ros_launch"))
+        self.actionEmegency_switch = QtGui.QAction(MainWindow)
+        self.actionEmegency_switch.setObjectName(_fromUtf8("actionEmegency_switch"))
         self.menuFlie.addAction(self.actionNew)
         self.menuFlie.addAction(self.actionOpen)
         self.menuFlie.addAction(self.actionSave)
@@ -233,6 +235,7 @@ class Ui_MainWindow(object):
         self.menuDifferential_Drive.addAction(self.actionOpen_Loop_Drive)
         self.menuDifferential_Drive.addAction(self.menuClose_Loop_Drive.menuAction())
         self.menuRiC_Device.addAction(self.actionBattery_Monitor)
+        self.menuRiC_Device.addAction(self.actionEmegency_switch)
         self.menuRiC_Device.addAction(self.actionServo)
         self.menuRiC_Device.addAction(self.actionSwitch)
         self.menuRiC_Device.addAction(self.actionIMU)
@@ -246,7 +249,7 @@ class Ui_MainWindow(object):
         self.menuExternal_Device.addAction(self.actionOPENNI)
         self.menuExternal_Device.addAction(self.actionHakoyo)
         self.menuExternal_Device.addAction(self.actionInclude_ros_node)
-        self.menuExternal_Device.addAction(self.actionInclude_roslaunch)
+        self.menuExternal_Device.addAction(self.actionInclude_ros_launch)
         self.menuTeleoperation.addAction(self.actionKeyboard)
         self.menuTeleoperation.addAction(self.actionJoystick)
         self.menuOther.addAction(self.actionRobot_Model)
@@ -264,7 +267,6 @@ class Ui_MainWindow(object):
         self.menuTools.addAction(self.actionRemote_robot_launch)
         self.menuTools.addAction(self.actionSet_parameters)
         self.menuTools.addAction(self.actionImu_calibration)
-        self.menuTools.addAction(self.actionRobot_simulation)
         self.menubar.addAction(self.menuFlie.menuAction())
         self.menubar.addAction(self.menuAdd_Device.menuAction())
         self.menubar.addAction(self.menuTools.menuAction())
@@ -294,7 +296,6 @@ class Ui_MainWindow(object):
         self.pushButton_2.setShortcut(_translate("MainWindow", "Ctrl+L", None))
         self.label_5.setText(_translate("MainWindow", "Port:", None))
         self.saveStatus.setText(_translate("MainWindow", "run/don\'t run on start", None))
-        self.saveStatus.setShortcut(_translate("MainWindow", "Ctrl+D", None))
         self.menuFlie.setTitle(_translate("MainWindow", "Flie", None))
         self.menuAdd_Device.setTitle(_translate("MainWindow", "Add", None))
         self.menuRiC_Device.setTitle(_translate("MainWindow", "RiC Board Device", None))
@@ -345,10 +346,11 @@ class Ui_MainWindow(object):
         self.actionKeyboard.setText(_translate("MainWindow", "Keyboard", None))
         self.actionJoystick.setText(_translate("MainWindow", "Joystick", None))
         self.actionDifferential_Drive_smoother.setText(_translate("MainWindow", "Differential Drive smoother", None))
+        self.actionEmergency_button.setText(_translate("MainWindow", "Emergency Button", None))
         self.actionAbout.setText(_translate("MainWindow", "About", None))
         self.actionImu_calibration.setText(_translate("MainWindow", "Imu calibration", None))
-        self.actionRobot_simulation.setText(_translate("MainWindow", "Robot simulation", None))
-        self.actionInclude_roslaunch.setText(_translate("MainWindow", "Include ros launch ", None))
         self.actionInclude_ros_node.setText(_translate("MainWindow", "Include ros node", None))
+        self.actionInclude_ros_launch.setText(_translate("MainWindow", "Include ros launch", None))
+        self.actionEmegency_switch.setText(_translate("MainWindow", "Emegency switch", None))
 
 import resource_rc

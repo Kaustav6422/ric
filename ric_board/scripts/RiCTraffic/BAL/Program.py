@@ -96,6 +96,7 @@ class Program:
                     devBuilder.createBattery()
                     devBuilder.createOpenDiff()
                     devBuilder.createDiffFour()
+                    devBuilder.createEmergencySwitch()
                     devs = devBuilder.getDevs()
                     devBuilder.sendFinishBuilding()
                     input.timeout = None

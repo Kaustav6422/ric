@@ -27,6 +27,7 @@ JOYSTICK = 23
 SMOOTHER = 24
 LAUNCH = 25
 NODE = 26
+EMERGENCY_SWITCH = 27
 
 
 class DeviceFrame():

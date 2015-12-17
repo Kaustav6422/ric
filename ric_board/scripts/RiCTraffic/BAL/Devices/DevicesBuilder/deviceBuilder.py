@@ -15,6 +15,7 @@ from BAL.Header.Response.IMUParamResponse import IMUParamResponse
 from BAL.Header.Response.ParamBuildResponse import EngineCL, EngineCL2
 from BAL.Header.Response.closeDiffFourParamResponse import CloseDIffFourParamResponse
 from BAL.Header.Response.closeDiffParamResponse import CloseDiffParamResponse
+from BAL.Header.Response.emergencySwitchParamResponse import EmergencySwitchParamResponse
 from BAL.Header.Response.gpsParamResponse import GPSParamResponse
 from BAL.Header.Response.openLoopMotorParamResponse import OpenLoopMotorParamResponse
 from BAL.Header.Response.ppmParamResponse import PPMParamResponse
@@ -170,6 +171,12 @@ class DeviceBuilder:
             diff = RiCOpenDiff(self._param, motorL, motorR)
             self._allDevs['diff'].append(diff)
             rospy.loginfo("Differential drive: %s is ready", self._param.getCloseDiffName())
+
+    def createEmergencySwitch(self):
+        if self._param.isEmergencyInit():
+            rospy.loginfo("Configuring emergency switch")
+            self._output.writeAndWaitForAck(EmergencySwitchParamResponse(self._param).dataTosend(), 0)
+            rospy.loginfo("Emergency switch is ready")
 
     def getDevs(self):
         return self._allDevs

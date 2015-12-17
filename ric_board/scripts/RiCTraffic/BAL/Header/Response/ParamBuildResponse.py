@@ -17,6 +17,7 @@ EngineCL2 = 12
 Battery = 13
 CloseDiffFour = 14
 DiffDriverOL = 15
+EmergencySwitch = 16
 
 
 class ParamBuildResponse(RiCHeader):

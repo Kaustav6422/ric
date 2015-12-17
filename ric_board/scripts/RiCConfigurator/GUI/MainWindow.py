@@ -1,4 +1,5 @@
 from BAL.Devices.KeyboardTeleop import KeyboardTeleop
+from BAL.Devices.emergencySwitch import EmergencySwitch
 from BAL.Devices.joystickTeleop import JoystickTeleop
 from BAL.Devices.launchFile import RosLaunch
 from BAL.Devices.rosNode import RosNode
@@ -34,7 +35,7 @@ from BAL.Devices.Urf import Urf
 from BAL.Devices.UsbCam import UsbCam
 from BAL.Interface.DeviceFrame import SERVO, BATTERY, SWITCH, IMU, PPM, GPS, RELAY, URF, CLOSE_LOP_ONE, CLOSE_LOP_TWO, \
     OPEN_LOP, DIFF_CLOSE, DIFF_OPEN, EX_DEV, HOKUYO, OPRNNI, USBCAM, DIFF_CLOSE_FOUR, ROBOT_MODEL, SLAM, Keyboard, \
-    JOYSTICK, SMOOTHER, LAUNCH, NODE
+    JOYSTICK, SMOOTHER, LAUNCH, NODE, EMERGENCY_SWITCH
 from GUI.RemoteLaunch import RemoteLaunch
 from GUI.ShowRiCBoard import ShowRiCBoard
 
@@ -97,9 +98,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionDifferential_Drive_smoother.triggered.connect(self.addDiffSmooth)
         self.actionAbout.triggered.connect(self.showAbout)
         self.actionImu_calibration.triggered.connect(self.showImuCalib)
-        self.actionRobot_simulation.triggered.connect(self.startSimGUI)
-        self.actionInclude_roslaunch.triggered.connect(self.addRosLaunch)
+        #self.actionRobot_simulation.triggered.connect(self.startSimGUI)
+        self.actionInclude_ros_launch.triggered.connect(self.addRosLaunch)
         self.actionInclude_ros_node.triggered.connect(self.addRosNode)
+        self.actionEmegency_switch.triggered.connect(self.addEmergencySwitch)
 
         self.fileName.textChanged.connect(self.fileNameEven)
         self.nameSpace.textChanged.connect(self.namespaceEven)
@@ -151,6 +153,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.haveOpenLoop = False
         self.haveDiff = False
         self.haveReader = False
+
 
         self.diffEnable = False
 
@@ -262,6 +265,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.haveOpenLoop = False
         self.haveDiff = False
         self.haveReader = False
+
 
         self.diffEnable = False
 
@@ -405,7 +409,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 elif dev['type'] == NODE:
                     self.currentShowDev = RosNode(self.DevFrame, self.data)
                     self.currentShowDev.fromDict(dev)
-
+                elif dev['type'] == EMERGENCY_SWITCH:
+                    self.currentShowDev = EmergencySwitch(self.DevFrame, self.data)
+                    self.currentShowDev.fromDict(dev)
 
                 if self.currentShowDev.getDevType() == BATTERY:
                     self.haveBattery = True
@@ -415,6 +421,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.havePPM = True
                 if self.currentShowDev.getDevType() == GPS:
                     self.haveGPS = True
+
+
+
                 if (self.currentShowDev.getDevType() == CLOSE_LOP_ONE) or (
                             self.currentShowDev.getDevType() == CLOSE_LOP_TWO):
                     self.haveCloseLoop = True
@@ -467,6 +476,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         initGPS = '0'
         initPPM = '0'
         initBAT = '0'
+        initEMER = '0'
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
         if str(self.ConPortList.currentText()) != '':
@@ -497,6 +507,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         initPPM = '1'
                     elif dev.getDevType() == BATTERY:
                         initBAT = '1'
+                    elif dev.getDevType() == EMERGENCY_SWITCH:
+                        initEMER = '1'
 
         toSave.write('IMU_INIT: ' + initIMU + '\n')
         toSave.write('GPS_INIT: ' + initGPS + '\n')
@@ -505,6 +517,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         toSave.write('DIFF_INIT: ' + initDiffClose + '\n')
         toSave.write('DIFF_INIT_OP: ' + initDiffOpen + '\n')
         toSave.write('DIFF_CLOSE_FOUR: ' + initDiffCloseFour + '\n')
+        toSave.write('EMERGENCY_INIT: ' + initEMER + '\n')
 
         toSave.write('closeLoopNum: ' + str(CloseLoop.closeLoop) + '\n')
         toSave.write('switchNum: ' + str(Switch.switchCount) + '\n')
@@ -540,6 +553,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         QMessageBox.information(self, "File Saved", "To launch: $ roslaunch ric_board %s.launch" % self._fileName)
         self.pushButton_2.setEnabled(True)
+
+    def addEmergencySwitch(self):
+        self.interruptHandler()
+        self.newDevMode = True
+        self.currentShowDev = EmergencySwitch(self.DevFrame, self.data)
+        self.currentShowDev.showDetails()
+        self.pushButton.clicked.connect(self.addDevToList)
 
     def addRosNode(self):
         self.interruptHandler()
@@ -834,6 +854,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.haveGPS = False
         if self.currentShowDev.getDevType() == RELAY:
             self.relayPorts.addItem(self.currentShowDev.getPort())
+
         if self.currentShowDev.getDevType() == URF:
             self.urfPorts.addItem(self.currentShowDev.getPort())
         if self.currentShowDev.getDevType() == CLOSE_LOP_ONE:

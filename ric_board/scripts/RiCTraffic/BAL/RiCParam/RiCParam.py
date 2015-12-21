@@ -289,11 +289,14 @@ class RiCParam:
     def getFileName(self):
         return rospy.get_param('FILE_NAME', '')
 
-    def getEmergencyPin(self):
-        return int(rospy.get_param('emergency_switch/pin', 27))
+    def getEmergencyPin(self, index):
+        return int(rospy.get_param('emergency_switch{0}/pin'.format(str(index)), 27))
 
-    def getEmergency(self):
-        return int(rospy.get_param('emergency_switch/state', 1))
+    def getEmergencyState(self, index):
+        return int(rospy.get_param('emergency_switch{0}/state'.format(str(index)), 1))
 
-    def isEmergencyInit(self):
-        return int(rospy.get_param('EMERGENCY_INIT', 0)) == 1
+    def getEmergencyName(self, index):
+        return rospy.get_param('emergency_switch{0}/name'.format(str(index)), 'None')
+
+    def EmergencyCount(self):
+        return int(rospy.get_param('emergencySwitchNum', 0))

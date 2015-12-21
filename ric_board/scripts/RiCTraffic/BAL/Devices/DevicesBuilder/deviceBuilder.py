@@ -173,10 +173,11 @@ class DeviceBuilder:
             rospy.loginfo("Differential drive: %s is ready", self._param.getCloseDiffName())
 
     def createEmergencySwitch(self):
-        if self._param.isEmergencyInit():
-            rospy.loginfo("Configuring emergency switch")
-            self._output.writeAndWaitForAck(EmergencySwitchParamResponse(self._param).dataTosend(), 0)
-            rospy.loginfo("Emergency switch is ready")
+        size = self._param.EmergencyCount()
+        for i in xrange(size):
+            rospy.loginfo("Configuring emergency switch: %s", self._param.getEmergencyName(i))
+            self._output.writeAndWaitForAck(EmergencySwitchParamResponse(i, self._param).dataTosend(), i)
+            rospy.loginfo("Emergency switch is ready: %s", self._param.getEmergencyName(i))
 
     def getDevs(self):
         return self._allDevs

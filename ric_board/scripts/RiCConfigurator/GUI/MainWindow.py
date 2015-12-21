@@ -476,7 +476,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         initGPS = '0'
         initPPM = '0'
         initBAT = '0'
-        initEMER = '0'
         toSave = open("%s/config/%s.yaml" % (pkg, self._fileName), 'w')
         launch = open("%s/launch/%s.launch" % (pkg, self._fileName), 'w')
         if str(self.ConPortList.currentText()) != '':
@@ -507,8 +506,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         initPPM = '1'
                     elif dev.getDevType() == BATTERY:
                         initBAT = '1'
-                    elif dev.getDevType() == EMERGENCY_SWITCH:
-                        initEMER = '1'
 
         toSave.write('IMU_INIT: ' + initIMU + '\n')
         toSave.write('GPS_INIT: ' + initGPS + '\n')
@@ -517,7 +514,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         toSave.write('DIFF_INIT: ' + initDiffClose + '\n')
         toSave.write('DIFF_INIT_OP: ' + initDiffOpen + '\n')
         toSave.write('DIFF_CLOSE_FOUR: ' + initDiffCloseFour + '\n')
-        toSave.write('EMERGENCY_INIT: ' + initEMER + '\n')
 
         toSave.write('closeLoopNum: ' + str(CloseLoop.closeLoop) + '\n')
         toSave.write('switchNum: ' + str(Switch.switchCount) + '\n')
@@ -525,6 +521,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         toSave.write('relayNum: ' + str(Relay.relayCount) + '\n')
         toSave.write('URFNum: ' + str(Urf.urfCount) + '\n')
         toSave.write('openLoopNum: ' + str(OpenLoop.openLoopNum) + '\n')
+        toSave.write('emergencySwitchNum: ' + str(EmergencySwitch.emergency_switch_count) + '\n')
 
         SubElement(parent, 'rosparam', {
             'file': '$(find ric_board)/config/' + self._fileName + '.yaml',

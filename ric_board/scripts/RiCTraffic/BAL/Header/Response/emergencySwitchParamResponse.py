@@ -5,13 +5,13 @@ MSG_LEN = 16
 
 
 class EmergencySwitchParamResponse(ParamBuildResponse):
-    def __init__(self, param):
-        ParamBuildResponse.__init__(self, EmergencySwitch, 0, 0)
+    def __init__(self, switchNum, param):
+        ParamBuildResponse.__init__(self, EmergencySwitch, switchNum, 0)
         self._length = MSG_LEN
         self._checkSum = 0
 
-        self._listenToPin = param.getEmergencyPin()
-        self._status = param.getEmergency()
+        self._listenToPin = param.getEmergencyPin(switchNum)
+        self._status = param.getEmergencyState(switchNum)
 
         self._checkSum = self.calCheckSum(self.dataTosend())
 

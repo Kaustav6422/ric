@@ -19,7 +19,7 @@ REV_LEFT_RIGHT = int(sys.argv[12])
 
 class Program:
     def __init__(self):
-        rospy.wait_for_service('/devsOnline')
+        #rospy.wait_for_service('/devsOnline')
         self._axes = [0.0, 0.0]
         self._enable = False
         self._maxSpeedLinear = float(sys.argv[1])
@@ -108,6 +108,7 @@ class Program:
 
                 elif event.type == JOYAXISMOTION:
                     if self.isEnable():
+			
                         data = event.dict
                         if data['axis'] == LEFT_RIGHT_NUM:
                             self.setLeftAndRightAxes(data['value'])
@@ -128,12 +129,12 @@ class Program:
                         self.setLeftAndRightAxes(0.0)
                         self.setUpAndDownAxes(0.0)
 
-                        msg = Twist()
+                msg = Twist()
 
-                        msg.linear.x = self.getUpAndDownAxes() * REV_UP_DOWN
-                        msg.angular.z = self.getLeftAndRightAxes() * REV_LEFT_RIGHT
+                msg.linear.x = self.getUpAndDownAxes() * REV_UP_DOWN
+                msg.angular.z = self.getLeftAndRightAxes() * REV_LEFT_RIGHT
 
-                        self._pub.publish(msg)
+                self._pub.publish(msg)
         except:
             rospy.logerr("Joystick [%d] not found" % JOY_NUM)
 

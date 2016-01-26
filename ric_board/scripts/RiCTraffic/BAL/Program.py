@@ -118,7 +118,7 @@ class Program:
                                 if msg is not None and msg.getId() != CON_REQ:
                                     msgHandler.addMsg(msg)
                                 elif msg.getId() == CON_REQ and not msg.toConnect():
-                                    subprocess.Popen(shlex.split("pkill -f ros"))
+                                    subprocess.Popen(shlex.split("pkill -f RiCTraffic"))
                                     rospy.logerr("Emergency button is activated.")
                                     break
                                 data = []

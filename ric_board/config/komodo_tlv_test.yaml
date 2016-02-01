@@ -49,6 +49,9 @@ Diff/maxAng: 16.0
 Diff/maxLin: 16.0
 Diff/motorL: 0
 Diff/motorR: 1
+emergency_switch0/pin: 27
+emergency_switch0/state: 2
+emergency_switch0/name: emergency_switch
 IMU_INIT: 0
 GPS_INIT: 0
 PPM_INIT: 0

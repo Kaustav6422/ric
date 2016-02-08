@@ -70,15 +70,16 @@ class RiCIMU(Device):
     def publish(self, data):
         if not self._calib and data.getImuMsgId() == PUB_ID:
             q = data.getOrientation()
-            roll, pitch, yaw = euler_from_quaternion([q.w, q.x, q.y, q.z])
-            array = quaternion_from_euler(roll, pitch, yaw + (self._angle * pi / 180))
-
+            roll, pitch, yaw = euler_from_quaternion((q.y, q.z, q.w, q.x))
+            #array = quaternion_from_euler(yaw + (self._angle * pi / 180), roll, pitch)
+            #array = quaternion_from_euler(yaw + (self._angle * pi / 180), -1 (roll - 180),  -1 * pitch)
+            array = quaternion_from_euler(yaw + (self._angle * pi / 180), roll, pitch)
             res = Quaternion()
             res.w = array[0]
             res.x = array[1]
             res.y = array[2]
             res.z = array[3]
-
+            
             msg = Imu()
             msg.header.frame_id = self._frameId
             msg.header.stamp = rospy.get_rostime()

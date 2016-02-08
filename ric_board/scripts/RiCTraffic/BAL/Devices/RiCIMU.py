@@ -73,7 +73,7 @@ class RiCIMU(Device):
             roll, pitch, yaw = euler_from_quaternion((q.y, q.z, q.w, q.x))
             #array = quaternion_from_euler(yaw + (self._angle * pi / 180), roll, pitch)
             #array = quaternion_from_euler(yaw + (self._angle * pi / 180), -1 (roll - 180),  -1 * pitch)
-            array = quaternion_from_euler(yaw + (self._angle * pi / 180), roll, pitch)
+            array = quaternion_from_euler((yaw + (self._angle * pi / 180)),-1 * roll, -1 * pitch)
             res = Quaternion()
             res.w = array[0]
             res.x = array[1]

@@ -56,15 +56,15 @@ class IMUPublishResponse(RiCHeader):
 
     def getVelocity(self):
         vec = Vector3()
-        vec.x = self._velocityX * 0.0174532925  # deg/s -> rad/s
-        vec.y = self._velocityY * 0.0174532925  # deg/s -> rad/s
-        vec.z = self._velocityZ * 0.0174532925  # deg/s -> rad/s
+        vec.y = -1 * (self._velocityX * 0.0174532925)  # deg/s -> rad/s
+        vec.x = -1 * (self._velocityY * 0.0174532925)  # deg/s -> rad/s
+        vec.z = -1 * (self._velocityZ * 0.0174532925)  # deg/s -> rad/s
         return vec
 
     def getAcceleration(self):
         acc = Vector3()
-        acc.x = self._accelerationX * 9.80665  # g -> m/s^2
-        acc.y = self._accelerationY * 9.80665  # g -> m/s^2
+        acc.y = self._accelerationX * 9.80665  # g -> m/s^2
+        acc.x = self._accelerationY * 9.80665  # g -> m/s^2
         acc.z = self._accelerationZ * 9.80665  # g -> m/s^2
         return acc
 

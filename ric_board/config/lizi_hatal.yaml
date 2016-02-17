@@ -1,4 +1,4 @@
-CON_PORT: ttyUSB0
+CON_PORT: RiCBoard
 FILE_NAME: lizi_hatal
 Battery/name: battery_monitor
 Battery/pubHz: 10

@@ -1,4 +1,5 @@
 CON_PORT: RiCBoard
+FILE_NAME: lizi102
 closeLoop0/publishHz: 20
 closeLoop0/name: left_motor
 closeLoop0/LPFAlpha: 0.7
@@ -53,7 +54,14 @@ Diff/motorR: 1
 Battery/name: battery_monitor
 Battery/pubHz: 5
 Battery/voltageDividerRatio: 6
-IMU_INIT: 0
+IMU/publishHz: 20
+IMU/name: imu
+IMU/frameId: RiC_Frame
+IMU/camp: 0
+IMU/orientation: 0
+IMU/fusionHz: 50
+IMU/fuseGyro: 0
+IMU_INIT: 1
 GPS_INIT: 0
 PPM_INIT: 0
 BAT_INIT: 1
@@ -66,3 +74,4 @@ servoNum: 0
 relayNum: 0
 URFNum: 0
 openLoopNum: 0
+emergencySwitchNum: 0

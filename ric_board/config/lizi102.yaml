@@ -54,14 +54,7 @@ Diff/motorR: 1
 Battery/name: battery_monitor
 Battery/pubHz: 5
 Battery/voltageDividerRatio: 6
-IMU/publishHz: 20
-IMU/name: imu
-IMU/frameId: RiC_Frame
-IMU/camp: 0
-IMU/orientation: 0
-IMU/fusionHz: 50
-IMU/fuseGyro: 0
-IMU_INIT: 1
+IMU_INIT: 0
 GPS_INIT: 0
 PPM_INIT: 0
 BAT_INIT: 1
